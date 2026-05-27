@@ -1,3 +1,48 @@
+# Project-specific
 data/
-
 tmp/
+
+# Node.js / npm (Svelte)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+package-lock.json
+yarn.lock
+.svelte-kit
+
+# Vite build output
+dist/
+docs/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Python / Jupyter
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+ENV/
+.ipynb_checkpoints/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
