@@ -3,6 +3,7 @@
 	import maplibregl from 'maplibre-gl';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { LAYER_GROUPS } from './tacLayerConfig.js';
+	import torontoBoundary from '$data/toronto-boundary.geo.json';
 
 	let {
 		map = $bindable(null),
@@ -61,6 +62,7 @@
 
 		map.on('load', () => {
 			mapLoaded = true;
+			addTorontoBoundary();
 			addVenueMarkers();
 			syncLayers();
 		});
@@ -73,6 +75,40 @@
 			map?.remove();
 		};
 	});
+
+	function addTorontoBoundary() {
+		if (!map) return;
+
+		map.addSource('toronto-boundary', {
+			type: 'geojson',
+			data: torontoBoundary,
+		});
+
+		// Dim everything outside Toronto with a semi-transparent white fill
+		map.addLayer({
+			id: 'toronto-mask',
+			type: 'fill',
+			source: 'toronto-boundary',
+			filter: ['==', ['get', 'name'], 'outside-mask'],
+			paint: {
+				'fill-color': '#ffffff',
+				'fill-opacity': 0.5,
+			},
+		});
+
+		// Thick border around City of Toronto
+		map.addLayer({
+			id: 'toronto-border',
+			type: 'line',
+			source: 'toronto-boundary',
+			filter: ['==', ['get', 'name'], 'Toronto'],
+			paint: {
+				'line-color': '#1E3765',
+				'line-width': 2.5,
+				'line-opacity': 0.85,
+			},
+		});
+	}
 
 	function addVenueMarkers() {
 		if (!map || VENUES.length === 0) return;
