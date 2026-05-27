@@ -4,6 +4,8 @@
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { LAYER_GROUPS } from './tacLayerConfig.js';
 	import torontoBoundary from '$data/toronto-boundary.geo.json';
+	import venuesCentroids from '$data/venues-centroids.geo.json';
+	import venuesBoundaries from '$data/venues-boundaries.geo.json';
 
 	let {
 		map = $bindable(null),
@@ -30,8 +32,6 @@
 
 	let mapContainer;
 	let mapLoaded = $state(false);
-
-	const VENUES = [];
 
 	onMount(() => {
 		map = new maplibregl.Map({
@@ -111,34 +111,53 @@
 	}
 
 	function addVenueMarkers() {
-		if (!map || VENUES.length === 0) return;
+		if (!map) return;
 
-		map.addSource('venues', {
+		// ── Sources ────────────────────────────────────────────────────────
+		map.addSource('venues-centroids', {
 			type: 'geojson',
-			data: {
-				type: 'FeatureCollection',
-				features: VENUES.map((v) => ({
-					type: 'Feature',
-					geometry: { type: 'Point', coordinates: [v.lng, v.lat] },
-					properties: { id: v.id, name: v.name },
-				})),
+			data: venuesCentroids,
+			promoteId: 'fid',
+		});
+
+		map.addSource('venues-boundaries', {
+			type: 'geojson',
+			data: venuesBoundaries,
+			promoteId: 'fid',
+		});
+
+		// ── Boundary layers (visible at zoom ≥ 14) ──────────────────────────
+		map.addLayer({
+			id: 'venues-fill',
+			type: 'fill',
+			source: 'venues-boundaries',
+			minzoom: 13.5,
+			paint: {
+				'fill-color': '#1E3765',
+				'fill-opacity': 0.08,
 			},
 		});
 
 		map.addLayer({
+			id: 'venues-outline',
+			type: 'line',
+			source: 'venues-boundaries',
+			minzoom: 13.5,
+			paint: {
+				'line-color': '#1E3765',
+				'line-width': 1.5,
+				'line-opacity': 0.7,
+			},
+		});
+
+		// ── Centroid dot layers (always visible) ──────────────────────────
+		map.addLayer({
 			id: 'venues-halo',
 			type: 'circle',
-			source: 'venues',
+			source: 'venues-centroids',
+			maxzoom: 13.5,
 			paint: {
-				'circle-radius': [
-					'interpolate',
-					['linear'],
-					['zoom'],
-					10,
-					8,
-					15,
-					14,
-				],
+				'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 8, 15, 14],
 				'circle-color': '#ffffff',
 				'circle-opacity': 0.9,
 				'circle-stroke-width': 0,
@@ -148,39 +167,54 @@
 		map.addLayer({
 			id: 'venues-circle',
 			type: 'circle',
-			source: 'venues',
+			source: 'venues-centroids',
+			maxzoom: 13.5,
 			paint: {
-				'circle-radius': [
-					'interpolate',
-					['linear'],
-					['zoom'],
-					10,
-					5,
-					15,
-					10,
-				],
-				'circle-color': [
-					'case',
-					['==', ['get', 'id'], selectedVenueId ?? ''],
-					'#DC4633',
-					'#1E3765',
-				],
+				'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 15, 10],
+				'circle-color': '#1E3765',
 				'circle-stroke-width': 1.5,
 				'circle-stroke-color': '#ffffff',
 			},
 		});
 
-		map.on('click', 'venues-circle', (e) => {
+		// ── Click handlers ────────────────────────────────────────────────
+		const handleVenueClick = (e) => {
 			const feature = e.features?.[0];
 			if (feature) selectedVenueId = feature.properties.id;
-		});
+		};
+		map.on('click', 'venues-circle', handleVenueClick);
+		map.on('click', 'venues-fill', handleVenueClick);
 
-		map.on('mouseenter', 'venues-circle', () => {
-			map.getCanvas().style.cursor = 'pointer';
-		});
-		map.on('mouseleave', 'venues-circle', () => {
-			map.getCanvas().style.cursor = '';
-		});
+		// ── Hover popup (desktop / fine-pointer only) ─────────────────────
+		const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+		if (supportsHover) {
+			const hoverPopup = new maplibregl.Popup({
+				closeButton: false,
+				closeOnClick: false,
+				offset: 12,
+				className: 'venue-hover-popup',
+			});
+
+			map.on('mouseenter', 'venues-circle', (e) => {
+				map.getCanvas().style.cursor = 'pointer';
+				const f = e.features[0];
+				hoverPopup
+					.setLngLat(f.geometry.coordinates)
+					.setHTML(`<span>${f.properties.venue_name}</span>`)
+					.addTo(map);
+			});
+			map.on('mouseleave', 'venues-circle', () => {
+				map.getCanvas().style.cursor = '';
+				hoverPopup.remove();
+			});
+		} else {
+			map.on('mouseenter', 'venues-circle', () => { map.getCanvas().style.cursor = 'pointer'; });
+			map.on('mouseleave', 'venues-circle', () => { map.getCanvas().style.cursor = ''; });
+		}
+
+		map.on('mouseenter', 'venues-fill', () => { map.getCanvas().style.cursor = 'pointer'; });
+		map.on('mouseleave', 'venues-fill', () => { map.getCanvas().style.cursor = ''; });
 	}
 
 	function syncLayers() {
@@ -246,21 +280,32 @@
 
 	$effect(() => {
 		if (!selectedVenueId || !mapLoaded) return;
-		const venue = VENUES.find((v) => v.id === selectedVenueId);
-		if (venue) {
-			map?.flyTo({ center: [venue.lng, venue.lat], zoom: 14, duration: 800 });
+		const feature = venuesCentroids.features.find(
+			(f) => f.properties.id === selectedVenueId
+		);
+		if (feature) {
+			map?.flyTo({ center: feature.geometry.coordinates, zoom: 14, duration: 800 });
 		}
 	});
 
 	$effect(() => {
-		if (!mapLoaded || !map?.getLayer('venues-circle')) return;
-		const selected = selectedVenueId;
-		map.setPaintProperty('venues-circle', 'circle-color', [
-			'case',
-			['==', ['get', 'id'], selected ?? ''],
-			'#DC4633',
-			'#1E3765',
-		]);
+		if (!mapLoaded) return;
+		const selected = selectedVenueId ?? '';
+		const colorExpr = ['case', ['==', ['get', 'id'], selected], '#DC4633', '#1E3765'];
+
+		if (map?.getLayer('venues-circle')) {
+			map.setPaintProperty('venues-circle', 'circle-color', colorExpr);
+		}
+		if (map?.getLayer('venues-fill')) {
+			map.setPaintProperty('venues-fill', 'fill-color', colorExpr);
+			map.setPaintProperty('venues-fill', 'fill-opacity',
+				['case', ['==', ['get', 'id'], selected], 0.2, 0.08]);
+		}
+		if (map?.getLayer('venues-outline')) {
+			map.setPaintProperty('venues-outline', 'line-color', colorExpr);
+			map.setPaintProperty('venues-outline', 'line-width',
+				['case', ['==', ['get', 'id'], selected], 2.5, 1.5]);
+		}
 	});
 
 	$effect(() => {
@@ -292,5 +337,22 @@
 	:global(.maplibregl-ctrl-bottom-right) {
 		bottom: 0;
 		right: 0;
+	}
+
+	/* Venue hover popup */
+	:global(.venue-hover-popup .maplibregl-popup-content) {
+		padding: 5px 10px;
+		background: rgba(30, 55, 101, 0.92);
+		color: #fff;
+		border-radius: 4px;
+		font-family: OpenSans, sans-serif;
+		font-size: 0.75rem;
+		line-height: 1.3;
+		max-width: 220px;
+		white-space: normal;
+		box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+	}
+	:global(.venue-hover-popup .maplibregl-popup-tip) {
+		border-top-color: rgba(30, 55, 101, 0.92);
 	}
 </style>

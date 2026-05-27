@@ -72,7 +72,23 @@
 	</section>
 
 	<div class="divider"></div>
+	<!-- ── Venue Description ──────────────────────────────────────────── -->
+	<section class="panel-section">
+		<h2 class="section-heading">Venue Description</h2>
 
+		{#if selectedVenue}
+			<p class="vd-name">{selectedVenue.name}</p>
+			<p class="vd-address">{selectedVenue.address}, Toronto, ON {selectedVenue.postalCode}</p>
+			<p class="vd-body">
+				Venue description coming soon. This section will include a brief overview of the
+				organization, its mandate, programming history, and community impact.
+			</p>
+		{:else}
+			<p class="empty-state">Select a venue above or click a marker on the map to view its description.</p>
+		{/if}
+	</section>
+
+	<div class="divider"></div>
 	<!-- ── Layer Toggles ─────────────────────────────────────────────── -->
 	<section class="panel-section">
 		<h2 class="section-heading">Map Layers</h2>
@@ -419,6 +435,32 @@
 		background: var(--brandMedBlue);
 		border-color: var(--brandMedBlue);
 		color: #fff;
+	}
+
+	/* ── Venue Description ──────────────────────────────────────────────── */
+
+	.vd-name {
+		font-family: TradeGothicBold, sans-serif;
+		font-size: 0.92rem;
+		color: var(--brandDarkBlue);
+		margin: 0 0 4px;
+		line-height: 1.25;
+	}
+
+	.vd-address {
+		font-size: 0.72rem;
+		color: var(--brandGray60);
+		margin: 0 0 10px;
+		line-height: 1.4;
+	}
+
+	.vd-body {
+		font-size: 0.75rem;
+		color: var(--brandBlack);
+		line-height: 1.55;
+		margin: 0;
+		font-style: italic;
+		opacity: 0.65;
 	}
 
 	/* ── Venue Profile ──────────────────────────────────────────────────── */

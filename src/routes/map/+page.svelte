@@ -4,11 +4,21 @@
 	import TacMap   from '$lib/maps/TacMap.svelte';
 	import TacPanel from '$lib/maps/TacPanel.svelte';
 	import { makeInitialLayerState } from '$lib/maps/tacLayerConfig.js';
+	import venuesCentroids from '$data/venues-centroids.geo.json';
 
 	let map = $state(null);
 	let selectedVenueId = $state(null);
 	let layerState = $state(makeInitialLayerState());
-	const venues = [];
+
+	// Derive a simple list for the panel dropdown — sorted alphabetically
+	const venues = venuesCentroids.features
+		.map((f) => ({
+			id:         String(f.properties.fid),
+			name:       f.properties.venue_name,
+			address:    f.properties.address,
+			postalCode: f.properties.postal_code,
+		}))
+		.sort((a, b) => a.name.localeCompare(b.name));
 </script>
 
 <svelte:head>
