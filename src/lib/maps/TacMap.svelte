@@ -6,6 +6,7 @@
 	import torontoBoundary from '$data/toronto-boundary.geo.json';
 	import venuesCentroids from '$data/venues-centroids.geo.json';
 	import venuesBoundaries from '$data/venues-boundaries.geo.json';
+	import mobilityLines from '$data/mobility-lines.geo.json';
 
 	let {
 		map = $bindable(null),
@@ -64,6 +65,7 @@
 			mapLoaded = true;
 			addTorontoBoundary();
 			addVenueMarkers();
+			addTransitLines();
 			syncLayers();
 		});
 
@@ -217,66 +219,115 @@
 		map.on('mouseleave', 'venues-fill', () => { map.getCanvas().style.cursor = ''; });
 	}
 
-	function syncLayers() {
-		if (!map || !mapLoaded) return;
+	function addTransitLines() {
+    if (!map) return;
 
-		for (const group of LAYER_GROUPS) {
-			for (const item of group.items) {
-				const isVisible = group.exclusive
-					? layerState[group.id]?.activeId === item.id
-					: (layerState[group.id]?.[item.id] ?? false);
+    // Single source for all transit lines
+    map.addSource('mobility-lines', {
+        type: 'geojson',
+        data: mobilityLines,
+    });
 
-				if (!isVisible) continue;
+    // Create a layer for each mode
+    const modes = [
+        { id: 'transit-subway', mode: 'subway', color: '#a6a6a6' },
+        { id: 'transit-streetcars', mode: 'streetcar', color: '#a6a6a6' },
+        { id: 'transit-busses', mode: 'bus', color: '#a6a6a6' },
+        { id: 'transit-go', mode: 'go', color: '#a6a6a6' },
+    ];
 
-				switch (item.id) {
-					case 'pop-density':
-					case 'age-0-14':
-					case 'age-15-64':
-					case 'age-65-plus':
-					case 'median-age':
-					case 'mean-age':
-					case 'avg-household-size':
-					case 'one-parent-families':
-					case 'income':
-					case 'pct-bachelors':
-					case 'pct-diploma':
-					case 'pct-highschool':
-					case 'nocs-arts':
-					case 'naics-arts':
-					case 'shelter-costs':
-					case 'core-housing-need':
-					case 'citizenship':
-					case 'visible-minority':
-						// TODO: demography layer keyed by item.key
-						break;
+    for (const mode of modes) {
+        map.addLayer({
+            id: mode.id,
+            type: 'line',
+            source: 'mobility-lines',
+            filter: ['==', ['get', 'mode'], mode.mode],
+            paint: {
+                'line-color': mode.color,
+                'line-width': 1.5,
+                'line-opacity': 0.8,
+				'line-dasharray': [2, 2]
+            },
+            layout: {
+                'visibility': 'none',
+            },
+        });
+    }
+}
 
-					case 'activity-all':
-					case 'activity-evenings':
-					case 'activity-daytime':
-					case 'activity-weekdays':
-					case 'activity-weekends':
-						// TODO: activity map layer
-						break;
+function syncLayers() {
+    if (!map || !mapLoaded) return;
 
-					case 'transit-subway':
-					case 'transit-streetcars':
-					case 'transit-busses':
-					case 'transit-go':
-						// TODO: route overlays
-						break;
+    for (const group of LAYER_GROUPS) {
+        for (const item of group.items) {
+            const isVisible = group.exclusive
+                ? layerState[group.id]?.activeId === item.id
+                : (layerState[group.id]?.[item.id] ?? false);
 
-					case 'commute-time':
-						// TODO: requires selectedVenueId
-						break;
+            // Always set visibility for known layers
+            const visibility = isVisible ? 'visible' : 'none';
 
-					case 'ref-neighbourhoods':
-					case 'ref-municipalities':
-						// TODO: reference boundaries
-						break;
-				}
-			}
-		}
-	}
+            switch (item.id) {
+                case 'pop-density':
+                case 'age-0-14':
+                case 'age-15-64':
+                case 'age-65-plus':
+                case 'median-age':
+                case 'mean-age':
+                case 'avg-household-size':
+                case 'one-parent-families':
+                case 'income':
+                case 'pct-bachelors':
+                case 'pct-diploma':
+                case 'pct-highschool':
+                case 'nocs-arts':
+                case 'naics-arts':
+                case 'shelter-costs':
+                case 'core-housing-need':
+                case 'citizenship':
+                case 'visible-minority':
+                    // TODO: demography layer keyed by item.key
+                    if (map.getLayer(item.id)) {
+                        map.setLayoutProperty(item.id, 'visibility', visibility);
+                    }
+                    break;
+
+                case 'activity-all':
+                case 'activity-evenings':
+                case 'activity-daytime':
+                case 'activity-weekdays':
+                case 'activity-weekends':
+                    // TODO: activity map layer
+                    if (map.getLayer(item.id)) {
+                        map.setLayoutProperty(item.id, 'visibility', visibility);
+                    }
+                    break;
+
+                case 'transit-subway':
+                case 'transit-streetcars':
+                case 'transit-busses':
+                case 'transit-go':
+                    map.setLayoutProperty(item.id, 'visibility', visibility);
+                    break;
+
+                case 'commute-time':
+                    // TODO: requires selectedVenueId
+                    if (map.getLayer(item.id)) {
+                        map.setLayoutProperty(item.id, 'visibility', visibility);
+                    }
+                    break;
+
+                case 'ref-neighbourhoods':
+                case 'ref-municipalities':
+                    // TODO: reference boundaries
+                    if (map.getLayer(item.id)) {
+                        map.setLayoutProperty(item.id, 'visibility', visibility);
+                    }
+                    break;
+            }
+        }
+    }
+}
 
 	$effect(() => {
 		if (!selectedVenueId || !mapLoaded) return;
