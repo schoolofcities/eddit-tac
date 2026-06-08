@@ -1,0 +1,162 @@
+GEO_NAME,CHARACTERISTIC_ID,CHARACTERISTIC_NAME,CHARACTERISTIC_CODE,C1_COUNT_TOTAL,C10_RATE_TOTAL
+35200042,1,"Population, 2021",pop_2021,9261.0,
+35200042,2,"Population, 2016",pop_2016,9511.0,
+35200042,3,"Population percentage change, 2016 to 2021",pop_pct_change,-2.6,-2.6
+35200042,6,Population density per square kilometre,pop_density,3637.0,3637.0
+35200042,34,Total - Distribution (%) of the population by broad age groups - 100% data,age_total_dist,100.0,100.0
+35200042,35,  0 to 14 years,age_0_14,12.0,12.0
+35200042,36,  15 to 64 years,age_15_64,62.7,62.7
+35200042,37,  65 years and over,age_65_over,25.2,25.2
+35200042,38,    85 years and over,age_85_over,3.7,3.7
+35200042,39,Average age of the population,age_mean,46.1,46.1
+35200042,40,Median age of the population,age_median,48.4,48.4
+35200042,50,Total - Private households by household size - 100% data,pvt_house_total,3540.0,100.0
+35200042,51,  1 person,pvt_house_1,825.0,23.3
+35200042,52,  2 persons,pvt_house_2,1120.0,31.6
+35200042,53,  3 persons,pvt_house_3,725.0,20.5
+35200042,54,  4 persons,pvt_house_4,545.0,15.4
+35200042,55,  5 or more persons,pvt_house_5plus,325.0,9.2
+35200042,56,Number of persons in private households,pvt_house_persons,9240.0,100.0
+35200042,57,Average household size,pvt_house_avg_size,2.6,2.6
+35200042,111,Total - Income statistics in 2020 for the population aged 15 years and over in private households - 100% data,income_total,8125.0,100.0
+35200042,112,  Number of total income recipients aged 15 years and over in private households in 2020 - 100% data,income_total_recip,7745.0,95.3
+35200042,113,    Median total income in 2020 among recipients ($),income_total_median,31600.0,31600.0
+35200042,114,  Number of after-tax income recipients aged 15 years and over in private households in 2020 - 100% data,income_aftertax_recip,7745.0,95.3
+35200042,115,    Median after-tax income in 2020 among recipients ($),income_aftertax_median,29600.0,29600.0
+35200042,116,  Number of market income recipients aged 15 years and over in private households in 2020 - 100% data,income_market_recip,6540.0,80.5
+35200042,117,    Median market income in 2020 among recipients ($),income_market_median,26200.0,26200.0
+35200042,118,  Number of employment income recipients aged 15 years and over in private households in 2020 - 100% data,income_emp_recip,4755.0,58.5
+35200042,119,    Median employment income in 2020 among recipients ($),income_emp_median,30400.0,30400.0
+35200042,120,  Number of government transfers recipients aged 15 years and over in private households in 2020 - 100% data,income_govtrans_recip,7105.0,87.4
+35200042,121,    Median government transfers in 2020 among recipients ($),income_govtrans_median,9600.0,9600.0
+35200042,122,  Number of employment insurance benefits recipients aged 15 years and over in private households in 2020 - 100% data,income_ei_recip,555.0,6.8
+35200042,123,    Median employment insurance benefits in 2020 among recipients ($),income_ei_median,5480.0,5480.0
+35200042,124,  Number of COVID-19 emergency and recovery benefits recipients aged 15 years and over in private households in 2020 - 100% data,income_covid_recip,2355.0,29.0
+35200042,125,    Median COVID-19 emergency and recovery benefits in 2020 among recipients ($),income_covid_median,10000.0,10000.0
+35200042,345,"Prevalence of low income based on the Low-income measure, after tax (LIM-AT) (%)",lim_at_prev,17.5,17.5
+35200042,346,  0 to 17 years (%),lim_at_0_17,17.0,17.0
+35200042,347,    0 to 5 years (%),lim_at_0_5,14.8,14.8
+35200042,348,  18 to 64 years (%),lim_at_18_64,12.8,12.8
+35200042,349,  65 years and over (%),lim_at_65_over,29.0,29.0
+35200042,365,Total - Adjusted after-tax economic family income decile group for the population in private households - 100% data,income_decile_total,9240.0,100.0
+35200042,366,  In bottom half of the distribution,income_decile_bottom_half,4795.0,51.9
+35200042,367,    In bottom decile,income_decile_1,1540.0,16.7
+35200042,368,    In second decile,income_decile_2,990.0,10.7
+35200042,369,    In third decile,income_decile_3,810.0,8.8
+35200042,370,    In fourth decile,income_decile_4,735.0,8.0
+35200042,371,    In fifth decile,income_decile_5,720.0,7.8
+35200042,372,  In top half of the distribution,income_decile_top_half,4445.0,48.1
+35200042,373,    In sixth decile,income_decile_6,765.0,8.3
+35200042,374,    In seventh decile,income_decile_7,780.0,8.4
+35200042,375,    In eighth decile,income_decile_8,840.0,9.1
+35200042,376,    In ninth decile,income_decile_9,1035.0,11.2
+35200042,377,    In top decile,income_decile_10,1025.0,11.1
+35200042,378,Total - Inequality measures for the population in private households - 100% data,gini_measures,9240.0,9240.0
+35200042,379,  Gini index on adjusted household total income,gini_total_income,0.364,0.364
+35200042,380,  Gini index on adjusted household market income,gini_market_income,0.494,0.494
+35200042,381,  Gini index on adjusted household after-tax income,gini_aftertax_income,0.324,0.324
+35200042,382,  P90/P10 ratio on adjusted household after-tax income,gini_p90_p10,4.5,4.5
+35200042,1414,Total - Private households by tenure - 25% sample data,housing_tenure_total,3540.0,100.0
+35200042,1415,  Owner,housing_tenure_owner,2400.0,67.8
+35200042,1416,  Renter,housing_tenure_renter,1140.0,32.2
+35200042,1417,"  Dwelling provided by the local government, First Nation or Indian band",housing_tenure_provided,0.0,0.0
+35200042,1418,Total - Occupied private dwellings by condominium status - 25% sample data,housing_condo_total,3540.0,100.0
+35200042,1465,"Total - Owner and tenant households with household total income greater than zero, in non-farm, non-reserve private dwellings by shelter-cost-to-income ratio - 25% sample data",housing_shelter_total,3525.0,100.0
+35200042,1466,  Spending less than 30% of income on shelter costs,housing_shelter_under30,2640.0,74.9
+35200042,1467,  Spending 30% or more of income on shelter costs,housing_shelter_30plus,890.0,25.2
+35200042,1468,    30% to less than 100%,housing_shelter_30_100,755.0,21.4
+35200042,1479,"Total - Owner and tenant households with household total income greater than zero and shelter-cost-to-income ratio less than 100%, in non-farm, non-reserve private dwellings - 25% sample data",housing_core_need_total,3395.0,100.0
+35200042,1480,  In core need,housing_core_need_yes,575.0,16.9
+35200042,1481,  Not in core need,housing_core_need_no,2815.0,82.9
+35200042,1482,"Total - Owner households in non-farm, non-reserve private dwellings - 25% sample data",housing_owner_total,2400.0,
+35200042,1483,  % of owner households with a mortgage,housing_owner_mortgage_pct,44.6,44.6
+35200042,1484,  % of owner households spending 30% or more of its income on shelter costs,housing_owner_shelter_30plus_pct,26.4,26.4
+35200042,1485,  % in core housing need,housing_owner_core_need_pct,12.4,12.4
+35200042,1522,Total - Citizenship for the population in private households - 25% sample data,citizen_total,9240.0,100.0
+35200042,1523,  Canadian citizens,citizen_canadian,7455.0,80.7
+35200042,1524,    Canadian citizens aged under 18,citizen_canadian_under18,1245.0,13.5
+35200042,1525,    Canadian citizens aged 18 and over,citizen_canadian_18over,6215.0,67.3
+35200042,1526,  Not Canadian citizens,citizen_not_canadian,1780.0,19.3
+35200042,1683,Total - Visible minority for the population in private households - 25% sample data,visible_minority_total,9240.0,100.0
+35200042,1684,  Total visible minority population,visible_minority_yes,7560.0,81.8
+35200042,1685,    South Asian,visible_minority_south_asian,610.0,6.6
+35200042,1686,    Chinese,visible_minority_chinese,4470.0,48.4
+35200042,1687,    Black,visible_minority_black,640.0,6.9
+35200042,1688,    Filipino,visible_minority_filipino,120.0,1.3
+35200042,1689,    Arab,visible_minority_arab,125.0,1.4
+35200042,1690,    Latin American,visible_minority_latin_american,135.0,1.5
+35200042,1691,    Southeast Asian,visible_minority_southeast_asian,165.0,1.8
+35200042,1692,    West Asian,visible_minority_west_asian,600.0,6.5
+35200042,1693,    Korean,visible_minority_korean,410.0,4.4
+35200042,1694,    Japanese,visible_minority_japanese,50.0,0.5
+35200042,1695,"    Visible minority, n.i.e.",visible_minority_nie,55.0,0.6
+35200042,1696,    Multiple visible minorities,visible_minority_multiple,165.0,1.8
+35200042,1697,  Not a visible minority,visible_minority_no,1685.0,18.2
+35200042,1998,"Total - Highest certificate, diploma or degree for the population aged 15 years and over in private households - 25% sample data",education_total,8125.0,100.0
+35200042,1999,"  No certificate, diploma or degree",education_none,975.0,12.0
+35200042,2000,  High (secondary) school diploma or equivalency certificate,education_secondary,1635.0,20.1
+35200042,2001,"  Postsecondary certificate, diploma or degree",education_postsec,5520.0,67.9
+35200042,2002,    Postsecondary certificate or diploma below bachelor level,education_postsec_below_bachelor,1635.0,20.1
+35200042,2003,      Apprenticeship or trades certificate or diploma,education_apprentice_trades,170.0,2.1
+35200042,2004,        Non-apprenticeship trades certificate or diploma,education_apprentice_non,115.0,1.4
+35200042,2005,        Apprenticeship certificate,education_apprentice_cert,55.0,0.7
+35200042,2006,"      College, CEGEP or other non-university certificate or diploma",education_college,1220.0,15.0
+35200042,2007,      University certificate or diploma below bachelor level,education_university_below_bachelor,245.0,3.0
+35200042,2008,    Bachelor's degree or higher,education_bachelor_higher,3880.0,47.8
+35200042,2009,      Bachelor's degree,education_bachelor,2400.0,29.5
+35200042,2010,      University certificate or diploma above bachelor level,education_university_above_bachelor,230.0,2.8
+35200042,2011,"      Degree in medicine, dentistry, veterinary medicine or optometry",education_medical_dental_vet,140.0,1.7
+35200042,2012,      Master's degree,education_masters,940.0,11.6
+35200042,2013,      Earned doctorate,education_doctorate,165.0,2.0
+35200042,2014,"Total - Highest certificate, diploma or degree for the population aged 25 to 64 years in private households - 25% sample data",education_25_64_total,4705.0,100.0
+35200042,2015,"  No certificate, diploma or degree",education_25_64_none,210.0,4.5
+35200042,2016,  High (secondary) school diploma or equivalency certificate,education_25_64_secondary,590.0,12.5
+35200042,2017,"  Postsecondary certificate, diploma or degree",education_25_64_postsec,3900.0,82.9
+35200042,2018,    Postsecondary certificate or diploma below bachelor level,education_25_64_postsec_below_bachelor,1025.0,21.8
+35200042,2019,      Apprenticeship or trades certificate or diploma,education_25_64_apprentice_trades,70.0,1.5
+35200042,2020,        Non-apprenticeship trades certificate or diploma,education_25_64_apprentice_non,45.0,1.0
+35200042,2021,        Apprenticeship certificate,education_25_64_apprentice_cert,20.0,0.4
+35200042,2022,"      College, CEGEP or other non-university certificate or diploma",education_25_64_college,805.0,17.1
+35200042,2023,      University certificate or diploma below bachelor level,education_25_64_university_below_bachelor,155.0,3.3
+35200042,2024,    Bachelor's degree or higher,education_25_64_bachelor_higher,2870.0,61.0
+35200042,2025,      Bachelor's degree,education_25_64_bachelor,1770.0,37.6
+35200042,2026,      University certificate or diploma above bachelor level,education_25_64_university_above_bachelor,140.0,3.0
+35200042,2027,"      Degree in medicine, dentistry, veterinary medicine or optometry",education_25_64_medical_dental_vet,95.0,2.0
+35200042,2028,      Master's degree,education_25_64_masters,745.0,15.8
+35200042,2029,      Earned doctorate,education_25_64_doctorate,120.0,2.6
+35200042,2246,Total - Labour force aged 15 years and over by occupation - Broad category - National Occupational Classification (NOC) 2021 - 25% sample data,labour_occupation_total,4375.0,100.0
+35200042,2247,  Occupation - not applicable,labour_occupation_na,215.0,4.9
+35200042,2248,  All occupations,labour_occupation_all,4160.0,95.1
+35200042,2249,    0 Legislative and senior management occupations,labour_occupation_0_management,45.0,1.0
+35200042,2250,"    1 Business, finance and administration occupations",labour_occupation_1_business_finance,905.0,20.7
+35200042,2251,    2 Natural and applied sciences and related occupations,labour_occupation_2_science,765.0,17.5
+35200042,2252,    3 Health occupations,labour_occupation_3_health,350.0,8.0
+35200042,2253,"    4 Occupations in education, law and social, community and government services",labour_occupation_4_education_law_social,465.0,10.6
+35200042,2254,"    5 Occupations in art, culture, recreation and sport",labour_occupation_5_arts_culture,150.0,3.4
+35200042,2255,    6 Sales and service occupations,labour_occupation_6_sales_service,950.0,21.7
+35200042,2256,"    7 Trades, transport and equipment operators and related occupations",labour_occupation_7_trades_transport,390.0,8.9
+35200042,2257,"    8 Natural resources, agriculture and related production occupations",labour_occupation_8_natural_resources,20.0,0.5
+35200042,2258,    9 Occupations in manufacturing and utilities,labour_occupation_9_manufacturing,110.0,2.5
+35200042,2259,Total - Labour force aged 15 years and over by industry - Sectors - North American Industry Classification System (NAICS) 2017 - 25% sample data,labour_industry_total,4375.0,100.0
+35200042,2260,  Industry - not applicable,labour_industry_na,215.0,4.9
+35200042,2261,  All industries,labour_industry_all,4160.0,95.1
+35200042,2262,"    11 Agriculture, forestry, fishing and hunting",labour_industry_11_agriculture,0.0,0.0
+35200042,2263,"    21 Mining, quarrying, and oil and gas extraction",labour_industry_21_mining,0.0,0.0
+35200042,2264,    22 Utilities,labour_industry_22_utilities,20.0,0.5
+35200042,2265,    23 Construction,labour_industry_23_construction,165.0,3.8
+35200042,2266,    31-33 Manufacturing,labour_industry_31_33_manufacturing,220.0,5.0
+35200042,2267,    41 Wholesale trade,labour_industry_41_wholesale,135.0,3.1
+35200042,2268,    44-45 Retail trade,labour_industry_44_45_retail,400.0,9.1
+35200042,2269,    48-49 Transportation and warehousing,labour_industry_48_49_transportation,225.0,5.1
+35200042,2270,    51 Information and cultural industries,labour_industry_51_information,130.0,3.0
+35200042,2271,    52 Finance and insurance,labour_industry_52_finance,390.0,8.9
+35200042,2272,    53 Real estate and rental and leasing,labour_industry_53_real_estate,190.0,4.3
+35200042,2273,"    54 Professional, scientific and technical services",labour_industry_54_professional,675.0,15.4
+35200042,2274,    55 Management of companies and enterprises,labour_industry_55_management,25.0,0.6
+35200042,2275,"    56 Administrative and support, waste management and remediation services",labour_industry_56_administrative,215.0,4.9
+35200042,2276,    61 Educational services,labour_industry_61_education,330.0,7.5
+35200042,2277,    62 Health care and social assistance,labour_industry_62_healthcare,495.0,11.3
+35200042,2278,"    71 Arts, entertainment and recreation",labour_industry_71_arts,45.0,1.0
+35200042,2279,    72 Accommodation and food services,labour_industry_72_accommodation,190.0,4.3
+35200042,2280,    81 Other services (except public administration),labour_industry_81_other_services,160.0,3.7
+35200042,2281,    91 Public administration,labour_industry_91_public_admin,155.0,3.5

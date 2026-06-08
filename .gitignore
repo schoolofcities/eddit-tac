@@ -1,5 +1,17 @@
 # Project-specific
-/data/
+data/activity
+
+data/census/ada/98-401-X2021012_English_CSV_data.csv
+
+data/geo/geohash
+data/geo/lada000b21a_e
+
+data/prelim
+
+data/test3
+
+data/venues/axle
+
 tmp/
 !src/data/
 
