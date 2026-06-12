@@ -141,12 +141,12 @@
 			promoteId: 'fid',
 		});
 
-		// ── Boundary layers (visible at zoom ≥ 14) ──────────────────────────
+		// ── Boundary layers (visible at zoom ≥ 15) ──────────────────────────
 		map.addLayer({
 			id: 'venues-fill',
 			type: 'fill',
 			source: 'venues-boundaries',
-			minzoom: 13.5,
+			minzoom: 15,
 			paint: {
 				'fill-color': '#1E3765',
 				'fill-opacity': 0.08,
@@ -157,7 +157,7 @@
 			id: 'venues-outline',
 			type: 'line',
 			source: 'venues-boundaries',
-			minzoom: 13.5,
+			minzoom: 15,
 			paint: {
 				'line-color': '#1E3765',
 				'line-width': 1.5,
@@ -170,7 +170,7 @@
 			id: 'venues-halo',
 			type: 'circle',
 			source: 'venues-centroids',
-			maxzoom: 13.5,
+			maxzoom: 15,
 			paint: {
 				'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 8, 15, 14],
 				'circle-color': '#ffffff',
@@ -183,7 +183,7 @@
 			id: 'venues-circle',
 			type: 'circle',
 			source: 'venues-centroids',
-			maxzoom: 13.5,
+			maxzoom: 15,
 			paint: {
 				'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 15, 10],
 				'circle-color': '#1E3765',
@@ -351,6 +351,35 @@ function addDemographyLayers() {
     }
 }
 
+function commuteTimePaint(venueId) {
+    const col = venueId ? `travel_time_${venueId}` : 'travel_time_1';
+    return {
+        'fill-color': [
+            'case',
+            ['==', ['get', col], null], 'rgba(0,0,0,0)',
+            ['step', ['get', col],
+                '#2166ac',
+                15, '#1fa187',
+                30, '#fde725',
+                45, '#f8961e',
+                // 60, '#d73027',
+            ]
+			// ['interpolate', ['linear'], ['get', col],
+            //     0,  '#2166ac',
+            //     15, '#1fa187',
+            //     30, '#fde725',
+            //     45, '#f8961e',
+            //     60, '#d73027',
+            // ]
+        ],
+        'fill-opacity': [
+            'case',
+            ['==', ['get', col], null], 0,
+            0.6
+        ],
+    };
+}
+
 function addCommuteTimeLayer() {
     if (!map) return;
 
@@ -359,31 +388,13 @@ function addCommuteTimeLayer() {
         url: `pmtiles://${commute_time}`,
     });
 
+    const paint = commuteTimePaint(selectedVenueId);
     map.addLayer({
         id: 'commute-time',
         type: 'fill',
         source: 'commute-time',
-        'source-layer': 'commute_time', 
-        paint: {
-			'fill-color': [
-				'case',
-				['==', ['get', 'travel_time_1'], null], 'rgba(0,0,0,0)',
-					[
-					'interpolate', ['linear'], ['get', 'travel_time_1'],
-					0,  '#2166ac',
-					15, '#1fa187',
-					30, '#fde725',
-					45, '#f8961e',
-					60, '#d73027',
-					]
-			],
-			//TO DO: make the column filtered by selectedVenueId
-			'fill-opacity': [
-				'case',
-				['==', ['get', 'travel_time_1'], null], 0,
-				0.6
-			],
-        },
+        'source-layer': 'commute_time',
+        paint,
         layout: {
             'visibility': 'none',
         },
@@ -499,6 +510,13 @@ function syncLayers() {
 			map.setPaintProperty('venues-outline', 'line-width',
 				['case', ['==', ['get', 'id'], selected], 2.5, 1.5]);
 		}
+	});
+
+	$effect(() => {
+		if (!mapLoaded || !map?.getLayer('commute-time')) return;
+		const paint = commuteTimePaint(selectedVenueId);
+		map.setPaintProperty('commute-time', 'fill-color', paint['fill-color']);
+		map.setPaintProperty('commute-time', 'fill-opacity', paint['fill-opacity']);
 	});
 
 	$effect(() => {
