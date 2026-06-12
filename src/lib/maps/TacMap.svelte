@@ -7,6 +7,8 @@
 	import venuesCentroids from '$data/venues-centroids.geo.json';
 	import venuesBoundaries from '$data/venues-boundaries.geo.json';
 	import mobilityLines from '$data/mobility-lines.geo.json';
+	import subwayStops from '$data/subway-stops.geo.json';
+	import goStops from '$data/go-stops.geo.json';
 	import torontoAda from '$data/toronto-ada-wide.geo.json';
 	import * as pmtiles from "pmtiles";
 
@@ -71,11 +73,12 @@
 
 		map.on('load', () => {
 			mapLoaded = true;
-			addTorontoBoundary();
-			addTransitLines();
 			addDemographyLayers();
-			addCommuteTimeLayer();
 			addVenueMarkers();
+			addTorontoBoundary();
+			addCommuteTimeLayer();
+			addTransitLines();
+			addTransitStops();
 			syncLayers();
 		});
 
@@ -240,10 +243,10 @@
 
     // Create a layer for each mode
     const modes = [
-        { id: 'transit-subway', mode: 'subway', color: '#bababa' },
-        { id: 'transit-streetcars', mode: 'streetcar', color: '#bababa' },
-        { id: 'transit-busses', mode: 'bus', color: '#bababa' },
-        { id: 'transit-go', mode: 'go', color: '#bababa' },
+        { id: 'transit-subway', mode: 'subway', color: '#1E3765' },
+        { id: 'transit-streetcars', mode: 'streetcar', color: '#1E3765' },
+        { id: 'transit-busses', mode: 'bus', color: '#1E3765' },
+        { id: 'transit-go', mode: 'go', color: '#1E3765' },
     ];
 
     for (const mode of modes) {
@@ -263,6 +266,50 @@
             },
         });
     }
+}
+
+function addTransitStops() {
+    if (!map) return;
+
+    map.addSource('subway-stops', {
+        type: 'geojson',
+        data: subwayStops
+    });
+
+    map.addSource('go-stops', {
+        type: 'geojson',
+        data: goStops
+    });
+
+    map.addLayer({
+        id: 'transit-subway-stops',
+        type: 'circle',
+        source: 'subway-stops',
+        paint: {
+            'circle-radius': 3,
+            'circle-color': '#fff',
+            'circle-stroke-width': 1,
+            'circle-stroke-color': '#1E3765'
+        },
+        layout: {
+            visibility: 'none'
+        }
+    });
+
+    map.addLayer({
+        id: 'transit-go-stops',
+        type: 'circle',
+        source: 'go-stops',
+        paint: {
+            'circle-radius': 3,
+            'circle-color': '#fff',
+            'circle-stroke-width': 1,
+            'circle-stroke-color': '#1E3765'
+        },
+        layout: {
+            visibility: 'none'
+        }
+    });
 }
 
 function addDemographyLayers() {
@@ -316,20 +363,21 @@ function addCommuteTimeLayer() {
         id: 'commute-time',
         type: 'fill',
         source: 'commute-time',
-        'source-layer': 'commute_time', // ← match the layer name inside your .pmtiles
+        'source-layer': 'commute_time', 
         paint: {
 			'fill-color': [
 				'case',
-				['==', ['get', 'travel_time_1'], null], 'rgba(0,0,0,0)',  // null → transparent
+				['==', ['get', 'travel_time_1'], null], 'rgba(0,0,0,0)',
 					[
 					'interpolate', ['linear'], ['get', 'travel_time_1'],
-					0,  '#2166ac',  // blue
-					15, '#1fa187',  // blue-green
-					30, '#fde725',  // yellows
-					45, '#f8961e',  // orange
-					60, '#d73027',  // red
+					0,  '#2166ac',
+					15, '#1fa187',
+					30, '#fde725',
+					45, '#f8961e',
+					60, '#d73027',
 					]
 			],
+			//TO DO: make the column filtered by selectedVenueId
 			'fill-opacity': [
 				'case',
 				['==', ['get', 'travel_time_1'], null], 0,
@@ -388,12 +436,21 @@ function syncLayers() {
                     }
                     break;
 
-                case 'transit-subway':
-                case 'transit-streetcars':
-                case 'transit-busses':
-                case 'transit-go':
-                    map.setLayoutProperty(item.id, 'visibility', visibility);
-                    break;
+					case 'transit-subway':
+					case 'transit-streetcars':
+					case 'transit-busses':
+					case 'transit-go':
+						map.setLayoutProperty(item.id, 'visibility', visibility);
+
+						if (item.id === 'transit-subway') {
+							map.setLayoutProperty('transit-subway-stops', 'visibility', visibility);
+						}
+
+						if (item.id === 'transit-go') {
+							map.setLayoutProperty('transit-go-stops', 'visibility', visibility);
+						}
+
+						break;
 
                 case 'commute-time':
                     // TODO: requires selectedVenueId
