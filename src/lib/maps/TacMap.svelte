@@ -74,11 +74,11 @@
 		map.on('load', () => {
 			mapLoaded = true;
 			addDemographyLayers();
-			addVenueMarkers();
 			addTorontoBoundary();
 			addCommuteTimeLayer();
 			addTransitLines();
 			addTransitStops();
+			addVenueMarkers();
 			syncLayers();
 		});
 
