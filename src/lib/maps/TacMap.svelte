@@ -11,6 +11,7 @@
 	import goStops from '$data/go-stops.geo.json';
 	import torontoAda from '$data/toronto-ada-wide.geo.json';
 	import formerMunicipalities from '$data/former-municipalities.geo.json';
+	import neighbourhoods from '$data/neighbourhoods.geo.json';
 	import * as pmtiles from "pmtiles";
 
 	let commute_time = "commute_time.pmtiles";
@@ -76,6 +77,7 @@
 			mapLoaded = true;
 			addDemographyLayers();
 			addTorontoBoundary();
+			addNeighbourhoods();
 			addFormerMunicipalities();
 			addCommuteTimeLayer();
 			addTransitLines();
@@ -127,6 +129,43 @@
 		});
 	}
 
+	function addNeighbourhoods() {
+		if (!map) return;
+
+		map.addSource('neighbourhoods', {
+			type: 'geojson',
+			data: neighbourhoods,
+		});
+
+		// Invisible fill — preserves polygon data for future use
+		map.addLayer({
+			id: 'ref-neighbourhoods-fill',
+			type: 'fill',
+			source: 'neighbourhoods',
+			filter: ['in', ['geometry-type'], ['literal', ['Polygon', 'MultiPolygon']]],
+			paint: {
+				'fill-color': '#000000',
+				'fill-opacity': 0,
+			},
+			layout: { visibility: 'none' },
+		});
+
+		// Interior boundary lines only (clipped to Toronto outer edge)
+		map.addLayer({
+			id: 'ref-neighbourhoods',
+			type: 'line',
+			source: 'neighbourhoods',
+			filter: ['in', ['geometry-type'], ['literal', ['LineString', 'MultiLineString']]],
+			paint: {
+				'line-color': '#4A607F',
+				'line-width': 1.2,
+				'line-opacity': 0.5,
+				'line-dasharray': [6, 5],
+			},
+			layout: { visibility: 'none' },
+		});
+	}
+
 	function addFormerMunicipalities() {
 		if (!map) return;
 
@@ -157,7 +196,7 @@
 			paint: {
 				'line-color': '#4A607F',
 				'line-width': 1.5,
-				'line-opacity': 0.7,
+				'line-opacity': 0.55,
 				'line-dasharray': [6, 5],
 			},
 			layout: { visibility: 'none' },
@@ -510,8 +549,9 @@ function syncLayers() {
                     break;
 
                 case 'ref-neighbourhoods':
-                    if (map.getLayer(item.id)) {
-                        map.setLayoutProperty(item.id, 'visibility', visibility);
+                    if (map.getLayer('ref-neighbourhoods')) {
+                        map.setLayoutProperty('ref-neighbourhoods', 'visibility', visibility);
+                        map.setLayoutProperty('ref-neighbourhoods-fill', 'visibility', visibility);
                     }
                     break;
 

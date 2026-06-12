@@ -68,10 +68,10 @@ export const LAYER_GROUPS = [
 	{
 		id: 'reference',
 		label: 'Reference',
-		exclusive: false,
-		ui: 'toggles',
+		exclusive: true,
+		ui: 'radio-toggles',
 		items: [
-			{ id: 'ref-neighbourhoods', label: 'Neighbourhoods (census tracts)', key: null },
+			{ id: 'ref-neighbourhoods', label: 'Neighbourhoods', key: null },
 			{ id: 'ref-municipalities', label: 'Municipalities (pre-1998)', key: null },
 		],
 	},
