@@ -7,6 +7,10 @@
 	import venuesCentroids from '$data/venues-centroids.geo.json';
 	import venuesBoundaries from '$data/venues-boundaries.geo.json';
 	import mobilityLines from '$data/mobility-lines.geo.json';
+	import torontoAda from '$data/toronto-ada-wide.geo.json';
+	import * as pmtiles from "pmtiles";
+
+	let commute_time = "commute_time.pmtiles";
 
 	let {
 		map = $bindable(null),
@@ -35,6 +39,10 @@
 	let mapLoaded = $state(false);
 
 	onMount(() => {
+
+		const protocol = new pmtiles.Protocol();
+		maplibregl.addProtocol("pmtiles", protocol.tile);
+
 		map = new maplibregl.Map({
 			container: mapContainer,
 			style: MAP_STYLE,
@@ -64,8 +72,10 @@
 		map.on('load', () => {
 			mapLoaded = true;
 			addTorontoBoundary();
-			addVenueMarkers();
 			addTransitLines();
+			addDemographyLayers();
+			addCommuteTimeLayer();
+			addVenueMarkers();
 			syncLayers();
 		});
 
@@ -230,10 +240,10 @@
 
     // Create a layer for each mode
     const modes = [
-        { id: 'transit-subway', mode: 'subway', color: '#a6a6a6' },
-        { id: 'transit-streetcars', mode: 'streetcar', color: '#a6a6a6' },
-        { id: 'transit-busses', mode: 'bus', color: '#a6a6a6' },
-        { id: 'transit-go', mode: 'go', color: '#a6a6a6' },
+        { id: 'transit-subway', mode: 'subway', color: '#bababa' },
+        { id: 'transit-streetcars', mode: 'streetcar', color: '#bababa' },
+        { id: 'transit-busses', mode: 'bus', color: '#bababa' },
+        { id: 'transit-go', mode: 'go', color: '#bababa' },
     ];
 
     for (const mode of modes) {
@@ -255,6 +265,83 @@
     }
 }
 
+function addDemographyLayers() {
+    if (!map) return;
+
+    map.addSource('toronto-ada', {
+        type: 'geojson',
+        data: torontoAda,
+    });
+
+    const demographyGroup = LAYER_GROUPS[0];
+
+    for (const item of demographyGroup.items) {
+
+		const fillColor = [
+			'step',
+			['get', item.key],
+			item.colors[0],
+			...item.breaks.flatMap((b, i) => [b, item.colors[i + 1]])
+		];
+
+        map.addLayer({
+            id: item.id,
+            type: 'fill',
+            source: 'toronto-ada',
+            paint: {
+                'fill-color': [
+                    'case',
+                    ['!=', ['get', item.key], null],
+                    fillColor,
+                    '#cbcbcb'
+                ],
+                'fill-opacity': 0.7,
+            },
+            layout: {
+                visibility: 'none',
+            },
+        });
+    }
+}
+
+function addCommuteTimeLayer() {
+    if (!map) return;
+
+    map.addSource('commute-time', {
+        type: 'vector',
+        url: `pmtiles://${commute_time}`,
+    });
+
+    map.addLayer({
+        id: 'commute-time',
+        type: 'fill',
+        source: 'commute-time',
+        'source-layer': 'commute_time', // ← match the layer name inside your .pmtiles
+        paint: {
+			'fill-color': [
+				'case',
+				['==', ['get', 'travel_time_1'], null], 'rgba(0,0,0,0)',  // null → transparent
+					[
+					'interpolate', ['linear'], ['get', 'travel_time_1'],
+					0,  '#2166ac',  // blue
+					15, '#1fa187',  // blue-green
+					30, '#fde725',  // yellows
+					45, '#f8961e',  // orange
+					60, '#d73027',  // red
+					]
+			],
+			'fill-opacity': [
+				'case',
+				['==', ['get', 'travel_time_1'], null], 0,
+				0.6
+			],
+        },
+        layout: {
+            'visibility': 'none',
+        },
+    });
+}
+
 function syncLayers() {
     if (!map || !mapLoaded) return;
 
@@ -269,24 +356,22 @@ function syncLayers() {
 
             switch (item.id) {
                 case 'pop-density':
-                case 'age-0-14':
-                case 'age-15-64':
-                case 'age-65-plus':
+				case 'pop-count':
                 case 'median-age':
-                case 'mean-age':
                 case 'avg-household-size':
-                case 'one-parent-families':
                 case 'income':
+				case 'income-after-tax':
+				case 'pct-low-income':
                 case 'pct-bachelors':
-                case 'pct-diploma':
+				case 'pct-no-education':
                 case 'pct-highschool':
                 case 'nocs-arts':
                 case 'naics-arts':
                 case 'shelter-costs':
+				case 'tenure-renter':
                 case 'core-housing-need':
                 case 'citizenship':
                 case 'visible-minority':
-                    // TODO: demography layer keyed by item.key
                     if (map.getLayer(item.id)) {
                         map.setLayoutProperty(item.id, 'visibility', visibility);
                     }

@@ -90,63 +90,109 @@
 
 	<div class="divider"></div>
 	<!-- ── Layer Toggles ─────────────────────────────────────────────── -->
-	<section class="panel-section">
-		<h2 class="section-heading">Map Layers</h2>
+<section class="panel-section">
+	<h2 class="section-heading">Map Layers</h2>
 
-		{#each LAYER_GROUPS as group (group.id)}
-			<div class="layer-group">
-				<span class="layer-group-label">{group.label}</span>
+	{#each LAYER_GROUPS as group (group.id)}
+		<div class="layer-group">
+			<span class="layer-group-label">{group.label}</span>
 
-				{#if group.ui === 'dropdown'}
-					<div class="select-wrapper">
-						<select
-							class="venue-select layer-select"
-							value={layerState[group.id]?.activeId ?? ''}
-							onchange={(e) => setExclusiveFromSelect(group.id, e.currentTarget.value)}
-							aria-label={`Select ${group.label} layer`}
-						>
-							<option value="">None</option>
-							{#each group.items as item (item.id)}
-								<option value={item.id}>{item.label}</option>
-							{/each}
-						</select>
-						<svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
-							<path d="M0 0l5 6 5-6z" />
-						</svg>
-					</div>
-				{:else if group.ui === 'radio-toggles'}
-					<div class="activity-grid">
+			{#if group.ui === 'dropdown'}
+				<div class="select-wrapper">
+					<select
+						class="venue-select layer-select"
+						value={layerState[group.id]?.activeId ?? ''}
+						onchange={(e) => setExclusiveFromSelect(group.id, e.currentTarget.value)}
+						aria-label={`Select ${group.label} layer`}
+					>
+						<option value="">None</option>
 						{#each group.items as item (item.id)}
-							<button
-								type="button"
-								class="activity-btn"
-								class:active={isOn(group, item)}
-								onclick={() => setExclusive(group.id, item.id)}
-							>
-								{item.label}
-							</button>
+							<option value={item.id}>{item.label}</option>
 						{/each}
-					</div>
-				{:else}
-					{#each group.items as item (item.id)}
-						<label class="layer-toggle" class:layer-toggle-disabled={item.id === 'commute-time' && !selectedVenueId}>
-							<span class="toggle-track" class:on={isOn(group, item)}>
-								<input
-									type="checkbox"
-									checked={isOn(group, item)}
-									onchange={() => toggleNonExclusive(group.id, item.id)}
-									class="sr-only"
-									disabled={item.id === 'commute-time' && !selectedVenueId}
-								/>
-								<span class="toggle-thumb"></span>
-							</span>
-							<span class="layer-label">{item.label}</span>
-						</label>
-					{/each}
+					</select>
+
+					<svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
+						<path d="M0 0l5 6 5-6z" />
+					</svg>
+				</div>
+
+				{#if group.id === 'demography' && layerState.demography?.activeId}
+					{@const selectedItem = group.items.find(
+						item => item.id === layerState.demography.activeId
+					)}
+
+					{#if selectedItem}
+						<svg class="legend" width="100%" height="40">
+							{#each selectedItem.colors as color, i}
+									<rect
+										x={i * 20 + '%'}
+										y="0"
+										width="20%"
+										height="20"
+										fill={color}
+										stroke="white"
+										stroke-width="1"
+										opacity="0.7"
+									/>
+							{/each}
+
+							{#each selectedItem.breaks as value, i}
+								<text
+									class="legend-label"
+									x={`${(i + 1) * 20}%`}
+									y="35"
+									text-anchor="middle"
+								>
+									{#if i === 0}
+										&lt;{value.toLocaleString()}
+									{:else if i === selectedItem.breaks.length - 1}
+										&gt;{value.toLocaleString()}
+									{:else}
+										{value.toLocaleString()}
+									{/if}
+								</text>
+							{/each}
+						</svg>
+					{/if}
 				{/if}
-			</div>
-		{/each}
-	</section>
+
+			{:else if group.ui === 'radio-toggles'}
+				<div class="activity-grid">
+					{#each group.items as item (item.id)}
+						<button
+							type="button"
+							class="activity-btn"
+							class:active={isOn(group, item)}
+							onclick={() => setExclusive(group.id, item.id)}
+						>
+							{item.label}
+						</button>
+					{/each}
+				</div>
+
+			{:else}
+				{#each group.items as item (item.id)}
+					<label
+						class="layer-toggle"
+						class:layer-toggle-disabled={item.id === 'commute-time' && !selectedVenueId}
+					>
+						<span class="toggle-track" class:on={isOn(group, item)}>
+							<input
+								type="checkbox"
+								checked={isOn(group, item)}
+								onchange={() => toggleNonExclusive(group.id, item.id)}
+								class="sr-only"
+								disabled={item.id === 'commute-time' && !selectedVenueId}
+							/>
+							<span class="toggle-thumb"></span>
+						</span>
+						<span class="layer-label">{item.label}</span>
+					</label>
+				{/each}
+			{/if}
+		</div>
+	{/each}
+</section>
 
 	<div class="divider"></div>
 
@@ -503,5 +549,10 @@
 
 	.stat-value.placeholder {
 		color: var(--brandGray);
+	}
+
+	.legend {
+	margin-top: 0.5rem;
+	display: block;
 	}
 </style>
