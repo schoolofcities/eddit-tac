@@ -27,7 +27,6 @@ yarn.lock
 
 # Vite build output
 dist/
-docs/
 
 # Environment variables
 .env
