@@ -10,6 +10,7 @@
 	import subwayStops from '$data/subway-stops.geo.json';
 	import goStops from '$data/go-stops.geo.json';
 	import torontoAda from '$data/toronto-ada-wide.geo.json';
+	import formerMunicipalities from '$data/former-municipalities.geo.json';
 	import * as pmtiles from "pmtiles";
 
 	let commute_time = "commute_time.pmtiles";
@@ -75,6 +76,7 @@
 			mapLoaded = true;
 			addDemographyLayers();
 			addTorontoBoundary();
+			addFormerMunicipalities();
 			addCommuteTimeLayer();
 			addTransitLines();
 			addTransitStops();
@@ -122,6 +124,43 @@
 				'line-width': 2.5,
 				'line-opacity': 0.85,
 			},
+		});
+	}
+
+	function addFormerMunicipalities() {
+		if (!map) return;
+
+		map.addSource('former-municipalities', {
+			type: 'geojson',
+			data: formerMunicipalities,
+		});
+
+		// Invisible fill — preserves polygon data for future use
+		map.addLayer({
+			id: 'ref-municipalities-fill',
+			type: 'fill',
+			source: 'former-municipalities',
+			filter: ['in', ['geometry-type'], ['literal', ['Polygon', 'MultiPolygon']]],
+			paint: {
+				'fill-color': '#000000',
+				'fill-opacity': 0,
+			},
+			layout: { visibility: 'none' },
+		});
+
+		// Interior boundary lines only (no Toronto outer edge doubling)
+		map.addLayer({
+			id: 'ref-municipalities',
+			type: 'line',
+			source: 'former-municipalities',
+			filter: ['in', ['geometry-type'], ['literal', ['LineString', 'MultiLineString']]],
+			paint: {
+				'line-color': '#4A607F',
+				'line-width': 1.5,
+				'line-opacity': 0.7,
+				'line-dasharray': [6, 5],
+			},
+			layout: { visibility: 'none' },
 		});
 	}
 
@@ -471,10 +510,15 @@ function syncLayers() {
                     break;
 
                 case 'ref-neighbourhoods':
-                case 'ref-municipalities':
-                    // TODO: reference boundaries
                     if (map.getLayer(item.id)) {
                         map.setLayoutProperty(item.id, 'visibility', visibility);
+                    }
+                    break;
+
+                case 'ref-municipalities':
+                    if (map.getLayer('ref-municipalities')) {
+                        map.setLayoutProperty('ref-municipalities', 'visibility', visibility);
+                        map.setLayoutProperty('ref-municipalities-fill', 'visibility', visibility);
                     }
                     break;
             }
