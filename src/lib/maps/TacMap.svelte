@@ -430,7 +430,7 @@ function addDemographyLayers() {
 }
 
 function commuteTimePaint(venueId) {
-    const col = venueId ? `travel_time_${venueId}` : 'travel_time_1';
+    const col = venueId ? `commute_time_${venueId}` : 'commute_time_1';
     return {
         'fill-color': [
             'case',
