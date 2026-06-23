@@ -12,25 +12,25 @@
             "type": "Feature",
             "properties": {
                 "fid": 1,
-                "venue_name": "32 Lisgar, InterAccess",
+                "venue_name": "InterAccess",
                 "address": "32 Lisgar Street",
                 "postal_code": "M6J 0C7",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 606,
+                "total_facility_area_sqft": 30284,
                 "disciplines_supported": [
-                    "visual_media_arts",
                     "community_arts",
-                    "literary"
+                    "literary",
+                    "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "InterAccess",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 2025
+                "year_opened": 1983,
+                "venue_description": "InterAccess is an artist-run centre at 32 Lisgar Street specializing in digital and media arts. Operated by InterAccess since relocating to the 32 Lisgar Cultural Hub in 2018, its mandate is to support emerging practices in technology-based art through exhibitions, residencies, workshops, and production facilities. Programming has long centred on hands-on experimentation and critical engagement with new media, serving artists and publics across visual, literary, and community-arts practices. The centre anchors affordable creation infrastructure in the Queen West corridor and contributes to Toronto's media-arts ecology, though the broader Lisgar hub's future remains subject to City of Toronto facility planning.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -67,9 +67,8 @@
                 "venue_name": "401 Richmond",
                 "address": "401 Richmond Street West",
                 "postal_code": "M5V 1X3",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 631,
+                "total_facility_area_sqft": 200000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -79,13 +78,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "private",
                 "ownership": "private",
                 "operator": "Urbanspace Property Group",
                 "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1994
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 1994,
+                "venue_description": "401 Richmond is a privately owned cultural hub at 401 Richmond Street West, operated by Urbanspace Property Group since Margie Zeidler's 1994 transformation of a late-19th-century tin factory. Home to more than 140 tenants—including artist-run centres such as A Space Gallery and Open Studio, galleries, studios, festivals, and social enterprises—the building's mandate is to provide affordable downtown workspace and foster collaboration among diverse cultural producers. Programming history spans three decades of exhibitions, studio practice, and community gathering in the courtyard and roof garden, embodying Jane Jacobs's vision of old buildings nurturing new ideas. The hub is widely credited with incubating Toronto's independent arts sector and advancing provincial property-tax reforms to protect culture-focused landlords.",
+                "owner": "Urbanspace Property Group"
             },
             "geometry": {
                 "type": "Polygon",
@@ -183,12 +183,11 @@
             "type": "Feature",
             "properties": {
                 "fid": 3,
-                "venue_name": "918 Bathurst",
+                "venue_name": "918 Bathurst Centre for Culture, Arts, Media and Education",
                 "address": "918 Bathurst Street",
                 "postal_code": "M5R 3G5",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 250,
+                "total_facility_area_sqft": 8000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -198,13 +197,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
-                "operator": "ArtHubs Toronto Inc.",
-                "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2009
+                "operator": "918 Bathurst",
+                "tac_funded_operator": true,
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 2009,
+                "venue_description": "The 918 Bathurst Centre is a nonprofit multidisciplinary hub in a former religious building at 918 Bathurst Street, operated by 918 Bathurst since 2009. Its mandate is to serve as an inclusive space for creative production, performances, exhibitions, education, and community gatherings across dance, music, theatre, literary, and visual practices. Programming uses the Sanctuary auditorium, Gallery 918 (Sun and Star Rooms), and lower-level studios and classrooms to support diverse artists and cultural exchange. As a TAC-funded operator and resident, it provides accessible arts infrastructure in the Annex and strengthens neighbourhood cultural participation.",
+                "owner": "918 Bathurst Centre for Culture, Arts, Media and Education"
             },
             "geometry": {
                 "type": "Polygon",
@@ -264,26 +264,25 @@
                 "fid": 4,
                 "venue_name": "Albion Library",
                 "address": "1515 Albion Road",
-                "postal_code": "M9V 1B4",
-                "seating_capacity": 100,
-                "usable_area": 121,
-                "notes": "",
+                "postal_code": "M9V 1B2",
+                "max_attendee_capacity": 2962,
+                "total_facility_area_sqft": 133268,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
                     "literary",
                     "music",
-                    "theatre",
-                    "film"
+                    "theatre"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "municipal",
                 "ownership": "municipal",
                 "operator": "Toronto Public Library",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1973
+                "tac_funded_programming": true,
+                "year_opened": 1973,
+                "venue_description": "Albion Library is a City of Toronto–owned Toronto Public Library branch at 1515 Albion Road in Etobicoke North, opened in 1973. TPL's mandate of free public access to learning and culture extends here through an auditorium and program room used for community arts, dance, literary, music, and theatre programming. Branch programs and room bookings bring performances, workshops, and neighbourhood events to a suburban community with limited dedicated arts venues. The library functions as an accessible municipal anchor for cultural participation in northwest Toronto.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -320,13 +319,268 @@
         {
             "type": "Feature",
             "properties": {
+                "fid": 84,
+                "venue_name": "Palmerston Library",
+                "address": "560 Palmerston Avenue",
+                "postal_code": "M6G 2P7",
+                "max_attendee_capacity": 884,
+                "total_facility_area_sqft": 39802,
+                "disciplines_supported": [
+                    "community_arts",
+                    "dance",
+                    "literary",
+                    "music",
+                    "theatre",
+                    "visual_arts"
+                ],
+                "primary_discipline": "dance",
+                "ownership": "municipal",
+                "operator": "Toronto Public Library",
+                "tac_funded_operator": false,
+                "tac_funded_resident": false,
+                "tac_funded_programming": true,
+                "year_opened": 1971,
+                "venue_description": "Palmerston Library is a municipal Toronto Public Library branch at 560 Palmerston Avenue, opened in 1971 in the Palmerston neighbourhood. Operated by TPL, it offers reading rooms and a distinctive central hall with stepped seating used for talks and small-scale dance, literary, music, theatre, and community-arts events. Its programming history reflects the branch model of embedding arts activity within everyday library services. The venue extends affordable, neighbourhood-scaled cultural programming to west-end residents.",
+                "owner": "City of Toronto"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -79.41441,
+                            43.6650934
+                        ],
+                        [
+                            -79.4144058,
+                            43.6651015
+                        ],
+                        [
+                            -79.4140568,
+                            43.6651775
+                        ],
+                        [
+                            -79.414054,
+                            43.665172
+                        ],
+                        [
+                            -79.4140429,
+                            43.665174
+                        ],
+                        [
+                            -79.414038,
+                            43.665182
+                        ],
+                        [
+                            -79.4139719,
+                            43.6651951
+                        ],
+                        [
+                            -79.413962,
+                            43.6651674
+                        ],
+                        [
+                            -79.4139281,
+                            43.6650839
+                        ],
+                        [
+                            -79.4139392,
+                            43.6650678
+                        ],
+                        [
+                            -79.4142736,
+                            43.6649932
+                        ],
+                        [
+                            -79.4142854,
+                            43.6649968
+                        ],
+                        [
+                            -79.4143021,
+                            43.6650446
+                        ],
+                        [
+                            -79.4143154,
+                            43.6650516
+                        ],
+                        [
+                            -79.4143773,
+                            43.665038
+                        ],
+                        [
+                            -79.4143863,
+                            43.6650406
+                        ],
+                        [
+                            -79.41441,
+                            43.6650934
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "fid": 85,
+                "venue_name": "Scarborough Civic Centre Library",
+                "address": "156 Borough Drive",
+                "postal_code": "M1P 4N7",
+                "max_attendee_capacity": 350,
+                "total_facility_area_sqft": 14500,
+                "disciplines_supported": [
+                    "dance"
+                ],
+                "primary_discipline": "dance",
+                "ownership": "municipal",
+                "operator": "Toronto Public Library",
+                "tac_funded_operator": false,
+                "tac_funded_resident": false,
+                "tac_funded_programming": true,
+                "year_opened": 2015,
+                "venue_description": "Scarborough Civic Centre Library is a Toronto Public Library branch integrated within the Scarborough Civic Centre at 156 Borough Drive, opened in 2015. Operated by TPL, it provides study spaces and flexible program areas for workshops and community events, with dance among its supported disciplines. Programming connects library services to civic-centre foot traffic and Scarborough's diverse communities. The branch extends municipal arts access in a rapidly growing suburban district.",
+                "owner": "City of Toronto"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -79.2573868,
+                            43.7723983
+                        ],
+                        [
+                            -79.2572299,
+                            43.772437
+                        ],
+                        [
+                            -79.2571159,
+                            43.7724874
+                        ],
+                        [
+                            -79.2570072,
+                            43.7725619
+                        ],
+                        [
+                            -79.2569228,
+                            43.7726442
+                        ],
+                        [
+                            -79.2568047,
+                            43.772589
+                        ],
+                        [
+                            -79.256794,
+                            43.7725997
+                        ],
+                        [
+                            -79.256676,
+                            43.7725048
+                        ],
+                        [
+                            -79.256853,
+                            43.7724234
+                        ],
+                        [
+                            -79.2567913,
+                            43.7723339
+                        ],
+                        [
+                            -79.256684,
+                            43.7723566
+                        ],
+                        [
+                            -79.2566529,
+                            43.7722746
+                        ],
+                        [
+                            -79.2566411,
+                            43.772238
+                        ],
+                        [
+                            -79.2572319,
+                            43.7721637
+                        ],
+                        [
+                            -79.2572929,
+                            43.7721562
+                        ],
+                        [
+                            -79.2573506,
+                            43.7722869
+                        ],
+                        [
+                            -79.2573345,
+                            43.7722888
+                        ],
+                        [
+                            -79.2573868,
+                            43.7723983
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "fid": 86,
+                "venue_name": "Children's Peace Theatre",
+                "address": "305 Dawes Road",
+                "postal_code": "M4B 2E2",
+                "max_attendee_capacity": 200,
+                "total_facility_area_sqft": 5000,
+                "disciplines_supported": [
+                    "community_arts",
+                    "theatre"
+                ],
+                "primary_discipline": "community_arts",
+                "ownership": "municipal",
+                "operator": "Children's Peace Theatre",
+                "tac_funded_operator": true,
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 1997,
+                "venue_description": "Children's Peace Theatre occupies the historic Massey–Goulding Estate at 305 Dawes Road, operated by Children's Peace Theatre since 1997 on City of Toronto–owned land. Rooted in the UN Decade for a Culture of Peace, its evolving mandate fosters ecological, social, and spiritual resilience through arts-based, intergenerational, and land-based programming centred on decolonization and Black and Indigenous liberation. Programming history includes Peace Camp, youth leadership training, the Speak Your Peace festival, and a Shared Platform supporting grassroots initiatives, with indoor spaces and an outdoor amphitheatre. The organization has been recognized for long-term youth arts engagement and serves as a hub for conflict transformation and community-led social change in East York.",
+                "owner": "City of Toronto"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -79.2955334,
+                            43.6991148
+                        ],
+                        [
+                            -79.294858,
+                            43.6991736
+                        ],
+                        [
+                            -79.2947954,
+                            43.6984021
+                        ],
+                        [
+                            -79.2957153,
+                            43.6984119
+                        ],
+                        [
+                            -79.2955299,
+                            43.6991154
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
                 "fid": 5,
                 "venue_name": "Array Space",
                 "address": "155 Walnut Avenue",
                 "postal_code": "M6J 3W3",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 90,
+                "total_facility_area_sqft": 1100,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -334,13 +588,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Arraymusic",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1976
+                "year_opened": 1972,
+                "venue_description": "Array Space at 155 Walnut Avenue is home to Arraymusic, a nonprofit contemporary-music organization founded in 1972 and TAC-funded as operator and resident. The venue combines a gallery and flexible performance space supporting experimental, interdisciplinary music, dance, theatre, and community programming. Arraymusic's mandate champions innovation and collaboration among emerging and established artists. The space has been a west-end anchor for new music and critical cultural dialogue for more than five decades.",
+                "owner": "Arraymusic"
             },
             "geometry": {
                 "type": "Polygon",
@@ -381,9 +636,8 @@
                 "venue_name": "Art Gallery of Ontario",
                 "address": "317 Dundas Street West",
                 "postal_code": "M5T 1G4",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 2500,
+                "total_facility_area_sqft": 583000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -393,13 +647,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Art Gallery of Ontario",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1900
+                "tac_funded_programming": true,
+                "year_opened": 1900,
+                "venue_description": "The Art Gallery of Ontario at 317 Dundas Street West is one of Canada's largest art museums, operated by the AGO since its origins in 1900 and housed in a Frank Gehry–renovated landmark. Its mandate spans collecting, exhibiting, and interpreting Canadian, Indigenous, and international art while offering public programs across visual, performing, and literary disciplines. Programming history includes major exhibitions, education, and community partnerships that reach audiences city-wide. The AGO is a provincially significant cultural institution whose scale and collections materially shape Toronto's visual-arts landscape.",
+                "owner": "Art Gallery of Ontario"
             },
             "geometry": {
                 "type": "Polygon",
@@ -708,20 +963,20 @@
                 "venue_name": "Art Museum at the University of Toronto",
                 "address": "15 King's College Circle",
                 "postal_code": "M5S 3H7",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 175,
+                "total_facility_area_sqft": 10000,
                 "disciplines_supported": [
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
                 "ownership": "university",
-                "operator": "Art Museum University Of Toronto",
-                "tac_funded_operator": true,
+                "operator": "Art Museum at the University of Toronto",
+                "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": true,
-                "year_opened": 1984
+                "year_opened": 1983,
+                "venue_description": "The Art Museum at the University of Toronto comprises the Justina M. Barnicke Gallery at Hart House and the University of Toronto Art Centre at University College on King's College Circle. Operated by the university since 1984, its mandate is to present interdisciplinary contemporary art and support emerging artists and curators. Programming emphasizes experimental collaborations and research-driven exhibitions in lens-based and visual practices. The museum extends academic and public engagement with contemporary art at the centre of Canada's largest university.",
+                "owner": "University of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -758,22 +1013,22 @@
                 "venue_name": "Arts Etobicoke",
                 "address": "4893a Dundas Street West",
                 "postal_code": "M9A 1B2",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 40,
+                "total_facility_area_sqft": 1200,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
                     "music"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Arts Etobicoke",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1973
+                "tac_funded_programming": true,
+                "year_opened": 1973,
+                "venue_description": "Arts Etobicoke is a nonprofit community arts organization at 4893a Dundas Street West, serving Etobicoke since 1973 with additional programming at Cloverdale Common in Cloverdale Mall. Its mandate is to support local artists through exhibitions, public art, and accessible community programs reflecting Etobicoke's diversity. Programming spans dance, music, and community-arts initiatives rooted in neighbourhood engagement. As a local arts service organization, it helps address geographic inequities in arts access across the former City of Etobicoke.",
+                "owner": "Arts Etobicoke"
             },
             "geometry": {
                 "type": "Polygon",
@@ -815,12 +1070,11 @@
             "type": "Feature",
             "properties": {
                 "fid": 9,
-                "venue_name": "Artscape Gibraltar Point",
+                "venue_name": "Gibraltar Point Centre for the Arts",
                 "address": "443 Lakeshore Avenue",
                 "postal_code": "M5J 2W2",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 200,
+                "total_facility_area_sqft": 35000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -830,13 +1084,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "ArtHubs Toronto Inc.",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1999
+                "tac_funded_programming": true,
+                "year_opened": 1999,
+                "venue_description": "Gibraltar Point Centre for the Arts on Toronto Island at 443 Lakeshore Avenue is a multidisciplinary artist residency operated by ArtHubs Toronto Inc. since 1999. Its mandate is to provide studios, accommodations, and quiet workspace for artists across disciplines to develop work away from urban distraction. Programming centres on residencies, retreats, and small-scale cultural gatherings in a historic lakeside setting. The centre supports creative development and has hosted generations of Canadian and international artists.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1062,12 +1317,11 @@
             "type": "Feature",
             "properties": {
                 "fid": 10,
-                "venue_name": "Artscape Wychwood Barns",
-                "address": "601 Christie Avenue",
-                "postal_code": "M6G 4C6",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "venue_name": "Wychwood Barns",
+                "address": "601 Christie Street",
+                "postal_code": "M6G 4C7",
+                "max_attendee_capacity": 450,
+                "total_facility_area_sqft": 10680,
                 "disciplines_supported": [
                     "community_arts",
                     "literary",
@@ -1076,13 +1330,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "ArtHubs Toronto Inc.",
                 "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2008
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 2008,
+                "venue_description": "Artscape Wychwood Barns at 601 Christie Street is a City-owned community cultural hub operated by ArtHubs in a converted streetcar maintenance barn, opened in 2008. The complex includes 26 artist live/work studios, work studios, nonprofit offices, the Covered Street event barn, and The Stop's Green Barn food-education centre. Programming spans farmers' markets, Nuit Blanche activations, gallery exhibitions, and a Community Activations Program offering free space to local groups. The LEED Gold site is a nationally cited model combining affordable housing, environmental leadership, heritage preservation, and neighbourhood cultural life in the Wychwood area.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1148,12 +1403,11 @@
             "type": "Feature",
             "properties": {
                 "fid": 11,
-                "venue_name": "Artscape Youngplace",
-                "address": "180 Shaw  Street",
+                "venue_name": "Youngplace",
+                "address": "180 Shaw Street",
                 "postal_code": "M6J 2W5",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 1500,
+                "total_facility_area_sqft": 75000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -1163,13 +1417,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "ArtHubs Toronto Inc.",
                 "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2013
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 2013,
+                "venue_description": "Youngplace at 180 Shaw Street is a community cultural hub in West Queen West, operated by ArtHubs Toronto Inc. in a repurposed 1914 public school opened for arts use in 2013. Resident organizations include the Centre for Indigenous Theatre, Koffler Arts, Small World Music, Paperhouse Studio, Toronto Potters, and Intergalactic Arts Collective, among dozens of studios. Its mandate is artistic creation, learning, and collaboration through galleries, classes, markets, and hallway exhibitions. Following Artscape's insolvency, City and federal investments helped tenants secure ownership of key units, protecting long-term affordable cultural space in the neighbourhood.",
+                "owner": "Toronto Standard Condominium Corporation No. 2397"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1256,23 +1511,26 @@
             "properties": {
                 "fid": 12,
                 "venue_name": "Assembly Hall",
-                "address": "1 Colonel Smith Park Drive",
+                "address": "1 Colonel Samuel Smith Park Drive",
                 "postal_code": "M8V 4B6",
-                "seating_capacity": 250,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 330,
+                "total_facility_area_sqft": 3329,
                 "disciplines_supported": [
+                    "community_arts",
                     "dance",
-                    "theatre"
+                    "literary",
+                    "theatre",
+                    "visual_media_arts"
                 ],
-                "primary_discipline": "dance",
-                "governance_type": "municipal",
+                "primary_discipline": "theatre",
                 "ownership": "municipal",
                 "operator": "City of Toronto",
                 "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1928
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 2001,
+                "venue_description": "Assembly Hall in Colonel Samuel Smith Park at 1 Colonel Samuel Smith Park Drive is a City of Toronto municipal arts facility opened in 2001. Operated by the City, it offers gallery exhibitions, artist studios, and performance spaces including the Performance Hall and community rooms. Programming supports local artists and accessible cultural activities across theatre, dance, literary, and visual practices in south Etobicoke. The venue extends municipal arts infrastructure to a waterfront community with limited downtown-style cultural amenities.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1343,25 +1601,23 @@
             "properties": {
                 "fid": 13,
                 "venue_name": "Bentway Staging Grounds",
-                "address": "250 Fort York Boulevard",
-                "postal_code": "M5V 3K9",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "address": "44 Dan Leckie Way",
+                "postal_code": "M5V 2V6",
+                "max_attendee_capacity": 300,
+                "total_facility_area_sqft": 20000,
                 "disciplines_supported": [
                     "community_arts",
-                    "dance",
-                    "music",
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "municipal",
                 "operator": "The Bentway Conservancy",
-                "tac_funded_operator": false,
+                "tac_funded_operator": true,
                 "tac_funded_resident": false,
                 "tac_funded_programming": false,
-                "year_opened": 2018
+                "year_opened": 2023,
+                "venue_description": "Bentway Staging Grounds at 44 Dan Leckie Way is an outdoor installation site below the Gardiner Expressway, operated by The Bentway Conservancy since 2023. The conservancy's mandate reimagines underutilized urban infrastructure as public space for art, recreation, and community gathering. Programming features temporary installations and experiments that test new forms of city-building and public engagement. The site extends The Bentway's city-wide mission of creative placemaking beneath the expressway corridor.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1404,26 +1660,24 @@
             "properties": {
                 "fid": 14,
                 "venue_name": "Bentway Strachan Gate",
-                "address": "250 Fort York  Blvd",
-                "postal_code": "M5V 3K9",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "address": "800 Fleet Street",
+                "postal_code": "M5V 1A9",
+                "max_attendee_capacity": 2500,
+                "total_facility_area_sqft": 108900,
                 "disciplines_supported": [
-                    "community_arts",
                     "dance",
                     "music",
-                    "theatre",
-                    "visual_media_arts"
+                    "theatre"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "municipal",
                 "operator": "The Bentway Conservancy",
-                "tac_funded_operator": false,
+                "tac_funded_operator": true,
                 "tac_funded_resident": false,
                 "tac_funded_programming": false,
-                "year_opened": 2018
+                "year_opened": 2018,
+                "venue_description": "Bentway Strachan Gate at 800 Fleet Street is an outdoor performance area operated by The Bentway Conservancy, opened in 2018 as part of the broader Bentway public-space project. The conservancy presents dance, music, and theatre in accessible open-air settings below the Gardiner. Programming history includes festivals and performances that draw diverse audiences to the waterfront-adjacent corridor. The gate is a high-capacity civic stage for free and ticketed cultural events in downtown Toronto.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1468,9 +1722,8 @@
                 "venue_name": "Berkeley Street Theatre",
                 "address": "26 Berkeley Street",
                 "postal_code": "M5A 2W3",
-                "seating_capacity": 550,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 550,
+                "total_facility_area_sqft": 25000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -1479,13 +1732,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "Canadian Stage",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1971
+                "year_opened": 1970,
+                "venue_description": "Berkeley Street Theatre at 26 Berkeley Street is the home of Canadian Stage, a major nonprofit theatre company operating the venue since 1970. The complex includes two flexible theatres hosting Canadian and international productions across theatre, dance, music, and literary programming. Canadian Stage's mandate centres on producing and presenting contemporary performance while developing artists and audiences. As a TAC-funded operator, the theatre is a cornerstone of Toronto's professional performing-arts ecology in the St. Lawrence neighbourhood.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1598,9 +1852,8 @@
                 "venue_name": "Buddies in Bad Times",
                 "address": "12 Alexander Street",
                 "postal_code": "M4Y 1B4",
-                "seating_capacity": 100,
-                "usable_area": null,
-                "notes": "Small, intimate venue with a focus on LGBTQ+ and diverse programming.",
+                "max_attendee_capacity": 300,
+                "total_facility_area_sqft": 15000,
                 "disciplines_supported": [
                     "dance",
                     "music",
@@ -1610,13 +1863,14 @@
                     "community_arts"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "Buddies in Bad Times Theatre",
                 "tac_funded_operator": true,
                 "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1979
+                "year_opened": 1979,
+                "venue_description": "Buddies in Bad Times Theatre at 12 Alexander Street is Canada's largest and longest-running queer theatre company, operating its own venue since 1979. Its mandate is to cultivate, promote, and present LGBTQ+ and diverse voices through theatre, dance, music, literary, and community programming in the Chamber and Cabaret spaces. Programming history includes groundbreaking queer theatre, the Rhubarb Festival, and year-round mainstage work that has shaped Canadian cultural discourse. Buddies is a TAC-funded hub whose community impact extends far beyond its Church–Wellesley Village walls.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1677,21 +1931,21 @@
                 "venue_name": "Canadian Music Centre",
                 "address": "20 St. Joseph Street",
                 "postal_code": "M4Y 1J9",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 50,
+                "total_facility_area_sqft": 8056,
                 "disciplines_supported": [
                     "music",
                     "theatre"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Canadian Music Centre",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1959
+                "year_opened": 1959,
+                "venue_description": "The Canadian Music Centre at 20 St. Joseph Street is a national nonprofit resource for Canadian composers, operating in Toronto since 1959. Its mandate is to promote, preserve, and disseminate Canadian music through a lending library, composer workspaces, and Chalmers House performance venue. Programming includes concerts, workshops, and recordings supporting new and established composers. As a TAC-funded operator, the CMC is a vital infrastructure node for music creation and heritage in Ontario.",
+                "owner": "Canadian Music Centre"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1778,24 +2032,24 @@
             "properties": {
                 "fid": 18,
                 "venue_name": "Casa de Bamba",
-                "address": "949 St Clair Ave W",
+                "address": "949 St. Clair Avenue West",
                 "postal_code": "M6C 1C7",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 300,
+                "total_facility_area_sqft": 6000,
                 "disciplines_supported": [
+                    "community_arts",
                     "dance",
-                    "music",
-                    "community_arts"
+                    "music"
                 ],
                 "primary_discipline": "dance",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Casa de Bamba",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": null
+                "tac_funded_programming": true,
+                "year_opened": 2006,
+                "venue_description": "Casa de Bamba at 949 St. Clair Avenue West is a nonprofit cultural hub rooted in Afro-Brazilian traditions, operating since 2006. Its mandate is to offer classes, rehearsals, performances, and community gatherings in dance, music, and community arts. Programming brings capoeira, samba, and related cultural practices to the St. Clair West corridor. The centre strengthens diasporic cultural visibility and participatory arts access in a mixed commercial-residential neighbourhood.",
+                "owner": "Casa de Bamba"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1860,9 +2114,8 @@
                 "venue_name": "Cedar Ridge Creative Centre",
                 "address": "225 Confederation Drive",
                 "postal_code": "M1G 1B2",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 80,
+                "total_facility_area_sqft": 5000,
                 "disciplines_supported": [
                     "community_arts",
                     "music",
@@ -1870,13 +2123,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "municipal",
                 "ownership": "municipal",
                 "operator": "City of Toronto",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1912
+                "tac_funded_programming": true,
+                "year_opened": 1912,
+                "venue_description": "Cedar Ridge Creative Centre at 225 Confederation Drive is a City of Toronto arts facility in a historic Scarborough estate, with roots dating to 1912 and ongoing municipal programming. Operated by the City, it provides galleries, artist studios, and classrooms for exhibitions, workshops, and community arts. Programming supports visual, music, theatre, and community-arts participation in east Toronto. The centre is a rare suburban municipal creative campus serving diverse Scarborough communities.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -1985,23 +2239,23 @@
                 "venue_name": "Clark Centre for the Arts",
                 "address": "191 Guildwood Parkway",
                 "postal_code": "M1E 1P5",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 231,
+                "total_facility_area_sqft": 10400,
                 "disciplines_supported": [
-                    "visual_media_arts",
                     "community_arts",
+                    "dance",
                     "music",
-                    "dance"
+                    "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "municipal",
                 "ownership": "municipal",
                 "operator": "City of Toronto",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2022
+                "tac_funded_programming": true,
+                "year_opened": 2022,
+                "venue_description": "Clark Centre for the Arts at 191 Guildwood Parkway is a City of Toronto multidisciplinary facility opened in 2022 in the Guildwood neighbourhood. Operated by the City, it offers gallery space, artist studios, and community rooms for exhibitions, performances, and workshops. Programming prioritizes local artists and community engagement across visual, dance, and music practices. The centre extends newly built municipal arts infrastructure to Scarborough's lakefront communities.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -2042,65 +2296,12 @@
         {
             "type": "Feature",
             "properties": {
-                "fid": 21,
-                "venue_name": "COC Theatre",
-                "address": null,
-                "postal_code": null,
-                "seating_capacity": 450,
-                "usable_area": null,
-                "notes": "",
-                "disciplines_supported": [
-                    "music",
-                    "theatre",
-                    "dance"
-                ],
-                "primary_discipline": "music",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
-                "operator": "Canadian Opera Company",
-                "tac_funded_operator": true,
-                "tac_funded_resident": false,
-                "tac_funded_programming": true,
-                "year_opened": 2006
-            },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            -79.36476074732514,
-                            43.65097550267568
-                        ],
-                        [
-                            -79.36465912851853,
-                            43.65074543355717
-                        ],
-                        [
-                            -79.36400352331454,
-                            43.650892488146916
-                        ],
-                        [
-                            -79.36410186409515,
-                            43.65112255670209
-                        ],
-                        [
-                            -79.36476074732514,
-                            43.65097550267568
-                        ]
-                    ]
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
                 "fid": 22,
                 "venue_name": "Danforth Coxwell Library",
                 "address": "1675 Danforth Avenue",
                 "postal_code": "M4C 5P2",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 1159,
+                "total_facility_area_sqft": 52136,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -2109,13 +2310,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "dance",
-                "governance_type": "municipal",
                 "ownership": "municipal",
                 "operator": "Toronto Public Library",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1965
+                "tac_funded_programming": true,
+                "year_opened": 1965,
+                "venue_description": "Danforth Coxwell Library at 1675 Danforth Avenue is a Toronto Public Library branch opened in 1965 in Toronto's east end. Operated by TPL, it provides standard branch services and program space for community arts, dance, literary, music, and visual activities. Like other branches, it embeds cultural programming within free public library access. The branch serves a dense, diverse Danforth corridor where the library is a primary neighbourhood gathering place.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -2196,21 +2398,21 @@
                 "venue_name": "Danforth Music Hall",
                 "address": "147 Danforth Avenue",
                 "postal_code": "M4K 1N2",
-                "seating_capacity": 1400,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 1500,
+                "total_facility_area_sqft": 35000,
                 "disciplines_supported": [
                     "community_arts",
                     "music"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "private",
                 "ownership": "private",
-                "operator": "Impérial Bell",
+                "operator": "Live Nation Canada",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1919
+                "tac_funded_programming": true,
+                "year_opened": 1919,
+                "venue_description": "Danforth Music Hall at 147 Danforth Avenue is a privately operated mid-sized concert venue in a restored 1919 cinema, now run by Live Nation Canada. Its programming history spans cinema, live music, comedy, and touring acts across genres for local and international audiences. The venue is a commercial presenting house rather than an artist-run or resident company space. It anchors the Danforth's nightlife economy and brings large-scale popular music programming to the east end.",
+                "owner": "Impresario Inc."
             },
             "geometry": {
                 "type": "Polygon",
@@ -2273,11 +2475,10 @@
             "properties": {
                 "fid": 24,
                 "venue_name": "Daniels Spectrum",
-                "address": "585  Dundas Street East",
+                "address": "585 Dundas Street East",
                 "postal_code": "M5A 2B7",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 600,
+                "total_facility_area_sqft": 60000,
                 "disciplines_supported": [
                     "community_arts",
                     "literary",
@@ -2285,13 +2486,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "ArtHubs Toronto Inc.",
                 "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2012
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 2012,
+                "venue_description": "Daniels Spectrum at 585 Dundas Street East is a Regent Park community cultural hub operated by ArtHubs Toronto Inc., opened in 2012 as part of neighbourhood revitalization. Anchor tenants have included COBA, Native Earth Performing Arts, Regent Park School of Music, ArtHeart, and Regent Park Film Festival, with Ada Slaight Hall as its main performance venue. The mandate is to foster equity, inclusion, and inter-cultural exchange through affordable space for arts and social-enterprise organizations. Programming spans performances, youth mentorship, hallway galleries, and community festivals, making the hub a national model for culture-led neighbourhood renewal.",
+                "owner": "Artscape Daniels Corporation"
             },
             "geometry": {
                 "type": "Polygon",
@@ -2352,20 +2554,20 @@
                 "venue_name": "DROM Taberna",
                 "address": "458 Queen Street West",
                 "postal_code": "M5V 2A8",
-                "seating_capacity": 120,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 160,
+                "total_facility_area_sqft": 8000,
                 "disciplines_supported": [
                     "music"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "private",
                 "ownership": "private",
                 "operator": "DROM Taberna",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2015
+                "tac_funded_programming": true,
+                "year_opened": 2018,
+                "venue_description": "DROM Taberna at 458 Queen Street West is a privately owned live-music venue and restaurant opened in 2018, inspired by Eastern European cabaret traditions. Programming presents global music, jazz, and experimental performances across dining room, garden patio, and heated patio spaces. The venue operates as a commercial supper-club rather than a nonprofit arts mandate, though it contributes to Queen West's live-music ecology. It offers intimate listening experiences and supports touring and local musicians in a hospitality setting.",
+                "owner": "DROM Taberna"
             },
             "geometry": {
                 "type": "Polygon",
@@ -2407,12 +2609,11 @@
             "type": "Feature",
             "properties": {
                 "fid": 26,
-                "venue_name": "East End Arts",
+                "venue_name": "St. Matthew's Clubhouse",
                 "address": "450 Broadview Avenue",
-                "postal_code": "M4K 2N3",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "postal_code": "M4K 2N1",
+                "max_attendee_capacity": 60,
+                "total_facility_area_sqft": 900,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -2420,13 +2621,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "East End Arts",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2011
+                "tac_funded_programming": true,
+                "year_opened": 2018,
+                "venue_description": "St. Matthew's Clubhouse at 450 Broadview Avenue is operated by East End Arts within the St. Matthew's United Church complex, opened as a dedicated arts space in 2018. Its mandate is to provide an intimate, flexible venue for theatre, music, dance, and grassroots community programming. Programming supports independent artists and neighbourhood-led events in Riverdale. The clubhouse exemplifies faith–arts partnerships that extend affordable performance infrastructure on the east side.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -2472,12 +2674,11 @@
             "type": "Feature",
             "properties": {
                 "fid": 27,
-                "venue_name": "Elgin Theatre",
+                "venue_name": "Elgin and Winter Garden Theatres",
                 "address": "189 Yonge Street",
-                "postal_code": "M5B 2H1",
-                "seating_capacity": 1500,
-                "usable_area": null,
-                "notes": "",
+                "postal_code": "M5B 1M4",
+                "max_attendee_capacity": 2520,
+                "total_facility_area_sqft": 100000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -2485,13 +2686,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "provincial",
                 "ownership": "provincial",
                 "operator": "Ontario Heritage Trust",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1913
+                "tac_funded_programming": true,
+                "year_opened": 1913,
+                "venue_description": "The Elgin and Winter Garden Theatres at 189 Yonge Street are provincially owned heritage stacked theatres operated by the Ontario Heritage Trust since their 1913 opening. Together seating over 2,500, they host film, music, theatre, and special events in the last surviving Edwardian double-decker theatre pair in the world. Programming history includes vaudeville origins, Broadway tours, and film festivals. The complex is a nationally significant heritage asset and major commercial presenting venue on Yonge Street.",
+                "owner": "Ontario Heritage Trust"
             },
             "geometry": {
                 "type": "Polygon",
@@ -2621,12 +2823,11 @@
             "type": "Feature",
             "properties": {
                 "fid": 28,
-                "venue_name": "Evergreen, The Kilns",
+                "venue_name": "Evergreen, The Kiln Building",
                 "address": "550 Bayview Avenue",
                 "postal_code": "M4W 3X8",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 2500,
+                "total_facility_area_sqft": 28000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -2636,13 +2837,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Evergreen",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": true,
-                "year_opened": 2010
+                "year_opened": 2010,
+                "venue_description": "The Kiln Building at Evergreen Brick Works at 550 Bayview Avenue is a restored industrial space operated by Evergreen since 2010. Its mandate integrates environmental education with flexible event and exhibition programming for markets, cultural gatherings, and community initiatives. The 28,000-square-foot hall hosts large-scale public programs with standing capacity near 2,500. Evergreen Brick Works is a landmark of adaptive reuse linking sustainability, heritage, and public culture in the Don Valley.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -2697,25 +2899,27 @@
             "properties": {
                 "fid": 29,
                 "venue_name": "Evergreen, Young Centre",
-                "address": null,
-                "postal_code": null,
-                "seating_capacity": 416,
-                "usable_area": null,
-                "notes": "",
+                "address": "550 Bayview Avenue",
+                "postal_code": "M4W 3X8",
+                "max_attendee_capacity": 150,
+                "total_facility_area_sqft": 3000,
                 "disciplines_supported": [
-                    "theatre",
-                    "music",
+                    "community_arts",
                     "dance",
-                    "literary"
+                    "literary",
+                    "music",
+                    "theatre",
+                    "visual_media_arts"
                 ],
-                "primary_discipline": "theatre",
-                "governance_type": "nonprofit",
+                "primary_discipline": "community_arts",
                 "ownership": "nonprofit",
-                "operator": "Soulpepper Theatre Company",
-                "tac_funded_operator": true,
+                "operator": "Evergreen",
+                "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": true,
-                "year_opened": 2006
+                "year_opened": 2010,
+                "venue_description": "The Young Centre at Evergreen Brick Works is a flexible indoor space within the Centre for Green Cities, operated by Evergreen. Programming focuses on youth arts workshops and community-engagement initiatives across multidisciplinary practices. It complements the larger Kiln Building and Brick Works campus as an intimate programming room. The space supports Evergreen's broader mission of urban sustainability through hands-on cultural and educational activity.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -2752,9 +2956,8 @@
                 "venue_name": "Factory Theatre",
                 "address": "125 Bathurst Street",
                 "postal_code": "M5V 2R2",
-                "seating_capacity": 200,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 300,
+                "total_facility_area_sqft": 18000,
                 "disciplines_supported": [
                     "dance",
                     "literary",
@@ -2762,13 +2965,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Factory Theatre",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1970
+                "year_opened": 1970,
+                "venue_description": "Factory Theatre at 125 Bathurst Street is a TAC-funded nonprofit company and venue operating since 1970, with a 300-seat flexible theatre. Its mandate is to develop and produce new Canadian plays and support artist development through premieres and labs. Programming history is closely tied to the national new-play movement and Toronto's independent theatre scene. Factory is a foundational creation venue whose work has launched generations of Canadian playwrights.",
+                "owner": "Factory Theatre"
             },
             "geometry": {
                 "type": "Polygon",
@@ -2909,9 +3113,8 @@
                 "venue_name": "Fairview Library",
                 "address": "35 Fairview Mall Drive",
                 "postal_code": "M2J 4S4",
-                "seating_capacity": 260,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 4854,
+                "total_facility_area_sqft": 218432,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -2921,13 +3124,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "municipal",
                 "ownership": "municipal",
                 "operator": "Toronto Public Library",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1971
+                "tac_funded_programming": true,
+                "year_opened": 1972,
+                "venue_description": "Fairview Library at 35 Fairview Mall Drive is a Toronto Public Library branch in North York opened in 1972, featuring a roughly 250-seat theatre. Operated by TPL, it supports community arts, dance, literary, music, theatre, and visual programming within a mall-adjacent suburban hub. Branch theatre programming brings performances and workshops to North York audiences. The library is a key municipal arts access point in an auto-oriented district.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -3076,21 +3280,21 @@
                 "venue_name": "Four Seasons Centre for the Performing Arts",
                 "address": "145 Queen Street West",
                 "postal_code": "M5H 4G1",
-                "seating_capacity": 2071,
-                "usable_area": null,
-                "notes": "Purpose-built opera and ballet house. Permanent home of the Canadian Opera Company and the National Ballet of Canada; includes secondary space for community and partner programming (e.g. Free Concert Series, Showcase Series, etc.).",
+                "max_attendee_capacity": 2071,
+                "total_facility_area_sqft": 384443,
                 "disciplines_supported": [
                     "dance",
                     "music"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Canadian Opera House Corporation",
                 "tac_funded_operator": false,
                 "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 2006
+                "year_opened": 2006,
+                "venue_description": "The Four Seasons Centre at 145 Queen Street West is Canada's principal opera house, opened in 2006 and operated by the Canadian Opera House Corporation. Permanent residents include the Canadian Opera Company and the National Ballet of Canada, with community programming such as the Free Concert Series. The 2,071-seat auditorium was purpose-built for opera and ballet with internationally regarded acoustics. The centre anchors Toronto's flagship opera and ballet institutions and draws national and international audiences.",
+                "owner": "Canadian Opera House Corporation"
             },
             "geometry": {
                 "type": "Polygon",
@@ -3175,9 +3379,8 @@
                 "venue_name": "Gallery TPW",
                 "address": "170 St. Helens Avenue",
                 "postal_code": "M6H 4A1",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 100,
+                "total_facility_area_sqft": 3300,
                 "disciplines_supported": [
                     "dance",
                     "literary",
@@ -3185,13 +3388,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Gallery TPW",
-                "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1981
+                "tac_funded_operator": true,
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 1977,
+                "venue_description": "Gallery TPW at 170 St. Helens Avenue is a TAC-funded artist-run centre founded in 1977 dedicated to lens-based and media arts. Operated by Gallery TPW, its mandate is exhibitions, publications, and public programs supporting photography, video, and digital practices. Programming history reflects decades of critical engagement with image culture and emerging artists. The gallery is a west-end node in Toronto's artist-run visual-arts network.",
+                "owner": "Gallery TPW"
             },
             "geometry": {
                 "type": "Polygon",
@@ -3226,24 +3430,24 @@
             "properties": {
                 "fid": 34,
                 "venue_name": "Gardiner Museum",
-                "address": null,
-                "postal_code": null,
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "address": "111 Queen's Park",
+                "postal_code": "M5S 2C7",
+                "max_attendee_capacity": 250,
+                "total_facility_area_sqft": 40000,
                 "disciplines_supported": [
-                    "visual_media_arts",
                     "community_arts",
-                    "literary"
+                    "literary",
+                    "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "The George R. Gardiner Museum Of Ceramic Art",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1984
+                "year_opened": 1984,
+                "venue_description": "The Gardiner Museum at 111 Queen's Park is a nonprofit ceramics museum operated by the George R. Gardiner Museum of Ceramic Art since 1984. Its mandate spans historical and contemporary ceramics through exhibitions, education, and public events. Programming connects craft, art history, and hands-on studio activity for diverse audiences. As a TAC-funded operator adjacent to the ROM and AGO, it enriches Toronto's museum precinct.",
+                "owner": "Gardiner Museum"
             },
             "geometry": {
                 "type": "Polygon",
@@ -3297,28 +3501,28 @@
             "type": "Feature",
             "properties": {
                 "fid": 35,
-                "venue_name": "Harbourfront Centre Main Building",
-                "address": "235 Queens Quay Quay West",
+                "venue_name": "Harbourfront Centre Main / Artport Building",
+                "address": "235 Queen's Quay West",
                 "postal_code": "M5J 2G8",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 250,
+                "total_facility_area_sqft": 18000,
                 "disciplines_supported": [
-                    "visual_media_arts",
-                    "music",
+                    "community_arts",
                     "dance",
-                    "theatre",
                     "literary",
-                    "community_arts"
+                    "music",
+                    "theatre",
+                    "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Harbourfront Centre Corporation",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1991
+                "tac_funded_programming": true,
+                "year_opened": 1991,
+                "venue_description": "The Harbourfront Centre Main and Artport Building at 235 Queen's Quay West is part of the nonprofit Harbourfront Centre campus opened in 1991 on the central waterfront. Operated by Harbourfront Centre Corporation, the building houses galleries, craft studios, a small theatre, and flexible program spaces across community, dance, literary, music, theatre, and visual disciplines. Programming history includes year-round festivals, exhibitions, and education that draw millions of visitors annually. Harbourfront is a major public cultural landlord and presenter shaping Toronto's waterfront identity.",
+                "owner": "Government of Canada"
             },
             "geometry": {
                 "type": "Polygon",
@@ -3401,24 +3605,24 @@
             "properties": {
                 "fid": 36,
                 "venue_name": "Harbourfront Concert Stage",
-                "address": null,
-                "postal_code": null,
-                "seating_capacity": 1300,
-                "usable_area": null,
-                "notes": "",
+                "address": "235 Queen's Quay West",
+                "postal_code": "M5J 2K9",
+                "max_attendee_capacity": 1300,
+                "total_facility_area_sqft": 47000,
                 "disciplines_supported": [
-                    "music",
+                    "community_arts",
                     "dance",
-                    "community_arts"
+                    "music"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Harbourfront Centre Corporation",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1991
+                "tac_funded_programming": true,
+                "year_opened": 1991,
+                "venue_description": "Harbourfront Concert Stage at 235 Queen's Quay West is an outdoor waterfront venue operated by Harbourfront Centre Corporation since 1991. Programming presents free and ticketed concerts, festivals, and cultural events with capacity near 1,000. The stage is central to Harbourfront's mandate of accessible public programming on the lake. It brings diverse music and performance to one of Toronto's highest-traffic public cultural sites.",
+                "owner": "Government of Canada"
             },
             "geometry": {
                 "type": "Polygon",
@@ -3512,26 +3716,26 @@
             "type": "Feature",
             "properties": {
                 "fid": 37,
-                "venue_name": "Harbourfront The Fleck",
-                "address": "231 Queens Quay Quay West",
+                "venue_name": "The Fleck at Harbourfront Centre Theatre",
+                "address": "231 Queen's Quay West",
                 "postal_code": "M5J 2G8",
-                "seating_capacity": 446,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 442,
+                "total_facility_area_sqft": 15000,
                 "disciplines_supported": [
-                    "theatre",
+                    "community_arts",
                     "dance",
                     "music",
-                    "community_arts"
+                    "theatre"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Harbourfront Centre Corporation",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1991
+                "tac_funded_programming": true,
+                "year_opened": 1991,
+                "venue_description": "The Fleck at Harbourfront Centre Theatre at 231 Queen's Quay West is a 442-seat auditorium operated by Harbourfront Centre Corporation, designed primarily for dance and theatre. Programming presents dance, theatre, and multidisciplinary performances as part of Harbourfront's presenting season. The venue complements outdoor and gallery programming on the waterfront campus. It is a key mid-sized dance and theatre stage in Toronto's presenting ecology.",
+                "owner": "Government of Canada"
             },
             "geometry": {
                 "type": "Polygon",
@@ -3575,10 +3779,9 @@
                 "fid": 38,
                 "venue_name": "Helen Gardiner Phelan Playhouse",
                 "address": "79 St. George Street",
-                "postal_code": "M6J 1G3",
-                "seating_capacity": 160,
-                "usable_area": null,
-                "notes": "",
+                "postal_code": "M5S 3L8",
+                "max_attendee_capacity": 81,
+                "total_facility_area_sqft": 3000,
                 "disciplines_supported": [
                     "community_arts",
                     "literary",
@@ -3586,13 +3789,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "university",
                 "ownership": "university",
                 "operator": "University of Toronto",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1993
+                "tac_funded_programming": true,
+                "year_opened": 1885,
+                "venue_description": "The Helen Gardiner Phelan Playhouse at 79 St. George Street is an 81-seat University of Toronto venue within the drama program, with roots in the 1885 University College building. Operated by the university, it supports student and emerging theatre, experimental productions, and academic programming. The playhouse is a training ground for theatre artists and a laboratory for new work. It extends U of T's cultural footprint in the downtown campus.",
+                "owner": "University of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -3653,9 +3857,8 @@
                 "venue_name": "Heliconian Hall",
                 "address": "35 Hazelton Avenue",
                 "postal_code": "M5R 2E3",
-                "seating_capacity": 120,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 124,
+                "total_facility_area_sqft": 4000,
                 "disciplines_supported": [
                     "dance",
                     "literary",
@@ -3663,13 +3866,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "The Heliconian Club",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1875
+                "tac_funded_programming": true,
+                "year_opened": 1923,
+                "venue_description": "Heliconian Hall at 35 Hazelton Avenue is operated by the Heliconian Club, a nonprofit women's arts organization in a historic Yorkville building since 1923. Programming presents concerts, literary events, and multidisciplinary performances in an intimate 124-seat hall. The club's mandate supports independent artists, particularly women, across music, dance, literary, and theatre practices. It is a heritage gem contributing to Toronto's chamber-music and literary cultural life.",
+                "owner": "The Heliconian Club"
             },
             "geometry": {
                 "type": "Polygon",
@@ -3708,23 +3912,23 @@
             "properties": {
                 "fid": 40,
                 "venue_name": "History",
-                "address": "1663 queen Street East",
+                "address": "1663 Queen Street East",
                 "postal_code": "M4L 1G5",
-                "seating_capacity": 2500,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 2500,
+                "total_facility_area_sqft": 30000,
                 "disciplines_supported": [
                     "community_arts",
                     "music"
                 ],
-                "primary_discipline": "community_arts",
-                "governance_type": "private",
+                "primary_discipline": "music",
                 "ownership": "private",
                 "operator": "Live Nation Entertainment",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": false,
-                "year_opened": 2021
+                "year_opened": 2021,
+                "venue_description": "History at 1663 Queen Street East is a privately operated 2,500-capacity live-music venue opened in 2021 by Live Nation Entertainment in a former cinema. Programming focuses on popular-music concerts and touring acts for east-end audiences. The venue is a commercial presenting house without TAC operating funding. It extends large-scale concert infrastructure to the Queen East corridor.",
+                "owner": "Live Nation Canada Inc."
             },
             "geometry": {
                 "type": "Polygon",
@@ -4005,9 +4209,8 @@
                 "venue_name": "Hot Docs Ted Rogers Cinema",
                 "address": "506 Bloor Street West",
                 "postal_code": "M5S 1Y3",
-                "seating_capacity": 600,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 650,
+                "total_facility_area_sqft": 35000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -4016,13 +4219,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "private",
                 "operator": "Hot Docs",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 2006
+                "year_opened": 1913,
+                "venue_description": "Hot Docs Ted Rogers Cinema at 506 Bloor Street West is operated by Hot Docs, North America's largest documentary festival organization, in a historic 1913 cinema. The 650-seat venue screens documentaries year-round alongside curated series, premieres, and filmmaker talks. Hot Docs' mandate advances non-fiction storytelling and public discourse through film. As a TAC-funded operator, the cinema is a global hub for documentary culture in Toronto.",
+                "owner": "Steven and Joan Nikolaou"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4074,10 +4278,9 @@
                 "fid": 42,
                 "venue_name": "Isabel Bader Theatre",
                 "address": "93 Charles Street West",
-                "postal_code": "M5S 1K6",
-                "seating_capacity": 500,
-                "usable_area": null,
-                "notes": "",
+                "postal_code": "M5S 2C7",
+                "max_attendee_capacity": 495,
+                "total_facility_area_sqft": 25000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -4087,13 +4290,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "university",
                 "ownership": "university",
                 "operator": "Victoria University in the University of Toronto",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2002
+                "tac_funded_programming": true,
+                "year_opened": 2001,
+                "venue_description": "The Isabel Bader Theatre at 93 Charles Street West is operated by Victoria University in the University of Toronto, opened in 2001. The 495-seat hall hosts concerts, theatre, film screenings, lectures, and conferences for campus and public audiences. Programming bridges academic and cultural presentation across multiple disciplines. The theatre serves both Victoria College's educational mission and Toronto's mid-sized performance market.",
+                "owner": "Victoria University in the University of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4191,25 +4395,25 @@
             "type": "Feature",
             "properties": {
                 "fid": 43,
-                "venue_name": "It's OK Community Arts Centre",
+                "venue_name": "It's Ok* Studios",
                 "address": "468 Queen Street West",
                 "postal_code": "M5V 2B2",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 400,
+                "total_facility_area_sqft": 10000,
                 "disciplines_supported": [
                     "community_arts",
                     "literary",
                     "music"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
-                "operator": "It's OK Community Arts Centre",
-                "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": null
+                "ownership": "municipal",
+                "operator": "It's Ok*",
+                "tac_funded_operator": true,
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 2022,
+                "venue_description": "It's Ok* Studios at 468 Queen Street West is a Black-led nonprofit interdisciplinary arts space opened in 2022. Operated by It's Ok*, its mandate is to support emerging artists through exhibitions, performances, workshops, and community events across music, literary, and community-arts practices. Programming centres equity-deserving creators in a 10,000-square-foot flexible environment. As a TAC-funded operator, the studio addresses historic under-representation in Toronto's Queen West arts corridor.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4246,21 +4450,21 @@
                 "venue_name": "Jazz Bistro",
                 "address": "251 Victoria Street",
                 "postal_code": "M5B 1T8",
-                "seating_capacity": 100,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 80,
+                "total_facility_area_sqft": 5000,
                 "disciplines_supported": [
                     "music",
                     "theatre"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "private",
                 "ownership": "private",
                 "operator": "Jazz Bistro",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2013
+                "tac_funded_programming": true,
+                "year_opened": 2013,
+                "venue_description": "Jazz Bistro at 251 Victoria Street is a privately owned jazz club and restaurant opened in 2013 near Massey Hall. Programming is dedicated to live jazz performance in an intimate 80-seat theatre setting. The venue operates commercially and contributes to downtown Toronto's jazz ecology. It provides a listening-room environment for local and touring jazz artists.",
+                "owner": "Jazz Bistro"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4299,11 +4503,10 @@
             "properties": {
                 "fid": 45,
                 "venue_name": "Lakeshore Arts",
-                "address": "2422 Lakeshore Blvd West",
+                "address": "2422 Lake Shore Boulevard West",
                 "postal_code": "M8V 1C4",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 50,
+                "total_facility_area_sqft": 2000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -4311,13 +4514,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Lakeshore Arts",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1999
+                "tac_funded_programming": true,
+                "year_opened": 1992,
+                "venue_description": "Lakeshore Arts at 2422 Lake Shore Boulevard West is a nonprofit community arts organization serving south Etobicoke since 1992. Its mandate is community-facing exhibitions, workshops, and programming that support local participation across community arts, dance, literary, and visual practices. Programming activates neighbourhood spaces for creative engagement west of the Humber. Lakeshore Arts addresses arts-access gaps along the Lake Shore corridor.",
+                "owner": "Lakeshore Arts"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4362,9 +4566,8 @@
                 "venue_name": "Lula Lounge",
                 "address": "1585 Dundas Street West",
                 "postal_code": "M6K 1T9",
-                "seating_capacity": 150,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 350,
+                "total_facility_area_sqft": 12000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -4373,13 +4576,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
-                "operator": "Lula Music And Arts Centre",
-                "tac_funded_operator": true,
+                "ownership": "private",
+                "operator": "Lula Music and Arts Centre",
+                "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": true,
-                "year_opened": 2002
+                "year_opened": 2002,
+                "venue_description": "Lula Lounge at 1585 Dundas Street West is a privately owned live-music venue and restaurant, with nonprofit programming led by the Lula Music and Arts Centre. Presenting Latin, jazz, and global music since 2002, its mandate combines dining, dance, and cabaret-style performance across ballroom, Havana Lounge, and balcony spaces. Lula Music and Arts Centre extends community and education programming beyond commercial concerts. The lounge is a west-end anchor for diasporic music and Toronto's world-music scene.",
+                "owner": "Lula Music and Arts Centre"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4417,24 +4621,24 @@
             "type": "Feature",
             "properties": {
                 "fid": 47,
-                "venue_name": "Mabelle Arts",
-                "address": "49 Mabelle Avenue",
-                "postal_code": "M9A 5B1",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "venue_name": "Mabelle Park",
+                "address": "38 Mabelle Avenue",
+                "postal_code": "M9A 0G7",
+                "max_attendee_capacity": 150,
+                "total_facility_area_sqft": 5000,
                 "disciplines_supported": [
                     "community_arts",
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "Mabelle Arts",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 2008
+                "year_opened": 2007,
+                "venue_description": "Mabelle Park at 38 Mabelle Avenue is operated by Mabelle Arts, a TAC-funded nonprofit using the Belle pavilion and park since 2007. Programming includes movie nights, communal meals, crafting sessions, and community-arts activations in Etobicoke. Mabelle Arts' mandate centres participatory arts in public space and tower-neighbourhood engagement. The park demonstrates how small-scale infrastructure can foster social connection in suburban communities.",
+                "owner": "Toronto Community Housing Corporation"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4479,9 +4683,8 @@
                 "venue_name": "Malvern Library",
                 "address": "30 Sewells Road",
                 "postal_code": "M1B 3G5",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 3317,
+                "total_facility_area_sqft": 149256,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -4490,13 +4693,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "municipal",
                 "ownership": "municipal",
                 "operator": "Toronto Public Library",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1982
+                "tac_funded_programming": true,
+                "year_opened": 1982,
+                "venue_description": "Malvern Library at 30 Sewells Road is a Toronto Public Library branch in northeast Scarborough opened in 1982. Operated by TPL, it hosts Artists in the Library and branch programming across community arts, dance, literary, music, and visual disciplines. The branch extends arts programming into a diverse suburban neighbourhood. It is a municipal access point for culturally responsive library-based arts activity.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4668,22 +4872,22 @@
                 "fid": 49,
                 "venue_name": "Massey Hall",
                 "address": "178 Victoria Street",
-                "postal_code": "M5B 1T6",
-                "seating_capacity": 2752,
-                "usable_area": null,
-                "notes": "",
+                "postal_code": "M5B 1T7",
+                "max_attendee_capacity": 2752,
+                "total_facility_area_sqft": 124000,
                 "disciplines_supported": [
-                    "music",
-                    "community_arts"
+                    "community_arts",
+                    "music"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "The Corporation of Massey Hall and Roy Thomson Hall",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": true,
-                "year_opened": 1894
+                "year_opened": 1894,
+                "venue_description": "Massey Hall at 178 Victoria Street is a historic nonprofit concert hall operated by the Corporation of Massey Hall and Roy Thomson Hall since 1894. Programming spans classical, jazz, folk, and contemporary music in a 2,752-seat auditorium of national heritage significance. A major restoration has preserved the hall's acoustics and heritage character for new generations. Massey Hall is among Canada's most storied music venues and a civic symbol of Toronto's performing-arts history.",
+                "owner": "The Corporation of Massey Hall and Roy Thomson Hall"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4740,22 +4944,22 @@
                 "venue_name": "Mercer Union",
                 "address": "1286 Bloor Street West",
                 "postal_code": "M6H 1N9",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 132,
+                "total_facility_area_sqft": 3300,
                 "disciplines_supported": [
                     "community_arts",
                     "music",
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Mercer Union, A Centre For Contemporary Visual Art",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1979
+                "year_opened": 1979,
+                "venue_description": "Mercer Union at 1286 Bloor Street West is a TAC-funded artist-run centre for contemporary art operating since 1979. Its mandate encompasses exhibitions, residencies, and public programs supporting experimental Canadian and international practices. Programming history reflects decades of research-driven and politically engaged contemporary art. The centre is a pillar of Toronto's artist-run visual-arts sector on the Bloor corridor.",
+                "owner": "Mercer Union, A Centre For Contemporary Visual Art"
             },
             "geometry": {
                 "type": "Polygon",
@@ -4792,9 +4996,8 @@
                 "venue_name": "Meridian Arts Centre",
                 "address": "5040 Yonge Street",
                 "postal_code": "M2N 6R8",
-                "seating_capacity": 1036,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 2300,
+                "total_facility_area_sqft": 200000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -4804,13 +5007,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "municipal",
                 "ownership": "municipal",
-                "operator": "City of Toronto",
+                "operator": "TO Live",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1993
+                "tac_funded_programming": true,
+                "year_opened": 1993,
+                "venue_description": "Meridian Arts Centre at 5040 Yonge Street is a City of Toronto–owned performing-arts complex in North York opened in 1993, including the Lyric, George Weston Recital Hall, Greenwin, and Studio theatres. Operated by the City, it hosts theatre, dance, music, and community events across multiple venues and galleries. Programming serves North York and city-wide audiences in a suburban cultural campus. The centre is the former North York Performing Arts Centre, renamed in 2019, and remains a major municipal presenting hub.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5089,24 +5293,24 @@
             "properties": {
                 "fid": 52,
                 "venue_name": "Meridian Hall",
-                "address": "1 Front Street Street East",
+                "address": "1 Front Street East",
                 "postal_code": "M5E 1B2",
-                "seating_capacity": 3191,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 3172,
+                "total_facility_area_sqft": 300000,
                 "disciplines_supported": [
                     "dance",
                     "music",
                     "theatre"
                 ],
                 "primary_discipline": "dance",
-                "governance_type": "municipal",
                 "ownership": "municipal",
-                "operator": "City of Toronto",
+                "operator": "TO Live",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1960
+                "tac_funded_programming": true,
+                "year_opened": 1960,
+                "venue_description": "Meridian Hall at 1 Front Street East is a City of Toronto–owned 3,191-seat auditorium opened in 1960 as the O'Keefe Centre. Operated by TO Live as a commercial presenting house, it hosts touring concerts, theatre, dance, and large-scale events. Programming is presenter-driven rather than resident-company-based. The hall is downtown Toronto's largest single-auditorium commercial venue and a landmark of the St. Lawrence corridor.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5204,26 +5408,26 @@
             "type": "Feature",
             "properties": {
                 "fid": 53,
-                "venue_name": "MUSE Arts",
-                "address": "38 Abell Street",
-                "postal_code": "M6J 0A8",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "venue_name": "MUSE Arts Creative Lab",
+                "address": "1369B St Clair Avenue West",
+                "postal_code": "M6E 1C7",
+                "max_attendee_capacity": 60,
+                "total_facility_area_sqft": 1300,
                 "disciplines_supported": [
                     "community_arts",
-                    "visual_media_arts",
+                    "dance",
                     "music",
-                    "dance"
+                    "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "MUSE Arts",
-                "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": null
+                "tac_funded_operator": true,
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 2012,
+                "venue_description": "MUSE Arts Creative Lab at 1369B St. Clair Avenue West is operated by MUSE Arts, a TAC-funded nonprofit community arts organization since 2012. Its mandate combines creative production, workshops, and small-scale performances supporting emerging artists in St. Clair West communities. Programming spans community arts, dance, music, and visual practices in a flexible studio environment. MUSE Arts serves culturally diverse neighbourhoods with participatory arts access.",
+                "owner": "MUSE Arts"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5259,10 +5463,9 @@
                 "fid": 54,
                 "venue_name": "Museum of Contemporary Art",
                 "address": "158 Sterling Road",
-                "postal_code": "M6R 2B2",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "postal_code": "M6R 2B7",
+                "max_attendee_capacity": 1375,
+                "total_facility_area_sqft": 55000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -5272,13 +5475,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Museum of Contemporary Art Toronto",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2018
+                "tac_funded_programming": true,
+                "year_opened": 2018,
+                "venue_description": "Museum of Contemporary Art Toronto at 158 Sterling Road is a nonprofit contemporary art museum in a repurposed industrial building, opened at this site in 2018. Operated by MOCA Toronto, its mandate is rotating exhibitions, commissions, and public programs in large flexible galleries. Programming supports installation-based and experimental contemporary art. MOCA has repositioned Toronto's contemporary-art discourse with a major presence in the Junction Triangle.",
+                "owner": "Museum of Contemporary Art Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5345,22 +5549,22 @@
             "properties": {
                 "fid": 55,
                 "venue_name": "Nia Centre for the Arts",
-                "address": "524 Oakwood  Avenue",
+                "address": "524 Oakwood Avenue",
                 "postal_code": "M6E 2X1",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 200,
+                "total_facility_area_sqft": 14000,
                 "disciplines_supported": [
                     "community_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "Nia Centre For The Arts",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 2015
+                "year_opened": 2023,
+                "venue_description": "Nia Centre for the Arts at 524 Oakwood Avenue is a TAC-funded nonprofit dedicated to Black arts, culture, and expression, with programming roots dating to 2015 and expanded facility use in the Oakwood Village area. Its mandate is to showcase and support Black artists through galleries, studios, performances, residencies, and community programs. Programming history includes exhibitions, music, theatre, and youth initiatives centreing Afro-diasporic creativity. Nia Centre is a landmark institution addressing systemic under-investment in Black cultural infrastructure in Toronto.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5421,9 +5625,8 @@
                 "venue_name": "P.C. Ho Theatre",
                 "address": "5183 Sheppard Avenue East",
                 "postal_code": "M1B 5Z5",
-                "seating_capacity": 626,
-                "usable_area": null,
-                "notes": "Boundaries cover the P.C. Ho Theatre auditorium only. Excludes multipurpose hall, lobbies, and other Chinese Cultural Centre facilities.",
+                "max_attendee_capacity": 626,
+                "total_facility_area_sqft": 25000,
                 "disciplines_supported": [
                     "dance",
                     "music",
@@ -5431,13 +5634,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
-                "operator": "Chinese Cultural Centre of the Greater Toronto",
+                "operator": "Chinese Cultural Centre of Greater Toronto",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": true,
-                "year_opened": 2006
+                "year_opened": 2006,
+                "venue_description": "P.C. Ho Theatre at 5183 Sheppard Avenue East is the main auditorium of the Chinese Cultural Centre of Greater Toronto, opened in 2006. Operated by the CCCGT, the 626-seat hall hosts concerts, performances, and community cultural events reflecting Chinese-Canadian heritage. Programming supports music, dance, theatre, and visual celebrations for Scarborough's diverse communities. The theatre is a major ethno-cultural performing-arts venue in northeast Toronto.",
+                "owner": "Chinese Cultural Centre of Greater Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5474,9 +5678,8 @@
                 "venue_name": "Paradise Theatre",
                 "address": "1006 Bloor Street West",
                 "postal_code": "M6H 1M2",
-                "seating_capacity": 232,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 208,
+                "total_facility_area_sqft": 12000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -5484,14 +5687,15 @@
                     "theatre",
                     "visual_media_arts"
                 ],
-                "primary_discipline": "music",
-                "governance_type": "private",
+                "primary_discipline": "visual_media_arts",
                 "ownership": "private",
                 "operator": "Paradise Theatre",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1937
+                "tac_funded_programming": true,
+                "year_opened": 1937,
+                "venue_description": "Paradise Theatre at 1006 Bloor Street West is a restored 1937 cinema operating as a hybrid cinema-performance venue. Programming includes films, live music, comedy, readings, and community events in a 208-seat hall. The privately operated venue contributes to Bloor West's cultural strip. Its revival preserves heritage cinema architecture while supporting contemporary multidisciplinary programming.",
+                "owner": "Moray Tawse"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5559,21 +5763,21 @@
                 "fid": 58,
                 "venue_name": "Phoenix Concert Theatre",
                 "address": "410 Sherbourne Street",
-                "postal_code": "M4X 1K2",
-                "seating_capacity": 1350,
-                "usable_area": null,
-                "notes": "",
+                "postal_code": "M5X 1K2",
+                "max_attendee_capacity": 1350,
+                "total_facility_area_sqft": 18000,
                 "disciplines_supported": [
                     "music"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "private",
                 "ownership": "private",
-                "operator": "Phoenix Concert Theatre",
+                "operator": "Lisa Zbitnew",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1991
+                "tac_funded_programming": true,
+                "year_opened": 1991,
+                "venue_description": "Phoenix Concert Theatre at 410 Sherbourne Street is a privately operated 1,350-capacity live-music and nightlife venue opened in 1991. Programming centres on concerts, club nights, and touring popular-music acts in a standing-room configuration with balcony. The venue is commercial rather than artist-run. It has been a long-standing node in Toronto's rock and electronic music scenes.",
+                "owner": "Lisa Zbitnew"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5616,24 +5820,24 @@
             "properties": {
                 "fid": 59,
                 "venue_name": "Princess of Wales Theatre",
-                "address": null,
-                "postal_code": null,
-                "seating_capacity": 2000,
-                "usable_area": null,
-                "notes": "",
+                "address": "300 King Street West",
+                "postal_code": "M5V 1J2",
+                "max_attendee_capacity": 2000,
+                "total_facility_area_sqft": 65000,
                 "disciplines_supported": [
-                    "theatre",
+                    "dance",
                     "music",
-                    "dance"
+                    "theatre"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "private",
                 "ownership": "private",
                 "operator": "Mirvish Productions",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": false,
-                "year_opened": 1993
+                "year_opened": 1993,
+                "venue_description": "Princess of Wales Theatre at 300 King Street West is a 2,000-seat commercial theatre opened in 1993 and operated by Mirvish Productions. Programming is dominated by Broadway musicals, touring productions, and large-scale commercial theatre. The venue is a private presenting house without TAC operating funding. It anchors Toronto's Entertainment District alongside Mirvish's other theatres.",
+                "owner": "Mirvish Productions"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5670,9 +5874,8 @@
                 "venue_name": "Randolph Theatre",
                 "address": "736 Bathurst Street",
                 "postal_code": "M5S 2R4",
-                "seating_capacity": 500,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 518,
+                "total_facility_area_sqft": 20000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -5681,13 +5884,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "private",
                 "ownership": "private",
                 "operator": "Randolph College for the Performing Arts",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1992
+                "tac_funded_programming": true,
+                "year_opened": 1985,
+                "venue_description": "Randolph Theatre at 736 Bathurst Street is operated by Randolph College for the Performing Arts in a repurposed church since 1985. The 518-seat auditorium and studio support theatre, dance, music, and training programs linked to the college's performing-arts education mandate. Programming mixes student showcases, rentals, and community events. The venue links professional training with mid-sized performance infrastructure on Bathurst Street.",
+                "owner": "Randolph College for the Performing Arts"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5756,23 +5960,22 @@
                 "venue_name": "Roy Thomson Hall",
                 "address": "60 Simcoe Street",
                 "postal_code": "M5J 2H5",
-                "seating_capacity": 2630,
-                "usable_area": null,
-                "notes": "Home to the Toronto Symphony Orchestra and the Toronto Mendelssohn Choir.",
+                "max_attendee_capacity": 2630,
+                "total_facility_area_sqft": 215278,
                 "disciplines_supported": [
-                    "music",
+                    "community_arts",
                     "dance",
-                    "film",
-                    "community_arts"
+                    "music"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
-                "ownership": "municipal",
-                "operator": "Roy Thomson Hall Management",
+                "ownership": "nonprofit",
+                "operator": "The Corporation of Massey Hall and Roy Thomson Hall",
                 "tac_funded_operator": false,
                 "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1982
+                "year_opened": 1982,
+                "venue_description": "Roy Thomson Hall at 60 Simcoe Street is home to the Toronto Symphony Orchestra and Toronto Mendelssohn Choir, opened in 1982 and operated by the Corporation of Massey Hall and Roy Thomson Hall. The 2,630-seat circular hall is renowned for classical programming, film-in-concert, and major civic events. TAC funding reflects resident company support rather than the hall operator. The venue is a flagship symphonic space and architectural landmark in Toronto's financial core.",
+                "owner": "The Corporation of Massey Hall and Roy Thomson Hall"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5827,24 +6030,24 @@
             "properties": {
                 "fid": 62,
                 "venue_name": "Royal Alexandra Theatre",
-                "address": null,
-                "postal_code": null,
-                "seating_capacity": 1247,
-                "usable_area": null,
-                "notes": "",
+                "address": "260 King Street West",
+                "postal_code": "M5V 1H9",
+                "max_attendee_capacity": 1244,
+                "total_facility_area_sqft": 55000,
                 "disciplines_supported": [
-                    "theatre",
+                    "dance",
                     "music",
-                    "dance"
+                    "theatre"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "private",
                 "ownership": "private",
                 "operator": "Mirvish Productions",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": false,
-                "year_opened": 1907
+                "year_opened": 1907,
+                "venue_description": "Royal Alexandra Theatre at 260 King Street West is among North America's oldest continuously operating theatres, opened in 1907 and operated by Mirvish Productions. Programming is primarily commercial musicals and touring theatre for 1,244 seats. The heritage venue is a private presenting house central to Toronto's theatre tourism economy. Its longevity and Mirvish stewardship have made it a civic cultural icon.",
+                "owner": "Mirvish Productions"
             },
             "geometry": {
                 "type": "Polygon",
@@ -5881,9 +6084,8 @@
                 "venue_name": "Royal Conservatory and Koerner Hall",
                 "address": "273 Bloor Street West",
                 "postal_code": "M5S 1W2",
-                "seating_capacity": 1135,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 1135,
+                "total_facility_area_sqft": 120000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -5892,13 +6094,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
-                "operator": "The Royal Conservatory Of Music",
+                "operator": "The Royal Conservatory of Music",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 2009
+                "year_opened": 2009,
+                "venue_description": "The Royal Conservatory of Music at 273 Bloor Street West includes Koerner Hall, opened in 2009 as a 1,135-seat acoustically acclaimed recital venue. Operated by the Royal Conservatory, the institution's mandate combines music education with a curated concert series spanning classical, jazz, and world music. Programming supports both international artists and student performances across the TELUS Centre for Performance and Learning. The RCM is Canada's leading music-education institution and Koerner Hall is a premier listening room on Bloor Street.",
+                "owner": "The Royal Conservatory of Music"
             },
             "geometry": {
                 "type": "Polygon",
@@ -6073,11 +6276,10 @@
             "properties": {
                 "fid": 64,
                 "venue_name": "Royal Ontario Museum",
-                "address": "100 Queens Park",
+                "address": "100 Queen's Park",
                 "postal_code": "M5S 2C6",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 2000,
+                "total_facility_area_sqft": 800000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -6087,13 +6289,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "provincial",
                 "operator": "Royal Ontario Museum",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1914
+                "tac_funded_programming": true,
+                "year_opened": 1912,
+                "venue_description": "The Royal Ontario Museum at 100 Queen's Park is a provincial museum operated by the Government of Ontario since 1912. Its mandate spans natural history, world cultures, and art with major exhibitions and education programs across disciplines. Programming reaches millions of visitors annually in one of Canada's largest museums. The ROM is a cornerstone of Toronto's museum district and public learning infrastructure.",
+                "owner": "Government of Ontario"
             },
             "geometry": {
                 "type": "Polygon",
@@ -6343,25 +6546,25 @@
             "type": "Feature",
             "properties": {
                 "fid": 65,
-                "venue_name": "Scarborough Arts",
+                "venue_name": "Bluffs Gallery",
                 "address": "1859 Kingston Rd",
                 "postal_code": "M1N 1T3",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 50,
+                "total_facility_area_sqft": 3500,
                 "disciplines_supported": [
                     "community_arts",
                     "theatre",
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Scarborough Arts",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1978
+                "tac_funded_programming": true,
+                "year_opened": 1978,
+                "venue_description": "Bluffs Gallery at 1859 Kingston Road is operated by Scarborough Arts within a civic facility, with roots dating to 1978. Its mandate is community-focused rotating exhibitions, workshops, and local programming across community arts, theatre, and visual practices. Programming supports Scarborough artists often under-represented in downtown gallery networks. The gallery is a neighbourhood anchor for east-end visual and community arts.",
+                "owner": "Scarborough Arts"
             },
             "geometry": {
                 "type": "Polygon",
@@ -6411,25 +6614,25 @@
             "type": "Feature",
             "properties": {
                 "fid": 66,
-                "venue_name": "Soulpepper Theatre",
+                "venue_name": "Young Centre for the Performing Arts",
                 "address": "50 Tank House Lane",
                 "postal_code": "M5A 3C4",
-                "seating_capacity": 416,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 600,
+                "total_facility_area_sqft": 45000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
                     "theatre"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
-                "operator": "Soulpepper Theatre Company",
-                "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "operator": "Young Centre for the Performing Arts",
+                "tac_funded_operator": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1998
+                "year_opened": 1998,
+                "venue_description": "The Young Centre at 50 Tank House Lane in the Distillery District is operated by Soulpepper Theatre Company in partnership with George Brown College, opened in 2006. The complex includes multiple flexible theatres, rehearsal rooms, and training facilities for theatre and dance. Soulpepper's mandate combines classical repertoire with new Canadian work while the college integrates professional training. The centre is a TAC-funded resident hub for one of Toronto's leading theatre companies.",
+                "owner": "Dream Unlimited Corp."
             },
             "geometry": {
                 "type": "Polygon",
@@ -6502,9 +6705,8 @@
                 "venue_name": "St. Lawrence Centre",
                 "address": "27 Front Street East",
                 "postal_code": "M5E 1B4",
-                "seating_capacity": 868,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 1367,
+                "total_facility_area_sqft": 120000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -6513,13 +6715,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "municipal",
                 "ownership": "municipal",
-                "operator": "City of Toronto",
+                "operator": "TO Live",
                 "tac_funded_operator": false,
-                "tac_funded_resident": true,
-                "tac_funded_programming": false,
-                "year_opened": 1970
+                "tac_funded_resident": false,
+                "tac_funded_programming": true,
+                "year_opened": 1970,
+                "venue_description": "St. Lawrence Centre at 27 Front Street East is a City of Toronto performing-arts complex opened in 1970, comprising the Bluma Appel Theatre (868 seats) and Jane Mallett Theatre (499 seats). Operated by the City with Canadian Stage as anchor tenant in the Bluma Appel, it hosts theatre, dance, music, and touring productions. Programming history reflects decades of municipal investment in downtown performing arts. The centre is a multi-tenant civic venue central to Toronto's theatre and dance presenting landscape.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -6656,22 +6859,22 @@
                 "venue_name": "Tarragon Theatre",
                 "address": "30 Bridgman Avenue",
                 "postal_code": "M5R 1X3",
-                "seating_capacity": 400,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 300,
+                "total_facility_area_sqft": 18000,
                 "disciplines_supported": [
                     "community_arts",
                     "literary",
                     "theatre"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Tarragon Theatre",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1971
+                "year_opened": 1971,
+                "venue_description": "Tarragon Theatre at 30 Bridgman Avenue is a TAC-funded nonprofit dedicated to new Canadian plays since 1971. The Mainspace and Extraspace theatres (300 seats combined) support premieres, residencies, and playwright development. Tarragon's mandate has shaped Canada's contemporary playwriting canon for over five decades. The company is a foundational creation engine in Toronto's theatre ecology.",
+                "owner": "Tarragon Theatre"
             },
             "geometry": {
                 "type": "Polygon",
@@ -6764,9 +6967,8 @@
                 "venue_name": "The Aga Khan Museum",
                 "address": "77 Wynford Drive",
                 "postal_code": "M3C 1K1",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 600,
+                "total_facility_area_sqft": 113020,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -6776,13 +6978,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Aga Khan Museum",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 2014
+                "year_opened": 2014,
+                "venue_description": "The Aga Khan Museum at 77 Wynford Drive opened in 2014 as a purpose-built museum of Islamic art and Muslim cultures. Operated by the Aga Khan Museum, its mandate spans exhibitions, performing arts, education, and dialogue in gallery and 300-seat theatre spaces. Programming connects historical and contemporary Muslim cultural production with diverse Toronto audiences. The museum is a TAC-funded landmark of pluralism and international arts programming in North York.",
+                "owner": "Aga Khan Museum"
             },
             "geometry": {
                 "type": "Polygon",
@@ -6847,9 +7050,8 @@
                 "venue_name": "The Garrison",
                 "address": "1197 Dundas Street West",
                 "postal_code": "M6J 1X3",
-                "seating_capacity": 90,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 300,
+                "total_facility_area_sqft": 6000,
                 "disciplines_supported": [
                     "community_arts",
                     "literary",
@@ -6857,13 +7059,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "private",
                 "ownership": "private",
                 "operator": "The Garrison",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": false,
-                "year_opened": 2009
+                "year_opened": 2009,
+                "venue_description": "The Garrison at 1197 Dundas Street West is a privately owned mid-sized live-music venue and bar opened in 2009. Programming features indie, alternative, DJ nights, and touring acts in a 300-capacity standing configuration. The venue operates commercially without TAC funding. It is a staple of Toronto's independent music and nightlife scene on Dundas West.",
+                "owner": "1802595 Ontario Inc."
             },
             "geometry": {
                 "type": "Polygon",
@@ -6902,11 +7105,10 @@
             "properties": {
                 "fid": 71,
                 "venue_name": "The Great Hall",
-                "address": "1087 Queen  Street West",
+                "address": "1087 Queen Street West",
                 "postal_code": "M6J 1H3",
-                "seating_capacity": 400,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 480,
+                "total_facility_area_sqft": 25000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -6914,13 +7116,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "private",
                 "ownership": "private",
-                "operator": "The Great Hall Limited",
+                "operator": "The Great Hall",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1889
+                "tac_funded_programming": true,
+                "year_opened": 1890,
+                "venue_description": "The Great Hall at 1087 Queen Street West is a privately operated event and performance venue in a restored 1890 heritage building. Programming spans concerts, theatre, markets, and private events across main hall, side rooms, and rooftop spaces. The venue's commercial model supports diverse rental and promoted programming. It is a long-standing Queen West cultural landmark with flexible capacity near 480.",
+                "owner": "Triangle Development Inc."
             },
             "geometry": {
                 "type": "Polygon",
@@ -6969,22 +7172,22 @@
                 "venue_name": "The Opera House",
                 "address": "735 Queen Street East",
                 "postal_code": "M4M 1H1",
-                "seating_capacity": 950,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 950,
+                "total_facility_area_sqft": 12000,
                 "disciplines_supported": [
                     "community_arts",
                     "music",
                     "theatre"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "private",
                 "ownership": "private",
-                "operator": "The Opera House",
+                "operator": "Live Nation Canada",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1909
+                "tac_funded_programming": true,
+                "year_opened": 1909,
+                "venue_description": "The Opera House at 735 Queen Street East is a privately operated 950-capacity venue in a former vaudeville theatre and cinema dating to 1909. Programming focuses on concerts, touring acts, and club events in popular music genres. The east-end venue is commercial rather than nonprofit. It has served generations of Toronto music audiences along Queen Street.",
+                "owner": "Ellinas family"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7031,24 +7234,24 @@
             "properties": {
                 "fid": 73,
                 "venue_name": "The Power Plant",
-                "address": null,
-                "postal_code": null,
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "address": "231 Queens Quay West",
+                "postal_code": "M5J 2G8",
+                "max_attendee_capacity": 150,
+                "total_facility_area_sqft": 13200,
                 "disciplines_supported": [
-                    "visual_media_arts",
+                    "community_arts",
                     "literary",
-                    "community_arts"
+                    "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "The Power Plant Contemporary Art Gallery",
                 "tac_funded_operator": true,
                 "tac_funded_resident": false,
                 "tac_funded_programming": true,
-                "year_opened": 1987
+                "year_opened": 1987,
+                "venue_description": "The Power Plant Contemporary Art Gallery at 231 Queens Quay West is a TAC-funded nonprofit contemporary art gallery at Harbourfront since 1987. Operated by The Power Plant, its mandate is exhibitions, commissions, and public programs in lens-based and visual practices. Programming history includes landmark shows by Canadian and international artists. The gallery is Canada's leading public contemporary art institution on the waterfront.",
+                "owner": "The Power Plant Contemporary Art Gallery"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7093,9 +7296,8 @@
                 "venue_name": "The Theatre Centre",
                 "address": "1115 Queen Street West",
                 "postal_code": "M6J 1J1",
-                "seating_capacity": 120,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 200,
+                "total_facility_area_sqft": 15000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -7105,13 +7307,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "dance",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "The Theatre Centre",
                 "tac_funded_operator": true,
                 "tac_funded_resident": false,
                 "tac_funded_programming": true,
-                "year_opened": 2015
+                "year_opened": 2014,
+                "venue_description": "The Theatre Centre at 1115 Queen Street West is a TAC-funded multidisciplinary creation hub in a purpose-built facility opened in 2014. Operated by The Theatre Centre, it includes the Franc Boni Theatre and black-box spaces supporting experimental theatre, dance, music, and hybrid work. Programming emphasizes artist development, residencies, and locally rooted contemporary performance. The centre is a vital incubator for non-mainstream performing arts on Queen West.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7228,9 +7431,8 @@
                 "venue_name": "The Tranzac",
                 "address": "292 Brunswick Avenue",
                 "postal_code": "M5S 2M7",
-                "seating_capacity": 100,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 120,
+                "total_facility_area_sqft": 8000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -7240,13 +7442,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Toronto Australian New Zealand Club (Tranzac)",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1931
+                "tac_funded_programming": true,
+                "year_opened": 1971,
+                "venue_description": "The Tranzac at 292 Brunswick Avenue is operated by the Toronto Australian New Zealand Club, a nonprofit community club with arts programming since 1971. Multiple small rooms host live music, workshops, and cultural events across music, theatre, dance, and literary practices. The club's mandate blends social-club functions with affordable performance space near the Annex. The Tranzac is a beloved grassroots venue supporting independent musicians and community gatherings.",
+                "owner": "Toronto Australian New Zealand Club (Tranzac)"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7291,9 +7494,8 @@
                 "venue_name": "Theatre Passe Muraille",
                 "address": "16 Ryerson Avenue",
                 "postal_code": "M5T 2P3",
-                "seating_capacity": 210,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 220,
+                "total_facility_area_sqft": 15000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -7302,13 +7504,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "Theatre Passe Muraille",
                 "tac_funded_operator": true,
                 "tac_funded_resident": false,
                 "tac_funded_programming": true,
-                "year_opened": 1968
+                "year_opened": 1968,
+                "venue_description": "Theatre Passe Muraille at 16 Ryerson Avenue is a TAC-funded nonprofit theatre company operating since 1968 in a converted industrial building. The mainstage and backspace studios support new Canadian work, community arts, and interdisciplinary performance. Passe Muraille's mandate helped pioneer collective creation and alternative theatre in Canada. The company remains a flagship independent theatre with deep roots in Toronto's Queen West arts history.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7343,23 +7546,23 @@
             "properties": {
                 "fid": 77,
                 "venue_name": "TIFF Lightbox",
-                "address": "350 King Street west Street West",
-                "postal_code": "M5W 3X5",
-                "seating_capacity": 550,
-                "usable_area": null,
-                "notes": "",
+                "address": "350 King Street West",
+                "postal_code": "M5V 3X5",
+                "max_attendee_capacity": 1292,
+                "total_facility_area_sqft": 153000,
                 "disciplines_supported": [
                     "theatre",
                     "visual_media_arts"
                 ],
                 "primary_discipline": "visual_media_arts",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
-                "operator": "Toronto International Film Festival Inc.",
+                "operator": "Toronto International Film Festival (TIFF)",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 2010
+                "tac_funded_programming": true,
+                "year_opened": 2010,
+                "venue_description": "TIFF Lightbox at 350 King Street West is the permanent home of the Toronto International Film Festival, opened in 2010. Operated by TIFF, the facility includes five cinemas, galleries, and learning spaces for year-round screenings, exhibitions, and industry programming. TIFF's mandate advances film culture locally and internationally. Lightbox anchors Toronto's identity as a global film city and major cultural destination.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7396,9 +7599,8 @@
                 "venue_name": "Toronto Reference Library",
                 "address": "789 Yonge Street",
                 "postal_code": "M4W 2G8",
-                "seating_capacity": 458,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 10000,
+                "total_facility_area_sqft": 450000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -7408,13 +7610,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "literary",
-                "governance_type": "municipal",
                 "ownership": "municipal",
                 "operator": "Toronto Public Library",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1977
+                "tac_funded_programming": true,
+                "year_opened": 1977,
+                "venue_description": "Toronto Reference Library at 789 Yonge Street is TPL's flagship research and cultural branch, opened in 1977 at Yonge and Bloor. Operated by Toronto Public Library, it hosts literary, music, theatre, dance, and community programs alongside its research collections, including the Bram & Bluma Appel Salon events. Programming history includes high-profile author talks, performances, and exhibitions. The branch is a civic landmark extending free cultural programming to city-wide audiences.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7515,9 +7718,8 @@
                 "venue_name": "Trinity St. Paul's United Church",
                 "address": "427 Bloor Street West",
                 "postal_code": "M5S 1X6",
-                "seating_capacity": 800,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 770,
+                "total_facility_area_sqft": 35000,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -7526,13 +7728,14 @@
                     "theatre"
                 ],
                 "primary_discipline": "music",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
                 "operator": "Trinity-St. Paul's United Church",
                 "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1889
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 1889,
+                "venue_description": "Trinity-St. Paul's United Church at 427 Bloor Street West is a nonprofit heritage church and concert venue dating to 1889. Its sanctuary seats approximately 770 and is renowned for acoustics used by choirs, concerts, and recordings, including activities of the Toronto Consort and community groups. Programming blends worship, music presentation, and rental activity across music, dance, literary, and theatre disciplines. The venue is a TAC-funded resident hub and a west-end institution for choral and early-music culture.",
+                "owner": "Trinity-St. Paul's United Church"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7625,9 +7828,8 @@
                 "venue_name": "Urban Arts",
                 "address": "5 Bartonville Avenue East",
                 "postal_code": "M6M 2B1",
-                "seating_capacity": null,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 100,
+                "total_facility_area_sqft": 3800,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -7636,13 +7838,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "nonprofit",
-                "ownership": "nonprofit",
+                "ownership": "municipal",
                 "operator": "UrbanArts",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
                 "tac_funded_programming": false,
-                "year_opened": 1991
+                "year_opened": 1988,
+                "venue_description": "Urban Arts at 5 Bartonville Avenue East is operated by UrbanArts Community Arts Council, a local arts service organization serving York South–Weston since 1988. Its mandate is inclusive, multidisciplinary free programming for youth, adults, and seniors through visual, digital, music, theatre, dance, and culinary arts. Programming history includes mural projects, festivals, artist mentorship, and activation of storefronts and parks across seven Neighbourhood Improvement Areas. UrbanArts addresses systemic arts-access gaps in one of Toronto's most diverse and under-resourced districts.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7679,21 +7882,21 @@
                 "venue_name": "Winchester Street Theatre",
                 "address": "80 Winchester Street",
                 "postal_code": "M4X 1B2",
-                "seating_capacity": 150,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 144,
+                "total_facility_area_sqft": 4270,
                 "disciplines_supported": [
                     "dance",
                     "theatre"
                 ],
                 "primary_discipline": "dance",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
-                "operator": "Alumnae Theatre",
+                "operator": "The Toronto Dance Foundation (TTDF)",
                 "tac_funded_operator": false,
-                "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1910
+                "tac_funded_resident": true,
+                "tac_funded_programming": true,
+                "year_opened": 1968,
+                "venue_description": "Winchester Street Theatre at 80 Winchester Street is operated by the Toronto Dance Foundation (Alumnae Theatre's dance affiliate) in a converted church since 1968. The 144-seat theatre and two dance studios support dance and theatre programming. The Toronto Dance Foundation's mandate includes preserving affordable dance infrastructure in Cabbagetown. The venue is a TAC-funded resident resource for independent dance and theatre artists.",
+                "owner": "The Toronto Dance Foundation (TTDF)"
             },
             "geometry": {
                 "type": "Polygon",
@@ -7791,12 +7994,11 @@
             "type": "Feature",
             "properties": {
                 "fid": 82,
-                "venue_name": "Yorkwoods Library",
+                "venue_name": "York Woods Library",
                 "address": "1785 Finch Avenue West",
                 "postal_code": "M3N 1M6",
-                "seating_capacity": 235,
-                "usable_area": null,
-                "notes": "",
+                "max_attendee_capacity": 2671,
+                "total_facility_area_sqft": 120199,
                 "disciplines_supported": [
                     "community_arts",
                     "dance",
@@ -7806,13 +8008,14 @@
                     "visual_media_arts"
                 ],
                 "primary_discipline": "community_arts",
-                "governance_type": "municipal",
                 "ownership": "municipal",
                 "operator": "Toronto Public Library",
                 "tac_funded_operator": false,
                 "tac_funded_resident": false,
-                "tac_funded_programming": false,
-                "year_opened": 1972
+                "tac_funded_programming": true,
+                "year_opened": 1972,
+                "venue_description": "York Woods Library at 1785 Finch Avenue West is a Toronto Public Library branch opened in 1972 in northwest Toronto. The branch includes a 235-seat theatre and a musical-instrument lending library, supporting community arts, dance, literary, music, theatre, and visual programming. TPL's branch theatre model brings performance infrastructure to suburban neighbourhoods. York Woods is a notable example of library-led cultural access in the Jane–Finch area.",
+                "owner": "City of Toronto"
             },
             "geometry": {
                 "type": "Polygon",
@@ -8030,25 +8233,25 @@
             "type": "Feature",
             "properties": {
                 "fid": 83,
-                "venue_name": "Young People Theatre",
-                "address": null,
-                "postal_code": null,
-                "seating_capacity": 460,
-                "usable_area": null,
-                "notes": "",
+                "venue_name": "Young People's Theatre",
+                "address": "165 Front Street East",
+                "postal_code": "M5A 3Z4",
+                "max_attendee_capacity": 548,
+                "total_facility_area_sqft": 35000,
                 "disciplines_supported": [
-                    "theatre",
                     "community_arts",
-                    "literary"
+                    "literary",
+                    "theatre"
                 ],
                 "primary_discipline": "theatre",
-                "governance_type": "nonprofit",
                 "ownership": "nonprofit",
-                "operator": "Young People'S Theatre",
+                "operator": "Young People's Theatre",
                 "tac_funded_operator": true,
-                "tac_funded_resident": false,
+                "tac_funded_resident": true,
                 "tac_funded_programming": true,
-                "year_opened": 1977
+                "year_opened": 1977,
+                "venue_description": "Young People's Theatre at 165 Front Street East is Canada's largest theatre for young audiences, operated by YPT since 1977. The Ada Slaight Stage and Studio Theatre (548 seats combined) support productions, education, and new work for children and youth. YPT's mandate is theatre that engages young people as artists and audiences. As a TAC-funded operator, YPT is a national leader in theatre for young audiences and arts education.",
+                "owner": "Young People's Theatre"
             },
             "geometry": {
                 "type": "Polygon",
