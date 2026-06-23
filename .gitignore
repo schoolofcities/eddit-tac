@@ -2,9 +2,11 @@
 data/activity
 
 data/census/ada/98-401-X2021012_English_CSV_data.csv
+data/census/noc-naics
 
 data/geo/geohash
 data/geo/lada000b21a_e
+data/geo/lct_000b21a_e
 
 data/prelim
 
@@ -58,3 +60,6 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude
+.claude
