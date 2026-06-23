@@ -12,6 +12,7 @@
 	import torontoAda from '$data/toronto-ada-wide.geo.json';
 	import formerMunicipalities from '$data/former-municipalities.geo.json';
 	import neighbourhoods from '$data/neighbourhoods.geo.json';
+	import cityWards from '$data/city-wards.geo.json';
 	import * as pmtiles from "pmtiles";
 
 	let commute_time = "commute_time.pmtiles";
@@ -82,6 +83,7 @@
 			addCommuteTimeLayer();
 			addTransitLines();
 			addTransitStops();
+			addCityWards();
 			addVenueMarkers();
 			syncLayers();
 		});
@@ -197,6 +199,41 @@
 				'line-color': '#4A607F',
 				'line-width': 1.5,
 				'line-opacity': 0.55,
+				'line-dasharray': [6, 5],
+			},
+			layout: { visibility: 'none' },
+		});
+	}
+
+	function addCityWards() {
+		if (!map) return;
+
+		map.addSource('city-wards', {
+			type: 'geojson',
+			data: cityWards,
+		});
+
+		map.addLayer({
+			id: 'ref-wards-fill',
+			type: 'fill',
+			source: 'city-wards',
+			filter: ['in', ['geometry-type'], ['literal', ['Polygon', 'MultiPolygon']]],
+			paint: {
+				'fill-color': '#000000',
+				'fill-opacity': 0,
+			},
+			layout: { visibility: 'none' },
+		});
+
+		map.addLayer({
+			id: 'ref-wards',
+			type: 'line',
+			source: 'city-wards',
+			filter: ['in', ['geometry-type'], ['literal', ['LineString', 'MultiLineString']]],
+			paint: {
+				'line-color': '#4A607F',
+				'line-width': 1.2,
+				'line-opacity': 0.5,
 				'line-dasharray': [6, 5],
 			},
 			layout: { visibility: 'none' },
@@ -559,6 +596,13 @@ function syncLayers() {
                     if (map.getLayer('ref-municipalities')) {
                         map.setLayoutProperty('ref-municipalities', 'visibility', visibility);
                         map.setLayoutProperty('ref-municipalities-fill', 'visibility', visibility);
+                    }
+                    break;
+
+                case 'ref-wards':
+                    if (map.getLayer('ref-wards')) {
+                        map.setLayoutProperty('ref-wards', 'visibility', visibility);
+                        map.setLayoutProperty('ref-wards-fill', 'visibility', visibility);
                     }
                     break;
             }
