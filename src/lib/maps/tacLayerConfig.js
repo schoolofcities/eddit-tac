@@ -58,10 +58,9 @@ export const LAYER_GROUPS = [
 		exclusive: false,
 		ui: 'toggles',
 		items: [
-			{ id: 'transit-subway', label: 'Subway and LRT', key: null },
+			{ id: 'transit-rail', label: 'Rail', key: null },
 			{ id: 'transit-streetcars', label: 'Streetcars', key: null },
 			{ id: 'transit-busses', label: 'Busses', key: null },
-			{ id: 'transit-go', label: 'GO Trains', key: null },
 			{ id: 'commute-time', label: 'Commute Time (must select venue)', key: null },
 		],
 	},

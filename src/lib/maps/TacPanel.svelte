@@ -189,6 +189,39 @@
 						<span class="layer-label">{item.label}</span>
 					</label>
 				{/each}
+
+				{#if group.items.some(item => item.id === 'commute-time') && layerState[group.id]?.['commute-time']}
+					{@const commuteBuckets = [
+						{ label: '0–15 min',  color: '#2166ac' },
+						{ label: '15–30 min', color: '#1fa187' },
+						{ label: '30–45 min', color: '#fde725' },
+						{ label: '45–60 min', color: '#f8961e' },
+					]}
+					<svg class="legend" width="100%" height="40">
+						{#each commuteBuckets as bucket, i}
+							<rect
+								x={i * 25 + '%'}
+								y="0"
+								width="25%"
+								height="20"
+								fill={bucket.color}
+								stroke="white"
+								stroke-width="1"
+								opacity="0.8"
+							/>
+						{/each}
+						{#each commuteBuckets as bucket, i}
+							<text
+								class="legend-label"
+								x={`${i * 25 + 12.5}%`}
+								y="35"
+								text-anchor="middle"
+							>
+								{bucket.label}
+							</text>
+						{/each}
+					</svg>
+				{/if}
 			{/if}
 		</div>
 	{/each}
@@ -552,7 +585,13 @@
 	}
 
 	.legend {
-	margin-top: 0.5rem;
-	display: block;
+		margin-top: 0.5rem;
+		display: block;
+	}
+
+	.legend-label {
+		font-size: 0.6rem;
+		fill: var(--brandGray60);
+		font-family: OpenSans, sans-serif;
 	}
 </style>
