@@ -6,7 +6,7 @@
 	import torontoBoundary from "$data/toronto-boundary.geo.json";
 	import venuesCentroids from "$data/venues-centroids.geo.json";
 	import venuesBoundaries from "$data/venues-boundaries.geo.json";
-	import mobilityLines from "$data/mobility-lines.geo.json";
+	import mobilityLines from "$data/mobility-lines-simplified.geo.json";
 	import subwayStops from "$data/subway-stops.geo.json";
 	import goStops from "$data/go-stops.geo.json";
 	import torontoAda from "$data/toronto-ada-wide.geo.json";
@@ -93,7 +93,6 @@
 			map?.remove();
 		};
 	});
-
 
 	function addTorontoBoundary() {
 		if (!map) return;
@@ -364,8 +363,9 @@
 		// Create a layer for each mode
 		const modes = [
 			{ id: "transit-rail", mode: "rail", color: "#1E3765" },
-			{ id: "transit-streetcars", mode: "streetcar", color: "#1E3765" },
-			{ id: "transit-busses", mode: "bus", color: "#1E3765" },
+			{ id: "transit-streetcars-busses", mode: "surface", color: "#1E3765" },
+			// { id: "transit-streetcars", mode: "streetcar", color: "#1E3765" },
+			// { id: "transit-busses", mode: "bus", color: "#1E3765" },
 		];
 
 		for (const mode of modes) {
@@ -376,9 +376,8 @@
 				filter: ["==", ["get", "mode"], mode.mode],
 				paint: {
 					"line-color": mode.color,
-					"line-width": 1.5,
+					"line-width": .7,
 					"line-opacity": 0.8,
-					"line-dasharray": [2, 2],
 				},
 				layout: {
 					visibility: "none",
@@ -576,9 +575,9 @@
 						break;
 
 					case "transit-rail":
-					case "transit-streetcars":
-					case "transit-busses":
-					case "transit-go":
+					case "transit-streetcars-busses":
+					// case "transit-busses":
+					// case "transit-go":
 						map.setLayoutProperty(
 							item.id,
 							"visibility",
