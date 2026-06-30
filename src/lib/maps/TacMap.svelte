@@ -1,17 +1,18 @@
 <script>
-	import { onMount } from "svelte";
-	import maplibregl from "maplibre-gl";
-	import "maplibre-gl/dist/maplibre-gl.css";
-	import { LAYER_GROUPS } from "./tacLayerConfig.js";
-	import torontoBoundary from "$data/toronto-boundary.geo.json";
-	import venuesCentroids from "$data/venues-centroids.geo.json";
-	import venuesBoundaries from "$data/venues-boundaries.geo.json";
+	import { onMount } from 'svelte';
+	import maplibregl from 'maplibre-gl';
+	import 'maplibre-gl/dist/maplibre-gl.css';
+	import { LAYER_GROUPS } from './tacLayerConfig.js';
+	import torontoBoundary from '$data/toronto-boundary.geo.json';
+	import venuesCentroids from '$data/venues-centroids.geo.json';
+	import venuesBoundaries from '$data/venues-boundaries.geo.json';
 	import mobilityLines from "$data/mobility-lines-simplified.geo.json";
-	import subwayStops from "$data/subway-stops.geo.json";
-	import goStops from "$data/go-stops.geo.json";
-	import torontoAda from "$data/toronto-ada-wide.geo.json";
-	import formerMunicipalities from "$data/former-municipalities.geo.json";
-	import neighbourhoods from "$data/neighbourhoods.geo.json";
+	import subwayStops from '$data/subway-stops.geo.json';
+	import goStops from '$data/go-stops.geo.json';
+	import torontoAda from '$data/toronto-ada-wide.geo.json';
+	import formerMunicipalities from '$data/former-municipalities.geo.json';
+	import neighbourhoods from '$data/neighbourhoods.geo.json';
+	import cityWards from '$data/city-wards.geo.json';
 	import * as pmtiles from "pmtiles";
 
 	let commute_time = "commute_time.pmtiles";
@@ -81,6 +82,7 @@
 			addCommuteTimeLayer();
 			addTransitLines();
 			addTransitStops();
+			addCityWards();
 			addVenueMarkers();
 			syncLayers();
 		});
@@ -215,6 +217,41 @@
 				"line-dasharray": [6, 5],
 			},
 			layout: { visibility: "none" },
+		});
+	}
+
+	function addCityWards() {
+		if (!map) return;
+
+		map.addSource('city-wards', {
+			type: 'geojson',
+			data: cityWards,
+		});
+
+		map.addLayer({
+			id: 'ref-wards-fill',
+			type: 'fill',
+			source: 'city-wards',
+			filter: ['in', ['geometry-type'], ['literal', ['Polygon', 'MultiPolygon']]],
+			paint: {
+				'fill-color': '#000000',
+				'fill-opacity': 0,
+			},
+			layout: { visibility: 'none' },
+		});
+
+		map.addLayer({
+			id: 'ref-wards',
+			type: 'line',
+			source: 'city-wards',
+			filter: ['in', ['geometry-type'], ['literal', ['LineString', 'MultiLineString']]],
+			paint: {
+				'line-color': '#4A607F',
+				'line-width': 1.2,
+				'line-opacity': 0.5,
+				'line-dasharray': [6, 5],
+			},
+			layout: { visibility: 'none' },
 		});
 	}
 
@@ -628,24 +665,23 @@
 						}
 						break;
 
-					case "ref-municipalities":
-						if (map.getLayer("ref-municipalities")) {
-							map.setLayoutProperty(
-								"ref-municipalities",
-								"visibility",
-								visibility,
-							);
-							map.setLayoutProperty(
-								"ref-municipalities-fill",
-								"visibility",
-								visibility,
-							);
-						}
-						break;
-				}
-			}
-		}
-	}
+                case 'ref-municipalities':
+                    if (map.getLayer('ref-municipalities')) {
+                        map.setLayoutProperty('ref-municipalities', 'visibility', visibility);
+                        map.setLayoutProperty('ref-municipalities-fill', 'visibility', visibility);
+                    }
+                    break;
+
+                case 'ref-wards':
+                    if (map.getLayer('ref-wards')) {
+                        map.setLayoutProperty('ref-wards', 'visibility', visibility);
+                        map.setLayoutProperty('ref-wards-fill', 'visibility', visibility);
+                    }
+                    break;
+            }
+        }
+    }
+}
 
 	$effect(() => {
 		if (!selectedVenueId || !mapLoaded) return;

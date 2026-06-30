@@ -72,6 +72,7 @@ export const LAYER_GROUPS = [
 		items: [
 			{ id: 'ref-neighbourhoods', label: 'Neighbourhoods', key: null },
 			{ id: 'ref-municipalities', label: 'Municipalities (pre-1998)', key: null },
+			{ id: 'ref-wards', label: 'City Wards', key: null },
 		],
 	},
 ];
