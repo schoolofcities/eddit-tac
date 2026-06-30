@@ -61,7 +61,7 @@ export const LAYER_GROUPS = [
 			{ id: 'transit-rail', label: 'Rail', key: null },
 			{ id: 'transit-streetcars-busses', label: 'Streetcars & Busses', key: null },
 			// { id: 'transit-busses', label: 'Busses', key: null },
-			// { id: 'commute-time', label: 'Commute Time (must select venue)', key: null },
+			{ id: 'commute-time', label: 'Commute Time (must select venue)', key: null },
 		],
 	},
 	{
