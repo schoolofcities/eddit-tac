@@ -63,3 +63,6 @@ Thumbs.db
 
 # Claude
 .claude
+
+# QGIS
+*.gpkg-*

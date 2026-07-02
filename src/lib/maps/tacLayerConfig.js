@@ -37,6 +37,7 @@ export const LAYER_GROUPS = [
 			{ id: 'tenure-renter', label: '% Renting', key: 'housing_tenure_renter_pct', breaks: [27.9, 40.6, 49.8, 60.7], colors: COLOURS },
 			{ id: 'core-housing-need', label: '% Core Housing Need', key: 'housing_core_need_yes_pct', breaks: [14.2, 17.8, 20.9, 24.3], colors: COLOURS },
 			{ id: 'visible-minority', label: '% Visible Minority Status', key: 'visible_minority_yes_pct', breaks: [31.7, 47.7, 64.7, 79.6], colors: COLOURS },
+			{ id: 'pct-no-vehicle', label: '% Households with No Vehicle', key: 'hh_no_veh_pct', breaks: [9.74, 15.20, 22.28, 35.92], colors: COLOURS },
 		],
 	},
 	{

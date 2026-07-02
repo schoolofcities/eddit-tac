@@ -587,6 +587,7 @@
 					case "core-housing-need":
 					case "citizenship":
 					case "visible-minority":
+					case "pct-no-vehicle":
 						if (map.getLayer(item.id)) {
 							map.setLayoutProperty(
 								item.id,
