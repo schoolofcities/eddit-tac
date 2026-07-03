@@ -132,7 +132,7 @@
 										fill={color}
 										stroke="white"
 										stroke-width="1"
-										opacity="0.7"
+										opacity="0.4"
 									/>
 							{/each}
 
