@@ -496,7 +496,7 @@
 		});
 	}
 
-	const ZOOM_TRANSITION = 13;
+	const ZOOM_TRANSITION = 15;
 	const FILL_OPACITY = 0.4;
 
 	function addDemographyLayers() {
@@ -555,7 +555,7 @@
 						["zoom"],
 						ZOOM_TRANSITION,
 						"rgba(0, 0, 0, 0)",
-						15,
+						18,
 						"rgba(0, 0, 0, 0)",
 					],
 				},
@@ -772,9 +772,9 @@
 			(f) => f.properties.id === selectedVenueId,
 		);
 		if (feature) {
-			map?.flyTo({
+			map?.easeTo({
 				center: feature.geometry.coordinates,
-				zoom: 14,
+				zoom: 15,
 				duration: 800,
 			});
 		}
