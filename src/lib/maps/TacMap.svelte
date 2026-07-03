@@ -18,6 +18,7 @@
 	import * as pmtiles from "pmtiles";
 
 	let commute_time = "commute_time.pmtiles";
+	let building_census = "building_census.pmtiles";
 
 	let {
 		map = $bindable(null),
@@ -36,6 +37,8 @@
 		},
 		layers: basemapLayers,
 	};
+
+	// const MAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
 
 	// Other easy swaps:
 	// 'https://tiles.openfreemap.org/styles/positron'
@@ -138,8 +141,8 @@
 			filter: ["==", ["get", "name"], "Toronto"],
 			paint: {
 				"line-color": "grey",
-				"line-width": .8,
-				"line-opacity": .8,
+				"line-width": 0.8,
+				"line-opacity": 0.8,
 			},
 		});
 	}
@@ -493,6 +496,9 @@
 		});
 	}
 
+	const ZOOM_TRANSITION = 13;
+	const FILL_OPACITY = 0.4;
+
 	function addDemographyLayers() {
 		if (!map) return;
 
@@ -501,8 +507,12 @@
 			data: torontoAda,
 		});
 
-		const demographyGroup = LAYER_GROUPS[0];
+		map.addSource("building-census", {
+			type: "vector",
+			url: `pmtiles://${building_census}`,
+		});
 
+		const demographyGroup = LAYER_GROUPS[0];
 		for (const item of demographyGroup.items) {
 			const fillColor = [
 				"step",
@@ -511,22 +521,45 @@
 				...item.breaks.flatMap((b, i) => [b, item.colors[i + 1]]),
 			];
 
+			const caseColor = [
+				"case",
+				["!=", ["get", item.key], null],
+				fillColor,
+				"#cbcbcb",
+			];
+
 			map.addLayer({
 				id: item.id,
 				type: "fill",
 				source: "toronto-ada",
+				maxzoom: ZOOM_TRANSITION,
 				paint: {
-					"fill-color": [
-						"case",
-						["!=", ["get", item.key], null],
-						fillColor,
-						"#cbcbcb",
+					"fill-color": caseColor,
+					"fill-opacity": FILL_OPACITY,
+				},
+				layout: { visibility: "none" },
+			});
+
+			map.addLayer({
+				id: `${item.id}-buildings`,
+				type: "fill",
+				source: "building-census",
+				"source-layer": "buildings_with_census",
+				minzoom: ZOOM_TRANSITION,
+				paint: {
+					"fill-color": caseColor,
+					"fill-opacity": FILL_OPACITY,
+					"fill-outline-color": [
+						"interpolate",
+						["linear"],
+						["zoom"],
+						ZOOM_TRANSITION,
+						"rgba(0, 0, 0, 0)",
+						15,
+						"rgba(0, 0, 0, 0)",
 					],
-					"fill-opacity": 0.7,
 				},
-				layout: {
-					visibility: "none",
-				},
+				layout: { visibility: "none" },
 			});
 		}
 	}
@@ -617,6 +650,13 @@
 						if (map.getLayer(item.id)) {
 							map.setLayoutProperty(
 								item.id,
+								"visibility",
+								visibility,
+							);
+						}
+						if (map.getLayer(`${item.id}-buildings`)) {
+							map.setLayoutProperty(
+								`${item.id}-buildings`,
 								"visibility",
 								visibility,
 							);

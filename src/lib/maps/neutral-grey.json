@@ -304,7 +304,10 @@
     "paint": {
       "fill-antialias": true,
       "fill-color": "rgba(255, 255, 255, 1)",
-      "fill-outline-color": "rgba(208, 208, 208, 0.3)"
+      "fill-outline-color": "rgba(208, 208, 208, .7)"
+    },
+    "layout": {
+      "visibility": "visible"
     }
   },
   {
@@ -652,7 +655,7 @@
     "layout": {
       "line-cap": "round",
       "line-join": "round",
-      "visibility": "visible"
+      "visibility": "none"
     },
     "paint": {
       "line-color": "rgb(234, 234, 234)",

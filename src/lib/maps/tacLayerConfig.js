@@ -7,11 +7,11 @@
  */
 
 const COLOURS = [
-    "#EAF0F8",
-    "#B8C8E3",
-    "#7E99C6",
-    "#4A679A",
-    "#1E3765"
+    "#A3BDF8",
+    "#6F97F1",
+    "#2860E6",
+    "#1F4DB8",
+    "#163A8A"
 ];
 
 export const LAYER_GROUPS = [
