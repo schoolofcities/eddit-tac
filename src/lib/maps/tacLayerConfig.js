@@ -22,7 +22,6 @@ export const LAYER_GROUPS = [
 		ui: 'dropdown',
 		items: [
 			{ id: 'pop-density', label: 'Population Density (per km²)', key: 'pop_density_pct', breaks: [3200, 4550, 6300, 8880], colors: COLOURS },
-			{ id: 'pop-count', label: 'Population Count', key: 'pop_2021_count', breaks: [7280, 8935, 10566, 12204], colors: COLOURS },
 			{ id: 'median-age', label: 'Median Age', key: 'age_median_count', breaks: [37.2, 40.0, 41.6, 44.4], colors: COLOURS },
 			{ id: 'avg-household-size', label: 'Average Household Size', key: 'pvt_house_avg_size_count', breaks: [2.1, 2.4, 2.6, 2.9], colors: COLOURS },
 			{ id: 'income', label: 'Income (Gini index)', key: 'gini_total_income_count', breaks: [0.29, 0.32, 0.37, 0.42], colors: COLOURS },

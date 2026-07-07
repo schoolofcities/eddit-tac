@@ -1688,7 +1688,7 @@
       ],
       "text-size": 10,
       "text-transform": "uppercase",
-      "visibility": "visible"
+      "visibility": "none"
     },
     "paint": {
       "text-color": "rgb(117, 129, 145)",
@@ -1732,7 +1732,7 @@
       ],
       "text-size": 10,
       "text-transform": "uppercase",
-      "visibility": "visible"
+      "visibility": "none"
     },
     "paint": {
       "text-color": "rgb(117, 129, 145)",
@@ -1777,7 +1777,7 @@
       ],
       "text-size": 10,
       "text-transform": "uppercase",
-      "visibility": "visible"
+      "visibility": "none"
     },
     "paint": {
       "icon-opacity": 0.7,
@@ -1848,7 +1848,7 @@
       ],
       "text-size": 10,
       "text-transform": "uppercase",
-      "visibility": "visible"
+      "visibility": "none"
     },
     "paint": {
       "icon-opacity": 0.7,
@@ -1932,7 +1932,7 @@
       ],
       "text-size": 10,
       "text-transform": "uppercase",
-      "visibility": "visible"
+      "visibility": "none"
     },
     "paint": {
       "icon-opacity": 0.7,
@@ -2011,7 +2011,7 @@
       ],
       "text-size": 14,
       "text-transform": "uppercase",
-      "visibility": "visible"
+      "visibility": "none"
     },
     "paint": {
       "icon-opacity": 0.7,
@@ -2096,7 +2096,7 @@
       ],
       "text-size": 14,
       "text-transform": "uppercase",
-      "visibility": "visible"
+      "visibility": "none"
     },
     "paint": {
       "icon-opacity": 0.7,

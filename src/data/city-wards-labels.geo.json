@@ -1,0 +1,32 @@
+{
+"type": "FeatureCollection",
+"name": "city-wards-labels",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "ward_code": "07", "ward_name": "Humber River-Black Creek" }, "geometry": { "type": "Point", "coordinates": [ -79.530271395022012, 43.750726216452613 ] } },
+{ "type": "Feature", "properties": { "ward_code": "06", "ward_name": "York Centre" }, "geometry": { "type": "Point", "coordinates": [ -79.467807651894944, 43.752568800037878 ] } },
+{ "type": "Feature", "properties": { "ward_code": "18", "ward_name": "Willowdale" }, "geometry": { "type": "Point", "coordinates": [ -79.416499967360508, 43.776887402877541 ] } },
+{ "type": "Feature", "properties": { "ward_code": "11", "ward_name": "University-Rosedale" }, "geometry": { "type": "Point", "coordinates": [ -79.394312249304278, 43.671140183494636 ] } },
+{ "type": "Feature", "properties": { "ward_code": "19", "ward_name": "Beaches-East York" }, "geometry": { "type": "Point", "coordinates": [ -79.306674077831786, 43.689271524385646 ] } },
+{ "type": "Feature", "properties": { "ward_code": "20", "ward_name": "Scarborough Southwest" }, "geometry": { "type": "Point", "coordinates": [ -79.259789043022025, 43.713628087648338 ] } },
+{ "type": "Feature", "properties": { "ward_code": "25", "ward_name": "Scarborough-Rouge Park" }, "geometry": { "type": "Point", "coordinates": [ -79.176851516415766, 43.805654266414692 ] } },
+{ "type": "Feature", "properties": { "ward_code": "23", "ward_name": "Scarborough North" }, "geometry": { "type": "Point", "coordinates": [ -79.254670342734471, 43.809673920586434 ] } },
+{ "type": "Feature", "properties": { "ward_code": "24", "ward_name": "Scarborough-Guildwood" }, "geometry": { "type": "Point", "coordinates": [ -79.214664567240447, 43.765800498148785 ] } },
+{ "type": "Feature", "properties": { "ward_code": "21", "ward_name": "Scarborough Centre" }, "geometry": { "type": "Point", "coordinates": [ -79.276614105419412, 43.7527402326225 ] } },
+{ "type": "Feature", "properties": { "ward_code": "22", "ward_name": "Scarborough-Agincourt" }, "geometry": { "type": "Point", "coordinates": [ -79.308136330810669, 43.796485905365962 ] } },
+{ "type": "Feature", "properties": { "ward_code": "15", "ward_name": "Don Valley West" }, "geometry": { "type": "Point", "coordinates": [ -79.375361265855332, 43.728400760503803 ] } },
+{ "type": "Feature", "properties": { "ward_code": "12", "ward_name": "Toronto-St. Paul's" }, "geometry": { "type": "Point", "coordinates": [ -79.413987304208106, 43.690530092373692 ] } },
+{ "type": "Feature", "properties": { "ward_code": "04", "ward_name": "Parkdale-High Park" }, "geometry": { "type": "Point", "coordinates": [ -79.467343096207557, 43.650120851451227 ] } },
+{ "type": "Feature", "properties": { "ward_code": "01", "ward_name": "Etobicoke North" }, "geometry": { "type": "Point", "coordinates": [ -79.584671231000939, 43.71940981560553 ] } },
+{ "type": "Feature", "properties": { "ward_code": "03", "ward_name": "Etobicoke-Lakeshore" }, "geometry": { "type": "Point", "coordinates": [ -79.520870546495217, 43.621648790857627 ] } },
+{ "type": "Feature", "properties": { "ward_code": "02", "ward_name": "Etobicoke Centre" }, "geometry": { "type": "Point", "coordinates": [ -79.552527017388414, 43.66443385266728 ] } },
+{ "type": "Feature", "properties": { "ward_code": "08", "ward_name": "Eglinton-Lawrence" }, "geometry": { "type": "Point", "coordinates": [ -79.433846143821128, 43.718316296818877 ] } },
+{ "type": "Feature", "properties": { "ward_code": "17", "ward_name": "Don Valley North" }, "geometry": { "type": "Point", "coordinates": [ -79.36003932676806, 43.787603082570918 ] } },
+{ "type": "Feature", "properties": { "ward_code": "16", "ward_name": "Don Valley East" }, "geometry": { "type": "Point", "coordinates": [ -79.332983070281557, 43.73971967665225 ] } },
+{ "type": "Feature", "properties": { "ward_code": "09", "ward_name": "Davenport" }, "geometry": { "type": "Point", "coordinates": [ -79.444050370887183, 43.669354835363883 ] } },
+{ "type": "Feature", "properties": { "ward_code": "13", "ward_name": "Toronto Centre" }, "geometry": { "type": "Point", "coordinates": [ -79.370101605412074, 43.660143629214552 ] } },
+{ "type": "Feature", "properties": { "ward_code": "05", "ward_name": "York South-Weston" }, "geometry": { "type": "Point", "coordinates": [ -79.493372602618805, 43.694953747093329 ] } },
+{ "type": "Feature", "properties": { "ward_code": "14", "ward_name": "Toronto-Danforth" }, "geometry": { "type": "Point", "coordinates": [ -79.3392516657416, 43.665980135769274 ] } },
+{ "type": "Feature", "properties": { "ward_code": "10", "ward_name": "Spadina-Fort York" }, "geometry": { "type": "Point", "coordinates": [ -79.387335606983299, 43.635801299443919 ] } }
+]
+}

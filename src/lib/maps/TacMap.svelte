@@ -11,8 +11,11 @@
 	import goStops from "$data/go-stops.geo.json";
 	import torontoAda from "$data/toronto-ada-wide.geo.json";
 	import formerMunicipalities from "$data/former-municipalities.geo.json";
+	import formerMunicipalitiesLabels from "$data/former-municipalities-labels.geo.json";
 	import neighbourhoods from "$data/neighbourhoods.geo.json";
+	import neighbourhoodsLabels from "$data/neighbourhoods-labels.geo.json";
 	import cityWards from "$data/city-wards.geo.json";
+	import cityWardsLabels from "$data/city-wards-labels.geo.json";
 
 	import basemapLayers from "$lib/maps/neutral-grey.json";
 	import * as pmtiles from "pmtiles";
@@ -49,7 +52,7 @@
 	// 'https://tiles.stadiamaps.com/styles/alidade_smooth.json?api_key=YOUR_KEY'
 
 	const MAP_CENTER = [-79.383, 43.718];
-	const MAP_ZOOM = 11;
+	const MAP_ZOOM = 10.5;
 	const MAP_MIN_ZOOM = 8.5;
 	const MAP_MAX_ZOOM = 16;
 	const MAP_MAX_BOUNDS = [
@@ -72,6 +75,7 @@
 			minZoom: MAP_MIN_ZOOM,
 			maxZoom: MAP_MAX_ZOOM,
 			maxBounds: MAP_MAX_BOUNDS,
+			bearing: -17,
 			dragRotate: false,
 			touchPitch: false,
 			attributionControl: false,
@@ -142,7 +146,7 @@
 			paint: {
 				"line-color": "grey",
 				"line-width": 0.8,
-				"line-opacity": 0.8,
+				"line-opacity": 1,
 			},
 		});
 	}
@@ -183,12 +187,38 @@
 				["literal", ["LineString", "MultiLineString"]],
 			],
 			paint: {
-				"line-color": "#4A607F",
-				"line-width": 1.2,
-				"line-opacity": 0.5,
-				"line-dasharray": [6, 5],
+				"line-color": "grey",
+				"line-width": 0.8,
+				"line-opacity": 1,
 			},
 			layout: { visibility: "none" },
+		});
+
+		map.addSource("neighbourhoods-labels", {
+			type: "geojson",
+			data: neighbourhoodsLabels,
+		});
+
+		map.addLayer({
+			id: "ref-neighbourhoods-label",
+			type: "symbol",
+			source: "neighbourhoods-labels",
+			layout: {
+				"text-field": ["get", "name"],
+				"text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
+				"text-size": 8,
+				"text-anchor": "center",
+				"text-transform": "uppercase",
+				"symbol-placement": "point",
+				visibility: "none",
+			},
+			paint: {
+				"text-color": "rgb(117, 129, 145)",
+				"text-halo-color": "rgb(242,243,240)",
+				"text-halo-width": 1,
+				"text-halo-blur": 1,
+				"text-opacity": 0.8,
+			},
 		});
 	}
 
@@ -228,12 +258,40 @@
 				["literal", ["LineString", "MultiLineString"]],
 			],
 			paint: {
-				"line-color": "#4A607F",
-				"line-width": 1.5,
-				"line-opacity": 0.55,
-				"line-dasharray": [6, 5],
+				"line-color": "grey",
+				"line-width": 0.8,
+				"line-opacity": 0.8,
 			},
 			layout: { visibility: "none" },
+		});
+
+		map.addSource("former-municipalities-labels", {
+			type: "geojson",
+			data: formerMunicipalitiesLabels,
+		});
+
+		map.addLayer({
+			id: "ref-municipalities-label",
+			type: "symbol",
+			source: "former-municipalities-labels",
+			layout: {
+				"text-field": ["get", "name"],
+				"text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
+				"text-size": 10,
+				"text-anchor": "center",
+				"text-transform": "uppercase",
+				"symbol-placement": "point",
+				"text-allow-overlap": false,
+				"text-ignore-placement": false,
+				visibility: "none",
+			},
+			paint: {
+				"text-color": "rgb(117, 129, 145)",
+				"text-halo-color": "rgb(242,243,240)",
+				"text-halo-width": 1,
+				"text-halo-blur": 1,
+				"text-opacity": 0.8,
+			},
 		});
 	}
 
@@ -271,13 +329,65 @@
 				["literal", ["LineString", "MultiLineString"]],
 			],
 			paint: {
-				"line-color": "#4A607F",
-				"line-width": 1.2,
-				"line-opacity": 0.5,
-				"line-dasharray": [6, 5],
+				"line-color": "grey",
+				"line-width": 0.8,
+				"line-opacity": 1,
 			},
 			layout: { visibility: "none" },
 		});
+
+		map.addSource("city-wards-labels", {
+			type: "geojson",
+			data: cityWardsLabels,
+		});
+
+		map.addLayer({
+			id: "ref-wards-label",
+			type: "symbol",
+			source: "city-wards-labels",
+			layout: {
+				"text-field": ["get", "ward_name"],
+				"text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
+				"text-size": 8,
+				"text-anchor": "center",
+				"text-transform": "uppercase",
+				"symbol-placement": "point",
+				"text-allow-overlap": false,
+				"text-ignore-placement": false,
+				visibility: "none",
+			},
+			paint: {
+				"text-color": "rgb(117, 129, 145)",
+				"text-halo-color": "rgb(242,243,240)",
+				"text-halo-width": 1,
+				"text-halo-blur": 1,
+				"text-opacity": 0.8,
+			},
+		});
+
+		// map.addLayer({
+		// 	id: "ref-wards-label",
+		// 	type: "symbol",
+		// 	source: "city-wards",
+		// 	filter: [
+		// 		"in",
+		// 		["geometry-type"],
+		// 		["literal", ["Polygon", "MultiPolygon"]],
+		// 	],
+		// 	layout: {
+		// 		"text-field": ["get", "ward_name"],
+		// 		"text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
+		// 		"text-size": 11,
+		// 		"text-anchor": "center",
+		// 		"symbol-placement": "point",
+		// 		visibility: "none",
+		// 	},
+		// 	paint: {
+		// 		"text-color": "#333333",
+		// 		"text-halo-color": "#ffffff",
+		// 		"text-halo-width": 1,
+		// 	},
+		// });
 	}
 
 	function addVenueMarkers() {
@@ -630,7 +740,6 @@
 
 				switch (item.id) {
 					case "pop-density":
-					case "pop-count":
 					case "median-age":
 					case "avg-household-size":
 					case "income":
@@ -729,6 +838,11 @@
 								"visibility",
 								visibility,
 							);
+							map.setLayoutProperty(
+								"ref-neighbourhoods-label",
+								"visibility",
+								visibility,
+							);
 						}
 						break;
 
@@ -744,6 +858,11 @@
 								"visibility",
 								visibility,
 							);
+							map.setLayoutProperty(
+								"ref-municipalities-label",
+								"visibility",
+								visibility,
+							);
 						}
 						break;
 
@@ -756,6 +875,11 @@
 							);
 							map.setLayoutProperty(
 								"ref-wards-fill",
+								"visibility",
+								visibility,
+							);
+							map.setLayoutProperty(
+								"ref-wards-label",
 								"visibility",
 								visibility,
 							);
