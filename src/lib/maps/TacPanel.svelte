@@ -191,18 +191,17 @@
 				{/each}
 
 				{#if group.items.some(item => item.id === 'commute-time') && layerState[group.id]?.['commute-time']}
-					{@const commuteBuckets = [
-						{ label: '0–15 min',  color: '#2166ac' },
-						{ label: '15–30 min', color: '#1fa187' },
-						{ label: '30–45 min', color: '#fde725' },
-						{ label: '45–60 min', color: '#f8961e' },
-					]}
+					{@const commuteItem = group.items.find(item => item.id === 'commute-time')}
+					{@const commuteBuckets = commuteItem.cutoffs.map((cutoff, i) => ({
+						label: `${cutoff} min`,
+						color: commuteItem.colors[i],
+					}))}
 					<svg class="legend" width="100%" height="40">
 						{#each commuteBuckets as bucket, i}
 							<rect
-								x={i * 25 + '%'}
+								x={(i * 100) / commuteBuckets.length + '%'}
 								y="0"
-								width="25%"
+								width={100 / commuteBuckets.length + '%'}
 								height="20"
 								fill={bucket.color}
 								stroke="white"
@@ -213,7 +212,7 @@
 						{#each commuteBuckets as bucket, i}
 							<text
 								class="legend-label"
-								x={`${i * 25 + 12.5}%`}
+								x={`${(i + 0.5) * (100 / commuteBuckets.length)}%`}
 								y="35"
 								text-anchor="middle"
 							>

@@ -16,11 +16,11 @@
 	import neighbourhoodsLabels from "$data/neighbourhoods-labels.geo.json";
 	import cityWards from "$data/city-wards.geo.json";
 	import cityWardsLabels from "$data/city-wards-labels.geo.json";
+	import isochrones from "$data/commute-time-isochrones.geo.json";
 
 	import basemapLayers from "$lib/maps/neutral-grey.json";
 	import * as pmtiles from "pmtiles";
 
-	let commute_time = "commute_time.pmtiles";
 	let building_census = "building_census.pmtiles";
 
 	let {
@@ -98,9 +98,9 @@
 			mapLoaded = true;
 			addDemographyLayers();
 			addTorontoBoundary();
+			addCommuteTimeLayer();
 			addNeighbourhoods();
 			addFormerMunicipalities();
-			addCommuteTimeLayer();
 			addTransitLines();
 			addTransitStops();
 			addCityWards();
@@ -674,52 +674,52 @@
 		}
 	}
 
-	function commuteTimePaint(venueId) {
-		const col = venueId ? `commute_time_${venueId}` : "commute_time_1";
+	// Isochrone cutoffs/colors come from tacLayerConfig so map + panel legend stay in sync.
+	const commuteTimeItem = LAYER_GROUPS.find(
+		(g) => g.id === "mobility",
+	).items.find((i) => i.id === "commute-time");
+
+	function commuteTimeFilter(venueId) {
+		// No venue selected -> filter matches nothing, layer shows no features.
+		return ["==", ["get", "venue_id"], venueId ?? "__none__"];
+	}
+
+	function commuteTimePaint() {
 		return {
 			"fill-color": [
-				"case",
-				["==", ["get", col], null],
+				"match",
+				["get", "cutoff_min"],
+				...commuteTimeItem.cutoffs.flatMap((cutoff, i) => [
+					cutoff,
+					commuteTimeItem.colors[i],
+				]),
 				"rgba(0,0,0,0)",
-				[
-					"step",
-					["get", col],
-					"#2166ac",
-					15,
-					"#1fa187",
-					30,
-					"#fde725",
-					45,
-					"#f8961e",
-					// 60, '#d73027',
-				],
-				// ['interpolate', ['linear'], ['get', col],
-				//     0,  '#2166ac',
-				//     15, '#1fa187',
-				//     30, '#fde725',
-				//     45, '#f8961e',
-				//     60, '#d73027',
-				// ]
 			],
-			"fill-opacity": ["case", ["==", ["get", col], null], 0, 0.6],
+			"fill-outline-color": "#000000",
+			"fill-opacity": 0.5,
 		};
 	}
 
 	function addCommuteTimeLayer() {
 		if (!map) return;
 
-		map.addSource("commute-time", {
-			type: "vector",
-			url: `pmtiles://${commute_time}`,
+		// Isochrone bands typically nest (e.g. the 50-min polygon contains the 40-min
+		// polygon, etc). Sort largest-cutoff-first so smaller/inner bands draw on top.
+		const sortedFeatures = [...isochrones.features].sort(
+			(a, b) => b.properties.cutoff_min - a.properties.cutoff_min,
+		);
+
+		map.addSource("commute-time-isochrones", {
+			type: "geojson",
+			data: { type: "FeatureCollection", features: sortedFeatures },
 		});
 
-		const paint = commuteTimePaint(selectedVenueId);
 		map.addLayer({
 			id: "commute-time",
 			type: "fill",
-			source: "commute-time",
-			"source-layer": "commute_time",
-			paint,
+			source: "commute-time-isochrones",
+			filter: commuteTimeFilter(selectedVenueId),
+			paint: commuteTimePaint(),
 			layout: {
 				visibility: "none",
 			},
@@ -939,13 +939,7 @@
 
 	$effect(() => {
 		if (!mapLoaded || !map?.getLayer("commute-time")) return;
-		const paint = commuteTimePaint(selectedVenueId);
-		map.setPaintProperty("commute-time", "fill-color", paint["fill-color"]);
-		map.setPaintProperty(
-			"commute-time",
-			"fill-opacity",
-			paint["fill-opacity"],
-		);
+		map.setFilter("commute-time", commuteTimeFilter(selectedVenueId));
 	});
 
 	$effect(() => {

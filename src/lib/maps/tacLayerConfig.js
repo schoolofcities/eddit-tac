@@ -61,7 +61,15 @@ export const LAYER_GROUPS = [
 			{ id: 'transit-rail', label: 'Rail', key: null },
 			{ id: 'transit-streetcars-busses', label: 'Streetcars & Busses', key: null },
 			// { id: 'transit-busses', label: 'Busses', key: null },
-			{ id: 'commute-time', label: 'Commute Time (must select venue)', key: null },
+			{
+				id: 'commute-time',
+				label: 'Commute Time (must select venue)',
+				key: null,
+				// Isochrone cutoffs (minutes) present in commute-time-isochrones.geo.json,
+				// matched 1:1 with colors below. Single source of truth for map + legend.
+				cutoffs: [10, 20, 30, 40, 50],
+				colors: ['#2166ac', '#1fa187', '#fde725', '#f8961e', '#d73027'],
+			},
 		],
 	},
 	{
