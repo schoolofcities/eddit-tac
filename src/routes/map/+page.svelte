@@ -17,6 +17,7 @@
 			name:       f.properties.venue_name,
 			address:    f.properties.address,
 			postalCode: f.properties.postal_code,
+			description:  f.properties.venue_description,
 		}))
 		.sort((a, b) => a.name.localeCompare(b.name));
 </script>

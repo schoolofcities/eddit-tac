@@ -1,5 +1,5 @@
 <script>
-	import { LAYER_GROUPS } from '$lib/maps/tacLayerConfig.js';
+	import { LAYER_GROUPS } from "$lib/maps/tacLayerConfig.js";
 
 	let {
 		selectedVenueId = $bindable(null),
@@ -7,7 +7,9 @@
 		venues = [],
 	} = $props();
 
-	const selectedVenue = $derived(venues.find((v) => v.id === selectedVenueId) ?? null);
+	const selectedVenue = $derived(
+		venues.find((v) => v.id === selectedVenueId) ?? null,
+	);
 
 	function setExclusive(groupId, itemId) {
 		const current = layerState[groupId]?.activeId ?? null;
@@ -19,7 +21,7 @@
 	}
 
 	function toggleNonExclusive(groupId, itemId) {
-		if (itemId === 'commute-time' && !selectedVenueId) return;
+		if (itemId === "commute-time" && !selectedVenueId) return;
 		layerState[groupId][itemId] = !layerState[groupId][itemId];
 	}
 
@@ -32,14 +34,12 @@
 </script>
 
 <aside class="panel">
-
 	<!-- ── Header ─────────────────────────────────────────────────────── -->
 	<header class="panel-header">
+		<h1 class="header-title">ACCESS IN THE ARTS</h1>
 		<span class="header-org">School of Cities | Toronto Arts Council</span>
-		<h1 class="header-title">Equitable Development Data Insight Training (EDDIT)</h1>
-		<p class="header-authors">
-			Author One, Author Two &middot; 2026
-		</p>
+
+		<p class="header-authors">Author One, Author Two &middot; 2026</p>
 	</header>
 
 	<!-- ── Venue Selector ────────────────────────────────────────────── -->
@@ -52,8 +52,10 @@
 		<div class="select-wrapper">
 			<select
 				class="venue-select"
-				value={selectedVenueId ?? ''}
-				onchange={(e) => { selectedVenueId = e.currentTarget.value || null; }}
+				value={selectedVenueId ?? ""}
+				onchange={(e) => {
+					selectedVenueId = e.currentTarget.value || null;
+				}}
 				aria-label="Select a venue"
 			>
 				<option value="">— Select a venue —</option>
@@ -74,58 +76,71 @@
 	<div class="divider"></div>
 	<!-- ── Venue Description ──────────────────────────────────────────── -->
 	<section class="panel-section">
-		<h2 class="section-heading">Venue Description</h2>
+		<!-- <h2 class="section-heading">Venue Description</h2> -->
 
 		{#if selectedVenue}
 			<p class="vd-name">{selectedVenue.name}</p>
-			<p class="vd-address">{selectedVenue.address}, Toronto, ON {selectedVenue.postalCode}</p>
+			<p class="vd-address">
+				{selectedVenue.address}, Toronto, ON {selectedVenue.postalCode}
+			</p>
 			<p class="vd-body">
-				Venue description coming soon. This section will include a brief overview of the
-				organization, its mandate, programming history, and community impact.
+				{selectedVenue.description || "Venue description coming soon."}
 			</p>
 		{:else}
-			<p class="empty-state">Select a venue above or click a marker on the map to view its description.</p>
+			<p class="empty-state">
+				Select a venue above or click a marker on the map to view its
+				description.
+			</p>
 		{/if}
 	</section>
 
 	<div class="divider"></div>
 	<!-- ── Layer Toggles ─────────────────────────────────────────────── -->
-<section class="panel-section">
-	<h2 class="section-heading">Map Layers</h2>
+	<section class="panel-section">
+		<h2 class="section-heading">Map Layers</h2>
 
-	{#each LAYER_GROUPS as group (group.id)}
-		<div class="layer-group">
-			<span class="layer-group-label">{group.label}</span>
+		{#each LAYER_GROUPS as group (group.id)}
+			<div class="layer-group">
+				<span class="layer-group-label">{group.label}</span>
 
-			{#if group.ui === 'dropdown'}
-				<div class="select-wrapper">
-					<select
-						class="venue-select layer-select"
-						value={layerState[group.id]?.activeId ?? ''}
-						onchange={(e) => setExclusiveFromSelect(group.id, e.currentTarget.value)}
-						aria-label={`Select ${group.label} layer`}
-					>
-						<option value="">None</option>
-						{#each group.items as item (item.id)}
-							<option value={item.id}>{item.label}</option>
-						{/each}
-					</select>
+				{#if group.ui === "dropdown"}
+					<div class="select-wrapper">
+						<select
+							class="venue-select layer-select"
+							value={layerState[group.id]?.activeId ?? ""}
+							onchange={(e) =>
+								setExclusiveFromSelect(
+									group.id,
+									e.currentTarget.value,
+								)}
+							aria-label={`Select ${group.label} layer`}
+						>
+							<option value="">None</option>
+							{#each group.items as item (item.id)}
+								<option value={item.id}>{item.label}</option>
+							{/each}
+						</select>
 
-					<svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
-						<path d="M0 0l5 6 5-6z" />
-					</svg>
-				</div>
+						<svg
+							class="select-arrow"
+							viewBox="0 0 10 6"
+							aria-hidden="true"
+						>
+							<path d="M0 0l5 6 5-6z" />
+						</svg>
+					</div>
 
-				{#if group.id === 'demography' && layerState.demography?.activeId}
-					{@const selectedItem = group.items.find(
-						item => item.id === layerState.demography.activeId
-					)}
+					{#if group.id === "demography" && layerState.demography?.activeId}
+						{@const selectedItem = group.items.find(
+							(item) =>
+								item.id === layerState.demography.activeId,
+						)}
 
-					{#if selectedItem}
-						<svg class="legend" width="100%" height="40">
-							{#each selectedItem.colors as color, i}
+						{#if selectedItem}
+							<svg class="legend" width="100%" height="40">
+								{#each selectedItem.colors as color, i}
 									<rect
-										x={i * 20 + '%'}
+										x={i * 20 + "%"}
 										y="0"
 										width="20%"
 										height="20"
@@ -134,97 +149,105 @@
 										stroke-width="1"
 										opacity="0.4"
 									/>
-							{/each}
+								{/each}
 
-							{#each selectedItem.breaks as value, i}
+								{#each selectedItem.breaks as value, i}
+									<text
+										class="legend-label"
+										x={`${(i + 1) * 20}%`}
+										y="35"
+										text-anchor="middle"
+									>
+										{#if i === 0}
+											&lt;{value.toLocaleString()}
+										{:else if i === selectedItem.breaks.length - 1}
+											&gt;{value.toLocaleString()}
+										{:else}
+											{value.toLocaleString()}
+										{/if}
+									</text>
+								{/each}
+							</svg>
+						{/if}
+					{/if}
+				{:else if group.ui === "radio-toggles"}
+					<div class="activity-grid">
+						{#each group.items as item (item.id)}
+							<button
+								type="button"
+								class="activity-btn"
+								class:active={isOn(group, item)}
+								onclick={() => setExclusive(group.id, item.id)}
+							>
+								{item.label}
+							</button>
+						{/each}
+					</div>
+				{:else}
+					{#each group.items as item (item.id)}
+						<label
+							class="layer-toggle"
+							class:layer-toggle-disabled={item.id ===
+								"commute-time" && !selectedVenueId}
+						>
+							<span
+								class="toggle-track"
+								class:on={isOn(group, item)}
+							>
+								<input
+									type="checkbox"
+									checked={isOn(group, item)}
+									onchange={() =>
+										toggleNonExclusive(group.id, item.id)}
+									class="sr-only"
+									disabled={item.id === "commute-time" &&
+										!selectedVenueId}
+								/>
+								<span class="toggle-thumb"></span>
+							</span>
+							<span class="layer-label">{item.label}</span>
+						</label>
+					{/each}
+
+					{#if group.items.some((item) => item.id === "commute-time") && layerState[group.id]?.["commute-time"]}
+						{@const commuteItem = group.items.find(
+							(item) => item.id === "commute-time",
+						)}
+						{@const commuteBuckets = commuteItem.cutoffs.map(
+							(cutoff, i) => ({
+								label: `${cutoff} min`,
+								color: commuteItem.colors[i],
+							}),
+						)}
+						<svg class="legend" width="100%" height="40">
+							{#each commuteBuckets as bucket, i}
+								<rect
+									x={(i * 100) / commuteBuckets.length + "%"}
+									y="0"
+									width={100 / commuteBuckets.length + "%"}
+									height="20"
+									fill={bucket.color}
+									stroke="white"
+									stroke-width="1"
+									opacity="0.8"
+								/>
+							{/each}
+							{#each commuteBuckets as bucket, i}
 								<text
 									class="legend-label"
-									x={`${(i + 1) * 20}%`}
+									x={`${(i + 0.5) * (100 / commuteBuckets.length)}%`}
 									y="35"
 									text-anchor="middle"
 								>
-									{#if i === 0}
-										&lt;{value.toLocaleString()}
-									{:else if i === selectedItem.breaks.length - 1}
-										&gt;{value.toLocaleString()}
-									{:else}
-										{value.toLocaleString()}
-									{/if}
+									{bucket.label}
 								</text>
 							{/each}
 						</svg>
 					{/if}
 				{/if}
-
-			{:else if group.ui === 'radio-toggles'}
-				<div class="activity-grid">
-					{#each group.items as item (item.id)}
-						<button
-							type="button"
-							class="activity-btn"
-							class:active={isOn(group, item)}
-							onclick={() => setExclusive(group.id, item.id)}
-						>
-							{item.label}
-						</button>
-					{/each}
-				</div>
-
-			{:else}
-				{#each group.items as item (item.id)}
-					<label
-						class="layer-toggle"
-						class:layer-toggle-disabled={item.id === 'commute-time' && !selectedVenueId}
-					>
-						<span class="toggle-track" class:on={isOn(group, item)}>
-							<input
-								type="checkbox"
-								checked={isOn(group, item)}
-								onchange={() => toggleNonExclusive(group.id, item.id)}
-								class="sr-only"
-								disabled={item.id === 'commute-time' && !selectedVenueId}
-							/>
-							<span class="toggle-thumb"></span>
-						</span>
-						<span class="layer-label">{item.label}</span>
-					</label>
-				{/each}
-
-				{#if group.items.some(item => item.id === 'commute-time') && layerState[group.id]?.['commute-time']}
-					{@const commuteItem = group.items.find(item => item.id === 'commute-time')}
-					{@const commuteBuckets = commuteItem.cutoffs.map((cutoff, i) => ({
-						label: `${cutoff} min`,
-						color: commuteItem.colors[i],
-					}))}
-					<svg class="legend" width="100%" height="40">
-						{#each commuteBuckets as bucket, i}
-							<rect
-								x={(i * 100) / commuteBuckets.length + '%'}
-								y="0"
-								width={100 / commuteBuckets.length + '%'}
-								height="20"
-								fill={bucket.color}
-								stroke="white"
-								stroke-width="1"
-								opacity="0.8"
-							/>
-						{/each}
-						{#each commuteBuckets as bucket, i}
-							<text
-								class="legend-label"
-								x={`${(i + 0.5) * (100 / commuteBuckets.length)}%`}
-								y="35"
-								text-anchor="middle"
-							>
-								{bucket.label}
-							</text>
-						{/each}
-					</svg>
-				{/if}
-			{/if}
-		</div>
-	{/each}
-</section>
+			</div>
+		{/each}
+	</section>
 
 	<div class="divider"></div>
 
@@ -255,7 +278,10 @@
 				</div>
 			</div>
 		{:else}
-			<p class="empty-state">Select a venue above or click on the map to view its activity and demographic profile.</p>
+			<p class="empty-state">
+				Select a venue above or click on the map to view its activity
+				and demographic profile.
+			</p>
 		{/if}
 	</section>
 
@@ -265,10 +291,10 @@
 	<section class="panel-section panel-section--grow">
 		<h2 class="section-heading">Compare Venues</h2>
 		<p class="empty-state">
-			Side-by-side comparison of multiple selected venues will appear here.
+			Side-by-side comparison of multiple selected venues will appear
+			here.
 		</p>
 	</section>
-
 </aside>
 
 <style>
@@ -279,9 +305,9 @@
 		flex-direction: column;
 		width: 100%;
 		height: 100%;
-		background: #ffffff;
+		background: rgb(246, 246, 246);
 		color: var(--brandBlack);
-		font-family: OpenSans, sans-serif;
+		font-family: Montserrat, sans-serif;
 		font-size: 0.8rem;
 		overflow-y: auto;
 		overflow-x: hidden;
@@ -294,31 +320,33 @@
 	.panel-header {
 		flex-shrink: 0;
 		padding: 16px 16px 14px;
-		background: var(--brandDarkBlue);
-		color: #fff;
+		background: rgb(246, 246, 246);
+		color: #000;
 	}
 
 	.header-org {
 		display: block;
-		font-family: TradeGothic, sans-serif;
+		font-family: Montserrat, sans-serif;
+		font-weight: bold;
 		font-size: 0.65rem;
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
-		color: var(--brandLightBlue);
+		color: rgb(0, 98, 234);
 		margin-bottom: 6px;
 	}
 
 	.header-title {
-		font-family: TradeGothicBold, sans-serif;
+		font-family: Montserrat, sans-serif;
+		font-weight: 600;
 		font-size: 1.05rem;
 		line-height: 1.25;
 		margin: 0 0 10px;
-		color: #fff;
+		color: #000;
 	}
 
 	.header-authors {
 		font-size: 0.7rem;
-		color: rgba(255, 255, 255, 0.6);
+		color: rgba(0, 0, 0, 0.6);
 		margin: 0;
 		line-height: 1.4;
 	}
@@ -342,11 +370,12 @@
 	}
 
 	.section-heading {
-		font-family: TradeGothicBold, sans-serif;
+		font-family: Montserrat, sans-serif;
+		font-weight: bold;
 		font-size: 0.68rem;
 		text-transform: uppercase;
 		letter-spacing: 0.07em;
-		color: var(--brandDarkBlue);
+		color: rgb(0, 98, 234);
 		margin: 0 0 8px;
 	}
 
@@ -378,22 +407,24 @@
 	.venue-select {
 		width: 100%;
 		padding: 7px 28px 7px 10px;
-		font-family: OpenSans, sans-serif;
+		font-family: Montserrat, sans-serif;
 		font-size: 0.78rem;
 		border: 1px solid var(--brandGray);
-		border-radius: 4px;
+		border-radius: 0px;
 		background: #fff;
 		color: var(--brandBlack);
 		appearance: none;
 		-webkit-appearance: none;
 		cursor: pointer;
 		outline: none;
-		transition: border-color 0.15s, box-shadow 0.15s;
+		transition:
+			border-color 0.15s,
+			box-shadow 0.15s;
 		box-sizing: border-box;
 	}
 
 	.venue-select:focus {
-		border-color: var(--brandMedBlue);
+		border-color: rgb(0, 98, 234);
 		box-shadow: 0 0 0 2px rgba(0, 127, 163, 0.18);
 	}
 
@@ -404,7 +435,7 @@
 		transform: translateY(-50%);
 		width: 10px;
 		height: 6px;
-		fill: var(--brandDarkBlue);
+		fill: rgb(0, 98, 234);
 		pointer-events: none;
 	}
 
@@ -466,7 +497,7 @@
 	}
 
 	.toggle-track.on {
-		background: var(--brandMedBlue);
+		background: rgb(0, 98, 234);
 	}
 
 	.toggle-thumb {
@@ -502,25 +533,26 @@
 		color: var(--brandGray70);
 		padding: 5px 8px;
 		font-size: 0.7rem;
-		font-family: OpenSans, sans-serif;
-		border-radius: 999px;
+		font-family: Montserrat, sans-serif;
+		border-radius: 0px;
 		line-height: 1.2;
 		cursor: pointer;
 		transition: all 0.15s ease;
 	}
 
 	.activity-btn.active {
-		background: var(--brandMedBlue);
-		border-color: var(--brandMedBlue);
+		background: rgb(0, 98, 234);
+		border-color: rgb(0, 98, 234);
 		color: #fff;
 	}
 
 	/* ── Venue Description ──────────────────────────────────────────────── */
 
 	.vd-name {
-		font-family: TradeGothicBold, sans-serif;
+		font-family: Montserrat, sans-serif;
+		font-weight: bold;
 		font-size: 0.92rem;
-		color: var(--brandDarkBlue);
+		color: rgb(0, 98, 234);
 		margin: 0 0 4px;
 		line-height: 1.25;
 	}
@@ -537,16 +569,16 @@
 		color: var(--brandBlack);
 		line-height: 1.55;
 		margin: 0;
-		font-style: italic;
 		opacity: 0.65;
 	}
 
 	/* ── Venue Profile ──────────────────────────────────────────────────── */
 
 	.venue-name {
-		font-family: TradeGothicBold, sans-serif;
+		font-family: Montserrat, sans-serif;
+		font-weight: bold;
 		font-size: 0.88rem;
-		color: var(--brandDarkBlue);
+		color: rgb(0, 98, 234);
 		margin: 0 0 10px;
 	}
 
@@ -558,7 +590,7 @@
 
 	.stat-card {
 		background: #f4f5f7;
-		border-radius: 4px;
+		border-radius: 0px;
 		padding: 10px;
 		display: flex;
 		flex-direction: column;
@@ -574,9 +606,10 @@
 	}
 
 	.stat-value {
-		font-family: TradeGothicBold, sans-serif;
+		font-family: Montserrat, sans-serif;
+		font-weight: bold;
 		font-size: 1rem;
-		color: var(--brandDarkBlue);
+		color: rgb(0, 98, 234);
 	}
 
 	.stat-value.placeholder {
@@ -591,6 +624,6 @@
 	.legend-label {
 		font-size: 0.6rem;
 		fill: var(--brandGray60);
-		font-family: OpenSans, sans-serif;
+		font-family: Montserrat, sans-serif;
 	}
 </style>

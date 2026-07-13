@@ -51,8 +51,8 @@
 	// 'https://api.maptiler.com/maps/streets/style.json?key=YOUR_KEY'
 	// 'https://tiles.stadiamaps.com/styles/alidade_smooth.json?api_key=YOUR_KEY'
 
-	const MAP_CENTER = [-79.383, 43.718];
-	const MAP_ZOOM = 10.5;
+	const MAP_CENTER = [-79.363, 43.717];
+	const MAP_ZOOM = 10.386;
 	const MAP_MIN_ZOOM = 8.5;
 	const MAP_MAX_ZOOM = 16;
 	const MAP_MAX_BOUNDS = [
@@ -99,13 +99,23 @@
 			addDemographyLayers();
 			addTorontoBoundary();
 			addCommuteTimeLayer();
+			addCityWards();
 			addNeighbourhoods();
 			addFormerMunicipalities();
 			addTransitLines();
 			addTransitStops();
-			addCityWards();
 			addVenueMarkers();
 			syncLayers();
+		});
+
+		map.on("moveend", () => {
+			const center = map.getCenter();
+			console.log(
+				"Map center:",
+				[center.lng, center.lat],
+				"Zoom:",
+				map.getZoom(),
+			);
 		});
 
 		const resizeObserver = new ResizeObserver(() => map?.resize());
@@ -133,7 +143,7 @@
 			filter: ["==", ["get", "name"], "outside-mask"],
 			paint: {
 				"fill-color": "#ffffff",
-				"fill-opacity": 0.6,
+				"fill-opacity": 0.7,
 			},
 		});
 
@@ -187,8 +197,8 @@
 				["literal", ["LineString", "MultiLineString"]],
 			],
 			paint: {
-				"line-color": "grey",
-				"line-width": 0.8,
+				"line-color": "#000000",
+				"line-width": 0.5,
 				"line-opacity": 1,
 			},
 			layout: { visibility: "none" },
@@ -203,21 +213,22 @@
 			id: "ref-neighbourhoods-label",
 			type: "symbol",
 			source: "neighbourhoods-labels",
+			minzoom: 12,
 			layout: {
 				"text-field": ["get", "name"],
 				"text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
-				"text-size": 8,
+				"text-size": 10,
 				"text-anchor": "center",
 				"text-transform": "uppercase",
 				"symbol-placement": "point",
 				visibility: "none",
 			},
 			paint: {
-				"text-color": "rgb(117, 129, 145)",
-				"text-halo-color": "rgb(242,243,240)",
+				"text-color": "#636363",
+				"text-halo-color": "#ffffff",
 				"text-halo-width": 1,
-				"text-halo-blur": 1,
-				"text-opacity": 0.8,
+				"text-halo-blur": 0,
+				"text-opacity": 1,
 			},
 		});
 	}
@@ -258,9 +269,9 @@
 				["literal", ["LineString", "MultiLineString"]],
 			],
 			paint: {
-				"line-color": "grey",
-				"line-width": 0.8,
-				"line-opacity": 0.8,
+				"line-color": "#000000",
+				"line-width": 0.5,
+				"line-opacity": 1,
 			},
 			layout: { visibility: "none" },
 		});
@@ -286,11 +297,11 @@
 				visibility: "none",
 			},
 			paint: {
-				"text-color": "rgb(117, 129, 145)",
-				"text-halo-color": "rgb(242,243,240)",
+				"text-color": "#636363",
+				"text-halo-color": "#ffffff",
 				"text-halo-width": 1,
-				"text-halo-blur": 1,
-				"text-opacity": 0.8,
+				"text-halo-blur": 0,
+				"text-opacity": 1,
 			},
 		});
 	}
@@ -329,8 +340,8 @@
 				["literal", ["LineString", "MultiLineString"]],
 			],
 			paint: {
-				"line-color": "grey",
-				"line-width": 0.8,
+				"line-color": "#000000",
+				"line-width": 0.5,
 				"line-opacity": 1,
 			},
 			layout: { visibility: "none" },
@@ -348,7 +359,7 @@
 			layout: {
 				"text-field": ["get", "ward_name"],
 				"text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
-				"text-size": 8,
+				"text-size": 9,
 				"text-anchor": "center",
 				"text-transform": "uppercase",
 				"symbol-placement": "point",
@@ -357,11 +368,11 @@
 				visibility: "none",
 			},
 			paint: {
-				"text-color": "rgb(117, 129, 145)",
-				"text-halo-color": "rgb(242,243,240)",
+				"text-color": "#636363",
+				"text-halo-color": "#ffffff",
 				"text-halo-width": 1,
-				"text-halo-blur": 1,
-				"text-opacity": 0.8,
+				"text-halo-blur": 0,
+				"text-opacity": 1,
 			},
 		});
 
@@ -552,8 +563,8 @@
 				filter: ["==", ["get", "mode"], mode.mode],
 				paint: {
 					"line-color": mode.color,
-					"line-width": 0.7,
-					"line-opacity": 0.8,
+					"line-width": 1,
+					"line-opacity": 1,
 				},
 				layout: {
 					visibility: "none",
@@ -911,7 +922,7 @@
 			"case",
 			["==", ["get", "id"], selected],
 			"#DC4633",
-			"#1E3765",
+			"#000000",
 		];
 
 		if (map?.getLayer("venues-circle")) {

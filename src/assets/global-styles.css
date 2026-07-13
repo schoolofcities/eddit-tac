@@ -76,6 +76,10 @@
 	src: url("fonts/OpenSans-BoldItalic.ttf");
 }
 
+@font-face {
+	font-family: Montserrat;
+	src: url("fonts/Montserrat-VariableFont_wght.ttf");
+}
 
 /* brand colours */
 
@@ -171,7 +175,7 @@ h4 {
 }
 
 p {
-	font-family: SourceSerif;
+	font-family: OpenSans, sans-serif;
 	font-weight: normal;
 	color: var(--brandGray90);
 	text-align: left;
@@ -212,12 +216,11 @@ em {
 }
 
 a {
-	color: var(--brandBlack);
+	color: var(--brandGray20);
 	text-decoration: underline;
-	font-family: SourceSerif;
+	/* font-family: SourceSerif; */
 	font-weight: normal;
 }
-
 
 a:hover {
 	color: var(--brandMedGreen);

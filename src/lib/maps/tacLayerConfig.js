@@ -7,11 +7,11 @@
  */
 
 const COLOURS = [
-    "#A3BDF8",
-    "#6F97F1",
-    "#2860E6",
-    "#1F4DB8",
-    "#163A8A"
+    "#99C2F8",
+    "#4D92F1",
+    "#0062EA",
+    "#004EBB",
+    "#00398C"
 ];
 
 export const LAYER_GROUPS = [
@@ -24,19 +24,19 @@ export const LAYER_GROUPS = [
 			{ id: 'pop-density', label: 'Population Density (per km²)', key: 'pop_density_pct', breaks: [3200, 4550, 6300, 8880], colors: COLOURS },
 			{ id: 'median-age', label: 'Median Age', key: 'age_median_count', breaks: [37.2, 40.0, 41.6, 44.4], colors: COLOURS },
 			{ id: 'avg-household-size', label: 'Average Household Size', key: 'pvt_house_avg_size_count', breaks: [2.1, 2.4, 2.6, 2.9], colors: COLOURS },
-			{ id: 'income', label: 'Income (Gini index)', key: 'gini_total_income_count', breaks: [0.29, 0.32, 0.37, 0.42], colors: COLOURS },
+			{ id: 'income', label: 'Income Distribution (Gini index)', key: 'gini_total_income_count', breaks: [0.29, 0.32, 0.37, 0.42], colors: COLOURS },
 			{ id: 'income-after-tax', label: 'Median Income After Tax', key: 'income_aftertax_median_count', breaks: [30720, 32800, 36400, 42960], colors: COLOURS },
-			{ id: 'pct-low-income', label: '% Low Income', key: 'lim_at_prev_pct', breaks: [9.1, 11.2, 13.3, 16.7], colors: COLOURS },
-			{ id: 'pct-bachelors', label: '% Bachelors and Up', key: 'education_bachelor_higher_pct', breaks: [25.5, 32.4, 41.8, 55.0], colors: COLOURS },
-			{ id: 'pct-no-education', label: '% No Education', key: 'education_none_pct', breaks: [8.1, 12.5, 16.7, 20.5], colors: COLOURS },
-			{ id: 'pct-highschool', label: '% High School and Up', key: 'education_secondary_pct', breaks: [18.9, 22.9, 26.4, 29.2], colors: COLOURS },
-			{ id: 'nocs-arts', label: '% NOCs in Arts and Culture', key: 'labour_occupation_5_arts_culture_pct', breaks: [2.1, 3.3, 4.6, 7.9], colors: COLOURS },
-			{ id: 'naics-arts', label: '% NAICS in Arts and Culture', key: 'labour_industry_71_arts_pct', breaks: [1.2, 1.5, 2.0, 2.9], colors: COLOURS },
-			{ id: 'shelter-costs', label: '% Shelter Costs >30% of Income', key: 'housing_shelter_30plus_pct', breaks: [25.2, 28.0, 31.4, 36.1], colors: COLOURS },
-			{ id: 'tenure-renter', label: '% Renting', key: 'housing_tenure_renter_pct', breaks: [27.9, 40.6, 49.8, 60.7], colors: COLOURS },
-			{ id: 'core-housing-need', label: '% Core Housing Need', key: 'housing_core_need_yes_pct', breaks: [14.2, 17.8, 20.9, 24.3], colors: COLOURS },
-			{ id: 'visible-minority', label: '% Visible Minority Status', key: 'visible_minority_yes_pct', breaks: [31.7, 47.7, 64.7, 79.6], colors: COLOURS },
-			{ id: 'pct-no-vehicle', label: '% Households with No Vehicle', key: 'hh_no_veh_pct', breaks: [9.74, 15.20, 22.28, 35.92], colors: COLOURS },
+			{ id: 'pct-low-income', label: 'Low Income Households (%)', key: 'lim_at_prev_pct', breaks: [9.1, 11.2, 13.3, 16.7], colors: COLOURS },
+			{ id: 'pct-bachelors', label: 'Bachelors and Up (%)', key: 'education_bachelor_higher_pct', breaks: [25.5, 32.4, 41.8, 55.0], colors: COLOURS },
+			{ id: 'pct-no-education', label: 'No Education (%)', key: 'education_none_pct', breaks: [8.1, 12.5, 16.7, 20.5], colors: COLOURS },
+			{ id: 'pct-highschool', label: 'High School and Up (%)', key: 'education_secondary_pct', breaks: [18.9, 22.9, 26.4, 29.2], colors: COLOURS },
+			{ id: 'nocs-arts', label: 'NOCs in Arts and Culture (%)', key: 'labour_occupation_5_arts_culture_pct', breaks: [2.1, 3.3, 4.6, 7.9], colors: COLOURS },
+			{ id: 'naics-arts', label: 'NAICS in Arts and Culture (%)', key: 'labour_industry_71_arts_pct', breaks: [1.2, 1.5, 2.0, 2.9], colors: COLOURS },
+			{ id: 'shelter-costs', label: 'Households spending >30% of Income on Housing (%)', key: 'housing_shelter_30plus_pct', breaks: [25.2, 28.0, 31.4, 36.1], colors: COLOURS },
+			{ id: 'tenure-renter', label: 'Households that are Renting (%)', key: 'housing_tenure_renter_pct', breaks: [27.9, 40.6, 49.8, 60.7], colors: COLOURS },
+			{ id: 'core-housing-need', label: 'Core Housing Need (%)', key: 'housing_core_need_yes_pct', breaks: [14.2, 17.8, 20.9, 24.3], colors: COLOURS },
+			{ id: 'visible-minority', label: 'Visible Minority Status (%)', key: 'visible_minority_yes_pct', breaks: [31.7, 47.7, 64.7, 79.6], colors: COLOURS },
+			{ id: 'pct-no-vehicle', label: 'Households with No Vehicle (%)', key: 'hh_no_veh_pct', breaks: [9.74, 15.20, 22.28, 35.92], colors: COLOURS },
 		],
 	},
 	{
