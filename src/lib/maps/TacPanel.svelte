@@ -80,6 +80,7 @@
 
 		{#if selectedVenue}
 			<p class="vd-name">{selectedVenue.name}</p>
+			<p class="vd-type">{selectedVenue.type}</p>
 			<p class="vd-address">
 				{selectedVenue.address}, Toronto, ON {selectedVenue.postalCode}
 			</p>
@@ -229,7 +230,7 @@
 									fill={bucket.color}
 									stroke="white"
 									stroke-width="1"
-									opacity="0.8"
+									opacity="0.5"
 								/>
 							{/each}
 							{#each commuteBuckets as bucket, i}
@@ -555,6 +556,13 @@
 		color: rgb(0, 98, 234);
 		margin: 0 0 4px;
 		line-height: 1.25;
+	}
+
+	.vd-type {
+		font-size: 0.72rem;
+		color: var(--brandGray60);
+		margin: 0 0 6px;
+		line-height: 1.4;
 	}
 
 	.vd-address {

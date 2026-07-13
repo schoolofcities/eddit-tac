@@ -108,16 +108,6 @@
 			syncLayers();
 		});
 
-		map.on("moveend", () => {
-			const center = map.getCenter();
-			console.log(
-				"Map center:",
-				[center.lng, center.lat],
-				"Zoom:",
-				map.getZoom(),
-			);
-		});
-
 		const resizeObserver = new ResizeObserver(() => map?.resize());
 		resizeObserver.observe(mapContainer);
 

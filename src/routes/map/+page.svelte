@@ -1,10 +1,10 @@
 <script>
-	import '../../assets/global-styles.css';
+	import "../../assets/global-styles.css";
 
-	import TacMap   from '$lib/maps/TacMap.svelte';
-	import TacPanel from '$lib/maps/TacPanel.svelte';
-	import { makeInitialLayerState } from '$lib/maps/tacLayerConfig.js';
-	import venuesCentroids from '$data/venues-centroids.geo.json';
+	import TacMap from "$lib/maps/TacMap.svelte";
+	import TacPanel from "$lib/maps/TacPanel.svelte";
+	import { makeInitialLayerState } from "$lib/maps/tacLayerConfig.js";
+	import venuesCentroids from "$data/venues-centroids.geo.json";
 
 	let map = $state(null);
 	let selectedVenueId = $state(null);
@@ -13,39 +13,38 @@
 	// Derive a simple list for the panel dropdown — sorted alphabetically
 	const venues = venuesCentroids.features
 		.map((f) => ({
-			id:         String(f.properties.fid),
-			name:       f.properties.venue_name,
-			address:    f.properties.address,
+			id: String(f.properties.fid),
+			name: f.properties.venue_name,
+			type: f.properties.primary_discipline
+				.replace(/_/g, " ")
+				.replace(/\b\w/g, (c) => c.toUpperCase()),
+			address: f.properties.address,
 			postalCode: f.properties.postal_code,
-			description:  f.properties.venue_description,
+			description: f.properties.venue_description,
 		}))
 		.sort((a, b) => a.name.localeCompare(b.name));
 </script>
 
 <svelte:head>
 	<title>Arts Venue Map | Toronto Arts Council</title>
-	<meta name="description" content="Equitable development initiative: exploring activity, demography, and access across Toronto Arts Council venues." />
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+	<meta
+		name="description"
+		content="Equitable development initiative: exploring activity, demography, and access across Toronto Arts Council venues."
+	/>
+	<meta
+		name="viewport"
+		content="width=device-width, initial-scale=1, minimum-scale=1"
+	/>
 </svelte:head>
 
 <div class="tac-layout">
-
 	<div class="tac-panel-wrap">
-		<TacPanel
-			bind:selectedVenueId
-			bind:layerState
-			{venues}
-		/>
+		<TacPanel bind:selectedVenueId bind:layerState {venues} />
 	</div>
 
 	<div class="tac-map-wrap">
-		<TacMap
-			bind:map
-			bind:selectedVenueId
-			{layerState}
-		/>
+		<TacMap bind:map bind:selectedVenueId {layerState} />
 	</div>
-
 </div>
 
 <style>
@@ -63,7 +62,7 @@
 	.tac-layout {
 		display: flex;
 		flex-direction: row;
-		width:  100vw;
+		width: 100vw;
 		height: 100dvh;
 		overflow: hidden;
 	}
@@ -96,7 +95,7 @@
 		}
 
 		.tac-panel-wrap {
-			width:  100vw;
+			width: 100vw;
 			height: 45dvh;
 			border-right: none;
 			border-top: 1px solid var(--brandGray);
@@ -104,7 +103,7 @@
 		}
 
 		.tac-map-wrap {
-			width:  100vw;
+			width: 100vw;
 			height: 55dvh;
 			order: 1;
 		}
