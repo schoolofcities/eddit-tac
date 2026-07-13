@@ -24,7 +24,7 @@ export const LAYER_GROUPS = [
 			{ id: 'pop-density', label: 'Population Density (per km²)', key: 'pop_density_pct', breaks: [3200, 4550, 6300, 8880], colors: COLOURS },
 			{ id: 'median-age', label: 'Median Age', key: 'age_median_count', breaks: [37.2, 40.0, 41.6, 44.4], colors: COLOURS },
 			{ id: 'avg-household-size', label: 'Average Household Size', key: 'pvt_house_avg_size_count', breaks: [2.1, 2.4, 2.6, 2.9], colors: COLOURS },
-			{ id: 'income', label: 'Income Distribution (Gini index)', key: 'gini_total_income_count', breaks: [0.29, 0.32, 0.37, 0.42], colors: COLOURS },
+			{ id: 'income', label: 'Income Inequality (Gini index)', key: 'gini_total_income_count', breaks: [0.29, 0.32, 0.37, 0.42], colors: COLOURS },
 			{ id: 'income-after-tax', label: 'Median Income After Tax', key: 'income_aftertax_median_count', breaks: [30720, 32800, 36400, 42960], colors: COLOURS },
 			{ id: 'pct-low-income', label: 'Low Income Households (%)', key: 'lim_at_prev_pct', breaks: [9.1, 11.2, 13.3, 16.7], colors: COLOURS },
 			{ id: 'pct-bachelors', label: 'Bachelors and Up (%)', key: 'education_bachelor_higher_pct', breaks: [25.5, 32.4, 41.8, 55.0], colors: COLOURS },

@@ -288,7 +288,7 @@
 			layout: {
 				"text-field": ["get", "name"],
 				"text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
-				"text-size": 10,
+				"text-size": 12,
 				"text-anchor": "center",
 				"text-transform": "uppercase",
 				"symbol-placement": "point",
