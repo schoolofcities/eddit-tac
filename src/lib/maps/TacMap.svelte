@@ -749,8 +749,13 @@
 					case "pct-bachelors":
 					case "pct-no-education":
 					case "pct-highschool":
-					case "nocs-arts":
-					case "naics-arts":
+					// case "nocs-arts":
+					// case "naics-arts":
+					case "labour-creatives":
+					case "labour-cultural-workers":
+					case "labour-cultural-industries":
+					case "labour-independent-artists":
+					case "labour-arts-major":
 					case "shelter-costs":
 					case "tenure-renter":
 					case "core-housing-need":

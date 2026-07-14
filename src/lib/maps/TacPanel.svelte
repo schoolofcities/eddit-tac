@@ -230,7 +230,7 @@
 									fill={bucket.color}
 									stroke="white"
 									stroke-width="1"
-									opacity="0.5"
+									opacity="0.7"
 								/>
 							{/each}
 							{#each commuteBuckets as bucket, i}
