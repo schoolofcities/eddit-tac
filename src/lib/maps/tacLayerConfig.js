@@ -70,10 +70,22 @@ export const LAYER_GROUPS = [
 				id: 'commute-time',
 				label: 'Commute Time (must select venue)',
 				key: null,
-				// Isochrone cutoffs (minutes) present in commute-time-isochrones.geo.json,
-				// matched 1:1 with colors below. Single source of truth for map + legend.
-				cutoffs: [10, 20, 30, 40, 50],
-				colors: ['#2166ac', '#1fa187', '#fde725', '#f8961e', '#d73027'],
+				// Two mutually exclusive periods. Each corresponds to a folder of
+				// per-venue pmtiles files in static/ (commute_time_peak/,
+				// commute_time_offpeak/), one venue_{id}.pmtiles per venue (see
+				// TacMap.svelte). They share the same cutoffs/colors so a single
+				// legend applies to both.
+				options: [
+					{ id: 'peak', label: 'Peak' },
+					{ id: 'off-peak', label: 'Off-Peak' },
+				],
+				// Isochrone cutoff_min values present in each venue's pmtiles file,
+				// matched 1:1 with colors below via an exact-match expression in
+				// TacMap.svelte's commuteTimePaint(). Must match the tileset's
+				// actual cutoff_min values exactly or features render transparent.
+				// Single source of truth for map + legend.
+				cutoffs: [15, 30, 45, 60],
+				colors: ['#2166ac', '#1fac8f', '#f8961e', '#d73027'],
 			},
 		],
 	},
@@ -101,7 +113,7 @@ export function makeInitialLayerState() {
 
 		state[group.id] = {};
 		for (const item of group.items) {
-			state[group.id][item.id] = false;
+			state[group.id][item.id] = item.options ? null : false;
 		}
 	}
 

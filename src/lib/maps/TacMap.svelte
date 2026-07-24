@@ -16,7 +16,6 @@
 	import neighbourhoodsLabels from "$data/neighbourhoods-labels.geo.json";
 	import cityWards from "$data/city-wards.geo.json";
 	import cityWardsLabels from "$data/city-wards-labels.geo.json";
-	import isochrones from "$data/commute-time-isochrones.geo.json";
 
 	import basemapLayers from "$lib/maps/neutral-grey.json";
 	import * as pmtiles from "pmtiles";
@@ -98,7 +97,6 @@
 			mapLoaded = true;
 			addDemographyLayers();
 			addTorontoBoundary();
-			addCommuteTimeLayer();
 			addCityWards();
 			addNeighbourhoods();
 			addFormerMunicipalities();
@@ -680,9 +678,40 @@
 		(g) => g.id === "mobility",
 	).items.find((i) => i.id === "commute-time");
 
-	function commuteTimeFilter(venueId) {
-		// No venue selected -> filter matches nothing, layer shows no features.
-		return ["==", ["get", "venue_id"], venueId ?? "__none__"];
+	function commuteTimeUrl(period, venueId) {
+		const folder = period === "peak" ? "commute_time_peak" : "commute_time_offpeak";
+		return `pmtiles://${folder}/venue_${venueId}.pmtiles`;
+	}
+
+	// Removes and rebuilds the source + layer for one period, pointed at the
+	// given venue. This has to be a full remove/re-add rather than a simple
+	// source.setUrl() swap, because the source-layer name inside each
+	// per-venue pmtiles file is venue_{id} — it's different for every venue,
+	// and MapLibre has no API to change a layer's source-layer after creation.
+	function setCommuteTimeLayer(period, venueId, visible) {
+		if (!map || !venueId) return;
+
+		const id = period === "peak" ? "commute-time-peak" : "commute-time-off-peak";
+
+		if (map.getLayer(id)) map.removeLayer(id);
+		if (map.getSource(id)) map.removeSource(id);
+
+		map.addSource(id, {
+			type: "vector",
+			url: commuteTimeUrl(period, venueId),
+		});
+
+		map.addLayer(
+			{
+				id,
+				type: "fill",
+				source: id,
+				"source-layer": `venue_${venueId}`,
+				paint: commuteTimePaint(),
+				layout: { visibility: visible ? "visible" : "none" },
+			},
+			"ref-wards-fill", // keep it in the same stacking slot it used to occupy
+		);
 	}
 
 	function commuteTimePaint() {
@@ -699,32 +728,6 @@
 			"fill-outline-color": "#000000",
 			"fill-opacity": 0.5,
 		};
-	}
-
-	function addCommuteTimeLayer() {
-		if (!map) return;
-
-		// Isochrone bands typically nest (e.g. the 50-min polygon contains the 40-min
-		// polygon, etc). Sort largest-cutoff-first so smaller/inner bands draw on top.
-		const sortedFeatures = [...isochrones.features].sort(
-			(a, b) => b.properties.cutoff_min - a.properties.cutoff_min,
-		);
-
-		map.addSource("commute-time-isochrones", {
-			type: "geojson",
-			data: { type: "FeatureCollection", features: sortedFeatures },
-		});
-
-		map.addLayer({
-			id: "commute-time",
-			type: "fill",
-			source: "commute-time-isochrones",
-			filter: commuteTimeFilter(selectedVenueId),
-			paint: commuteTimePaint(),
-			layout: {
-				visibility: "none",
-			},
-		});
 	}
 
 	function syncLayers() {
@@ -821,16 +824,30 @@
 
 						break;
 
-					case "commute-time":
-						// TODO: requires selectedVenueId
-						if (map.getLayer(item.id)) {
+					case "commute-time": {
+						// Value is the active option id ("peak" / "off-peak") or null.
+						const period = layerState[group.id]?.[item.id] ?? null;
+
+						if (period && selectedVenueId) {
+							setCommuteTimeLayer(period, selectedVenueId, true);
+						}
+
+						if (map.getLayer("commute-time-peak")) {
 							map.setLayoutProperty(
-								item.id,
+								"commute-time-peak",
 								"visibility",
-								visibility,
+								period === "peak" ? "visible" : "none",
+							);
+						}
+						if (map.getLayer("commute-time-off-peak")) {
+							map.setLayoutProperty(
+								"commute-time-off-peak",
+								"visibility",
+								period === "off-peak" ? "visible" : "none",
 							);
 						}
 						break;
+					}
 
 					case "ref-neighbourhoods":
 						if (map.getLayer("ref-neighbourhoods")) {
@@ -943,9 +960,13 @@
 		}
 	});
 
+	// Handles switching venues while a commute-time period is already active:
+	// rebuilds that period's layer pointed at the newly selected venue's
+	// pmtiles file.
 	$effect(() => {
-		if (!mapLoaded || !map?.getLayer("commute-time")) return;
-		map.setFilter("commute-time", commuteTimeFilter(selectedVenueId));
+		if (!mapLoaded || !selectedVenueId) return;
+		const period = layerState.mobility?.["commute-time"] ?? null;
+		if (period) setCommuteTimeLayer(period, selectedVenueId, true);
 	});
 
 	$effect(() => {
