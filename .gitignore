@@ -16,6 +16,8 @@ data/test3
 
 data/venues/axle
 
+analysis/mobility/graphs
+
 tmp/
 !src/data/
 
