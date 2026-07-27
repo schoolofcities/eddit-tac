@@ -26,6 +26,12 @@
 		layerState[groupId][itemId] = !layerState[groupId][itemId];
 	}
 
+	function setCommutePeriod(groupId, itemId, optionId) {
+		if (!selectedVenueId) return;
+		const current = layerState[groupId]?.[itemId] ?? null;
+		layerState[groupId][itemId] = current === optionId ? null : optionId;
+	}
+
 	function isOn(group, item) {
 		if (group.exclusive) {
 			return layerState[group.id]?.activeId === item.id;
@@ -187,28 +193,56 @@
 					</div>
 				{:else}
 					{#each group.items as item (item.id)}
-						<label
-							class="layer-toggle"
-							class:layer-toggle-disabled={item.id ===
-								"commute-time" && !selectedVenueId}
-						>
-							<span
-								class="toggle-track"
-								class:on={isOn(group, item)}
+						{#if item.options}
+							<div
+								class="commute-period-row"
+								class:layer-toggle-disabled={!selectedVenueId}
 							>
-								<input
-									type="checkbox"
-									checked={isOn(group, item)}
-									onchange={() =>
-										toggleNonExclusive(group.id, item.id)}
-									class="sr-only"
-									disabled={item.id === "commute-time" &&
-										!selectedVenueId}
-								/>
-								<span class="toggle-thumb"></span>
-							</span>
-							<span class="layer-label">{item.label}</span>
-						</label>
+								<span class="layer-label"
+									>{item.label}</span
+								>
+								<div class="commute-period-buttons">
+									{#each item.options as option (option.id)}
+										<button
+											type="button"
+											class="period-btn"
+											class:active={layerState[
+												group.id
+											]?.[item.id] === option.id}
+											disabled={!selectedVenueId}
+											onclick={() =>
+												setCommutePeriod(
+													group.id,
+													item.id,
+													option.id,
+												)}
+										>
+											{option.label}
+										</button>
+									{/each}
+								</div>
+							</div>
+						{:else}
+							<label class="layer-toggle">
+								<span
+									class="toggle-track"
+									class:on={isOn(group, item)}
+								>
+									<input
+										type="checkbox"
+										checked={isOn(group, item)}
+										onchange={() =>
+											toggleNonExclusive(
+												group.id,
+												item.id,
+											)}
+										class="sr-only"
+									/>
+									<span class="toggle-thumb"></span>
+								</span>
+								<span class="layer-label">{item.label}</span>
+							</label>
+						{/if}
 					{/each}
 
 					{#if group.items.some((item) => item.id === "commute-time") && layerState[group.id]?.["commute-time"]}
@@ -503,6 +537,43 @@
 		font-size: 0.77rem;
 		color: var(--brandBlack);
 		line-height: 1.3;
+	}
+
+	.commute-period-row {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		padding: 4px 0;
+	}
+
+	.commute-period-buttons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.period-btn {
+		border: 1px solid var(--brandGray);
+		background: #fff;
+		color: var(--brandGray70);
+		padding: 5px 10px;
+		font-size: 0.7rem;
+		font-family: Montserrat, sans-serif;
+		border-radius: 0px;
+		line-height: 1.2;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.period-btn.active {
+		background: rgb(0, 98, 234);
+		border-color: rgb(0, 98, 234);
+		color: #fff;
+	}
+
+	.period-btn:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
 	}
 
 	.activity-grid {
