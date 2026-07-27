@@ -1,5 +1,6 @@
 <script>
 	import { LAYER_GROUPS } from "$lib/maps/tacLayerConfig.js";
+	import VenueProfile from "$lib/venue-profile/VenueProfile.svelte";
 
 	let {
 		selectedVenueId = $bindable(null),
@@ -259,25 +260,7 @@
 		{#if selectedVenue}
 			<p class="venue-name">{selectedVenue.name}</p>
 
-			<!-- Stat cards placeholder — replace with real data -->
-			<div class="stat-grid">
-				<div class="stat-card">
-					<span class="stat-label">Monthly Visitors</span>
-					<span class="stat-value placeholder">—</span>
-				</div>
-				<div class="stat-card">
-					<span class="stat-label">Catchment Radius</span>
-					<span class="stat-value placeholder">—</span>
-				</div>
-				<div class="stat-card">
-					<span class="stat-label">Equity Index</span>
-					<span class="stat-value placeholder">—</span>
-				</div>
-				<div class="stat-card">
-					<span class="stat-label">Transit Access</span>
-					<span class="stat-value placeholder">—</span>
-				</div>
-			</div>
+			<VenueProfile venueId={selectedVenue.id} />
 		{:else}
 			<p class="empty-state">
 				Select a venue above or click on the map to view its activity
@@ -588,40 +571,6 @@
 		font-size: 0.88rem;
 		color: rgb(0, 98, 234);
 		margin: 0 0 10px;
-	}
-
-	.stat-grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 8px;
-	}
-
-	.stat-card {
-		background: #f4f5f7;
-		border-radius: 0px;
-		padding: 10px;
-		display: flex;
-		flex-direction: column;
-		gap: 4px;
-	}
-
-	.stat-label {
-		font-size: 0.65rem;
-		color: var(--brandGray60);
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		line-height: 1.3;
-	}
-
-	.stat-value {
-		font-family: Montserrat, sans-serif;
-		font-weight: bold;
-		font-size: 1rem;
-		color: rgb(0, 98, 234);
-	}
-
-	.stat-value.placeholder {
-		color: var(--brandGray);
 	}
 
 	.legend {
