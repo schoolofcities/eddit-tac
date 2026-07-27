@@ -13,12 +13,26 @@
 	);
 
 	function setExclusive(groupId, itemId) {
+		if (groupId === "activity" && !selectedVenueId) return;
 		const current = layerState[groupId]?.activeId ?? null;
-		layerState[groupId].activeId = current === itemId ? null : itemId;
+		const next = current === itemId ? null : itemId;
+		layerState[groupId].activeId = next;
+		applyCrossGroupExclusion(groupId, next);
 	}
 
 	function setExclusiveFromSelect(groupId, value) {
-		layerState[groupId].activeId = value || null;
+		const next = value || null;
+		layerState[groupId].activeId = next;
+		applyCrossGroupExclusion(groupId, next);
+	}
+
+	// Demography and Activity are two choropleths drawn on the same ADA
+	// polygons — picking one clears the other so they never compete for the
+	// same fill layer.
+	function applyCrossGroupExclusion(groupId, next) {
+		if (!next) return;
+		if (groupId === "demography") layerState.activity.activeId = null;
+		else if (groupId === "activity") layerState.demography.activeId = null;
 	}
 
 	function toggleNonExclusive(groupId, itemId) {
@@ -39,6 +53,40 @@
 		return layerState[group.id]?.[item.id] ?? false;
 	}
 </script>
+
+{#snippet breaksLegend(item)}
+	<svg class="legend" width="100%" height="40">
+		{#each item.colors as color, i}
+			<rect
+				x={i * 20 + "%"}
+				y="0"
+				width="20%"
+				height="20"
+				fill={color}
+				stroke="white"
+				stroke-width="1"
+				opacity="0.4"
+			/>
+		{/each}
+
+		{#each item.breaks as value, i}
+			<text
+				class="legend-label"
+				x={`${(i + 1) * 20}%`}
+				y="35"
+				text-anchor="middle"
+			>
+				{#if i === 0}
+					&lt;{value.toLocaleString()}
+				{:else if i === item.breaks.length - 1}
+					&gt;{value.toLocaleString()}
+				{:else}
+					{value.toLocaleString()}
+				{/if}
+			</text>
+		{/each}
+	</svg>
+{/snippet}
 
 <aside class="panel">
 	<!-- ── Header ─────────────────────────────────────────────────────── -->
@@ -145,37 +193,7 @@
 						)}
 
 						{#if selectedItem}
-							<svg class="legend" width="100%" height="40">
-								{#each selectedItem.colors as color, i}
-									<rect
-										x={i * 20 + "%"}
-										y="0"
-										width="20%"
-										height="20"
-										fill={color}
-										stroke="white"
-										stroke-width="1"
-										opacity="0.4"
-									/>
-								{/each}
-
-								{#each selectedItem.breaks as value, i}
-									<text
-										class="legend-label"
-										x={`${(i + 1) * 20}%`}
-										y="35"
-										text-anchor="middle"
-									>
-										{#if i === 0}
-											&lt;{value.toLocaleString()}
-										{:else if i === selectedItem.breaks.length - 1}
-											&gt;{value.toLocaleString()}
-										{:else}
-											{value.toLocaleString()}
-										{/if}
-									</text>
-								{/each}
-							</svg>
+							{@render breaksLegend(selectedItem)}
 						{/if}
 					{/if}
 				{:else if group.ui === "radio-toggles"}
@@ -185,12 +203,37 @@
 								type="button"
 								class="activity-btn"
 								class:active={isOn(group, item)}
+								disabled={group.id === "activity" &&
+									!selectedVenueId}
 								onclick={() => setExclusive(group.id, item.id)}
 							>
 								{item.label}
 							</button>
 						{/each}
 					</div>
+
+					{#if group.id === "activity"}
+						{#if !selectedVenueId}
+							<p class="section-desc activity-hint">
+								Select a venue to view its home-origin
+								activity layers.
+							</p>
+						{:else if layerState.activity?.activeId}
+							{@const selectedActivityItem = group.items.find(
+								(item) =>
+									item.id === layerState.activity.activeId,
+							)}
+							{#if selectedActivityItem}
+								{@render breaksLegend(selectedActivityItem)}
+								<p class="section-desc legend-caption">
+									% share of the venue's estimated
+									home-origin visitors, by census ADA
+									(quintiles). Gray ADAs had no estimated
+									visitors.
+								</p>
+							{/if}
+						{/if}
+					{/if}
 				{:else}
 					{#each group.items as item (item.id)}
 						{#if item.options}
@@ -599,6 +642,19 @@
 		background: rgb(0, 98, 234);
 		border-color: rgb(0, 98, 234);
 		color: #fff;
+	}
+
+	.activity-btn:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	.activity-hint {
+		margin: 6px 0 0;
+	}
+
+	.legend-caption {
+		margin: 4px 0 0;
 	}
 
 	/* ── Venue Description ──────────────────────────────────────────────── */

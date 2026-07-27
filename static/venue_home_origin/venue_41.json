@@ -1,0 +1,1955 @@
+{
+  "35200001": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200002": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200003": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200004": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200005": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200006": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200007": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200008": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200009": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200011": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200012": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200014": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200015": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200016": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200017": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200018": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200019": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200020": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200021": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200022": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200024": {
+    "all": 0.1345,
+    "evening": 0.0,
+    "nine-five": 0.5455,
+    "weekdays": 0.176,
+    "weekends": 0.0
+  },
+  "35200025": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200026": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200027": {
+    "all": 0.0012,
+    "evening": 0.0,
+    "nine-five": 0.0049,
+    "weekdays": 0.0016,
+    "weekends": 0.0
+  },
+  "35200028": {
+    "all": 0.2227,
+    "evening": 0.0087,
+    "nine-five": 0.882,
+    "weekdays": 0.2915,
+    "weekends": 0.0
+  },
+  "35200029": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200030": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200035": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200036": {
+    "all": 0.1758,
+    "evening": 0.2902,
+    "nine-five": 0.0,
+    "weekdays": 0.2301,
+    "weekends": 0.0
+  },
+  "35200037": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200038": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200040": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200041": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200042": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200044": {
+    "all": 0.0286,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.1159
+  },
+  "35200045": {
+    "all": 0.0139,
+    "evening": 0.0229,
+    "nine-five": 0.0,
+    "weekdays": 0.0181,
+    "weekends": 0.0
+  },
+  "35200046": {
+    "all": 0.2472,
+    "evening": 0.4081,
+    "nine-five": 0.0,
+    "weekdays": 0.2126,
+    "weekends": 0.3435
+  },
+  "35200047": {
+    "all": 0.3511,
+    "evening": 0.0,
+    "nine-five": 1.4247,
+    "weekdays": 0.4596,
+    "weekends": 0.0
+  },
+  "35200049": {
+    "all": 0.3106,
+    "evening": 0.5128,
+    "nine-five": 0.0,
+    "weekdays": 0.1974,
+    "weekends": 0.6483
+  },
+  "35200050": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200051": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200052": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200053": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200054": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200055": {
+    "all": 0.6611,
+    "evening": 1.0915,
+    "nine-five": 0.0,
+    "weekdays": 0.7243,
+    "weekends": 0.4368
+  },
+  "35200056": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200057": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200058": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200059": {
+    "all": 0.005,
+    "evening": 0.0082,
+    "nine-five": 0.0,
+    "weekdays": 0.0065,
+    "weekends": 0.0
+  },
+  "35200060": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200061": {
+    "all": 0.581,
+    "evening": 0.7703,
+    "nine-five": 0.4642,
+    "weekdays": 0.6106,
+    "weekends": 0.4642
+  },
+  "35200062": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200063": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200064": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200065": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200066": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200067": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200068": {
+    "all": 0.2238,
+    "evening": 0.0,
+    "nine-five": 0.9078,
+    "weekdays": 0.2928,
+    "weekends": 0.0
+  },
+  "35200069": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200070": {
+    "all": 0.4768,
+    "evening": 0.3936,
+    "nine-five": 0.9672,
+    "weekdays": 0.624,
+    "weekends": 0.0
+  },
+  "35200071": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200072": {
+    "all": 0.4754,
+    "evening": 0.3925,
+    "nine-five": 0.9643,
+    "weekdays": 0.3111,
+    "weekends": 0.9643
+  },
+  "35200073": {
+    "all": 0.1356,
+    "evening": 0.2239,
+    "nine-five": 0.0,
+    "weekdays": 0.1774,
+    "weekends": 0.0
+  },
+  "35200075": {
+    "all": 0.1284,
+    "evening": 0.0,
+    "nine-five": 0.5208,
+    "weekdays": 0.168,
+    "weekends": 0.0
+  },
+  "35200077": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200078": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200079": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200080": {
+    "all": 0.1672,
+    "evening": 0.0,
+    "nine-five": 0.6054,
+    "weekdays": 0.1953,
+    "weekends": 0.0731
+  },
+  "35200082": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200083": {
+    "all": 0.0005,
+    "evening": 0.0008,
+    "nine-five": 0.0,
+    "weekdays": 0.0006,
+    "weekends": 0.0
+  },
+  "35200085": {
+    "all": 0.2365,
+    "evening": 0.0001,
+    "nine-five": 0.0004,
+    "weekdays": 0.1549,
+    "weekends": 0.4794
+  },
+  "35200086": {
+    "all": 0.2571,
+    "evening": 0.4246,
+    "nine-five": 0.0,
+    "weekdays": 0.3365,
+    "weekends": 0.0
+  },
+  "35200087": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200088": {
+    "all": 0.4426,
+    "evening": 0.7309,
+    "nine-five": 0.0,
+    "weekdays": 0.5793,
+    "weekends": 0.0
+  },
+  "35200089": {
+    "all": 0.0111,
+    "evening": 0.0184,
+    "nine-five": 0.0,
+    "weekdays": 0.0145,
+    "weekends": 0.0
+  },
+  "35200090": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200091": {
+    "all": 0.1535,
+    "evening": 0.2534,
+    "nine-five": 0.0,
+    "weekdays": 0.2008,
+    "weekends": 0.0
+  },
+  "35200092": {
+    "all": 0.5696,
+    "evening": 0.0,
+    "nine-five": 0.8964,
+    "weekdays": 0.2892,
+    "weekends": 1.4147
+  },
+  "35200093": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200095": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200096": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200097": {
+    "all": 0.1277,
+    "evening": 0.1999,
+    "nine-five": 0.0269,
+    "weekdays": 0.1671,
+    "weekends": 0.0
+  },
+  "35200098": {
+    "all": 2.0007,
+    "evening": 3.2935,
+    "nine-five": 0.0107,
+    "weekdays": 1.7737,
+    "weekends": 2.619
+  },
+  "35200099": {
+    "all": 0.0991,
+    "evening": 0.0,
+    "nine-five": 0.402,
+    "weekdays": 0.1297,
+    "weekends": 0.0
+  },
+  "35200100": {
+    "all": 0.0468,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0613,
+    "weekends": 0.0
+  },
+  "35200101": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200102": {
+    "all": 0.1384,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.1811,
+    "weekends": 0.0
+  },
+  "35200103": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200104": {
+    "all": 0.004,
+    "evening": 0.0065,
+    "nine-five": 0.0,
+    "weekdays": 0.0052,
+    "weekends": 0.0
+  },
+  "35200105": {
+    "all": 0.1395,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.1825,
+    "weekends": 0.0
+  },
+  "35200106": {
+    "all": 0.3586,
+    "evening": 0.592,
+    "nine-five": 0.0,
+    "weekdays": 0.0101,
+    "weekends": 1.4235
+  },
+  "35200108": {
+    "all": 0.605,
+    "evening": 0.0,
+    "nine-five": 1.2272,
+    "weekdays": 0.3959,
+    "weekends": 1.2272
+  },
+  "35200109": {
+    "all": 0.0008,
+    "evening": 0.0014,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0034
+  },
+  "35200110": {
+    "all": 0.2649,
+    "evening": 0.0,
+    "nine-five": 1.0745,
+    "weekdays": 0.3466,
+    "weekends": 0.0
+  },
+  "35200111": {
+    "all": 0.0274,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0359,
+    "weekends": 0.0
+  },
+  "35200115": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200116": {
+    "all": 0.3393,
+    "evening": 0.5603,
+    "nine-five": 0.0,
+    "weekdays": 0.4425,
+    "weekends": 0.005
+  },
+  "35200117": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200118": {
+    "all": 0.0632,
+    "evening": 0.0,
+    "nine-five": 0.1282,
+    "weekdays": 0.0414,
+    "weekends": 0.1282
+  },
+  "35200120": {
+    "all": 0.0539,
+    "evening": 0.0891,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.2189
+  },
+  "35200121": {
+    "all": 0.4622,
+    "evening": 0.7631,
+    "nine-five": 0.0,
+    "weekdays": 0.3024,
+    "weekends": 0.9376
+  },
+  "35200122": {
+    "all": 0.0059,
+    "evening": 0.0097,
+    "nine-five": 0.0,
+    "weekdays": 0.0077,
+    "weekends": 0.0
+  },
+  "35200123": {
+    "all": 0.0321,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.1302
+  },
+  "35200124": {
+    "all": 0.2679,
+    "evening": 0.4423,
+    "nine-five": 0.0,
+    "weekdays": 0.3506,
+    "weekends": 0.0
+  },
+  "35200125": {
+    "all": 0.0971,
+    "evening": 0.0,
+    "nine-five": 0.394,
+    "weekdays": 0.1271,
+    "weekends": 0.0
+  },
+  "35200126": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200127": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200128": {
+    "all": 0.2597,
+    "evening": 0.2653,
+    "nine-five": 0.4018,
+    "weekdays": 0.2586,
+    "weekends": 0.2521
+  },
+  "35200129": {
+    "all": 0.0371,
+    "evening": 0.0612,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.1503
+  },
+  "35200132": {
+    "all": 0.0871,
+    "evening": 0.0,
+    "nine-five": 0.3534,
+    "weekdays": 0.114,
+    "weekends": 0.0
+  },
+  "35200133": {
+    "all": 0.0635,
+    "evening": 0.1048,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.2574
+  },
+  "35200134": {
+    "all": 0.4004,
+    "evening": 0.0,
+    "nine-five": 0.1959,
+    "weekdays": 0.0632,
+    "weekends": 1.4286
+  },
+  "35200135": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200136": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200137": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200138": {
+    "all": 0.6312,
+    "evening": 0.0,
+    "nine-five": 2.5608,
+    "weekdays": 0.8261,
+    "weekends": 0.0
+  },
+  "35200139": {
+    "all": 0.1659,
+    "evening": 0.274,
+    "nine-five": 0.0,
+    "weekdays": 0.1086,
+    "weekends": 0.3366
+  },
+  "35200141": {
+    "all": 0.3815,
+    "evening": 0.1204,
+    "nine-five": 1.2521,
+    "weekdays": 0.4993,
+    "weekends": 0.0
+  },
+  "35200142": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200144": {
+    "all": 0.0761,
+    "evening": 0.1257,
+    "nine-five": 0.0,
+    "weekdays": 0.0498,
+    "weekends": 0.1544
+  },
+  "35200145": {
+    "all": 0.521,
+    "evening": 0.0,
+    "nine-five": 1.0906,
+    "weekdays": 0.6819,
+    "weekends": 0.0
+  },
+  "35200146": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200148": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200149": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200151": {
+    "all": 0.1968,
+    "evening": 0.325,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.7985
+  },
+  "35200153": {
+    "all": 0.0801,
+    "evening": 0.1323,
+    "nine-five": 0.0,
+    "weekdays": 0.1049,
+    "weekends": 0.0
+  },
+  "35200154": {
+    "all": 0.1191,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.4831
+  },
+  "35200155": {
+    "all": 0.122,
+    "evening": 0.1959,
+    "nine-five": 0.0135,
+    "weekdays": 0.1596,
+    "weekends": 0.0
+  },
+  "35200156": {
+    "all": 1.3047,
+    "evening": 0.0,
+    "nine-five": 5.2933,
+    "weekdays": 1.7075,
+    "weekends": 0.0
+  },
+  "35200157": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200158": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200159": {
+    "all": 0.0648,
+    "evening": 0.0659,
+    "nine-five": 0.101,
+    "weekdays": 0.0848,
+    "weekends": 0.0
+  },
+  "35200160": {
+    "all": 0.3839,
+    "evening": 0.4609,
+    "nine-five": 0.1162,
+    "weekdays": 0.5024,
+    "weekends": 0.0
+  },
+  "35200161": {
+    "all": 0.0821,
+    "evening": 0.1356,
+    "nine-five": 0.0,
+    "weekdays": 0.1075,
+    "weekends": 0.0
+  },
+  "35200162": {
+    "all": 0.3923,
+    "evening": 0.6478,
+    "nine-five": 0.0,
+    "weekdays": 0.5135,
+    "weekends": 0.0
+  },
+  "35200163": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200164": {
+    "all": 0.0238,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0312,
+    "weekends": 0.0
+  },
+  "35200165": {
+    "all": 0.0028,
+    "evening": 0.0,
+    "nine-five": 0.0115,
+    "weekdays": 0.0037,
+    "weekends": 0.0
+  },
+  "35200166": {
+    "all": 0.4072,
+    "evening": 0.256,
+    "nine-five": 1.0229,
+    "weekdays": 0.5329,
+    "weekends": 0.0
+  },
+  "35200168": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200169": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200171": {
+    "all": 0.5799,
+    "evening": 0.9576,
+    "nine-five": 0.0,
+    "weekdays": 0.759,
+    "weekends": 0.0
+  },
+  "35200172": {
+    "all": 0.0521,
+    "evening": 0.0,
+    "nine-five": 0.2116,
+    "weekdays": 0.0682,
+    "weekends": 0.0
+  },
+  "35200173": {
+    "all": 0.2198,
+    "evening": 0.363,
+    "nine-five": 0.0,
+    "weekdays": 0.2877,
+    "weekends": 0.0
+  },
+  "35200174": {
+    "all": 0.0117,
+    "evening": 0.0,
+    "nine-five": 0.0477,
+    "weekdays": 0.0154,
+    "weekends": 0.0
+  },
+  "35200176": {
+    "all": 0.1735,
+    "evening": 0.1316,
+    "nine-five": 0.3807,
+    "weekdays": 0.1942,
+    "weekends": 0.1021
+  },
+  "35200177": {
+    "all": 0.2148,
+    "evening": 0.3546,
+    "nine-five": 0.0,
+    "weekdays": 0.2811,
+    "weekends": 0.0
+  },
+  "35200178": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200179": {
+    "all": 0.1455,
+    "evening": 0.2403,
+    "nine-five": 0.0,
+    "weekdays": 0.1905,
+    "weekends": 0.0
+  },
+  "35200180": {
+    "all": 0.5499,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.4566,
+    "weekends": 0.8152
+  },
+  "35200181": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200182": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200183": {
+    "all": 0.1824,
+    "evening": 0.3011,
+    "nine-five": 0.0,
+    "weekdays": 0.2387,
+    "weekends": 0.0
+  },
+  "35200184": {
+    "all": 0.2371,
+    "evening": 0.3914,
+    "nine-five": 0.0,
+    "weekdays": 0.3103,
+    "weekends": 0.0
+  },
+  "35200187": {
+    "all": 0.0284,
+    "evening": 0.0469,
+    "nine-five": 0.0,
+    "weekdays": 0.0372,
+    "weekends": 0.0
+  },
+  "35200188": {
+    "all": 0.2179,
+    "evening": 0.3599,
+    "nine-five": 0.0,
+    "weekdays": 0.1955,
+    "weekends": 0.2782
+  },
+  "35200189": {
+    "all": 0.0433,
+    "evening": 0.0716,
+    "nine-five": 0.0,
+    "weekdays": 0.0567,
+    "weekends": 0.0
+  },
+  "35200190": {
+    "all": 0.2584,
+    "evening": 0.4266,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 1.0483
+  },
+  "35200191": {
+    "all": 0.0583,
+    "evening": 0.0,
+    "nine-five": 0.2367,
+    "weekdays": 0.0764,
+    "weekends": 0.0
+  },
+  "35200192": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200195": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200196": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200197": {
+    "all": 0.064,
+    "evening": 0.1056,
+    "nine-five": 0.0,
+    "weekdays": 0.0837,
+    "weekends": 0.0
+  },
+  "35200198": {
+    "all": 0.2095,
+    "evening": 0.0128,
+    "nine-five": 0.4215,
+    "weekdays": 0.1411,
+    "weekends": 0.4126
+  },
+  "35200199": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200200": {
+    "all": 0.2475,
+    "evening": 0.4086,
+    "nine-five": 0.0,
+    "weekdays": 0.3239,
+    "weekends": 0.0
+  },
+  "35200201": {
+    "all": 0.015,
+    "evening": 0.0195,
+    "nine-five": 0.0,
+    "weekdays": 0.0197,
+    "weekends": 0.0
+  },
+  "35200203": {
+    "all": 0.222,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.9006
+  },
+  "35200204": {
+    "all": 0.0453,
+    "evening": 0.0748,
+    "nine-five": 0.0,
+    "weekdays": 0.0593,
+    "weekends": 0.0
+  },
+  "35200205": {
+    "all": 0.021,
+    "evening": 0.0346,
+    "nine-five": 0.0,
+    "weekdays": 0.0275,
+    "weekends": 0.0
+  },
+  "35200206": {
+    "all": 0.1632,
+    "evening": 0.2695,
+    "nine-five": 0.0,
+    "weekdays": 0.2136,
+    "weekends": 0.0
+  },
+  "35200207": {
+    "all": 0.1695,
+    "evening": 0.2714,
+    "nine-five": 0.0152,
+    "weekdays": 0.2182,
+    "weekends": 0.0116
+  },
+  "35200208": {
+    "all": 0.033,
+    "evening": 0.0545,
+    "nine-five": 0.0,
+    "weekdays": 0.0432,
+    "weekends": 0.0
+  },
+  "35200209": {
+    "all": 0.3058,
+    "evening": 0.5049,
+    "nine-five": 0.0,
+    "weekdays": 0.4002,
+    "weekends": 0.0
+  },
+  "35200210": {
+    "all": 0.0215,
+    "evening": 0.0354,
+    "nine-five": 0.0,
+    "weekdays": 0.0281,
+    "weekends": 0.0
+  },
+  "35200211": {
+    "all": 0.038,
+    "evening": 0.047,
+    "nine-five": 0.0,
+    "weekdays": 0.0373,
+    "weekends": 0.0385
+  },
+  "35200212": {
+    "all": 0.0866,
+    "evening": 0.0627,
+    "nine-five": 0.0988,
+    "weekdays": 0.0815,
+    "weekends": 0.0988
+  },
+  "35200214": {
+    "all": 0.0323,
+    "evening": 0.0533,
+    "nine-five": 0.0,
+    "weekdays": 0.0211,
+    "weekends": 0.0655
+  },
+  "35200215": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200216": {
+    "all": 0.219,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.2866,
+    "weekends": 0.0
+  },
+  "35200217": {
+    "all": 0.0156,
+    "evening": 0.0258,
+    "nine-five": 0.0,
+    "weekdays": 0.0204,
+    "weekends": 0.0
+  },
+  "35200218": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200219": {
+    "all": 0.291,
+    "evening": 0.4657,
+    "nine-five": 0.0,
+    "weekdays": 0.3695,
+    "weekends": 0.0351
+  },
+  "35200220": {
+    "all": 1.859,
+    "evening": 2.0371,
+    "nine-five": 1.4219,
+    "weekdays": 1.3823,
+    "weekends": 3.2568
+  },
+  "35200221": {
+    "all": 0.0002,
+    "evening": 0.0,
+    "nine-five": 0.0007,
+    "weekdays": 0.0002,
+    "weekends": 0.0
+  },
+  "35200222": {
+    "all": 0.0707,
+    "evening": 0.1167,
+    "nine-five": 0.0,
+    "weekdays": 0.0463,
+    "weekends": 0.1434
+  },
+  "35200223": {
+    "all": 0.6064,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.6346,
+    "weekends": 0.4929
+  },
+  "35200224": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200226": {
+    "all": 1.4209,
+    "evening": 1.6332,
+    "nine-five": 0.4453,
+    "weekdays": 1.2018,
+    "weekends": 2.0392
+  },
+  "35200228": {
+    "all": 0.1236,
+    "evening": 0.2041,
+    "nine-five": 0.0,
+    "weekdays": 0.1617,
+    "weekends": 0.0
+  },
+  "35200229": {
+    "all": 1.5543,
+    "evening": 2.0451,
+    "nine-five": 0.0,
+    "weekdays": 1.621,
+    "weekends": 1.2811
+  },
+  "35200230": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200232": {
+    "all": 1.2459,
+    "evening": 1.1934,
+    "nine-five": 1.1437,
+    "weekdays": 1.0007,
+    "weekends": 1.9527
+  },
+  "35200233": {
+    "all": 0.0318,
+    "evening": 0.0526,
+    "nine-five": 0.0,
+    "weekdays": 0.0224,
+    "weekends": 0.0597
+  },
+  "35200234": {
+    "all": 0.3233,
+    "evening": 0.4946,
+    "nine-five": 0.0,
+    "weekdays": 0.3916,
+    "weekends": 0.0979
+  },
+  "35200236": {
+    "all": 0.0051,
+    "evening": 0.0,
+    "nine-five": 0.0207,
+    "weekdays": 0.0067,
+    "weekends": 0.0
+  },
+  "35200237": {
+    "all": 0.0765,
+    "evening": 0.1264,
+    "nine-five": 0.0,
+    "weekdays": 0.1002,
+    "weekends": 0.0
+  },
+  "35200238": {
+    "all": 0.6521,
+    "evening": 0.8082,
+    "nine-five": 0.374,
+    "weekdays": 0.655,
+    "weekends": 0.615
+  },
+  "35200241": {
+    "all": 4.6341,
+    "evening": 5.2783,
+    "nine-five": 2.113,
+    "weekdays": 3.5816,
+    "weekends": 7.6981
+  },
+  "35200242": {
+    "all": 2.9352,
+    "evening": 4.0305,
+    "nine-five": 0.735,
+    "weekdays": 3.212,
+    "weekends": 1.9514
+  },
+  "35200243": {
+    "all": 1.2641,
+    "evening": 1.791,
+    "nine-five": 0.728,
+    "weekdays": 0.9446,
+    "weekends": 2.2003
+  },
+  "35200244": {
+    "all": 0.7822,
+    "evening": 1.2859,
+    "nine-five": 0.0014,
+    "weekdays": 0.5593,
+    "weekends": 1.4396
+  },
+  "35200245": {
+    "all": 0.0699,
+    "evening": 0.1153,
+    "nine-five": 0.0,
+    "weekdays": 0.0457,
+    "weekends": 0.1417
+  },
+  "35200246": {
+    "all": 1.0646,
+    "evening": 1.1743,
+    "nine-five": 0.472,
+    "weekdays": 0.7728,
+    "weekends": 1.9237
+  },
+  "35200247": {
+    "all": 1.3226,
+    "evening": 1.4756,
+    "nine-five": 0.3528,
+    "weekdays": 1.0678,
+    "weekends": 2.0556
+  },
+  "35200248": {
+    "all": 16.1723,
+    "evening": 16.739,
+    "nine-five": 11.3212,
+    "weekdays": 15.6229,
+    "weekends": 18.5756
+  },
+  "35200249": {
+    "all": 1.6295,
+    "evening": 2.096,
+    "nine-five": 0.0,
+    "weekdays": 1.5455,
+    "weekends": 1.8199
+  },
+  "35200250": {
+    "all": 0.1674,
+    "evening": 0.0,
+    "nine-five": 0.6792,
+    "weekdays": 0.2191,
+    "weekends": 0.0
+  },
+  "35200252": {
+    "all": 0.5063,
+    "evening": 0.836,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 2.0542
+  },
+  "35200253": {
+    "all": 1.2138,
+    "evening": 0.7085,
+    "nine-five": 0.4325,
+    "weekdays": 0.7351,
+    "weekends": 2.6762
+  },
+  "35200255": {
+    "all": 1.3647,
+    "evening": 1.2489,
+    "nine-five": 0.9717,
+    "weekdays": 1.1676,
+    "weekends": 1.9171
+  },
+  "35200256": {
+    "all": 0.6021,
+    "evening": 0.9941,
+    "nine-five": 0.0,
+    "weekdays": 0.394,
+    "weekends": 1.2214
+  },
+  "35200257": {
+    "all": 0.5315,
+    "evening": 0.5434,
+    "nine-five": 0.8211,
+    "weekdays": 0.6956,
+    "weekends": 0.0
+  },
+  "35200258": {
+    "all": 0.1124,
+    "evening": 0.1856,
+    "nine-five": 0.0,
+    "weekdays": 0.1471,
+    "weekends": 0.0
+  },
+  "35200259": {
+    "all": 0.1391,
+    "evening": 0.2296,
+    "nine-five": 0.0,
+    "weekdays": 0.182,
+    "weekends": 0.0
+  },
+  "35200260": {
+    "all": 0.6047,
+    "evening": 0.9985,
+    "nine-five": 0.0,
+    "weekdays": 0.7914,
+    "weekends": 0.0
+  },
+  "35200261": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200262": {
+    "all": 0.5128,
+    "evening": 0.8366,
+    "nine-five": 0.0284,
+    "weekdays": 0.6698,
+    "weekends": 0.0039
+  },
+  "35200263": {
+    "all": 0.0568,
+    "evening": 0.0,
+    "nine-five": 0.2304,
+    "weekdays": 0.0743,
+    "weekends": 0.0
+  },
+  "35200264": {
+    "all": 3.8221,
+    "evening": 2.2746,
+    "nine-five": 8.4926,
+    "weekdays": 4.1186,
+    "weekends": 2.7438
+  },
+  "35200265": {
+    "all": 1.7317,
+    "evening": 1.2502,
+    "nine-five": 1.6177,
+    "weekdays": 1.2313,
+    "weekends": 3.2089
+  },
+  "35200267": {
+    "all": 0.3308,
+    "evening": 0.3259,
+    "nine-five": 0.5415,
+    "weekdays": 0.433,
+    "weekends": 0.0
+  },
+  "35200268": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200269": {
+    "all": 1.6654,
+    "evening": 1.3619,
+    "nine-five": 1.3774,
+    "weekdays": 1.2378,
+    "weekends": 2.9197
+  },
+  "35200270": {
+    "all": 4.6281,
+    "evening": 2.5615,
+    "nine-five": 6.2588,
+    "weekdays": 5.5066,
+    "weekends": 1.7066
+  },
+  "35200272": {
+    "all": 0.3502,
+    "evening": 0.5782,
+    "nine-five": 0.0,
+    "weekdays": 0.2596,
+    "weekends": 0.6159
+  },
+  "35200273": {
+    "all": 1.0702,
+    "evening": 0.0611,
+    "nine-five": 2.1821,
+    "weekdays": 1.4006,
+    "weekends": 0.0
+  },
+  "35200274": {
+    "all": 0.0558,
+    "evening": 0.0,
+    "nine-five": 0.2264,
+    "weekdays": 0.073,
+    "weekends": 0.0
+  },
+  "35200275": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200278": {
+    "all": 2.2065,
+    "evening": 0.7554,
+    "nine-five": 7.1034,
+    "weekdays": 2.8869,
+    "weekends": 0.0027
+  },
+  "35200282": {
+    "all": 0.6672,
+    "evening": 0.6658,
+    "nine-five": 1.2158,
+    "weekdays": 0.8732,
+    "weekends": 0.0
+  },
+  "35200284": {
+    "all": 0.0437,
+    "evening": 0.0244,
+    "nine-five": 0.0,
+    "weekdays": 0.0379,
+    "weekends": 0.06
+  },
+  "35200285": {
+    "all": 0.288,
+    "evening": 0.4755,
+    "nine-five": 0.0,
+    "weekdays": 0.3769,
+    "weekends": 0.0
+  },
+  "35200286": {
+    "all": 0.3693,
+    "evening": 0.6097,
+    "nine-five": 0.0,
+    "weekdays": 0.4833,
+    "weekends": 0.0
+  },
+  "35200288": {
+    "all": 0.4186,
+    "evening": 0.6912,
+    "nine-five": 0.0,
+    "weekdays": 0.4876,
+    "weekends": 0.187
+  },
+  "35200289": {
+    "all": 0.7213,
+    "evening": 1.1909,
+    "nine-five": 0.0574,
+    "weekdays": 0.4831,
+    "weekends": 1.486
+  },
+  "35200290": {
+    "all": 2.3704,
+    "evening": 3.914,
+    "nine-five": 6.8685,
+    "weekdays": 3.1023,
+    "weekends": 2.7455
+  },
+  "35200291": {
+    "all": 0.2994,
+    "evening": 0.4943,
+    "nine-five": 0.0,
+    "weekdays": 0.2001,
+    "weekends": 0.5941
+  },
+  "35200292": {
+    "all": 0.0148,
+    "evening": 0.0245,
+    "nine-five": 0.0,
+    "weekdays": 0.0194,
+    "weekends": 0.0
+  },
+  "35200293": {
+    "all": 0.2247,
+    "evening": 0.2852,
+    "nine-five": 0.2108,
+    "weekdays": 0.2941,
+    "weekends": 0.0
+  },
+  "35200295": {
+    "all": 0.0137,
+    "evening": 0.0226,
+    "nine-five": 0.0,
+    "weekdays": 0.0179,
+    "weekends": 0.0
+  },
+  "35200296": {
+    "all": 0.502,
+    "evening": 0.2638,
+    "nine-five": 1.3116,
+    "weekdays": 0.5077,
+    "weekends": 0.4628
+  },
+  "35200297": {
+    "all": 0.4107,
+    "evening": 0.1447,
+    "nine-five": 1.3107,
+    "weekdays": 0.5375,
+    "weekends": 0.0
+  },
+  "35200299": {
+    "all": 0.1659,
+    "evening": 0.019,
+    "nine-five": 0.0466,
+    "weekdays": 0.2172,
+    "weekends": 0.0
+  },
+  "35200300": {
+    "all": 0.0041,
+    "evening": 0.0068,
+    "nine-five": 0.0,
+    "weekdays": 0.0054,
+    "weekends": 0.0
+  },
+  "35200301": {
+    "all": 0.0086,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0113,
+    "weekends": 0.0
+  },
+  "35200302": {
+    "all": 0.3326,
+    "evening": 0.0,
+    "nine-five": 0.8996,
+    "weekdays": 0.2902,
+    "weekends": 0.4498
+  },
+  "35200303": {
+    "all": 0.1501,
+    "evening": 0.0,
+    "nine-five": 0.4059,
+    "weekdays": 0.1309,
+    "weekends": 0.2029
+  },
+  "35200304": {
+    "all": 0.0878,
+    "evening": 0.1449,
+    "nine-five": 0.2169,
+    "weekdays": 0.1149,
+    "weekends": 0.0542
+  },
+  "35200306": {
+    "all": 0.5095,
+    "evening": 0.2929,
+    "nine-five": 0.6286,
+    "weekdays": 0.6668,
+    "weekends": 0.0
+  },
+  "35200307": {
+    "all": 0.7008,
+    "evening": 0.7283,
+    "nine-five": 0.2921,
+    "weekdays": 0.9171,
+    "weekends": 0.0
+  },
+  "35200308": {
+    "all": 0.0291,
+    "evening": 0.0,
+    "nine-five": 0.1179,
+    "weekdays": 0.038,
+    "weekends": 0.0
+  },
+  "35200309": {
+    "all": 0.1134,
+    "evening": 0.048,
+    "nine-five": 0.342,
+    "weekdays": 0.1484,
+    "weekends": 0.0
+  },
+  "35200310": {
+    "all": 0.5005,
+    "evening": 0.5163,
+    "nine-five": 0.0,
+    "weekdays": 0.655,
+    "weekends": 0.0
+  },
+  "35200311": {
+    "all": 0.3595,
+    "evening": 0.5936,
+    "nine-five": 0.0,
+    "weekdays": 0.4705,
+    "weekends": 0.0
+  },
+  "35200313": {
+    "all": 0.3072,
+    "evening": 0.5073,
+    "nine-five": 0.0,
+    "weekdays": 0.4021,
+    "weekends": 0.0
+  },
+  "35200314": {
+    "all": 0.3415,
+    "evening": 0.5638,
+    "nine-five": 0.0,
+    "weekdays": 0.4469,
+    "weekends": 0.0
+  },
+  "35200316": {
+    "all": 0.268,
+    "evening": 0.0003,
+    "nine-five": 1.0866,
+    "weekdays": 0.3508,
+    "weekends": 0.0
+  },
+  "35200318": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200320": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200321": {
+    "all": 0.0164,
+    "evening": 0.027,
+    "nine-five": 0.0,
+    "weekdays": 0.0214,
+    "weekends": 0.0
+  },
+  "35200323": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200324": {
+    "all": 0.1026,
+    "evening": 0.1694,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.4161
+  },
+  "35200325": {
+    "all": 0.2495,
+    "evening": 0.412,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 1.0124
+  },
+  "35200326": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200327": {
+    "all": 0.6704,
+    "evening": 0.5727,
+    "nine-five": 0.0,
+    "weekdays": 0.4539,
+    "weekends": 1.3126
+  },
+  "35200328": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200329": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200330": {
+    "all": 0.0,
+    "evening": 0.0,
+    "nine-five": 0.0,
+    "weekdays": 0.0,
+    "weekends": 0.0
+  },
+  "35200331": {
+    "all": 0.2911,
+    "evening": 0.0686,
+    "nine-five": 1.0124,
+    "weekdays": 0.381,
+    "weekends": 0.0
+  },
+  "35200332": {
+    "all": 0.9375,
+    "evening": 0.8494,
+    "nine-five": 1.8899,
+    "weekdays": 1.0923,
+    "weekends": 0.4174
+  },
+  "35200333": {
+    "all": 0.0443,
+    "evening": 0.0538,
+    "nine-five": 0.0477,
+    "weekdays": 0.058,
+    "weekends": 0.0
+  },
+  "35200334": {
+    "all": 1.8051,
+    "evening": 2.2647,
+    "nine-five": 1.845,
+    "weekdays": 1.7259,
+    "weekends": 1.9732
+  },
+  "35200335": {
+    "all": 0.1234,
+    "evening": 0.1019,
+    "nine-five": 0.2504,
+    "weekdays": 0.1616,
+    "weekends": 0.0
+  },
+  "35200336": {
+    "all": 0.3357,
+    "evening": 0.5542,
+    "nine-five": 0.0,
+    "weekdays": 0.4393,
+    "weekends": 0.0
+  },
+  "35202000": {
+    "all": 2.3606,
+    "evening": 2.8192,
+    "nine-five": 3.2186,
+    "weekdays": 2.586,
+    "weekends": 1.5606
+  },
+  "35202001": {
+    "all": 0.2215,
+    "evening": 0.0,
+    "nine-five": 0.8986,
+    "weekdays": 0.2899,
+    "weekends": 0.0
+  },
+  "35202003": {
+    "all": 0.0044,
+    "evening": 0.0072,
+    "nine-five": 0.0,
+    "weekdays": 0.0057,
+    "weekends": 0.0
+  },
+  "35202004": {
+    "all": 0.9777,
+    "evening": 0.6541,
+    "nine-five": 0.461,
+    "weekdays": 0.9733,
+    "weekends": 0.9491
+  }
+}

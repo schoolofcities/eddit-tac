@@ -96,6 +96,7 @@
 		map.on("load", () => {
 			mapLoaded = true;
 			addDemographyLayers();
+			addActivityLayers();
 			addTorontoBoundary();
 			addCityWards();
 			addNeighbourhoods();
@@ -614,6 +615,10 @@
 		map.addSource("toronto-ada", {
 			type: "geojson",
 			data: torontoAda,
+			// Lets setFeatureState/removeFeatureState target ADAs by their
+			// census ADAUID — used by the Activity layers below to attach
+			// per-venue data without re-uploading the 279-polygon geometry.
+			promoteId: "ADAUID",
 		});
 
 		map.addSource("building-census", {
@@ -670,6 +675,90 @@
 				},
 				layout: { visibility: "none" },
 			});
+		}
+	}
+
+	// Activity layers share the same ADA polygons as demography, but the
+	// data behind them is per-venue and fetched at runtime (see
+	// applyActivityFeatureState), so it's attached via feature-state keyed by
+	// ADAUID rather than baked into the GeoJSON's properties like demography.
+	function activityFillColor(item) {
+		const stepColor = [
+			"step",
+			["feature-state", item.key],
+			item.colors[0],
+			...item.breaks.flatMap((b, i) => [b, item.colors[i + 1]]),
+		];
+
+		// No fetched value yet, or a genuine 0% share, both render as the
+		// same neutral "no visitors from here" gray demography uses for
+		// missing data.
+		return [
+			"case",
+			[
+				"any",
+				["==", ["feature-state", item.key], null],
+				["==", ["feature-state", item.key], 0],
+			],
+			"#cbcbcb",
+			stepColor,
+		];
+	}
+
+	function addActivityLayers() {
+		if (!map) return;
+
+		const activityGroup = LAYER_GROUPS.find((g) => g.id === "activity");
+		for (const item of activityGroup.items) {
+			map.addLayer({
+				id: item.id,
+				type: "fill",
+				source: "toronto-ada",
+				paint: {
+					"fill-color": activityFillColor(item),
+					"fill-opacity": FILL_OPACITY,
+				},
+				layout: { visibility: "none" },
+			});
+		}
+	}
+
+	// Per-venue home-origin activity, fetched lazily and cached by venue id.
+	// Files are pretty-printed JSON under static/venue_home_origin/ (see
+	// analysis/activity/interpolate_venue_activity_ct.ipynb) — small enough
+	// (~25-35KB) that there's no need to prefetch every venue up front.
+	const activityDataCache = new Map();
+
+	async function loadVenueActivityData(venueId) {
+		if (activityDataCache.has(venueId)) return activityDataCache.get(venueId);
+
+		let data = null;
+		try {
+			const response = await fetch(`venue_home_origin/venue_${venueId}.json`);
+			if (response.ok) data = await response.json();
+		} catch {
+			data = null;
+		}
+
+		activityDataCache.set(venueId, data);
+		return data;
+	}
+
+	// Clears any previously-set activity feature-state, then (if a venue is
+	// selected) fetches its data and re-attaches it per ADA. Runs on every
+	// venue change regardless of whether an activity layer is currently
+	// visible, so the data's already in place by the time someone clicks one.
+	async function applyActivityFeatureState(venueId) {
+		if (!map || !map.getSource("toronto-ada")) return;
+
+		map.removeFeatureState({ source: "toronto-ada" });
+		if (!venueId) return;
+
+		const data = await loadVenueActivityData(venueId);
+		if (!data) return;
+
+		for (const [adaId, values] of Object.entries(data)) {
+			map.setFeatureState({ source: "toronto-ada", id: adaId }, values);
 		}
 	}
 
@@ -786,7 +875,6 @@
 					case "activity-daytime":
 					case "activity-weekdays":
 					case "activity-weekends":
-						// TODO: activity map layer
 						if (map.getLayer(item.id)) {
 							map.setLayoutProperty(
 								item.id,
@@ -967,6 +1055,14 @@
 		if (!mapLoaded || !selectedVenueId) return;
 		const period = layerState.mobility?.["commute-time"] ?? null;
 		if (period) setCommuteTimeLayer(period, selectedVenueId, true);
+	});
+
+	// Refreshes the Activity layers' feature-state whenever the selected venue
+	// changes, whether or not an activity layer is currently visible — so the
+	// data's already in place if/when one gets toggled on.
+	$effect(() => {
+		if (!mapLoaded) return;
+		applyActivityFeatureState(selectedVenueId);
 	});
 
 	$effect(() => {

@@ -50,11 +50,18 @@ export const LAYER_GROUPS = [
 		exclusive: true,
 		ui: 'radio-toggles',
 		items: [
-			{ id: 'activity-all', label: 'All', key: null },
-			{ id: 'activity-evenings', label: 'Evenings (5-11PM)', key: null },
-			{ id: 'activity-daytime', label: 'Daytime (9AM-5PM)', key: null },
-			{ id: 'activity-weekdays', label: 'Weekdays', key: null },
-			{ id: 'activity-weekends', label: 'Weekends', key: null },
+			// `key` is the time_period field read out of each venue's
+			// static/venue_home_origin/venue_<id>.json (via MapLibre feature-state,
+			// since the data is per-venue and fetched at runtime — see TacMap.svelte).
+			// `breaks`/`colors` are quintile breakpoints (20/40/60/80th percentile of
+			// nonzero % share, pooled across all venues) computed in
+			// analysis/activity/interpolate_venue_activity_ct.ipynb, reusing the same
+			// blue ramp as the demography layers for visual consistency.
+			{ id: 'activity-all', label: 'All', key: 'all', breaks: [0.042, 0.106, 0.221, 0.565], colors: COLOURS },
+			{ id: 'activity-evenings', label: 'Evenings (5-11PM)', key: 'evening', breaks: [0.044, 0.123, 0.293, 0.82], colors: COLOURS },
+			{ id: 'activity-daytime', label: 'Daytime (9AM-5PM)', key: 'nine-five', breaks: [0.052, 0.146, 0.333, 0.938], colors: COLOURS },
+			{ id: 'activity-weekdays', label: 'Weekdays', key: 'weekdays', breaks: [0.043, 0.11, 0.235, 0.638], colors: COLOURS },
+			{ id: 'activity-weekends', label: 'Weekends', key: 'weekends', breaks: [0.051, 0.145, 0.33, 0.914], colors: COLOURS },
 		],
 	},
 	{
