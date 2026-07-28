@@ -26,13 +26,20 @@
 		applyCrossGroupExclusion(groupId, next);
 	}
 
-	// Demography and Activity are two choropleths drawn on the same ADA
-	// polygons — picking one clears the other so they never compete for the
-	// same fill layer.
+	// Demography, Activity, and Commute Time are three fill layers drawn on
+	// the same map surface — picking one clears the other two so they never
+	// compete for the same visual space. "except" is the layer that was just
+	// activated and should be left alone.
+	function clearOtherExclusiveLayers(except) {
+		if (except !== "demography") layerState.demography.activeId = null;
+		if (except !== "activity") layerState.activity.activeId = null;
+		if (except !== "commute-time") layerState.mobility["commute-time"] = null;
+	}
+
 	function applyCrossGroupExclusion(groupId, next) {
 		if (!next) return;
-		if (groupId === "demography") layerState.activity.activeId = null;
-		else if (groupId === "activity") layerState.demography.activeId = null;
+		if (groupId !== "demography" && groupId !== "activity") return;
+		clearOtherExclusiveLayers(groupId);
 	}
 
 	function toggleNonExclusive(groupId, itemId) {
@@ -43,7 +50,9 @@
 	function setCommutePeriod(groupId, itemId, optionId) {
 		if (!selectedVenueId) return;
 		const current = layerState[groupId]?.[itemId] ?? null;
-		layerState[groupId][itemId] = current === optionId ? null : optionId;
+		const next = current === optionId ? null : optionId;
+		layerState[groupId][itemId] = next;
+		if (next) clearOtherExclusiveLayers("commute-time");
 	}
 
 	function isOn(group, item) {
