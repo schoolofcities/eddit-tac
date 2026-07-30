@@ -77,14 +77,21 @@ export const LAYER_GROUPS = [
 				id: 'commute-time',
 				label: 'Commute Time (must select venue)',
 				key: null,
-				// Two mutually exclusive periods. Each corresponds to a folder of
-				// per-venue pmtiles files in static/ (commute_time_peak/,
-				// commute_time_offpeak/), one venue_{id}.pmtiles per venue (see
-				// TacMap.svelte). They share the same cutoffs/colors so a single
-				// legend applies to both.
+				// Seven mutually exclusive categories. Each option's id is also the
+				// name of its folder of per-venue pmtiles files in static/
+				// (overall_typical/, peak_all/, offpeak_all/, weekday_peak/,
+				// weekday_offpeak/, weekend_peak/, weekend_offpeak/), one
+				// venue_{id}.pmtiles per venue (see TacMap.svelte's
+				// commuteTimeUrl()). They share the same cutoffs/colors so a
+				// single legend applies to all of them.
 				options: [
-					{ id: 'peak', label: 'Peak' },
-					{ id: 'off-peak', label: 'Off-Peak' },
+					{ id: 'overall_typical', label: 'Overall Typical' },
+					{ id: 'peak_all', label: 'Peak (All Days)' },
+					{ id: 'offpeak_all', label: 'Off-Peak (All Days)' },
+					{ id: 'weekday_peak', label: 'Weekday Peak' },
+					{ id: 'weekday_offpeak', label: 'Weekday Off-Peak' },
+					{ id: 'weekend_peak', label: 'Weekend Peak' },
+					{ id: 'weekend_offpeak', label: 'Weekend Off-Peak' },
 				],
 				// Isochrone cutoff_min values present in each venue's pmtiles file,
 				// matched 1:1 with colors below via an exact-match expression in

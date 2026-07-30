@@ -768,8 +768,10 @@
 	).items.find((i) => i.id === "commute-time");
 
 	function commuteTimeUrl(period, venueId) {
-		const folder = period === "peak" ? "commute_time_peak" : "commute_time_offpeak";
-		return `pmtiles://${folder}/venue_${venueId}.pmtiles`;
+		// `period` is one of the option ids in tacLayerConfig.js's commute-time
+		// item, which are named to match their static/ folder 1:1
+		// (e.g. "weekday_peak" -> static/weekday_peak/venue_{id}.pmtiles).
+		return `pmtiles://${period}/venue_${venueId}.pmtiles`;
 	}
 
 	// Removes and rebuilds the source + layer for one period, pointed at the
@@ -780,7 +782,7 @@
 	function setCommuteTimeLayer(period, venueId, visible) {
 		if (!map || !venueId) return;
 
-		const id = period === "peak" ? "commute-time-peak" : "commute-time-off-peak";
+		const id = `commute-time-${period}`;
 
 		if (map.getLayer(id)) map.removeLayer(id);
 		if (map.getSource(id)) map.removeSource(id);
@@ -913,26 +915,25 @@
 						break;
 
 					case "commute-time": {
-						// Value is the active option id ("peak" / "off-peak") or null.
+						// Value is the active option id (one of the 7 category ids
+						// in tacLayerConfig.js) or null.
 						const period = layerState[group.id]?.[item.id] ?? null;
 
 						if (period && selectedVenueId) {
 							setCommuteTimeLayer(period, selectedVenueId, true);
 						}
 
-						if (map.getLayer("commute-time-peak")) {
-							map.setLayoutProperty(
-								"commute-time-peak",
-								"visibility",
-								period === "peak" ? "visible" : "none",
-							);
-						}
-						if (map.getLayer("commute-time-off-peak")) {
-							map.setLayoutProperty(
-								"commute-time-off-peak",
-								"visibility",
-								period === "off-peak" ? "visible" : "none",
-							);
+						// Hide every other category's layer (if it's been built
+						// before) so only the active one shows.
+						for (const option of item.options) {
+							const layerId = `commute-time-${option.id}`;
+							if (map.getLayer(layerId)) {
+								map.setLayoutProperty(
+									layerId,
+									"visibility",
+									period === option.id ? "visible" : "none",
+								);
+							}
 						}
 						break;
 					}
