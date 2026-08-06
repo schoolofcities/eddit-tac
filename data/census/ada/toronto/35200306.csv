@@ -92,6 +92,15 @@ GEO_NAME,CHARACTERISTIC_ID,CHARACTERISTIC_NAME,CHARACTERISTIC_CODE,C1_COUNT_TOTA
 35200306,1695,"    Visible minority, n.i.e.",visible_minority_nie,330.0,4.9
 35200306,1696,    Multiple visible minorities,visible_minority_multiple,210.0,3.1
 35200306,1697,  Not a visible minority,visible_minority_no,3520.0,52.3
+35200306,1983,Total - Mobility status 5 years ago - 25% sample data,mobility_total,6530.0,100.0
+35200306,1984,  Non-movers,mobility_non_movers,3385.0,51.8
+35200306,1985,  Movers,mobility_movers,3145.0,48.2
+35200306,1986,    Non-migrants,mobility_non_migrants,1625.0,24.9
+35200306,1987,    Migrants,mobility_migrants,1520.0,23.3
+35200306,1988,      Internal migrants,mobility_internal_migrants,825.0,12.6
+35200306,1989,        Intraprovincial migrants,mobility_intraprovincial_migrants,605.0,9.3
+35200306,1990,        Interprovincial migrants,mobility_interprovincial_migrants,220.0,3.4
+35200306,1991,      External migrants,mobility_external_migrants,695.0,10.6
 35200306,1998,"Total - Highest certificate, diploma or degree for the population aged 15 years and over in private households - 25% sample data",education_total,6125.0,100.0
 35200306,1999,"  No certificate, diploma or degree",education_none,930.0,15.2
 35200306,2000,  High (secondary) school diploma or equivalency certificate,education_secondary,1490.0,24.3
@@ -160,3 +169,17 @@ GEO_NAME,CHARACTERISTIC_ID,CHARACTERISTIC_NAME,CHARACTERISTIC_CODE,C1_COUNT_TOTA
 35200306,2279,    72 Accommodation and food services,labour_industry_72_accommodation,365.0,8.7
 35200306,2280,    81 Other services (except public administration),labour_industry_81_other_services,130.0,3.1
 35200306,2281,    91 Public administration,labour_industry_91_public_admin,140.0,3.3
+35200306,2603,Total - Main mode of commuting for the employed labour force aged 15 years and over with a usual place of work or no fixed workplace address - 25% sample data,commute_mode_total,1895.0,100.0
+35200306,2604,"  Car, truck or van",commute_mode_car_truck_van,670.0,35.4
+35200306,2605,"    Car, truck or van - as a driver",commute_mode_car_driver,590.0,31.1
+35200306,2606,"    Car, truck or van - as a passenger",commute_mode_car_passenger,80.0,4.2
+35200306,2607,  Public transit,commute_mode_transit,725.0,38.3
+35200306,2608,  Walked,commute_mode_walked,310.0,16.4
+35200306,2609,  Bicycle,commute_mode_bicycle,120.0,6.3
+35200306,2610,  Other method,commute_mode_other,70.0,3.7
+35200306,2611,Total - Commuting duration for the employed labour force aged 15 years and over with a usual place of work or no fixed workplace address - 25% sample data,commute_duration_total,1895.0,100.0
+35200306,2612,  Less than 15 minutes,commute_duration_under15,300.0,15.8
+35200306,2613,  15 to 29 minutes,commute_duration_15_29,645.0,34.0
+35200306,2614,  30 to 44 minutes,commute_duration_30_44,530.0,28.0
+35200306,2615,  45 to 59 minutes,commute_duration_45_59,200.0,10.6
+35200306,2616,  60 minutes and over,commute_duration_60plus,225.0,11.9
