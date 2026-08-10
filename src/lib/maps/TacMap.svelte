@@ -40,16 +40,6 @@
 		layers: basemapLayers,
 	};
 
-	// const MAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
-
-	// Other easy swaps:
-	// 'https://tiles.openfreemap.org/styles/positron'
-	// 'https://tiles.openfreemap.org/styles/bright'
-	// 'https://tiles.openfreemap.org/styles/liberty'
-	// 'https://api.protomaps.com/styles/v2/light.json?key=YOUR_KEY'
-	// 'https://api.maptiler.com/maps/streets/style.json?key=YOUR_KEY'
-	// 'https://tiles.stadiamaps.com/styles/alidade_smooth.json?api_key=YOUR_KEY'
-
 	const MAP_CENTER = [-79.363, 43.717];
 	const MAP_ZOOM = 10.386;
 	const MAP_MIN_ZOOM = 8.5;
@@ -768,9 +758,9 @@
 	).items.find((i) => i.id === "commute-time");
 
 	function commuteTimeUrl(period, venueId) {
-		// `period` is one of the option ids in tacLayerConfig.js's commute-time
-		// item, which are named to match their static/ folder 1:1
-		// (e.g. "weekday_peak" -> static/weekday_peak/venue_{id}.pmtiles).
+		// `period` is tacLayerConfig.js's commute-time item.period, named to
+		// match its static/ folder 1:1
+		// (e.g. "overall_typical" -> static/overall_typical/venue_{id}.pmtiles).
 		return `pmtiles://${period}/venue_${venueId}.pmtiles`;
 	}
 
@@ -915,25 +905,27 @@
 						break;
 
 					case "commute-time": {
-						// Value is the active option id (one of the 7 category ids
-						// in tacLayerConfig.js) or null.
-						const period = layerState[group.id]?.[item.id] ?? null;
+						// Value is now a plain on/off toggle rather than a chosen
+						// category id, since only one period (item.period) is wired
+						// up.
+						const isCommuteOn =
+							layerState[group.id]?.[item.id] ?? false;
 
-						if (period && selectedVenueId) {
-							setCommuteTimeLayer(period, selectedVenueId, true);
+						if (isCommuteOn && selectedVenueId) {
+							setCommuteTimeLayer(
+								item.period,
+								selectedVenueId,
+								true,
+							);
 						}
 
-						// Hide every other category's layer (if it's been built
-						// before) so only the active one shows.
-						for (const option of item.options) {
-							const layerId = `commute-time-${option.id}`;
-							if (map.getLayer(layerId)) {
-								map.setLayoutProperty(
-									layerId,
-									"visibility",
-									period === option.id ? "visible" : "none",
-								);
-							}
+						const layerId = `commute-time-${item.period}`;
+						if (map.getLayer(layerId)) {
+							map.setLayoutProperty(
+								layerId,
+								"visibility",
+								isCommuteOn ? "visible" : "none",
+							);
 						}
 						break;
 					}
@@ -1049,13 +1041,14 @@
 		}
 	});
 
-	// Handles switching venues while a commute-time period is already active:
-	// rebuilds that period's layer pointed at the newly selected venue's
-	// pmtiles file.
+	// Handles switching venues while the commute-time toggle is already on:
+	// rebuilds that layer pointed at the newly selected venue's pmtiles file.
 	$effect(() => {
 		if (!mapLoaded || !selectedVenueId) return;
-		const period = layerState.mobility?.["commute-time"] ?? null;
-		if (period) setCommuteTimeLayer(period, selectedVenueId, true);
+		const isCommuteOn = layerState.mobility?.["commute-time"] ?? false;
+		if (isCommuteOn) {
+			setCommuteTimeLayer(commuteTimeItem.period, selectedVenueId, true);
+		}
 	});
 
 	// Refreshes the Activity layers' feature-state whenever the selected venue

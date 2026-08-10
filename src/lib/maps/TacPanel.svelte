@@ -33,7 +33,7 @@
 	function clearOtherExclusiveLayers(except) {
 		if (except !== "demography") layerState.demography.activeId = null;
 		if (except !== "activity") layerState.activity.activeId = null;
-		if (except !== "commute-time") layerState.mobility["commute-time"] = null;
+		if (except !== "commute-time") layerState.mobility["commute-time"] = false;
 	}
 
 	function applyCrossGroupExclusion(groupId, next) {
@@ -44,15 +44,11 @@
 
 	function toggleNonExclusive(groupId, itemId) {
 		if (itemId === "commute-time" && !selectedVenueId) return;
-		layerState[groupId][itemId] = !layerState[groupId][itemId];
-	}
-
-	function setCommutePeriod(groupId, itemId, optionId) {
-		if (!selectedVenueId) return;
-		const current = layerState[groupId]?.[itemId] ?? null;
-		const next = current === optionId ? null : optionId;
+		const next = !layerState[groupId][itemId];
 		layerState[groupId][itemId] = next;
-		if (next) clearOtherExclusiveLayers("commute-time");
+		if (itemId === "commute-time" && next) {
+			clearOtherExclusiveLayers("commute-time");
+		}
 	}
 
 	function isOn(group, item) {
@@ -245,56 +241,31 @@
 					{/if}
 				{:else}
 					{#each group.items as item (item.id)}
-						{#if item.options}
-							<div
-								class="commute-period-row"
-								class:layer-toggle-disabled={!selectedVenueId}
+						<label
+							class="layer-toggle"
+							class:layer-toggle-disabled={item.id ===
+								"commute-time" && !selectedVenueId}
+						>
+							<span
+								class="toggle-track"
+								class:on={isOn(group, item)}
 							>
-								<span class="layer-label"
-									>{item.label}</span
-								>
-								<div class="commute-period-buttons">
-									{#each item.options as option (option.id)}
-										<button
-											type="button"
-											class="period-btn"
-											class:active={layerState[
-												group.id
-											]?.[item.id] === option.id}
-											disabled={!selectedVenueId}
-											onclick={() =>
-												setCommutePeriod(
-													group.id,
-													item.id,
-													option.id,
-												)}
-										>
-											{option.label}
-										</button>
-									{/each}
-								</div>
-							</div>
-						{:else}
-							<label class="layer-toggle">
-								<span
-									class="toggle-track"
-									class:on={isOn(group, item)}
-								>
-									<input
-										type="checkbox"
-										checked={isOn(group, item)}
-										onchange={() =>
-											toggleNonExclusive(
-												group.id,
-												item.id,
-											)}
-										class="sr-only"
-									/>
-									<span class="toggle-thumb"></span>
-								</span>
-								<span class="layer-label">{item.label}</span>
-							</label>
-						{/if}
+								<input
+									type="checkbox"
+									checked={isOn(group, item)}
+									disabled={item.id === "commute-time" &&
+										!selectedVenueId}
+									onchange={() =>
+										toggleNonExclusive(
+											group.id,
+											item.id,
+										)}
+									class="sr-only"
+								/>
+								<span class="toggle-thumb"></span>
+							</span>
+							<span class="layer-label">{item.label}</span>
+						</label>
 					{/each}
 
 					{#if group.items.some((item) => item.id === "commute-time") && layerState[group.id]?.["commute-time"]}
@@ -589,43 +560,6 @@
 		font-size: 0.77rem;
 		color: var(--brandBlack);
 		line-height: 1.3;
-	}
-
-	.commute-period-row {
-		display: flex;
-		flex-direction: column;
-		gap: 5px;
-		padding: 4px 0;
-	}
-
-	.commute-period-buttons {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 6px;
-	}
-
-	.period-btn {
-		border: 1px solid var(--brandGray);
-		background: #fff;
-		color: var(--brandGray70);
-		padding: 5px 10px;
-		font-size: 0.7rem;
-		font-family: Montserrat, sans-serif;
-		border-radius: 0px;
-		line-height: 1.2;
-		cursor: pointer;
-		transition: all 0.15s ease;
-	}
-
-	.period-btn.active {
-		background: rgb(0, 98, 234);
-		border-color: rgb(0, 98, 234);
-		color: #fff;
-	}
-
-	.period-btn:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
 	}
 
 	.activity-grid {

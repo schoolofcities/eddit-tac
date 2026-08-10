@@ -1,11 +1,3 @@
-/**
- * Map layer catalog.
- *
- * group.exclusive: one active item at a time
- * group.ui: UI hint for panel rendering
- * item.key: optional data field key to connect once data is wired
- */
-
 const COLOURS = [
     "#99C2F8",
     "#4D92F1",
@@ -50,13 +42,6 @@ export const LAYER_GROUPS = [
 		exclusive: true,
 		ui: 'radio-toggles',
 		items: [
-			// `key` is the time_period field read out of each venue's
-			// static/venue_home_origin/venue_<id>.json (via MapLibre feature-state,
-			// since the data is per-venue and fetched at runtime — see TacMap.svelte).
-			// `breaks`/`colors` are quintile breakpoints (20/40/60/80th percentile of
-			// nonzero % share, pooled across all venues) computed in
-			// analysis/activity/interpolate_venue_activity_ct.ipynb, reusing the same
-			// blue ramp as the demography layers for visual consistency.
 			{ id: 'activity-all', label: 'All', key: 'all', breaks: [0.042, 0.106, 0.221, 0.565], colors: COLOURS },
 			{ id: 'activity-evenings', label: 'Evenings (5-11PM)', key: 'evening', breaks: [0.044, 0.123, 0.293, 0.82], colors: COLOURS },
 			{ id: 'activity-daytime', label: 'Daytime (9AM-5PM)', key: 'nine-five', breaks: [0.052, 0.146, 0.333, 0.938], colors: COLOURS },
@@ -72,32 +57,11 @@ export const LAYER_GROUPS = [
 		items: [
 			{ id: 'transit-rail', label: 'Rail', key: null },
 			{ id: 'transit-streetcars-busses', label: 'Streetcars & Busses', key: null },
-			// { id: 'transit-busses', label: 'Busses', key: null },
 			{
 				id: 'commute-time',
 				label: 'Commute Time (must select venue)',
 				key: null,
-				// Seven mutually exclusive categories. Each option's id is also the
-				// name of its folder of per-venue pmtiles files in static/
-				// (overall_typical/, peak_all/, offpeak_all/, weekday_peak/,
-				// weekday_offpeak/, weekend_peak/, weekend_offpeak/), one
-				// venue_{id}.pmtiles per venue (see TacMap.svelte's
-				// commuteTimeUrl()). They share the same cutoffs/colors so a
-				// single legend applies to all of them.
-				options: [
-					{ id: 'overall_typical', label: 'Overall Typical' },
-					{ id: 'peak_all', label: 'Peak (All Days)' },
-					{ id: 'offpeak_all', label: 'Off-Peak (All Days)' },
-					{ id: 'weekday_peak', label: 'Weekday Peak' },
-					{ id: 'weekday_offpeak', label: 'Weekday Off-Peak' },
-					{ id: 'weekend_peak', label: 'Weekend Peak' },
-					{ id: 'weekend_offpeak', label: 'Weekend Off-Peak' },
-				],
-				// Isochrone cutoff_min values present in each venue's pmtiles file,
-				// matched 1:1 with colors below via an exact-match expression in
-				// TacMap.svelte's commuteTimePaint(). Must match the tileset's
-				// actual cutoff_min values exactly or features render transparent.
-				// Single source of truth for map + legend.
+				period: 'overall_typical',
 				cutoffs: [15, 30, 45, 60],
 				colors: ['#2166ac', '#1fac8f', '#f8961e', '#d73027'],
 			},
@@ -127,7 +91,7 @@ export function makeInitialLayerState() {
 
 		state[group.id] = {};
 		for (const item of group.items) {
-			state[group.id][item.id] = item.options ? null : false;
+			state[group.id][item.id] = false;
 		}
 	}
 
