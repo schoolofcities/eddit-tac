@@ -211,9 +211,11 @@
 		{#if selectedVenue}
 			<p class="vd-name">{selectedVenue.name}</p>
 			<p class="vd-type">{selectedVenue.type}</p>
-			<p class="vd-address">
-				{selectedVenue.address}, Toronto, ON {selectedVenue.postalCode}
-			</p>
+			{#if selectedVenue.address || selectedVenue.postalCode}
+				<p class="vd-address">
+					{selectedVenue.address ?? "Address not available"}, Toronto, ON {selectedVenue.postalCode ?? ""}
+				</p>
+			{/if}
 			<p class="vd-body">
 				{selectedVenue.description || "Venue description coming soon."}
 			</p>

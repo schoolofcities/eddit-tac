@@ -17,13 +17,15 @@
 			id: String(f.properties.fid),
 			name: f.properties.venue_name,
 			type: f.properties.primary_discipline
-				.replace(/_/g, " ")
-				.replace(/\b\w/g, (c) => c.toUpperCase()),
+				? f.properties.primary_discipline
+						.replace(/_/g, " ")
+						.replace(/\b\w/g, (c) => c.toUpperCase())
+				: null,
 			address: f.properties.address,
 			postalCode: f.properties.postal_code,
 			description: f.properties.venue_description,
 		}))
-		.sort((a, b) => a.name.localeCompare(b.name));
+		.sort((a, b) => (a.name ?? "").localeCompare(b.name ?? ""));
 </script>
 
 <svelte:head>
