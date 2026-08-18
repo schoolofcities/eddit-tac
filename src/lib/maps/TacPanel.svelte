@@ -1,16 +1,38 @@
 <script>
 	import { LAYER_GROUPS } from "$lib/maps/tacLayerConfig.js";
 	import VenueProfile from "$lib/venue-profile/VenueProfile.svelte";
+	import artLocations from "$data/current_toronto_arts_locations_eddit.geo.json";
 
 	let {
 		selectedVenueId = $bindable(null),
 		layerState = $bindable({}),
 		venues = [],
+		venueDisplayMode = $bindable("some"), // "some" (default) | "all"
 	} = $props();
 
 	const selectedVenue = $derived(
 		venues.find((v) => v.id === selectedVenueId) ?? null,
 	);
+
+
+	function isTacFunded(value) {
+		return (
+			value === true
+		);
+	}
+
+	const tacFundedCounts = $derived.by(() => {
+		let funded = 0;
+		let unfunded = 0;
+		for (const feature of artLocations.features) {
+			if (isTacFunded(feature.properties?.TAC_funded_activities)) {
+				funded++;
+			} else {
+				unfunded++;
+			}
+		}
+		return { funded, unfunded };
+	});
 
 	function setExclusive(groupId, itemId) {
 		if (groupId === "activity" && !selectedVenueId) return;
@@ -43,13 +65,28 @@
 	}
 
 	function toggleNonExclusive(groupId, itemId) {
-		if (itemId === "commute-time" && !selectedVenueId) return;
+		if (
+			itemId === "commute-time" &&
+			(!selectedVenueId || venueDisplayMode === "all")
+		)
+			return;
 		const next = !layerState[groupId][itemId];
 		layerState[groupId][itemId] = next;
 		if (itemId === "commute-time" && next) {
 			clearOtherExclusiveLayers("commute-time");
 		}
 	}
+
+	// Commute time only makes sense against the "Some" venue markers — turn
+	// it off if it was on when the user switches to "All".
+	$effect(() => {
+		if (
+			venueDisplayMode === "all" &&
+			layerState.mobility?.["commute-time"]
+		) {
+			layerState.mobility["commute-time"] = false;
+		}
+	});
 
 	function isOn(group, item) {
 		if (group.exclusive) {
@@ -109,10 +146,43 @@
 			Choose from the list or click a marker on the map.
 		</p>
 
-		<div class="select-wrapper">
+		<div class="segmented-toggle" role="group" aria-label="Venue display mode">
+			<button
+				type="button"
+				class="segmented-btn"
+				class:active={venueDisplayMode === "some"}
+				onclick={() => (venueDisplayMode = "some")}
+			>
+				Some
+			</button>
+			<button
+				type="button"
+				class="segmented-btn"
+				class:active={venueDisplayMode === "all"}
+				onclick={() => (venueDisplayMode = "all")}
+			>
+				All
+			</button>
+		</div>
+
+		{#if venueDisplayMode === "all"}
+			<div class="dot-legend">
+				<span class="dot-legend-item">
+					<span class="dot-swatch dot-funded"></span>
+					TAC-funded activity ({tacFundedCounts.funded})
+				</span>
+				<span class="dot-legend-item">
+					<span class="dot-swatch dot-unfunded"></span>
+					Not TAC-funded ({tacFundedCounts.unfunded})
+				</span>
+			</div>
+		{/if}
+
+		<div class="select-wrapper" class:select-wrapper-disabled={venueDisplayMode === "all"}>
 			<select
 				class="venue-select"
 				value={selectedVenueId ?? ""}
+				disabled={venueDisplayMode === "all"}
 				onchange={(e) => {
 					selectedVenueId = e.currentTarget.value || null;
 				}}
@@ -244,7 +314,9 @@
 						<label
 							class="layer-toggle"
 							class:layer-toggle-disabled={item.id ===
-								"commute-time" && !selectedVenueId}
+								"commute-time" &&
+								(!selectedVenueId ||
+									venueDisplayMode === "all")}
 						>
 							<span
 								class="toggle-track"
@@ -254,7 +326,8 @@
 									type="checkbox"
 									checked={isOn(group, item)}
 									disabled={item.id === "commute-time" &&
-										!selectedVenueId}
+										(!selectedVenueId ||
+											venueDisplayMode === "all")}
 									onchange={() =>
 										toggleNonExclusive(
 											group.id,
@@ -478,6 +551,79 @@
 		height: 6px;
 		fill: rgb(0, 98, 234);
 		pointer-events: none;
+	}
+
+	.select-wrapper-disabled {
+		opacity: 0.5;
+	}
+
+	.venue-select:disabled {
+		cursor: not-allowed;
+		background: var(--brandGray, #eee);
+		color: var(--brandGray60);
+	}
+
+	/* ── Venue Display Mode Toggle ─────────────────────────────────────── */
+
+	.segmented-toggle {
+		display: flex;
+		width: fit-content;
+		border: 1px solid var(--brandGray);
+		margin-bottom: 10px;
+		overflow: hidden;
+	}
+
+	.segmented-btn {
+		padding: 6px 16px;
+		font-family: Montserrat, sans-serif;
+		font-size: 0.75rem;
+		background: #fff;
+		border: none;
+		color: var(--brandGray70);
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.segmented-btn + .segmented-btn {
+		border-left: 1px solid var(--brandGray);
+	}
+
+	.segmented-btn.active {
+		background: rgb(0, 98, 234);
+		color: #fff;
+	}
+
+	.dot-legend {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+		margin: 0 0 10px;
+	}
+
+	.dot-legend-item {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.72rem;
+		color: var(--brandGray60);
+		line-height: 1.3;
+	}
+
+	.dot-swatch {
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		flex-shrink: 0;
+		border: 1px solid #ffffff;
+		box-shadow: 0 0 0 1px var(--brandGray);
+	}
+
+	.dot-funded {
+		background: rgb(0, 98, 234);
+	}
+
+	.dot-unfunded {
+		background: #9c9c9c;
 	}
 
 	/* ── Layer Toggles ──────────────────────────────────────────────────── */

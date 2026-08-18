@@ -6,6 +6,7 @@
 	import torontoBoundary from "$data/toronto-boundary.geo.json";
 	import venuesCentroids from "$data/venues-centroids.geo.json";
 	import venuesBoundaries from "$data/venues-boundaries.geo.json";
+	import artLocations from "$data/current_toronto_arts_locations_eddit.geo.json";
 	import mobilityLines from "$data/mobility-lines-simplified.geo.json";
 	import subwayStops from "$data/subway-stops.geo.json";
 	import goStops from "$data/go-stops.geo.json";
@@ -26,6 +27,7 @@
 		map = $bindable(null),
 		selectedVenueId = $bindable(null),
 		layerState = {},
+		venueDisplayMode = $bindable("some"), // "some" (venuesCentroids, default) | "all" (artLocations)
 	} = $props();
 
 	const MAP_STYLE = {
@@ -94,6 +96,7 @@
 			addTransitLines();
 			addTransitStops();
 			addVenueMarkers();
+			addArtLocations();
 			syncLayers();
 		});
 
@@ -396,6 +399,8 @@
 			promoteId: "fid",
 		});
 
+		const someVisibility = venueDisplayMode === "all" ? "none" : "visible";
+
 		// ── Boundary layers (visible at zoom ≥ 15) ──────────────────────────
 		map.addLayer({
 			id: "venues-fill",
@@ -406,6 +411,7 @@
 				"fill-color": "#1E3765",
 				"fill-opacity": 0.08,
 			},
+			layout: { visibility: someVisibility },
 		});
 
 		map.addLayer({
@@ -418,9 +424,10 @@
 				"line-width": 1.5,
 				"line-opacity": 0.7,
 			},
+			layout: { visibility: someVisibility },
 		});
 
-		// ── Centroid dot layers (always visible) ──────────────────────────
+		// ── Centroid dot layers (visible by default — "Some" mode) ─────────
 		map.addLayer({
 			id: "venues-halo",
 			type: "circle",
@@ -440,6 +447,7 @@
 				"circle-opacity": 0,
 				"circle-stroke-width": 0,
 			},
+			layout: { visibility: someVisibility },
 		});
 
 		map.addLayer({
@@ -461,6 +469,7 @@
 				"circle-stroke-width": 1.5,
 				"circle-stroke-color": "#ffffff",
 			},
+			layout: { visibility: someVisibility },
 		});
 
 		// ── Click handlers ────────────────────────────────────────────────
@@ -513,16 +522,48 @@
 		});
 	}
 
+	const TAC_FUNDED_COLOR = [
+		"case",
+		[
+			"any",
+			["==", ["get", "TAC_funded_activities"], true]
+		],
+		"rgb(0, 98, 234)",
+		"#9c9c9c",
+	];
+
+	function addArtLocations() {
+		if (!map) return;
+
+		map.addSource("art-locations", {
+			type: "geojson",
+			data: artLocations,
+		});
+
+		map.addLayer({
+			id: "art-locations-circle",
+			type: "circle",
+			source: "art-locations",
+			paint: {
+				"circle-radius": 3,
+				"circle-color": TAC_FUNDED_COLOR,
+				"circle-stroke-width": 1,
+				"circle-stroke-color": "#ffffff",
+			},
+			layout: {
+				visibility: venueDisplayMode === "all" ? "visible" : "none",
+			},
+		});
+	}
+
 	function addTransitLines() {
 		if (!map) return;
 
-		// Single source for all transit lines
 		map.addSource("mobility-lines", {
 			type: "geojson",
 			data: mobilityLines,
 		});
 
-		// Create a layer for each mode
 		const modes = [
 			{ id: "transit-rail", mode: "rail", color: "#1E3765" },
 			{
@@ -530,8 +571,6 @@
 				mode: "surface",
 				color: "#1E3765",
 			},
-			// { id: "transit-streetcars", mode: "streetcar", color: "#1E3765" },
-			// { id: "transit-busses", mode: "bus", color: "#1E3765" },
 		];
 
 		for (const mode of modes) {
@@ -605,9 +644,6 @@
 		map.addSource("toronto-ada", {
 			type: "geojson",
 			data: torontoAda,
-			// Lets setFeatureState/removeFeatureState target ADAs by their
-			// census ADAUID — used by the Activity layers below to attach
-			// per-venue data without re-uploading the 279-polygon geometry.
 			promoteId: "ADAUID",
 		});
 
@@ -668,10 +704,6 @@
 		}
 	}
 
-	// Activity layers share the same ADA polygons as demography, but the
-	// data behind them is per-venue and fetched at runtime (see
-	// applyActivityFeatureState), so it's attached via feature-state keyed by
-	// ADAUID rather than baked into the GeoJSON's properties like demography.
 	function activityFillColor(item) {
 		const stepColor = [
 			"step",
@@ -680,9 +712,6 @@
 			...item.breaks.flatMap((b, i) => [b, item.colors[i + 1]]),
 		];
 
-		// No fetched value yet, or a genuine 0% share, both render as the
-		// same neutral "no visitors from here" gray demography uses for
-		// missing data.
 		return [
 			"case",
 			[
@@ -713,10 +742,6 @@
 		}
 	}
 
-	// Per-venue home-origin activity, fetched lazily and cached by venue id.
-	// Files are pretty-printed JSON under static/venue_home_origin/ (see
-	// analysis/activity/interpolate_venue_activity_ct.ipynb) — small enough
-	// (~25-35KB) that there's no need to prefetch every venue up front.
 	const activityDataCache = new Map();
 
 	async function loadVenueActivityData(venueId) {
@@ -752,23 +777,15 @@
 		}
 	}
 
-	// Isochrone cutoffs/colors come from tacLayerConfig so map + panel legend stay in sync.
 	const commuteTimeItem = LAYER_GROUPS.find(
 		(g) => g.id === "mobility",
 	).items.find((i) => i.id === "commute-time");
 
 	function commuteTimeUrl(period, venueId) {
-		// `period` is tacLayerConfig.js's commute-time item.period, named to
-		// match its static/ folder 1:1
-		// (e.g. "overall_typical" -> static/overall_typical/venue_{id}.pmtiles).
 		return `pmtiles://${period}/venue_${venueId}.pmtiles`;
 	}
 
-	// Removes and rebuilds the source + layer for one period, pointed at the
-	// given venue. This has to be a full remove/re-add rather than a simple
-	// source.setUrl() swap, because the source-layer name inside each
-	// per-venue pmtiles file is venue_{id} — it's different for every venue,
-	// and MapLibre has no API to change a layer's source-layer after creation.
+
 	function setCommuteTimeLayer(period, venueId, visible) {
 		if (!map || !venueId) return;
 
@@ -1057,6 +1074,38 @@
 	$effect(() => {
 		if (!mapLoaded) return;
 		applyActivityFeatureState(selectedVenueId);
+	});
+
+	// Toggles between the "Some" (venue centroid/boundary markers, default)
+	// and "All" (art-locations dots colored by TAC_funded_activities) views.
+	$effect(() => {
+		if (!map || !mapLoaded) return;
+
+		const showAll = venueDisplayMode === "all";
+		const someLayerIds = [
+			"venues-halo",
+			"venues-circle",
+			"venues-fill",
+			"venues-outline",
+		];
+
+		for (const id of someLayerIds) {
+			if (map.getLayer(id)) {
+				map.setLayoutProperty(
+					id,
+					"visibility",
+					showAll ? "none" : "visible",
+				);
+			}
+		}
+
+		if (map.getLayer("art-locations-circle")) {
+			map.setLayoutProperty(
+				"art-locations-circle",
+				"visibility",
+				showAll ? "visible" : "none",
+			);
+		}
 	});
 
 	$effect(() => {

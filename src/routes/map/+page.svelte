@@ -9,6 +9,7 @@
 	let map = $state(null);
 	let selectedVenueId = $state(null);
 	let layerState = $state(makeInitialLayerState());
+	let venueDisplayMode = $state("some"); // "some" (default) | "all"
 
 	// Derive a simple list for the panel dropdown — sorted alphabetically
 	const venues = venuesCentroids.features
@@ -39,11 +40,11 @@
 
 <div class="tac-layout">
 	<div class="tac-panel-wrap">
-		<TacPanel bind:selectedVenueId bind:layerState {venues} />
+		<TacPanel bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
 	</div>
 
 	<div class="tac-map-wrap">
-		<TacMap bind:map bind:selectedVenueId {layerState} />
+		<TacMap bind:map bind:selectedVenueId {layerState} bind:venueDisplayMode />
 	</div>
 </div>
 
