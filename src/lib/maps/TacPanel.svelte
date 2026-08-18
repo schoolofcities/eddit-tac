@@ -35,7 +35,11 @@
 	});
 
 	function setExclusive(groupId, itemId) {
-		if (groupId === "activity" && !selectedVenueId) return;
+		if (
+			groupId === "activity" &&
+			(!selectedVenueId || venueDisplayMode === "all")
+		)
+			return;
 		const current = layerState[groupId]?.activeId ?? null;
 		const next = current === itemId ? null : itemId;
 		layerState[groupId].activeId = next;
@@ -85,6 +89,14 @@
 			layerState.mobility?.["commute-time"]
 		) {
 			layerState.mobility["commute-time"] = false;
+		}
+	});
+
+	// Activity layers are keyed to a single selected venue, same as commute
+	// time — turn activity off if it was on when the user switches to "All".
+	$effect(() => {
+		if (venueDisplayMode === "all" && layerState.activity?.activeId) {
+			layerState.activity.activeId = null;
 		}
 	});
 
@@ -281,7 +293,8 @@
 								class="activity-btn"
 								class:active={isOn(group, item)}
 								disabled={group.id === "activity" &&
-									!selectedVenueId}
+									(!selectedVenueId ||
+										venueDisplayMode === "all")}
 								onclick={() => setExclusive(group.id, item.id)}
 							>
 								{item.label}
@@ -290,7 +303,12 @@
 					</div>
 
 					{#if group.id === "activity"}
-						{#if !selectedVenueId}
+						{#if venueDisplayMode === "all"}
+							<p class="section-desc activity-hint">
+								Switch to "Some" to view a venue's home-origin
+								activity layers.
+							</p>
+						{:else if !selectedVenueId}
 							<p class="section-desc activity-hint">
 								Select a venue to view its home-origin
 								activity layers.
@@ -389,7 +407,12 @@
 	<section class="panel-section">
 		<h2 class="section-heading">Venue Profile</h2>
 
-		{#if selectedVenue}
+		{#if venueDisplayMode === "all"}
+			<p class="empty-state">
+				Switch to "Some" to view a venue's activity and demographic
+				profile.
+			</p>
+		{:else if selectedVenue}
 			<p class="venue-name">{selectedVenue.name}</p>
 
 			<VenueProfile venueId={selectedVenue.id} />

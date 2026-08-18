@@ -545,7 +545,15 @@
 			type: "circle",
 			source: "art-locations",
 			paint: {
-				"circle-radius": 3,
+				"circle-radius": [
+					"interpolate",
+					["linear"],
+					["zoom"],
+					10,
+					1.5,
+					15,
+					6,
+				],
 				"circle-color": TAC_FUNDED_COLOR,
 				"circle-stroke-width": 1,
 				"circle-stroke-color": "#ffffff",
