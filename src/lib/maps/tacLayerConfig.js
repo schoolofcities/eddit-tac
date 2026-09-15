@@ -61,7 +61,7 @@ export const LAYER_GROUPS = [
 				id: 'commute-time',
 				label: 'Commute Time (must select venue)',
 				key: null,
-				period: 'overall_typical',
+				period: 'commute_time',
 				cutoffs: [15, 30, 45, 60],
 				colors: ['#2166ac', '#1fac8f', '#f8961e', '#d73027'],
 			},

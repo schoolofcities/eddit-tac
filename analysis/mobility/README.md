@@ -3,9 +3,18 @@
 Computes transit accessibility isochrones for a set of venues in Toronto
 using OpenTripPlanner 1.x, aggregated across multiple sampled departure
 times via a frequency-threshold method, and split into weekday/weekend and
-peak/off-peak categories.
+peak/off-peak categories, plus pooled composite views.
 
-This repository contains one script: `generate_isochrones_peak_offpeak.py`.
+This repository contains one script: `otp_isochrones.py`.
+
+**A note on directory structure.** Every path in this README (the jar,
+`graphs/`, `data/`, `output-4/`) is relative to a single working
+directory — call it the *project directory*. It doesn't need to be your
+terminal's home directory or a top-level folder; it's fine for this to be
+a subfolder inside some larger project (e.g. `big-project/transit-
+isochrones/`). What matters is that you `cd` into that same project
+directory before running any of the Java or Python commands below, in
+every terminal you use — see Section 3 for exactly where.
 
 ---
 
@@ -24,7 +33,8 @@ install and select Java 8 for this project before proceeding.
 
 ### 1.2 OpenTripPlanner 1.5.0
 
-Download the shaded jar:
+Download the shaded jar into your project directory (see the note above —
+`cd` there first):
 
 ```bash
 curl -o otp-1.5.0-shaded.jar \
@@ -36,7 +46,7 @@ curl -o otp-1.5.0-shaded.jar \
 Python 3, with all dependencies this script requires:
 
 ```bash
-pip install requests geopandas shapely rasterio numpy --break-system-packages
+pip install requests geopandas shapely rasterio numpy pandas --break-system-packages
 ```
 
 On macOS, the command is `python3`, not `python` — `python` is usually not
@@ -44,14 +54,17 @@ aliased and will fail with `command not found`.
 
 ### 1.4 Input data
 
-You will need, in a working directory of your choice:
+You will need:
 
 - **GTFS feeds** for the transit agencies you want routed (e.g. one zip
   per agency). Avoid spaces or special characters in filenames.
 - **An OSM extract** covering the same area, in `.osm.pbf` format.
-- **`venues-centroids.geojson`** — a GeoJSON `FeatureCollection` of Point
-  features, one per venue, each with an `id` property (or whichever
-  property name you set `ID_FIELD` to in the script). Example:
+- **`../../data/venues/tac-list/venues-centroids.geojson`** (relative to
+  the project directory — this one lives two levels up, in a shared
+  `data/` folder outside this project, per `VENUES_GEOJSON` in the
+  script) — a GeoJSON `FeatureCollection` of Point features, one per
+  venue, each with an `id` property (or whichever property name you set
+  `ID_FIELD` to in the script). Example:
 
   ```json
   {
@@ -75,10 +88,10 @@ Place your OSM extract and all GTFS feeds in one directory, e.g.:
 ```
 graphs/
 └── toronto/
-    ├── city.osm.pbf
-    ├── agency1-gtfs.zip
-    ├── agency2-gtfs.zip
-    └── agency3-gtfs.zip
+    ├── Toronto.osm.pbf
+    ├── GO-GTFS.zip
+    ├── TTC-GTFS.zip
+    └── UP-GTFS.zip
 ```
 
 Build the graph:
@@ -100,11 +113,15 @@ If the build runs out of memory, increase `-Xmx` (e.g. `-Xmx6G` or `-Xmx8G`).
 ## 3. Running the pipeline
 
 This requires **two terminals running concurrently**: one hosting the OTP
-server, one running the Python script that queries it.
+server, one running the Python script that queries it. Each terminal is a
+separate shell session, so **each one needs its own `cd` into the project
+directory** — one terminal's working directory doesn't carry over to the
+other.
 
 ### Terminal 1 — start the OTP server
 
 ```bash
+cd /path/to/your/project-directory   # e.g. big-project/transit-isochrones
 java -Xmx4G -jar otp-1.5.0-shaded.jar --graphs graphs --router toronto --server --port 8080
 ```
 
@@ -118,13 +135,15 @@ the run.
 Once the server is confirmed up, in a separate terminal:
 
 ```bash
-python3 generate_isochrones_peak_offpeak.py
+cd /path/to/your/project-directory   # same directory as Terminal 1
+python3 otp_isochrones.py
 ```
 
 The script queries OTP once for each (venue, date, time) combination
 across four sampling categories — `weekday_peak`, `weekday_offpeak`,
-`weekend_peak`, `weekend_offpeak` — then computes two additional pooled
-outputs. See Section 6 (Methodology) for the full procedure.
+`weekend_peak`, `weekend_offpeak` — then computes three additional pooled
+outputs on top of those. See Section 6 (Methodology) for the full
+procedure.
 
 Expect a long runtime: each isochrone computation is CPU-bound on the OTP
 side, and the total request count is `venues × dates × times` per
@@ -139,7 +158,7 @@ Once the script completes, return to Terminal 1 and stop the server with
 
 ## 4. Output files
 
-Six GeoJSON files are produced:
+Seven GeoJSON files are produced, written to `output-4/`:
 
 - `isochrones_weekday_peak.geojson`
 - `isochrones_weekday_offpeak.geojson`
@@ -147,6 +166,7 @@ Six GeoJSON files are produced:
 - `isochrones_weekend_offpeak.geojson`
 - `isochrones_peak_all.geojson` (weekday + weekend peak pooled)
 - `isochrones_offpeak_all.geojson` (weekday + weekend off-peak pooled)
+- `isochrones_overall_typical.geojson` (all four base categories combined)
 
 Each is a `FeatureCollection` where each feature is one non-overlapping
 band for one venue at one cutoff. See Section 6.7 for the full schema.
@@ -163,16 +183,22 @@ set to just the incomplete category:
 RUN_CATEGORIES = ["weekend_offpeak"]
 ```
 
-Note: the two pooled outputs (`peak_all`, `offpeak_all`) are only
-generated if all of their source categories were executed within the same
-run. Running a single category in isolation will not regenerate a pooled
-output on its own.
+Note: each pooled output (`peak_all`, `offpeak_all`, `overall_typical`) is
+only generated if all of its source categories were executed within the
+same run. Running a single category in isolation will not regenerate a
+pooled output on its own — `overall_typical` in particular needs all four
+base categories present, since it draws on every one of them.
 
 ---
 
 ## 5. Troubleshooting
 
 - **`command not found: python`** — use `python3`.
+- **`Error: Unable to access jarfile otp-1.5.0-shaded.jar`** or the script
+  can't find `graphs/` / `../../data/venues/tac-list/venues-centroids.geojson`
+  — you're
+  not in the project directory in that terminal. `cd` there first (see
+  Section 3); remember each terminal needs this independently.
 - **All requests fail with `Connection refused`** — the OTP server is not
   running or has not finished loading the graph. Confirm Terminal 1 shows
   the server-running log line before starting the script.
@@ -185,7 +211,7 @@ output on its own.
   service reaches that point at the queried date/time (e.g. outside a
   feed's service area, or the date falls outside a feed's calendar
   validity range).
-- **Output geometry appears blocky** — see Section 6.8 (Boundary geometry).
+- **Output geometry appears blocky** — see Section 6.9 (Boundary geometry).
 
 ---
 
@@ -205,7 +231,7 @@ venue per cutoff.
 
 ### 6.2 Aggregation method: frequency threshold
 
-For each cutoff band (10/20/30/40/50 minutes), the procedure is:
+For each cutoff band (15/30/45/60 minutes), the base procedure is:
 
 1. Query OTP for an isochrone at each sampled (date, time) combination.
 2. Rasterize each resulting polygon onto a common grid.
@@ -225,16 +251,50 @@ reachability criterion:
 THRESHOLD = 0.5  ->  median reachability across sampled departures
 ```
 
-### 6.3 Non-overlapping band construction (donut operation)
+This base procedure is what produces each of the four independent
+category outputs. The three pooled outputs (Section 6.6) build on it via
+the pooling method described next.
 
-OTP isochrone output is cumulative: the polygon for a given cutoff is a
-superset of the polygon for any smaller cutoff, since the reachable set is
-monotonically non-decreasing in time. Post-aggregation, the procedure
-computes, for each venue, the set-difference between each band's polygon
-and the union of all smaller-cutoff bands, yielding a partition of the
-total reachable area into disjoint annuli — e.g. the region reachable
-within 20–30 minutes but not within 20 minutes. The smallest cutoff band
-(10 minutes) is retained unmodified, as no smaller band exists to subtract.
+### 6.3 Pooling method
+
+Pooling combines samples from more than one category into a single
+threshold calculation. Because the four base categories don't have equal
+sample counts per venue (see Section 6.4), pooling them naively (summing
+raw hits and dividing by the combined sample count) would let whichever
+categories were sampled more densely dominate the result. To avoid that,
+all three pooled outputs use **equal-weighted averaging**: each source
+category's own reachability fraction is computed independently (that
+category's hit-count divided by *its own* sample count), and those
+per-category fractions are then averaged with equal weight before
+thresholding:
+
+```
+typical_fraction = (1/N) * sum over categories of (category's own fraction)
+```
+
+Each category counts the same regardless of how many samples it
+contributed — a category with 10 samples and a category with 17 samples
+each get an equal 1/N vote. This holds by construction, not because the
+source categories' sample counts happen to be close — so it keeps holding
+even if a sample time is added to or removed from a window later.
+
+Mechanically, this pooling (`threshold_aggregate_weighted` in the script)
+works like this, per (venue, cutoff) group:
+
+1. Build one shared raster grid from the combined bounding box of *all*
+   source categories' geometries in that group, so every category's
+   fraction is computed on identical pixel bounds and can be averaged
+   directly.
+2. For each source category independently: rasterize its own samples
+   onto that shared grid, sum hits, and divide by that category's own
+   sample count to get a per-cell fraction.
+3. Average the per-category fraction rasters with equal weight.
+4. Threshold the averaged fraction and vectorize to polygon(s), same as
+   the base procedure.
+
+A category with zero reachable cells for a given (venue, cutoff)
+correctly contributes an all-zero fraction to the average, rather than
+being dropped and inflating the remaining categories' share.
 
 ### 6.4 Sampling windows
 
@@ -251,12 +311,13 @@ subcategories:
 
 Sampling interval: 30 minutes, uniform across all windows.
 
-### 6.5 Dates
+These counts are unequal across categories — and may change further if
+sample times are added or removed from a window later. All three
+combined outputs use equal-weighted pooling (Section 6.3) precisely so
+that this doesn't require revisiting: each source category keeps its
+stated share regardless of how many samples it happens to contain.
 
-| Category | Date | Calendar status |
-|---|---|---|
-| Weekday | 2026-06-10 (Wednesday) | Verified — falls within the overlapping service-date range confirmed across all three feeds (GO, TTC, UP) |
-| Weekend | 2026-06-13 (Saturday) | Unverified — TTC calendar data available covers weekdays only (2026-06-08 through 2026-06-19, excluding weekends); no weekend date has been confirmed against TTC's service calendar |
+### 6.5 Dates
 
 A single date is used per category rather than a date range. Consequently,
 aggregation in the current configuration averages over intra-day departure
@@ -265,23 +326,28 @@ dates per category would require additional confirmed calendar coverage.
 
 ### 6.6 Output files
 
-Four outputs correspond to the base categories, computed independently:
+Four outputs correspond to the base categories, computed independently
+via the base procedure (Section 6.2):
 
 - `isochrones_weekday_peak.geojson`
 - `isochrones_weekday_offpeak.geojson`
 - `isochrones_weekend_peak.geojson`
 - `isochrones_weekend_offpeak.geojson`
 
-Two additional outputs are computed by pooling the sample sets of the
-corresponding weekday and weekend categories prior to thresholding:
+Three additional outputs are computed by pooling samples from multiple
+base categories, per `COMBINED_OUTPUTS` in the script — all via
+equal-weighted pooling (Section 6.3):
 
-- `isochrones_peak_all.geojson` (weekday-peak ∪ weekend-peak sample pool)
-- `isochrones_offpeak_all.geojson` (weekday-offpeak ∪ weekend-offpeak sample pool)
+- `isochrones_peak_all.geojson` — equal-weighted average of weekday-peak
+  and weekend-peak's own reachability fractions.
+- `isochrones_offpeak_all.geojson` — equal-weighted average of
+  weekday-offpeak and weekend-offpeak's own reachability fractions.
+- `isochrones_overall_typical.geojson` — equal-weighted average of all
+  four base categories' own reachability fractions.
 
-Pooling combines two populations with potentially distinct service
-frequency distributions into a single threshold calculation. The resulting
-polygon reflects the combined sample set and does not correspond
-independently to either the weekday-only or weekend-only result.
+Each source category contributes an equal share regardless of its sample
+count; see Section 6.3 for the mechanics and Section 6.9 for the one
+caveat equal-weighting does not resolve.
 
 ### 6.7 Output schema
 
@@ -292,7 +358,7 @@ one non-overlapping band for one venue at one cutoff. Feature properties:
 |---|---|
 | `venue_id` | Venue identifier |
 | `cutoff_sec` / `cutoff_min` | Cutoff band, in seconds and minutes |
-| `sample_date` | Set to a string of the form `threshold_50%_of_N_samples`, indicating aggregation parameters rather than a calendar date |
+| `sample_date` | For the four base categories: a string of the form `threshold_50%_of_N_samples`. For the three pooled outputs: a string of the form `equal_weighted_threshold_50%_of_N_categories`. Either way, this records aggregation parameters rather than a calendar date. |
 | `sample_time` | Empty string; not applicable post-aggregation |
 
 ### 6.8 Parameters
@@ -300,7 +366,7 @@ one non-overlapping band for one venue at one cutoff. Feature properties:
 | Parameter | Value | Function |
 |---|---|---|
 | `MODES` | `WALK,TRANSIT` | Permitted travel modes for OTP routing |
-| `CUTOFFS_SEC` | 600, 1200, 1800, 2400, 3000 | Cutoff bands, in seconds (10/20/30/40/50 min) |
+| `CUTOFFS_SEC` | 900, 1800, 2700, 3600 | Cutoff bands, in seconds (15/30/45/60 min) |
 | `MAX_WALK_DISTANCE` | 1200 m | Maximum permitted walking distance per leg |
 | `PRECISION_METERS` | 50 | Resolution of OTP's internal isochrone contour computation |
 | `THRESHOLD` | 0.5 | Reachability fraction cutoff; see Section 6.2 |
@@ -313,9 +379,18 @@ one non-overlapping band for one venue at one cutoff. Feature properties:
 - **Temporal resolution of sampling.** A single date per category limits
   the aggregation to intra-day variation; inter-day variation is not
   captured in the current configuration.
-- **Pooled-output interpretation.** See Section 6.6 regarding the
-  combination of distinct service populations in `peak_all` and
-  `offpeak_all`.
+- **What equal-weighted pooling does and doesn't fix.** Equal-weighting
+  removes sample-count imbalance as a source of bias in all three pooled
+  outputs, but it doesn't address whether an equal share per category is
+  the right notion of "typical" in the first place — e.g. for
+  `overall_typical`, an equal ¼ share does not correspond to the fraction
+  of a real week that each regime actually occupies (peak windows and
+  off-peak windows are not equal shares of a real week). It answers
+  "reachable across a representative mix of the source regimes," not
+  "reachable at a randomly chosen moment during an average week." If the
+  latter is the intended meaning, weighting by each regime's real-world
+  share of the week rather than equally would be a different (and not
+  currently implemented) method.
 - **Threshold-grid interaction.** Grid resolution and threshold value
   jointly determine boundary behavior near marginal reachability; grid
   resolution should be held constant when comparing outputs across
@@ -332,4 +407,4 @@ Additional script-level configuration, beyond the parameters in Section 6.8:
 | `WEEKDAY_DATES`, `WEEKEND_DATES` | Sampled dates per day-type |
 | `WEEKDAY_MORNING_PEAK`, `WEEKDAY_MIDDAY_OFFPEAK`, etc. | Time windows per category |
 | `RUN_CATEGORIES` | Subset of base categories to execute in a given run |
-| `COMBINED_OUTPUTS` | Source categories feeding each pooled output |
+| `COMBINED_OUTPUTS` | Source categories and output path for each pooled output. All three are pooled via equal-weighted averaging (Section 6.3) — there's no method selector; every pooled output uses the same approach. |
