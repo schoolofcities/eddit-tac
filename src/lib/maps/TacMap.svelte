@@ -1025,9 +1025,10 @@
 			(f) => f.properties.id === selectedVenueId,
 		);
 		if (feature) {
+			const MAP_CURRENT_ZOOM = map?.getZoom();
 			map?.easeTo({
 				center: feature.geometry.coordinates,
-				zoom: 15,
+				zoom: MAP_CURRENT_ZOOM,
 				duration: 800,
 			});
 		}
