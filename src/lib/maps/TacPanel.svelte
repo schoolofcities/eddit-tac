@@ -427,13 +427,13 @@
 	<div class="divider"></div>
 
 	<!-- ── Compare ───────────────────────────────────────────────────── -->
-	<section class="panel-section panel-section--grow">
+	<!-- <section class="panel-section panel-section--grow">
 		<h2 class="section-heading">Compare Venues</h2>
 		<p class="empty-state">
 			Side-by-side comparison of multiple selected venues will appear
 			here.
 		</p>
-	</section>
+	</section> -->
 </aside>
 
 <style>

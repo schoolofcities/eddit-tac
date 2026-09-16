@@ -6,6 +6,7 @@
 		formatYearMonth,
 		formatHalfYear,
 	} from "./venueMetrics.js";
+	import wardToVenueSummary from "$data/ward_to_venue_summary.json";
 
 	let { venueId = null } = $props();
 
@@ -112,6 +113,31 @@
 			: [],
 	);
 
+	const wardSummary = $derived(
+		venueId
+			? (wardToVenueSummary.find(
+					(row) => String(row.venue_id) === String(venueId),
+				) ?? null)
+			: null,
+	);
+
+	const wardOriginSegments = $derived(
+		wardSummary
+			? [
+					{
+						label: `Percentage of visits from within ${wardSummary.home_ward}`,
+						value: wardSummary.pct_inside_ward * 100,
+						color: ACCENT_BLUE,
+					},
+					{
+						label: `Percentage of visits from outside ${wardSummary.home_ward}`,
+						value: wardSummary.pct_outside_ward * 100,
+						color: ACCENT_ORANGE,
+					},
+				]
+			: [],
+	);
+
 	const distanceSegments = $derived(
 		metrics
 			? DISTANCE_LABELS.map((label, i) => ({
@@ -159,7 +185,7 @@
 			<ProportionalBar segments={dayEveningSegments} />
 		</div>
 
-		<div class="metric-block">
+		<!-- <div class="metric-block">
 			<h3 class="metric-heading">Home-Origin Concentration</h3>
 			<ProportionalBar segments={hhiSegments} showLegend={false} />
 			<p class="metric-annotation">
@@ -167,7 +193,14 @@
 				values indicate visitors are drawn from a smaller, more
 				concentrated set of home areas.
 			</p>
-		</div>
+		</div> -->
+
+		{#if wardSummary}
+			<div class="metric-block">
+				<h3 class="metric-heading">Ward Origin Visits</h3>
+				<ProportionalBar segments={wardOriginSegments} />
+			</div>
+		{/if}
 
 		<div class="metric-block">
 			<h3 class="metric-heading">Travel Distance</h3>
