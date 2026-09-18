@@ -4,6 +4,8 @@ data/archive
 data/activity
 
 data/census/ada/98-401-X2021012_English_CSV_data.csv
+data/census/wards/98-401-X2021010_eng_CSV
+data/census/wards/toronto
 data/census/noc-naics
 
 data/geo/geohash
