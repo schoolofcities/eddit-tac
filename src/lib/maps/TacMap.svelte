@@ -1091,6 +1091,16 @@
 		if (!map || !mapLoaded) return;
 
 		const showAll = venueDisplayMode === "all";
+
+		if (showAll) {
+			map.easeTo({
+				center: MAP_CENTER,
+				zoom: MAP_ZOOM,
+				bearing: -17,
+				duration: 800,
+			});
+		}
+
 		const someLayerIds = [
 			"venues-halo",
 			"venues-circle",

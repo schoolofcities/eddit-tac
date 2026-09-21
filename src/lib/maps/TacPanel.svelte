@@ -81,6 +81,12 @@
 		}
 	}
 
+	$effect(() => {
+		if (venueDisplayMode === "all" && selectedVenueId) {
+			selectedVenueId = null;
+		}
+	});
+
 	// Commute time only makes sense against the "Some" venue markers — turn
 	// it off if it was on when the user switches to "All".
 	$effect(() => {
@@ -220,7 +226,12 @@
 	<section class="panel-section">
 		<!-- <h2 class="section-heading">Venue Description</h2> -->
 
-		{#if selectedVenue}
+		{#if venueDisplayMode === "all"}
+			<p class="vd-body">
+				These are all venues that have received funding from the
+				Toronto Arts Council for their activities.
+			</p>
+		{:else if selectedVenue}
 			<p class="vd-name">{selectedVenue.name}</p>
 			<p class="vd-type">{selectedVenue.type}</p>
 			{#if selectedVenue.address || selectedVenue.postalCode}
