@@ -1,7 +1,7 @@
 <script>
 	import "../../assets/global-styles.css";
 
-	import PasswordGate from "$lib/maps/PasswordGate.svelte";
+	import Password from "$lib/Password.svelte";
 	import TacMap from "$lib/maps/TacMap.svelte";
 	import TacPanel from "$lib/maps/TacPanel.svelte";
 	import { makeInitialLayerState } from "$lib/maps/tacLayerConfig.js";
@@ -41,17 +41,17 @@
 	/>
 </svelte:head>
 
-<PasswordGate>
-	<div class="tac-layout">
-		<div class="tac-panel-wrap">
-			<TacPanel bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
-		</div>
+<Password />
 
-		<div class="tac-map-wrap">
-			<TacMap bind:map bind:selectedVenueId {layerState} bind:venueDisplayMode />
-		</div>
+<div class="tac-layout">
+	<div class="tac-panel-wrap">
+		<TacPanel bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
 	</div>
-</PasswordGate>
+
+	<div class="tac-map-wrap">
+		<TacMap bind:map bind:selectedVenueId {layerState} bind:venueDisplayMode />
+	</div>
+</div>
 
 <style>
 	/* Reset: prevent the global body styles from adding scroll or min-width */
