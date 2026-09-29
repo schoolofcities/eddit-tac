@@ -1,9 +1,9 @@
 /**
  * Lookup + formatting helpers for the per-venue activity metrics computed in
  * analysis/activity/compute_venue_activity_metrics.ipynb and exported to
- * src/data/venue_metrics.json.
+ * src/data/activity/venue_metrics.json.
  */
-import venueMetricsData from "$data/venue_metrics.json";
+import venueMetricsData from "$data/activity/venue_metrics.json";
 
 const metricsById = new Map(
 	venueMetricsData.map((v) => [String(v.venue_id), v]),

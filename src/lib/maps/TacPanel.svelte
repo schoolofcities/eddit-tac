@@ -1,7 +1,7 @@
 <script>
 	import { LAYER_GROUPS } from "$lib/maps/tacLayerConfig.js";
 	import VenueProfile from "$lib/venue-profile/VenueProfile.svelte";
-	import artLocations from "$data/current_toronto_arts_locations_eddit.geo.json";
+	import artLocations from "$data/venues/current_toronto_arts_locations_eddit.geo.json";
 
 	let {
 		selectedVenueId = $bindable(null),

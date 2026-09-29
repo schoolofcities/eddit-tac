@@ -1288,11 +1288,11 @@
     "weekends": 0.0
   },
   "35200221": {
-    "all": 16.89,
+    "all": 16.4987,
     "evening": 0.0,
     "nine-five": 0.0,
     "weekdays": 0.0,
-    "weekends": 33.78
+    "weekends": 31.7273
   },
   "35200222": {
     "all": 0.0,
@@ -1365,11 +1365,11 @@
     "weekends": 0.0
   },
   "35200236": {
-    "all": 38.2367,
-    "evening": 65.0314,
+    "all": 41.7511,
+    "evening": 64.4295,
     "nine-five": 0.0,
-    "weekdays": 15.0314,
-    "weekends": 61.442
+    "weekdays": 17.8795,
+    "weekends": 63.7851
   },
   "35200237": {
     "all": 0.0,
@@ -1400,11 +1400,11 @@
     "weekends": 0.0
   },
   "35200243": {
-    "all": 3.3372,
+    "all": 3.0601,
     "evening": 0.0,
     "nine-five": 0.0,
-    "weekdays": 2.0109,
-    "weekends": 4.6636
+    "weekdays": 1.6299,
+    "weekends": 4.3802
   },
   "35200244": {
     "all": 0.0,
@@ -1449,17 +1449,17 @@
     "weekends": 0.0
   },
   "35200250": {
-    "all": 16.6498,
-    "evening": 21.8227,
+    "all": 16.9356,
+    "evening": 22.1983,
     "nine-five": 0.0,
-    "weekdays": 33.1851,
-    "weekends": 0.1144
+    "weekdays": 35.1672,
+    "weekends": 0.1074
   },
   "35200252": {
-    "all": 4.6597,
-    "evening": 9.1582,
+    "all": 5.2915,
+    "evening": 9.3158,
     "nine-five": 0.0,
-    "weekdays": 9.3195,
+    "weekdays": 11.0243,
     "weekends": 0.0
   },
   "35200253": {
@@ -1470,10 +1470,10 @@
     "weekends": 0.0
   },
   "35200255": {
-    "all": 2.2771,
+    "all": 1.7718,
     "evening": 0.0,
     "nine-five": 0.0,
-    "weekdays": 4.5543,
+    "weekdays": 3.6913,
     "weekends": 0.0
   },
   "35200256": {
@@ -1505,10 +1505,10 @@
     "weekends": 0.0
   },
   "35200260": {
-    "all": 1.9938,
-    "evening": 3.9877,
+    "all": 2.2767,
+    "evening": 4.0563,
     "nine-five": 0.0,
-    "weekdays": 3.9877,
+    "weekdays": 4.7433,
     "weekends": 0.0
   },
   "35200261": {
@@ -1526,10 +1526,10 @@
     "weekends": 0.0
   },
   "35200263": {
-    "all": 15.9556,
+    "all": 12.4146,
     "evening": 0.0,
     "nine-five": 0.0,
-    "weekdays": 31.9112,
+    "weekdays": 25.8645,
     "weekends": 0.0
   },
   "35200264": {

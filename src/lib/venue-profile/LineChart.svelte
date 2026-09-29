@@ -9,6 +9,7 @@
 		yAxisLabel = "",
 		xTickEvery = 6,
 		height = 120,
+		omitZero = false,
 	} = $props();
 
 	const width = 300;
@@ -39,6 +40,21 @@
 			.map(
 				(p, i) =>
 					`${i === 0 ? "M" : "L"}${xPos(i).toFixed(2)},${yPos(p.y).toFixed(2)}`,
+			)
+			.join(" ");
+	}
+
+	// When omitZero is set, drop zero-value points from the line entirely and
+	// connect the remaining non-zero points directly to each other — a 0 in
+	// the middle of the series (missing data) is bridged over, not drawn as a
+	// dip to the axis or as a break in the line.
+	function linePathOmitZero(points) {
+		return points
+			.map((p, i) => ({ i, y: p.y }))
+			.filter((p) => p.y !== 0)
+			.map(
+				(p, j) =>
+					`${j === 0 ? "M" : "L"}${xPos(p.i).toFixed(2)},${yPos(p.y).toFixed(2)}`,
 			)
 			.join(" ");
 	}
@@ -100,7 +116,7 @@
 		<!-- series -->
 		{#each series as s (s.id)}
 			<path
-				d={linePath(s.points)}
+				d={omitZero ? linePathOmitZero(s.points) : linePath(s.points)}
 				stroke={s.color}
 				stroke-width="1.6"
 				stroke-linecap="round"
@@ -108,9 +124,11 @@
 				fill="none"
 			/>
 			{#each s.points as p, i (i)}
-				<circle cx={xPos(i)} cy={yPos(p.y)} r="1.7" fill={s.color}>
-					<title>{xLabels[i]}: {yFormat(p.y)}</title>
-				</circle>
+				{#if !omitZero || p.y !== 0}
+					<circle cx={xPos(i)} cy={yPos(p.y)} r="1.7" fill={s.color}>
+						<title>{xLabels[i]}: {yFormat(p.y)}</title>
+					</circle>
+				{/if}
 			{/each}
 		{/each}
 	</svg>

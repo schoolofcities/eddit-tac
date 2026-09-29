@@ -6,7 +6,7 @@
 		formatYearMonth,
 		formatHalfYear,
 	} from "./venueMetrics.js";
-	import wardToVenueSummary from "$data/ward_to_venue_summary.json";
+	import wardToVenueSummary from "$data/activity/ward_to_venue_summary.json";
 
 	let { venueId = null } = $props();
 
@@ -60,6 +60,13 @@
 					},
 				]
 			: [],
+	);
+
+	// 0% half-years usually mean "no data that period", not "zero repeat
+	// visitors" — so the chart hides those points/segments (via omitZero) and
+	// falls back to a placeholder entirely when only one real value exists.
+	const repeatHasEnoughData = $derived(
+		(metrics?.repeat_visitor_pct ?? []).filter((d) => d.value !== 0).length > 1,
 	);
 
 	const weekdaySegments = $derived(
@@ -155,7 +162,7 @@
 			<h3 class="metric-heading">Monthly Activity</h3>
 			<LineChart
 				series={stopsSeries}
-				yAxisLabel="Raw stops / unique devices (×1,000 prop.)"
+				yAxisLabel="Raw stops / unique devices (sample-adjusted). Reflects relative change over time, not an actual visit count."
 				yFormat={(v) => v.toFixed(2)}
 				xTickEvery={6}
 			/>
@@ -163,12 +170,17 @@
 
 		<div class="metric-block">
 			<h3 class="metric-heading">Repeat Visitors</h3>
-			<LineChart
-				series={repeatSeries}
-				yAxisLabel="Repeat visitors (%)"
-				yFormat={(v) => `${v.toFixed(0)}%`}
-				xTickEvery={1}
-			/>
+			{#if repeatHasEnoughData}
+				<LineChart
+					series={repeatSeries}
+					yAxisLabel="Repeat visitors (%)"
+					yFormat={(v) => `${v.toFixed(0)}%`}
+					xTickEvery={1}
+					omitZero
+				/>
+			{:else}
+				<p class="metric-annotation">Not enough data.</p>
+			{/if}
 		</div>
 
 		<div class="metric-block">

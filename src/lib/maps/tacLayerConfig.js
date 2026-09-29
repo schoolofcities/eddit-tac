@@ -42,11 +42,11 @@ export const LAYER_GROUPS = [
 		exclusive: true,
 		ui: 'radio-toggles',
 		items: [
-			{ id: 'activity-all', label: 'All', key: 'all', breaks: [0.042, 0.11, 0.234, 0.615], colors: COLOURS },
-			{ id: 'activity-evenings', label: 'Evenings (5-11PM)', key: 'evening', breaks: [0.045, 0.13, 0.316, 0.89], colors: COLOURS },
-			{ id: 'activity-daytime', label: 'Daytime (9AM-5PM)', key: 'nine-five', breaks: [0.053, 0.152, 0.357, 1.028], colors: COLOURS },
-			{ id: 'activity-weekdays', label: 'Weekdays', key: 'weekdays', breaks: [0.044, 0.115, 0.252, 0.7], colors: COLOURS },
-			{ id: 'activity-weekends', label: 'Weekends', key: 'weekends', breaks: [0.052, 0.154, 0.357, 0.999], colors: COLOURS },
+			{ id: 'activity-all', label: 'All', key: 'all', breaks: [0.039, 0.107, 0.228, 0.611], colors: COLOURS },
+			{ id: 'activity-evenings', label: 'Evenings (5-11PM)', key: 'evening', breaks: [0.043, 0.127, 0.31, 0.891], colors: COLOURS },
+			{ id: 'activity-daytime', label: 'Daytime (9AM-5PM)', key: 'nine-five', breaks: [0.05, 0.143, 0.342, 0.981], colors: COLOURS },
+			{ id: 'activity-weekdays', label: 'Weekdays', key: 'weekdays', breaks: [0.041, 0.111, 0.244, 0.688], colors: COLOURS },
+			{ id: 'activity-weekends', label: 'Weekends', key: 'weekends', breaks: [0.049, 0.147, 0.348, 0.987], colors: COLOURS },
 		],
 	},
 	{

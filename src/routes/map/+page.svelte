@@ -5,7 +5,7 @@
 	import TacMap from "$lib/maps/TacMap.svelte";
 	import TacPanel from "$lib/maps/TacPanel.svelte";
 	import { makeInitialLayerState } from "$lib/maps/tacLayerConfig.js";
-	import venuesCentroids from "$data/venues-centroids.geo.json";
+	import venuesCentroids from "$data/venues/venues-centroids.geo.json";
 
 	let map = $state(null);
 	let selectedVenueId = $state(null);
