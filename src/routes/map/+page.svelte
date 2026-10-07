@@ -8,7 +8,8 @@
 	import venuesCentroids from "$data/venues-centroids.geo.json";
 
 	// Matches the CSS breakpoint below. On mobile one stacked panel holds
-	// everything; on desktop it splits into a layers column and a venue strip.
+	// everything; on desktop it splits into a left column (title, arts venue,
+	// map layers) and a venue profile strip along the bottom.
 	let isMobile = $state(false);
 
 	$effect(() => {
@@ -62,10 +63,10 @@
 		</div>
 	{:else}
 		<div class="tac-panel-wrap tac-side-wrap">
-			<TacPanel section="layers" bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
+			<TacPanel section="side" bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
 		</div>
 		<div class="tac-panel-wrap tac-venue-wrap">
-			<TacPanel section="venue" bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
+			<TacPanel section="profile" bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
 		</div>
 	{/if}
 
@@ -89,11 +90,12 @@
 	/*
 		Desktop:
 		┌──────────┬──────────────────────┐
-		│  title + │                      │
-		│  layers  │         map          │
-		├──────────┴──────────────────────┤
-		│  venue selector │ venue profile │
-		└─────────────────────────────────┘
+		│  title   │                      │
+		│  venue ↕ │         map          │
+		│          │                      │
+		│  layers  ├──────────────────────┤
+		│          │    venue profile     │
+		└──────────┴──────────────────────┘
 	*/
 
 	.tac-layout {
@@ -104,8 +106,8 @@
 		grid-template-columns: var(--tac-side-width) minmax(0, 1fr);
 		grid-template-rows: minmax(0, 1fr) var(--tac-bottom-height);
 		grid-template-areas:
-			"side  map"
-			"venue venue";
+			"side map"
+			"side venue";
 		width: 100vw;
 		height: 100dvh;
 		overflow: hidden;

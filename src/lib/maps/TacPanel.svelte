@@ -9,13 +9,13 @@
 		venues = [],
 		venueDisplayMode = $bindable("some"), // "some" (default) | "all"
 		// Which part of the panel to render:
-		// "all" (mobile, single stacked panel) | "layers" | "venue"
+		// "all" (mobile, single stacked panel) | "side" | "profile"
 		section = "all",
 	} = $props();
 
 	// On desktop two TacPanels are mounted at once. The sync effects below
-	// only need to run in one of them, so the venue strip skips them.
-	const ownsSyncEffects = $derived(section !== "venue");
+	// only need to run in one of them, so the profile strip skips them.
+	const ownsSyncEffects = $derived(section !== "profile");
 
 	const selectedVenue = $derived(
 		venues.find((v) => v.id === selectedVenueId) ?? null,
@@ -161,8 +161,8 @@
 
 <!-- ── Section snippets ───────────────────────────────────────────────
 	Each block is defined once and arranged differently per `section`:
-	  "layers" → title + map layers (desktop left column)
-	  "venue"  → everything about venues (desktop bottom strip)
+	  "side"    → title, arts venue (scrolls), map layers (desktop left column)
+	  "profile" → venue profile charts in one row (desktop bottom strip)
 	  "all"    → the original single stacked panel (mobile)
 ──────────────────────────────────────────────────────────────────── -->
 
@@ -434,7 +434,7 @@
 {#snippet venueProfile(showName = true)}
 	<section
 		class="panel-section"
-		class:panel-section--fill={section === "venue"}
+		class:panel-section--fill={section === "profile"}
 	>
 		<h2 class="section-heading">Venue Profile</h2>
 
@@ -450,7 +450,7 @@
 
 			<VenueProfile
 				venueId={selectedVenue.id}
-				layout={section === "venue" ? "row" : "stack"}
+				layout={section === "profile" ? "row" : "stack"}
 			/>
 		{:else}
 			<p class="empty-state">
@@ -461,19 +461,19 @@
 	</section>
 {/snippet}
 
-{#if section === "layers"}
-	<aside class="panel panel--layers">
+{#if section === "side"}
+	<aside class="panel panel--side">
 		{@render panelHeader()}
-		<div class="divider"></div>
-		{@render layerToggles()}
-	</aside>
-{:else if section === "venue"}
-	<aside class="panel panel--venue" aria-label="Venue information">
-		<div class="venue-col venue-col--info">
+		<div class="side-scroll">
 			{@render venueSelector()}
 			<div class="divider"></div>
 			{@render venueDescription()}
+			<div class="divider"></div>
+			{@render layerToggles()}
 		</div>
+	</aside>
+{:else if section === "profile"}
+	<aside class="panel panel--profile" aria-label="Venue profile">
 		<div class="venue-col venue-col--profile">
 			{@render venueProfile(false)}
 		</div>
@@ -519,39 +519,39 @@
 		scrollbar-color: var(--brandGray) transparent;
 	}
 
-	/* ── Desktop venue strip ───────────────────────────────────────────── */
+	/* ── Desktop left column ───────────────────────────────────────────── */
 	/*
-		Two independently scrolling columns. The info column matches the
-		width of the layers panel above it (--tac-side-width, set by the
-		page) so the column edges line up.
+		The title stays put; Arts Venue and Map Layers share one area below
+		it that scrolls as a whole.
 	*/
 
-	.panel--venue {
-		flex-direction: row;
+	.panel--side {
 		overflow: hidden;
 	}
 
-	.venue-col {
-		height: 100%;
+	.side-scroll {
+		flex: 1 1 auto;
+		min-height: 0;
 		overflow-y: auto;
 		overflow-x: hidden;
 		scrollbar-width: thin;
 		scrollbar-color: var(--brandGray) transparent;
 	}
 
-	.venue-col--info {
-		width: var(--tac-side-width, 400px);
-		flex-shrink: 0;
-		box-sizing: border-box;
-		border-right: 1px solid var(--brandGray);
+	/* ── Desktop profile strip ─────────────────────────────────────────── */
+
+	.panel--profile {
+		overflow: hidden;
 	}
 
 	/* Profile blocks run in one row: scroll sideways if needed, never down */
 	.venue-col--profile {
-		flex: 1;
+		height: 100%;
 		min-width: 0;
 		overflow-x: auto;
 		overflow-y: hidden;
+		scrollbar-width: thin;
+		scrollbar-color: var(--brandGray) transparent;
 	}
 
 	/* ── Header ─────────────────────────────────────────────────────────── */
