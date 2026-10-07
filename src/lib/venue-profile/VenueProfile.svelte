@@ -8,7 +8,12 @@
 	} from "./venueMetrics.js";
 	import wardToVenueSummary from "$data/ward_to_venue_summary.json";
 
-	let { venueId = null } = $props();
+	// layout: "stack" (one column, default) | "row" (blocks side by side,
+	// each at a fixed width — used in the desktop venue strip)
+	let { venueId = null, layout = "stack" } = $props();
+
+	// Slimmer bars in the desktop strip, original height when stacked
+	const barHeight = $derived(layout === "row" ? 14 : 22);
 
 	const metrics = $derived(venueId ? getVenueMetrics(venueId) : null);
 
@@ -150,44 +155,55 @@
 </script>
 
 {#if metrics}
-	<div class="venue-profile">
-		<div class="metric-block">
+	<div class="venue-profile" class:venue-profile--row={layout === "row"}>
+		<div class="metric-block metric-block--chart">
 			<h3 class="metric-heading">Monthly Activity</h3>
-			<LineChart
-				series={stopsSeries}
-				yAxisLabel="Raw stops / unique devices (×1,000 prop.)"
-				yFormat={(v) => v.toFixed(2)}
-				xTickEvery={6}
-			/>
+			<div class="chart-fill">
+				<LineChart
+					series={stopsSeries}
+					yAxisLabel="Raw stops / unique devices (×1,000 prop.)"
+					yFormat={(v) => v.toFixed(2)}
+					xTickEvery={6}
+					fill={layout === "row"}
+				/>
+			</div>
 		</div>
 
-		<div class="metric-block">
+		<div class="metric-block metric-block--chart">
 			<h3 class="metric-heading">Repeat Visitors</h3>
-			<LineChart
-				series={repeatSeries}
-				yAxisLabel="Repeat visitors (%)"
-				yFormat={(v) => `${v.toFixed(0)}%`}
-				xTickEvery={1}
-			/>
+			<div class="chart-fill">
+				<LineChart
+					series={repeatSeries}
+					yAxisLabel="Repeat visitors (%)"
+					yFormat={(v) => `${v.toFixed(0)}%`}
+					xTickEvery={1}
+					fill={layout === "row"}
+				/>
+			</div>
 		</div>
 
-		<div class="metric-block">
-			<h3 class="metric-heading">Weekday vs. Weekend</h3>
-			<ProportionalBar
-				segments={weekdaySegments}
-				referenceLine={(5 / 7) * 100}
-				referenceLabel="5/7 days"
-			/>
-		</div>
+		<!-- Bar charts are grouped in pairs: stacked in one column in the
+		     row layout, and flattened back into the list in the stack layout. -->
+		<div class="metric-pair">
+			<div class="metric-block">
+				<h3 class="metric-heading">Weekday vs. Weekend</h3>
+				<ProportionalBar
+					height={barHeight}
+					segments={weekdaySegments}
+					referenceLine={(5 / 7) * 100}
+					referenceLabel="5/7 days"
+				/>
+			</div>
 
-		<div class="metric-block">
-			<h3 class="metric-heading">Daytime vs. Evening</h3>
-			<ProportionalBar segments={dayEveningSegments} />
+			<div class="metric-block">
+				<h3 class="metric-heading">Daytime vs. Evening</h3>
+				<ProportionalBar height={barHeight} segments={dayEveningSegments} />
+			</div>
 		</div>
 
 		<!-- <div class="metric-block">
 			<h3 class="metric-heading">Home-Origin Concentration</h3>
-			<ProportionalBar segments={hhiSegments} showLegend={false} />
+			<ProportionalBar height={barHeight} segments={hhiSegments} showLegend={false} />
 			<p class="metric-annotation">
 				HHI <strong>{metrics.home_origin_hhi.toFixed(2)}</strong> — higher
 				values indicate visitors are drawn from a smaller, more
@@ -195,16 +211,18 @@
 			</p>
 		</div> -->
 
-		{#if wardSummary}
-			<div class="metric-block">
-				<h3 class="metric-heading">Ward Origin Visits</h3>
-				<ProportionalBar segments={wardOriginSegments} />
-			</div>
-		{/if}
+		<div class="metric-pair">
+			{#if wardSummary}
+				<div class="metric-block">
+					<h3 class="metric-heading">Ward Origin Visits</h3>
+					<ProportionalBar height={barHeight} segments={wardOriginSegments} />
+				</div>
+			{/if}
 
-		<div class="metric-block">
-			<h3 class="metric-heading">Travel Distance</h3>
-			<ProportionalBar segments={distanceSegments} />
+			<div class="metric-block">
+				<h3 class="metric-heading">Travel Distance</h3>
+				<ProportionalBar height={barHeight} segments={distanceSegments} />
+			</div>
 		</div>
 	</div>
 {:else}
@@ -214,26 +232,108 @@
 {/if}
 
 <style>
+	/*
+		One spacing scale shared by both layouts so headings, charts and
+		columns all line up on the same rhythm.
+	*/
 	.venue-profile {
+		--vp-heading-gap: 8px; /* heading → its chart */
+		--vp-block-gap: 24px; /* chart → next heading */
+		--vp-col-gap: 24px; /* space either side of a column rule */
+		--vp-col-width: 360px;
+
 		display: flex;
 		flex-direction: column;
-		gap: 18px;
+		gap: calc(var(--vp-block-gap) + 4px);
 	}
 
 	.metric-block {
 		display: flex;
 		flex-direction: column;
-		gap: 6px;
+		gap: var(--vp-heading-gap);
+		min-width: 0;
 	}
 
 	.metric-heading {
 		font-family: Montserrat, sans-serif;
 		font-weight: bold;
 		font-size: 0.7rem;
+		line-height: 1.2;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		color: var(--brandGray70);
 		margin: 0;
+	}
+
+	/* Stack layout: the pair wrapper disappears, so its blocks sit in the
+	   column exactly as before. */
+	.metric-pair {
+		display: contents;
+	}
+
+	/* ── Row layout (desktop venue strip) ──────────────────────────────── */
+	/*
+		Equal-width columns on a grid, separated by thin rules. Every column
+		starts at the same top edge and every heading sits on one line, so
+		the first chart in each column begins at the same height.
+	*/
+	.venue-profile--row {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: var(--vp-col-width);
+		align-items: stretch;
+		gap: 0;
+		width: max-content;
+		flex: 1 1 auto;
+		min-height: 0;
+	}
+
+	.venue-profile--row > .metric-block,
+	.venue-profile--row > .metric-pair {
+		box-sizing: content-box;
+		padding: 0 var(--vp-col-gap);
+		border-left: 1px solid var(--brandGray);
+	}
+
+	.venue-profile--row > :first-child {
+		padding-left: 0;
+		border-left: none;
+	}
+
+	/* Breathing room after the last column, so it doesn't sit flush
+	   against the strip's edge (or the end of the sideways scroll). */
+	.venue-profile--row > :last-child {
+		padding-right: var(--vp-col-gap);
+	}
+
+	/* Two equal rows: each bar block gets half the column's height. A lone
+	   block (no ward data) still takes only the top half. */
+	.venue-profile--row .metric-pair {
+		display: grid;
+		grid-template-rows: repeat(2, minmax(0, 1fr));
+		row-gap: var(--vp-block-gap);
+	}
+
+	.venue-profile--row .metric-pair > .metric-block {
+		min-height: 0;
+	}
+
+	.venue-profile--row .metric-heading {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	/* Line charts fill their column down to the bottom of the strip */
+	.chart-fill {
+		display: block;
+	}
+
+	.venue-profile--row .chart-fill {
+		flex: 1 1 auto;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.metric-annotation {

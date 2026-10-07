@@ -8,14 +8,23 @@
 		yFormat = (v) => v,
 		yAxisLabel = "",
 		xTickEvery = 6,
-		height = 120,
+		height = 120, // plot height in px (ignored when `fill` is on)
+		fill = false, // plot grows to fill the height its container gives it
 	} = $props();
 
-	const width = 300;
-	const padding = { top: 8, right: 6, bottom: 20, left: 30 };
+	// The plot is drawn in real pixels at whatever size it's rendered,
+	// so text and strokes never get stretched or squashed.
+	let boxWidth = $state(0);
+	let boxHeight = $state(0);
+
+	const width = $derived(boxWidth || 300);
+	const plotBoxHeight = $derived(fill && boxHeight ? boxHeight : height);
+	const padding = { top: 8, right: 8, bottom: 22, left: 36 };
 
 	const plotWidth = $derived(width - padding.left - padding.right);
-	const plotHeight = $derived(height - padding.top - padding.bottom);
+	const plotHeight = $derived(
+		Math.max(0, plotBoxHeight - padding.top - padding.bottom),
+	);
 
 	const xLabels = $derived(series[0]?.points.map((p) => p.x) ?? []);
 	const n = $derived(xLabels.length);
@@ -53,10 +62,17 @@
 	});
 </script>
 
-<div class="line-chart">
+<div class="line-chart" class:line-chart--fill={fill}>
+	<div
+		class="plot"
+		style={fill ? undefined : `height:${height}px`}
+		bind:clientWidth={boxWidth}
+		bind:clientHeight={boxHeight}
+	>
 	<svg
-		viewBox={`0 0 ${width} ${height}`}
-		preserveAspectRatio="none"
+		viewBox={`0 0 ${width} ${plotBoxHeight}`}
+		width={width}
+		height={plotBoxHeight}
 		class="chart-svg"
 		role="img"
 		aria-label={yAxisLabel || "Line chart"}
@@ -72,7 +88,7 @@
 			/>
 			<text
 				x={padding.left - 4}
-				y={yPos(tick) + 2.5}
+				y={yPos(tick) + 3}
 				class="axis-tick"
 				text-anchor="end">{yFormat(tick)}</text
 			>
@@ -82,8 +98,8 @@
 		<line
 			x1={padding.left}
 			x2={width - padding.right}
-			y1={height - padding.bottom}
-			y2={height - padding.bottom}
+			y1={plotBoxHeight - padding.bottom}
+			y2={plotBoxHeight - padding.bottom}
 			class="axis-line"
 		/>
 
@@ -91,7 +107,7 @@
 		{#each xTickIndices as i (i)}
 			<text
 				x={xPos(i)}
-				y={height - padding.bottom + 11}
+				y={plotBoxHeight - padding.bottom + 13}
 				class="axis-tick"
 				text-anchor="middle">{xLabels[i]}</text
 			>
@@ -102,18 +118,19 @@
 			<path
 				d={linePath(s.points)}
 				stroke={s.color}
-				stroke-width="1.6"
+				stroke-width="1.75"
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				fill="none"
 			/>
 			{#each s.points as p, i (i)}
-				<circle cx={xPos(i)} cy={yPos(p.y)} r="1.7" fill={s.color}>
+				<circle cx={xPos(i)} cy={yPos(p.y)} r="2" fill={s.color}>
 					<title>{xLabels[i]}: {yFormat(p.y)}</title>
 				</circle>
 			{/each}
 		{/each}
 	</svg>
+	</div>
 
 	{#if yAxisLabel}
 		<p class="axis-caption">{yAxisLabel}</p>
@@ -141,26 +158,44 @@
 		gap: 4px;
 	}
 
-	.chart-svg {
+	/* Fill mode: the plot takes whatever height is left after the caption
+	   and legend. The svg is absolutely positioned so its own size never
+	   feeds back into the measurement. */
+	.line-chart--fill {
+		flex: 1 1 auto;
+		min-height: 0;
+	}
+
+	.plot {
+		position: relative;
 		width: 100%;
-		height: 120px;
+	}
+
+	.line-chart--fill .plot {
+		flex: 1 1 auto;
+		min-height: 60px;
+	}
+
+	.chart-svg {
+		position: absolute;
+		inset: 0;
 		display: block;
 		overflow: visible;
 	}
 
 	.gridline {
 		stroke: var(--brandGray);
-		stroke-width: 0.4;
+		stroke-width: 0.5;
 	}
 
 	.axis-line {
 		stroke: var(--brandGray);
-		stroke-width: 0.6;
+		stroke-width: 0.75;
 	}
 
 	.axis-tick {
 		font-family: Montserrat, sans-serif;
-		font-size: 6.2px;
+		font-size: 9px;
 		fill: var(--brandGray60);
 	}
 

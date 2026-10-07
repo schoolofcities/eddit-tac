@@ -24,7 +24,10 @@
 	}
 </script>
 
-<div class="prop-bar-wrap">
+<div
+	class="prop-bar-wrap"
+	class:has-ref-label={referenceLine !== null && referenceLabel}
+>
 	<div class="prop-bar" style={`height:${height}px`}>
 		{#each segments as seg, i (seg.label + i)}
 			{#if seg.value > 0}
@@ -70,6 +73,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
+	}
+
+	/* Room for the reference label that sits above the bar */
+	.has-ref-label {
+		padding-top: 12px;
 	}
 
 	.prop-bar {

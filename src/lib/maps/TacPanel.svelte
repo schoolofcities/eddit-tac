@@ -8,7 +8,14 @@
 		layerState = $bindable({}),
 		venues = [],
 		venueDisplayMode = $bindable("some"), // "some" (default) | "all"
+		// Which part of the panel to render:
+		// "all" (mobile, single stacked panel) | "layers" | "venue"
+		section = "all",
 	} = $props();
+
+	// On desktop two TacPanels are mounted at once. The sync effects below
+	// only need to run in one of them, so the venue strip skips them.
+	const ownsSyncEffects = $derived(section !== "venue");
 
 	const selectedVenue = $derived(
 		venues.find((v) => v.id === selectedVenueId) ?? null,
@@ -82,6 +89,7 @@
 	}
 
 	$effect(() => {
+		if (!ownsSyncEffects) return;
 		if (venueDisplayMode === "all" && selectedVenueId) {
 			selectedVenueId = null;
 		}
@@ -90,6 +98,7 @@
 	// Commute time only makes sense against the "Some" venue markers — turn
 	// it off if it was on when the user switches to "All".
 	$effect(() => {
+		if (!ownsSyncEffects) return;
 		if (
 			venueDisplayMode === "all" &&
 			layerState.mobility?.["commute-time"]
@@ -101,6 +110,7 @@
 	// Activity layers are keyed to a single selected venue, same as commute
 	// time — turn activity off if it was on when the user switches to "All".
 	$effect(() => {
+		if (!ownsSyncEffects) return;
 		if (venueDisplayMode === "all" && layerState.activity?.activeId) {
 			layerState.activity.activeId = null;
 		}
@@ -148,16 +158,24 @@
 	</svg>
 {/snippet}
 
-<aside class="panel">
-	<!-- ── Header ─────────────────────────────────────────────────────── -->
+
+<!-- ── Section snippets ───────────────────────────────────────────────
+	Each block is defined once and arranged differently per `section`:
+	  "layers" → title + map layers (desktop left column)
+	  "venue"  → everything about venues (desktop bottom strip)
+	  "all"    → the original single stacked panel (mobile)
+──────────────────────────────────────────────────────────────────── -->
+
+{#snippet panelHeader()}
 	<header class="panel-header">
 		<h1 class="header-title">ACCESS IN THE ARTS</h1>
 		<span class="header-org">School of Cities | Toronto Arts Council</span>
 
 		<p class="header-authors">Author One, Author Two &middot; 2026</p>
 	</header>
+{/snippet}
 
-	<!-- ── Venue Selector ────────────────────────────────────────────── -->
+{#snippet venueSelector()}
 	<section class="panel-section">
 		<h2 class="section-heading">Arts Venue</h2>
 		<p class="section-desc">
@@ -220,9 +238,9 @@
 			</svg>
 		</div>
 	</section>
+{/snippet}
 
-	<div class="divider"></div>
-	<!-- ── Venue Description ──────────────────────────────────────────── -->
+{#snippet venueDescription()}
 	<section class="panel-section">
 		<!-- <h2 class="section-heading">Venue Description</h2> -->
 
@@ -244,14 +262,14 @@
 			</p>
 		{:else}
 			<p class="empty-state">
-				Select a venue above or click a marker on the map to view its
-				description.
+				Choose a venue from the list or click a marker on the map to
+				see its description.
 			</p>
 		{/if}
 	</section>
+{/snippet}
 
-	<div class="divider"></div>
-	<!-- ── Layer Toggles ─────────────────────────────────────────────── -->
+{#snippet layerToggles()}
 	<section class="panel-section">
 		<h2 class="section-heading">Map Layers</h2>
 
@@ -411,11 +429,13 @@
 			</div>
 		{/each}
 	</section>
+{/snippet}
 
-	<div class="divider"></div>
-
-	<!-- ── Venue Profile ─────────────────────────────────────────────── -->
-	<section class="panel-section">
+{#snippet venueProfile(showName = true)}
+	<section
+		class="panel-section"
+		class:panel-section--fill={section === "venue"}
+	>
 		<h2 class="section-heading">Venue Profile</h2>
 
 		{#if venueDisplayMode === "all"}
@@ -424,20 +444,53 @@
 				profile.
 			</p>
 		{:else if selectedVenue}
-			<p class="venue-name">{selectedVenue.name}</p>
+			{#if showName}
+				<p class="venue-name">{selectedVenue.name}</p>
+			{/if}
 
-			<VenueProfile venueId={selectedVenue.id} />
+			<VenueProfile
+				venueId={selectedVenue.id}
+				layout={section === "venue" ? "row" : "stack"}
+			/>
 		{:else}
 			<p class="empty-state">
-				Select a venue above or click on the map to view its activity
-				and demographic profile.
+				Choose a venue from the list or click a marker on the map to
+				see its activity and demographic profile.
 			</p>
 		{/if}
 	</section>
+{/snippet}
 
-	<div class="divider"></div>
+{#if section === "layers"}
+	<aside class="panel panel--layers">
+		{@render panelHeader()}
+		<div class="divider"></div>
+		{@render layerToggles()}
+	</aside>
+{:else if section === "venue"}
+	<aside class="panel panel--venue" aria-label="Venue information">
+		<div class="venue-col venue-col--info">
+			{@render venueSelector()}
+			<div class="divider"></div>
+			{@render venueDescription()}
+		</div>
+		<div class="venue-col venue-col--profile">
+			{@render venueProfile(false)}
+		</div>
+	</aside>
+{:else}
+	<aside class="panel">
+		{@render panelHeader()}
+		{@render venueSelector()}
+		<div class="divider"></div>
+		{@render venueDescription()}
+		<div class="divider"></div>
+		{@render layerToggles()}
+		<div class="divider"></div>
+		{@render venueProfile()}
+		<div class="divider"></div>
 
-	<!-- ── Compare ───────────────────────────────────────────────────── -->
+		<!-- ── Compare ───────────────────────────────────────────────────── -->
 	<!-- <section class="panel-section panel-section--grow">
 		<h2 class="section-heading">Compare Venues</h2>
 		<p class="empty-state">
@@ -445,7 +498,8 @@
 			here.
 		</p>
 	</section> -->
-</aside>
+	</aside>
+{/if}
 
 <style>
 	/* ── Container ──────────────────────────────────────────────────────── */
@@ -463,6 +517,41 @@
 		overflow-x: hidden;
 		scrollbar-width: thin;
 		scrollbar-color: var(--brandGray) transparent;
+	}
+
+	/* ── Desktop venue strip ───────────────────────────────────────────── */
+	/*
+		Two independently scrolling columns. The info column matches the
+		width of the layers panel above it (--tac-side-width, set by the
+		page) so the column edges line up.
+	*/
+
+	.panel--venue {
+		flex-direction: row;
+		overflow: hidden;
+	}
+
+	.venue-col {
+		height: 100%;
+		overflow-y: auto;
+		overflow-x: hidden;
+		scrollbar-width: thin;
+		scrollbar-color: var(--brandGray) transparent;
+	}
+
+	.venue-col--info {
+		width: var(--tac-side-width, 400px);
+		flex-shrink: 0;
+		box-sizing: border-box;
+		border-right: 1px solid var(--brandGray);
+	}
+
+	/* Profile blocks run in one row: scroll sideways if needed, never down */
+	.venue-col--profile {
+		flex: 1;
+		min-width: 0;
+		overflow-x: auto;
+		overflow-y: hidden;
 	}
 
 	/* ── Header ─────────────────────────────────────────────────────────── */
@@ -512,6 +601,15 @@
 	.panel-section {
 		padding: 14px 16px;
 		flex-shrink: 0;
+	}
+
+	/* Venue strip: the profile section spans the column's full height so
+	   VenueProfile's row can stretch its blocks top to bottom. */
+	.panel-section--fill {
+		height: 100%;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
 	}
 
 	/* Let the last section expand to fill remaining height */
