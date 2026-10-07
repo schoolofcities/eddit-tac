@@ -1,6 +1,6 @@
 /**
  * Lookup + formatting helpers for the per-venue activity metrics computed in
- * analysis/activity/compute_venue_activity_metrics.ipynb and exported to
+ * analysis/activity/main/01_venue_metrics.ipynb and exported to
  * src/data/activity/venue_metrics.json.
  */
 import venueMetricsData from "$data/activity/venue_metrics.json";
