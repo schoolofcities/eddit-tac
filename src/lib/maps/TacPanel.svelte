@@ -52,14 +52,16 @@
 		applyCrossGroupExclusion(groupId, next);
 	}
 
-	// Demography, Activity, and Commute Time are three fill layers drawn on
-	// the same map surface — picking one clears the other two so they never
+	// Demography, Activity, Commute Time and Walk Access are fill layers drawn
+	// on the same map surface — picking one clears the others so they never
 	// compete for the same visual space. "except" is the layer that was just
 	// activated and should be left alone.
 	function clearOtherExclusiveLayers(except) {
 		if (except !== "demography") layerState.demography.activeId = null;
 		if (except !== "activity") layerState.activity.activeId = null;
 		if (except !== "commute-time") layerState.mobility["commute-time"] = false;
+		if (except !== "walk-venues-30min")
+			layerState.mobility["walk-venues-30min"] = false;
 	}
 
 	function applyCrossGroupExclusion(groupId, next) {
@@ -76,8 +78,8 @@
 			return;
 		const next = !layerState[groupId][itemId];
 		layerState[groupId][itemId] = next;
-		if (itemId === "commute-time" && next) {
-			clearOtherExclusiveLayers("commute-time");
+		if ((itemId === "commute-time" || itemId === "walk-venues-30min") && next) {
+			clearOtherExclusiveLayers(itemId);
 		}
 	}
 
@@ -129,6 +131,18 @@
 			/>
 		{/each}
 
+		{#if item.legendLabels}
+			{#each item.legendLabels as label, i}
+				<text
+					class="legend-label"
+					x={`${(i + 0.5) * 20}%`}
+					y="35"
+					text-anchor="middle"
+				>
+					{label}
+				</text>
+			{/each}
+		{:else}
 		{#each item.breaks as value, i}
 			<text
 				class="legend-label"
@@ -145,6 +159,7 @@
 				{/if}
 			</text>
 		{/each}
+		{/if}
 	</svg>
 {/snippet}
 
@@ -370,43 +385,46 @@
 							</span>
 							<span class="layer-label">{item.label}</span>
 						</label>
+
+						{#if item.id === "commute-time" && isOn(group, item)}
+							{@const commuteItem = item}
+							{@const commuteBuckets = commuteItem.cutoffs.map(
+								(cutoff, i) => ({
+									label: `${cutoff} min`,
+									color: commuteItem.colors[i],
+								}),
+							)}
+							<svg class="legend" width="100%" height="40">
+								{#each commuteBuckets as bucket, i}
+									<rect
+										x={(i * 100) / commuteBuckets.length + "%"}
+										y="0"
+										width={100 / commuteBuckets.length + "%"}
+										height="20"
+										fill={bucket.color}
+										stroke="white"
+										stroke-width="1"
+										opacity="0.7"
+									/>
+								{/each}
+								{#each commuteBuckets as bucket, i}
+									<text
+										class="legend-label"
+										x={`${(i + 0.5) * (100 / commuteBuckets.length)}%`}
+										y="35"
+										text-anchor="middle"
+									>
+										{bucket.label}
+									</text>
+								{/each}
+							</svg>
+						{/if}
+
+						{#if item.id === "walk-venues-30min" && isOn(group, item)}
+							{@render breaksLegend(item)}
+						{/if}
 					{/each}
 
-					{#if group.items.some((item) => item.id === "commute-time") && layerState[group.id]?.["commute-time"]}
-						{@const commuteItem = group.items.find(
-							(item) => item.id === "commute-time",
-						)}
-						{@const commuteBuckets = commuteItem.cutoffs.map(
-							(cutoff, i) => ({
-								label: `${cutoff} min`,
-								color: commuteItem.colors[i],
-							}),
-						)}
-						<svg class="legend" width="100%" height="40">
-							{#each commuteBuckets as bucket, i}
-								<rect
-									x={(i * 100) / commuteBuckets.length + "%"}
-									y="0"
-									width={100 / commuteBuckets.length + "%"}
-									height="20"
-									fill={bucket.color}
-									stroke="white"
-									stroke-width="1"
-									opacity="0.7"
-								/>
-							{/each}
-							{#each commuteBuckets as bucket, i}
-								<text
-									class="legend-label"
-									x={`${(i + 0.5) * (100 / commuteBuckets.length)}%`}
-									y="35"
-									text-anchor="middle"
-								>
-									{bucket.label}
-								</text>
-							{/each}
-						</svg>
-					{/if}
 				{/if}
 			</div>
 		{/each}

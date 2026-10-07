@@ -65,6 +65,15 @@ export const LAYER_GROUPS = [
 				cutoffs: [15, 30, 45, 60],
 				colors: ['#2166ac', '#1fac8f', '#f8961e', '#d73027'],
 			},
+			{
+				id: 'walk-venues-30min',
+				label: 'Number of Venues Within a 30 Minute Walk',
+				key: 'venues_reachable',
+				// step thresholds: 1–10 | 11–30 | 31–75 | 76–200 | 200+
+				breaks: [11, 31, 76, 201],
+				legendLabels: ['1–10', '11–30', '31–75', '76–200', '200+'],
+				colors: COLOURS,
+			},
 		],
 	},
 	{

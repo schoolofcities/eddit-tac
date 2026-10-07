@@ -25,6 +25,8 @@ analysis/mobility/graphs
 tmp/
 !src/data/
 
+*.graphml
+
 # Node.js / npm (Svelte)
 node_modules/
 npm-debug.log*

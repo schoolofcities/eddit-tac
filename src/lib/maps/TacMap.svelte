@@ -17,6 +17,7 @@
 	import neighbourhoodsLabels from "$data/geo/neighbourhoods-labels.geo.json";
 	import cityWards from "$data/geo/city-wards.geo.json";
 	import cityWardsLabels from "$data/geo/city-wards-labels.geo.json";
+	import hexWalk30 from "$data/mobility/hex_walk_30min_res9.geo.json";
 
 	import basemapLayers from "$lib/maps/neutral-grey.json";
 	import * as pmtiles from "pmtiles";
@@ -89,6 +90,7 @@
 			mapLoaded = true;
 			addDemographyLayers();
 			addActivityLayers();
+			addWalkAccessLayer();
 			addTorontoBoundary();
 			addCityWards();
 			addNeighbourhoods();
@@ -750,6 +752,45 @@
 		}
 	}
 
+	const walkAccessItem = LAYER_GROUPS.find(
+		(g) => g.id === "mobility",
+	).items.find((i) => i.id === "walk-venues-30min");
+
+	// Hex grid (H3 res 9) of how many venues are reachable on a 30 min walk.
+	// Not venue-dependent, so it's added once and only its visibility changes.
+	function addWalkAccessLayer() {
+		if (!map) return;
+
+		map.addSource("hex-walk-30min", {
+			type: "geojson",
+			data: hexWalk30,
+		});
+
+		const item = walkAccessItem;
+		const value = ["to-number", ["get", item.key], 0];
+
+		map.addLayer({
+			id: item.id,
+			type: "fill",
+			source: "hex-walk-30min",
+			paint: {
+				"fill-color": [
+					"case",
+					["<", value, 1],
+					"#cbcbcb",
+					[
+						"step",
+						value,
+						item.colors[0],
+						...item.breaks.flatMap((b, i) => [b, item.colors[i + 1]]),
+					],
+				],
+				"fill-opacity": FILL_OPACITY,
+			},
+			layout: { visibility: "none" },
+		});
+	}
+
 	const activityDataCache = new Map();
 
 	async function loadVenueActivityData(venueId) {
@@ -954,6 +995,16 @@
 						}
 						break;
 					}
+
+					case "walk-venues-30min":
+						if (map.getLayer(item.id)) {
+							map.setLayoutProperty(
+								item.id,
+								"visibility",
+								visibility,
+							);
+						}
+						break;
 
 					case "ref-neighbourhoods":
 						if (map.getLayer("ref-neighbourhoods")) {
