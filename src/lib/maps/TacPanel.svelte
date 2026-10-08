@@ -449,6 +449,33 @@
 			here.
 		</p>
 	</section> -->
+
+  <!-- ── About ─────────────────────────────────────────────────────── -->
+  <section class="panel-section about-section">
+    <div class="about-block">
+      <h2 class="section-heading">Project Description</h2>
+      <p class="section-desc">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris.
+      </p>
+    </div>
+
+    <div class="about-block">
+      <h2 class="section-heading">Data</h2>
+      <p class="section-desc">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore.
+      </p>
+    </div>
+
+    <div class="about-block">
+      <h2 class="section-heading">GitHub</h2>
+      <p class="section-desc">
+        <a></a>
+      </p>
+    </div>
+  </section>
 </aside>
 
 <style>
@@ -548,6 +575,26 @@
     color: #000;
     margin: 0 0 10px;
     line-height: 1.45;
+  }
+
+  /* ── About ──────────────────────────────────────────────────────────── */
+
+  .about-block + .about-block {
+    margin-top: 14px;
+  }
+
+  .about-block .section-desc {
+    margin: 0;
+  }
+
+  .about-link {
+    color: rgb(0, 98, 234);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .about-link:hover {
+    text-decoration: underline;
   }
 
   .empty-state {
