@@ -4,8 +4,9 @@
 	import Password from "$lib/Password.svelte";
 	import TacMap from "$lib/maps/TacMap.svelte";
 	import TacPanel from "$lib/maps/TacPanel.svelte";
+	import TacProfilePanel from "$lib/maps/TacProfilePanel.svelte";
 	import { makeInitialLayerState } from "$lib/maps/tacLayerConfig.js";
-	import venuesCentroids from "$data/venues-centroids.geo.json";
+	import venuesCentroids from "$data/venues/venues-centroids.geo.json";
 
 	// Matches the CSS breakpoint below. On mobile one stacked panel holds
 	// everything; on desktop it splits into a left column (title, arts venue,
@@ -28,7 +29,9 @@
 	// Derive a simple list for the panel dropdown — sorted alphabetically
 	const venues = venuesCentroids.features
 		.map((f) => ({
-			id: String(f.properties.fid),
+			// Same rule TacMap uses (venueKey), so the dropdown and map clicks
+			// produce identical ids.
+			id: String(f.properties.id ?? f.properties.fid),
 			name: f.properties.venue_name,
 			type: f.properties.primary_discipline
 				? f.properties.primary_discipline
@@ -39,11 +42,23 @@
 			postalCode: f.properties.postal_code,
 			description: f.properties.venue_description,
 		}))
+		// Keep one entry per id. The dropdown's list is keyed by id, and a
+		// repeated id makes Svelte throw (each_key_duplicate), which silently
+		// stops the map and profile from reacting to the selection.
+		.filter((v, i, all) => {
+			const first = all.findIndex((o) => o.id === v.id) === i;
+			if (!first) {
+				console.warn(
+					`[venues] duplicate venue id "${v.id}" in venues-centroids — keeping the first ("${all.find((o) => o.id === v.id).name}"), skipping "${v.name}"`,
+				);
+			}
+			return first;
+		})
 		.sort((a, b) => (a.name ?? "").localeCompare(b.name ?? ""));
 </script>
 
 <svelte:head>
-	<title>Arts Venue Map | Toronto Arts Council</title>
+	<title>Access to the Arts | Toronto Arts Council</title>
 	<meta
 		name="description"
 		content="Equitable development initiative: exploring activity, demography, and access across Toronto Arts Council venues."
@@ -58,15 +73,24 @@
 
 <div class="tac-layout">
 	{#if isMobile}
+		<!-- Mobile: one panel with everything, Venue Profile included -->
 		<div class="tac-panel-wrap tac-side-wrap">
-			<TacPanel section="all" bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
+			<TacPanel bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
 		</div>
 	{:else}
+		<!-- Desktop: left column without the profile... -->
 		<div class="tac-panel-wrap tac-side-wrap">
-			<TacPanel section="side" bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
+			<TacPanel
+				showProfile={false}
+				bind:selectedVenueId
+				bind:layerState
+				bind:venueDisplayMode
+				{venues}
+			/>
 		</div>
+		<!-- ...and the profile on its own in the strip under the map -->
 		<div class="tac-panel-wrap tac-venue-wrap">
-			<TacPanel section="profile" bind:selectedVenueId bind:layerState bind:venueDisplayMode {venues} />
+			<TacProfilePanel {selectedVenueId} {venueDisplayMode} {venues} />
 		</div>
 	{/if}
 

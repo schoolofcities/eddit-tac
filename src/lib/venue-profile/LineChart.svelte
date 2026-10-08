@@ -9,6 +9,7 @@
 		yAxisLabel = "",
 		xTickEvery = 6,
 		height = 120, // plot height in px (ignored when `fill` is on)
+		omitZero = false,
 		fill = false, // plot grows to fill the height its container gives it
 	} = $props();
 
@@ -48,6 +49,21 @@
 			.map(
 				(p, i) =>
 					`${i === 0 ? "M" : "L"}${xPos(i).toFixed(2)},${yPos(p.y).toFixed(2)}`,
+			)
+			.join(" ");
+	}
+
+	// When omitZero is set, drop zero-value points from the line entirely and
+	// connect the remaining non-zero points directly to each other — a 0 in
+	// the middle of the series (missing data) is bridged over, not drawn as a
+	// dip to the axis or as a break in the line.
+	function linePathOmitZero(points) {
+		return points
+			.map((p, i) => ({ i, y: p.y }))
+			.filter((p) => p.y !== 0)
+			.map(
+				(p, j) =>
+					`${j === 0 ? "M" : "L"}${xPos(p.i).toFixed(2)},${yPos(p.y).toFixed(2)}`,
 			)
 			.join(" ");
 	}
@@ -116,7 +132,7 @@
 		<!-- series -->
 		{#each series as s (s.id)}
 			<path
-				d={linePath(s.points)}
+				d={omitZero ? linePathOmitZero(s.points) : linePath(s.points)}
 				stroke={s.color}
 				stroke-width="1.75"
 				stroke-linecap="round"
@@ -124,9 +140,11 @@
 				fill="none"
 			/>
 			{#each s.points as p, i (i)}
-				<circle cx={xPos(i)} cy={yPos(p.y)} r="2" fill={s.color}>
-					<title>{xLabels[i]}: {yFormat(p.y)}</title>
-				</circle>
+				{#if !omitZero || p.y !== 0}
+					<circle cx={xPos(i)} cy={yPos(p.y)} r="1.7" fill={s.color}>
+						<title>{xLabels[i]}: {yFormat(p.y)}</title>
+					</circle>
+				{/if}
 			{/each}
 		{/each}
 	</svg>
@@ -196,12 +214,13 @@
 	.axis-tick {
 		font-family: Montserrat, sans-serif;
 		font-size: 9px;
-		fill: var(--brandGray60);
+		fill: #000;
 	}
 
 	.axis-caption {
-		font-size: 0.62rem;
-		color: var(--brandGray60);
+		font-size: 11px;
+		font-family: Montserrat, sans-serif;
+		color: #000;
 		margin: 0;
 		line-height: 1.3;
 	}
@@ -218,7 +237,7 @@
 		align-items: center;
 		gap: 5px;
 		font-size: 0.68rem;
-		color: var(--brandGray70);
+		color: #000;
 	}
 
 	.legend-swatch {

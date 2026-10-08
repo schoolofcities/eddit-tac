@@ -1,5 +1,14 @@
 # Project-specific
-data/archive
+data/archive/*
+!data/archive/unused-layers/
+
+# Mobility pipeline scratch: OTP graph (large) and resumable checkpoints
+data/mobility/otp-graphs/
+data/mobility/.isochrones_checkpoint_*
+data/mobility/walk-graph/
+
+# Large temporary file written (and deleted) by analysis/census/05_osm_buildings_census_join.ipynb
+data/census/buildings_with_census.geojson
 
 data/activity
 
@@ -12,18 +21,14 @@ data/geo/geohash
 data/geo/lada000b21a_e
 data/geo/lct_000b21a_e
 
-data/prelim
-
-data/test3
-
 data/venues/axle
-
-data/activity
-
-analysis/mobility/graphs
 
 tmp/
 !src/data/
+
+*.graphml
+*.obj
+*.pbf
 
 # Node.js / npm (Svelte)
 node_modules/

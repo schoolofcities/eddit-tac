@@ -1,20 +1,34 @@
-# Transit Isochrone Aggregation (OTP)
+# Mobility analysis
+
+Everything on the map's **Mobility** menu is produced here. All paths are relative to the **repository root**, and every script/notebook finds the root itself, so you can run them from any directory.
+
+| Step | File | Reads | Writes | Used by the map as |
+|---|---|---|---|---|
+| 01 | `01_otp_isochrones.py` (this README) | `src/data/venues/venues-centroids.geo.json`, OTP graph in `data/mobility/otp-graphs/toronto/` | `data/mobility/isochrones_*.geojson` (7 files) | -- (input to step 02) |
+| 02 | `02_tile_isochrones.ipynb` | `data/mobility/isochrones_peak_all.geojson`, `data/geo/lake-ontario.geojson` | **`static/commute_time/venue_<id>.pmtiles`** (one per venue) | "Commute Time" layer (`period: 'commute_time'` in `src/lib/maps/tacLayerConfig.js`) |
+| 03 | `03_hex_walk_access_osmnx.ipynb` | `src/data/geo/toronto-boundary.geo.json`, `data/venues/tac-list/current_toronto_arts_locations_eddit.csv`, OSM walk network | **`src/data/mobility/hex_walk_30min_res9.geo.json`** | "Number of venues within a 30 minute walk" layer |
+
+Steps 01 -> 02 are the transit chain (run 01 first; it takes hours). Step 03 is independent (walking only).
+
+The other Mobility layers -- rail and streetcar/bus lines (`src/data/geo/mobility-lines-simplified.geo.json`), subway and GO stops (`subway-stops.geo.json`, `go-stops.geo.json`) -- are hand-prepared reference layers; see `src/data/README.md`.
+
+PMTiles stay in `static/` because the browser reads them with HTTP range requests, which a bundler cannot do. Everything else is bundled from `src/data/`.
+
+**Which isochrone file is live?** `static/commute_time/` was built from `isochrones_peak_all.geojson` (weekday + weekend peak pooled, which is what `02_tile_isochrones.ipynb` is set to). To show a different period (for example off-peak), change `INPUT_FILE` in step 02 and rebuild the tiles.
+
+---
+
+# Step 01: Transit isochrone aggregation (OTP)
 
 Computes transit accessibility isochrones for a set of venues in Toronto
 using OpenTripPlanner 1.x, aggregated across multiple sampled departure
 times via a frequency-threshold method, and split into weekday/weekend and
 peak/off-peak categories, plus pooled composite views.
 
-This repository contains one script: `otp_isochrones.py`.
-
-**A note on directory structure.** Every path in this README (the jar,
-`graphs/`, `data/`, `output-4/`) is relative to a single working
-directory — call it the *project directory*. It doesn't need to be your
-terminal's home directory or a top-level folder; it's fine for this to be
-a subfolder inside some larger project (e.g. `big-project/transit-
-isochrones/`). What matters is that you `cd` into that same project
-directory before running any of the Java or Python commands below, in
-every terminal you use — see Section 3 for exactly where.
+The script is `01_otp_isochrones.py`. Its output folder is `data/mobility/`
+and its input venues come from `src/data/venues/venues-centroids.geo.json`;
+the OTP graph and the downloaded GTFS/OSM inputs live in
+`data/mobility/otp-graphs/toronto/` (git-ignored).
 
 ---
 
@@ -33,11 +47,11 @@ install and select Java 8 for this project before proceeding.
 
 ### 1.2 OpenTripPlanner 1.5.0
 
-Download the shaded jar into your project directory (see the note above —
-`cd` there first):
+The shaded jar is already in this folder (`analysis/mobility/otp-1.5.0-shaded.jar`).
+If it is missing, download it:
 
 ```bash
-curl -o otp-1.5.0-shaded.jar \
+curl -o analysis/mobility/otp-1.5.0-shaded.jar \
   https://repo1.maven.org/maven2/org/opentripplanner/otp/1.5.0/otp-1.5.0-shaded.jar
 ```
 
@@ -59,10 +73,9 @@ You will need:
 - **GTFS feeds** for the transit agencies you want routed (e.g. one zip
   per agency). Avoid spaces or special characters in filenames.
 - **An OSM extract** covering the same area, in `.osm.pbf` format.
-- **`../../data/venues/tac-list/venues-centroids.geojson`** (relative to
-  the project directory — this one lives two levels up, in a shared
-  `data/` folder outside this project, per `VENUES_GEOJSON` in the
-  script) — a GeoJSON `FeatureCollection` of Point features, one per
+- **`src/data/venues/venues-centroids.geo.json`** (per `VENUES_GEOJSON` in
+  the script; regenerate it with `analysis/venues/main/03_export_map_layers.ipynb`)
+  — a GeoJSON `FeatureCollection` of Point features, one per
   venue, each with an `id` property (or whichever property name you set
   `ID_FIELD` to in the script). Example:
 
@@ -83,10 +96,18 @@ You will need:
 
 ## 2. Building the OTP graph
 
-Place your OSM extract and all GTFS feeds in one directory, e.g.:
+The raw inputs are already in `data/geo/` (`Toronto.osm.pbf`, `GO-GTFS.zip`,
+`UP-GTFS.zip` and the TTC zip). Copy them into the graph directory, giving the
+TTC file a name without spaces. From the repository root:
+
+```bash
+mkdir -p data/mobility/otp-graphs/toronto
+cp data/geo/Toronto.osm.pbf data/geo/GO-GTFS.zip data/geo/UP-GTFS.zip data/mobility/otp-graphs/toronto/
+cp "data/geo/TTC Routes and Schedules Data.zip" data/mobility/otp-graphs/toronto/TTC-GTFS.zip
+```
 
 ```
-graphs/
+data/mobility/otp-graphs/
 └── toronto/
     ├── Toronto.osm.pbf
     ├── GO-GTFS.zip
@@ -94,14 +115,14 @@ graphs/
     └── UP-GTFS.zip
 ```
 
-Build the graph:
+Build the graph (from the repository root):
 
 ```bash
-java -Xmx4G -jar otp-1.5.0-shaded.jar --build graphs/toronto
+java -Xmx4G -jar analysis/mobility/otp-1.5.0-shaded.jar --build data/mobility/otp-graphs/toronto
 ```
 
-This writes `Graph.obj` into `graphs/toronto/` and generates a build
-report at `graphs/toronto/build-report/report.html`. Check that report
+This writes `Graph.obj` into `data/mobility/otp-graphs/toronto/` and generates a build
+report at `data/mobility/otp-graphs/toronto/build-report/report.html`. Check that report
 for feed-linking errors (e.g. overlapping stop/trip IDs across agencies)
 before proceeding — these can silently degrade routing without failing
 the build.
@@ -113,16 +134,13 @@ If the build runs out of memory, increase `-Xmx` (e.g. `-Xmx6G` or `-Xmx8G`).
 ## 3. Running the pipeline
 
 This requires **two terminals running concurrently**: one hosting the OTP
-server, one running the Python script that queries it. Each terminal is a
-separate shell session, so **each one needs its own `cd` into the project
-directory** — one terminal's working directory doesn't carry over to the
-other.
+server, one running the Python script that queries it. Run both from the
+**repository root**.
 
 ### Terminal 1 — start the OTP server
 
 ```bash
-cd /path/to/your/project-directory   # e.g. big-project/transit-isochrones
-java -Xmx4G -jar otp-1.5.0-shaded.jar --graphs graphs --router toronto --server --port 8080
+java -Xmx4G -jar analysis/mobility/otp-1.5.0-shaded.jar --graphs data/mobility/otp-graphs --router toronto --server --port 8080
 ```
 
 Wait for a log line indicating the server is running (e.g. `Grizzly server
@@ -135,8 +153,7 @@ the run.
 Once the server is confirmed up, in a separate terminal:
 
 ```bash
-cd /path/to/your/project-directory   # same directory as Terminal 1
-python3 otp_isochrones.py
+python3 analysis/mobility/01_otp_isochrones.py
 ```
 
 The script queries OTP once for each (venue, date, time) combination
@@ -158,7 +175,7 @@ Once the script completes, return to Terminal 1 and stop the server with
 
 ## 4. Output files
 
-Seven GeoJSON files are produced, written to `output-4/`:
+Seven GeoJSON files are produced, written to `data/mobility/`:
 
 - `isochrones_weekday_peak.geojson`
 - `isochrones_weekday_offpeak.geojson`
@@ -194,11 +211,9 @@ base categories present, since it draws on every one of them.
 ## 5. Troubleshooting
 
 - **`command not found: python`** — use `python3`.
-- **`Error: Unable to access jarfile otp-1.5.0-shaded.jar`** or the script
-  can't find `graphs/` / `../../data/venues/tac-list/venues-centroids.geojson`
-  — you're
-  not in the project directory in that terminal. `cd` there first (see
-  Section 3); remember each terminal needs this independently.
+- **`Error: Unable to access jarfile`** or the script can't find the graph or
+  `src/data/venues/venues-centroids.geo.json` — you're not running from the
+  repository root. `cd` there first; each terminal needs this independently.
 - **All requests fail with `Connection refused`** — the OTP server is not
   running or has not finished loading the graph. Confirm Terminal 1 shows
   the server-running log line before starting the script.

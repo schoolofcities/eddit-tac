@@ -6,7 +6,7 @@
 		formatYearMonth,
 		formatHalfYear,
 	} from "./venueMetrics.js";
-	import wardToVenueSummary from "$data/ward_to_venue_summary.json";
+	import wardToVenueSummary from "$data/activity/ward_to_venue_summary.json";
 
 	// layout: "stack" (one column, default) | "row" (blocks side by side,
 	// each at a fixed width — used in the desktop venue strip)
@@ -15,7 +15,43 @@
 	// Slimmer bars in the desktop strip, original height when stacked
 	const barHeight = $derived(layout === "row" ? 14 : 22);
 
-	const metrics = $derived(venueId ? getVenueMetrics(venueId) : null);
+	// A venue with missing or malformed metrics must never throw: in Svelte 5
+	// an error here aborts the whole update, so the map and dropdown would
+	// stop responding too. Log it and show the empty state instead.
+	function safeMetrics(id) {
+		try {
+			return getVenueMetrics(id) ?? null;
+		} catch (err) {
+			console.error(`[VenueProfile] could not load metrics for venue ${id}`, err);
+			return null;
+		}
+	}
+
+	const metrics = $derived(venueId ? safeMetrics(venueId) : null);
+
+	// Missing / null values become 0, which the charts already treat as
+	// "no data" (omitZero). A null reaching a chart would throw on toFixed.
+	const num = (v) => (Number.isFinite(Number(v)) && v !== null ? Number(v) : 0);
+	const fmt = (digits, suffix = "") => (v) =>
+		Number.isFinite(v) ? `${v.toFixed(digits)}${suffix}` : "–";
+
+	// Each chart has its own error boundary: a failing chart shows its error
+	// in place (and in the console) while the other charts still render.
+	function logChartError(chart, err) {
+		console.error(`[VenueProfile] "${chart}" chart failed for venue ${venueId}:`, err);
+	}
+
+	// Series must be arrays; anything else (missing, or an object keyed by
+	// period) is treated as empty rather than crashing on .map / .filter.
+	const list = (v) => (Array.isArray(v) ? v : []);
+
+	function safeFormat(fn, v) {
+		try {
+			return fn(v);
+		} catch {
+			return String(v ?? "");
+		}
+	}
 
 	// Fixed categorical order reused across every dual/multi-segment chart below:
 	// blue = primary/first category, orange = secondary. Distance buckets get
@@ -31,20 +67,20 @@
 			? [
 					{
 						id: "raw-stops",
-						label: "Raw stops",
+						label: "Total stops",
 						color: ACCENT_BLUE,
-						points: metrics.monthly_raw_stops.map((d) => ({
-							x: formatYearMonth(d.year_month),
-							y: d.value,
+						points: list(metrics.monthly_raw_stops).map((d) => ({
+							x: safeFormat(formatYearMonth, d?.year_month),
+							y: num(d?.value),
 						})),
 					},
 					{
 						id: "unique-devices",
 						label: "Unique devices",
 						color: ACCENT_ORANGE,
-						points: metrics.monthly_unique_devices.map((d) => ({
-							x: formatYearMonth(d.year_month),
-							y: d.value,
+						points: list(metrics.monthly_unique_devices).map((d) => ({
+							x: safeFormat(formatYearMonth, d?.year_month),
+							y: num(d?.value),
 						})),
 					},
 				]
@@ -58,13 +94,20 @@
 						id: "repeat-visitors",
 						label: "Repeat visitors",
 						color: ACCENT_BLUE,
-						points: metrics.repeat_visitor_pct.map((d) => ({
-							x: formatHalfYear(d.half_year),
-							y: d.value,
+						points: list(metrics.repeat_visitor_pct).map((d) => ({
+							x: safeFormat(formatHalfYear, d?.half_year),
+							y: num(d?.value),
 						})),
 					},
 				]
 			: [],
+	);
+
+	// 0% half-years usually mean "no data that period", not "zero repeat
+	// visitors" — so the chart hides those points/segments (via omitZero) and
+	// falls back to a placeholder entirely when only one real value exists.
+	const repeatHasEnoughData = $derived(
+		list(metrics?.repeat_visitor_pct).filter((d) => num(d?.value) !== 0).length > 1,
 	);
 
 	const weekdaySegments = $derived(
@@ -72,12 +115,12 @@
 			? [
 					{
 						label: "Weekdays",
-						value: metrics.weekday_weekend_split.weekday_pct,
+						value: num(metrics.weekday_weekend_split?.weekday_pct),
 						color: ACCENT_BLUE,
 					},
 					{
 						label: "Weekends",
-						value: metrics.weekday_weekend_split.weekend_pct,
+						value: num(metrics.weekday_weekend_split?.weekend_pct),
 						color: ACCENT_ORANGE,
 					},
 				]
@@ -89,12 +132,12 @@
 			? [
 					{
 						label: "Daytime (9-5)",
-						value: metrics.daytime_evening_split.nine_five_pct,
+						value: num(metrics.daytime_evening_split?.nine_five_pct),
 						color: ACCENT_BLUE,
 					},
 					{
 						label: "Evening",
-						value: metrics.daytime_evening_split.evening_pct,
+						value: num(metrics.daytime_evening_split?.evening_pct),
 						color: ACCENT_ORANGE,
 					},
 				]
@@ -120,7 +163,7 @@
 
 	const wardSummary = $derived(
 		venueId
-			? (wardToVenueSummary.find(
+			? (list(wardToVenueSummary).find(
 					(row) => String(row.venue_id) === String(venueId),
 				) ?? null)
 			: null,
@@ -131,12 +174,12 @@
 			? [
 					{
 						label: `Percentage of visits from within ${wardSummary.home_ward}`,
-						value: wardSummary.pct_inside_ward * 100,
+						value: num(wardSummary.pct_inside_ward) * 100,
 						color: ACCENT_BLUE,
 					},
 					{
 						label: `Percentage of visits from outside ${wardSummary.home_ward}`,
-						value: wardSummary.pct_outside_ward * 100,
+						value: num(wardSummary.pct_outside_ward) * 100,
 						color: ACCENT_ORANGE,
 					},
 				]
@@ -147,39 +190,54 @@
 		metrics
 			? DISTANCE_LABELS.map((label, i) => ({
 					label,
-					value: metrics.travel_distance_distribution[label] ?? 0,
+					value: num(metrics.travel_distance_distribution?.[label]),
 					color: DISTANCE_RAMP[i],
 				}))
 			: [],
 	);
 </script>
 
+{#snippet chartError(err)}
+	<p class="chart-error">
+		Chart error: {err?.message ?? String(err)}
+	</p>
+{/snippet}
+
 {#if metrics}
 	<div class="venue-profile" class:venue-profile--row={layout === "row"}>
 		<div class="metric-block metric-block--chart">
 			<h3 class="metric-heading">Monthly Activity</h3>
 			<div class="chart-fill">
-				<LineChart
-					series={stopsSeries}
-					yAxisLabel="Raw stops / unique devices (×1,000 prop.)"
-					yFormat={(v) => v.toFixed(2)}
-					xTickEvery={6}
-					fill={layout === "row"}
-				/>
+				<svelte:boundary failed={chartError} onerror={(err) => logChartError("Monthly Activity", err)}>
+					<LineChart
+						series={stopsSeries}
+						yAxisLabel="Total stops / unique devices (sample-adjusted). Reflects relative change over time, not an actual visit count."
+						yFormat={fmt(2)}
+						xTickEvery={6}
+						fill={layout === "row"}
+					/>
+				</svelte:boundary>
 			</div>
 		</div>
 
 		<div class="metric-block metric-block--chart">
 			<h3 class="metric-heading">Repeat Visitors</h3>
-			<div class="chart-fill">
-				<LineChart
-					series={repeatSeries}
-					yAxisLabel="Repeat visitors (%)"
-					yFormat={(v) => `${v.toFixed(0)}%`}
-					xTickEvery={1}
-					fill={layout === "row"}
-				/>
-			</div>
+			{#if repeatHasEnoughData}
+				<div class="chart-fill">
+					<svelte:boundary failed={chartError} onerror={(err) => logChartError("Repeat Visitors", err)}>
+						<LineChart
+							series={repeatSeries}
+							yAxisLabel="Repeat visitors (%)"
+							yFormat={fmt(0, "%")}
+							xTickEvery={1}
+							omitZero
+							fill={layout === "row"}
+						/>
+					</svelte:boundary>
+				</div>
+			{:else}
+				<p class="metric-annotation">Not enough data.</p>
+			{/if}
 		</div>
 
 		<!-- Bar charts are grouped in pairs: stacked in one column in the
@@ -187,17 +245,21 @@
 		<div class="metric-pair">
 			<div class="metric-block">
 				<h3 class="metric-heading">Weekday vs. Weekend</h3>
-				<ProportionalBar
-					height={barHeight}
-					segments={weekdaySegments}
-					referenceLine={(5 / 7) * 100}
-					referenceLabel="5/7 days"
-				/>
+				<svelte:boundary failed={chartError} onerror={(err) => logChartError("Weekday vs. Weekend", err)}>
+					<ProportionalBar
+						height={barHeight}
+						segments={weekdaySegments}
+						referenceLine={(5 / 7) * 100}
+						referenceLabel="5/7 days"
+					/>
+				</svelte:boundary>
 			</div>
 
 			<div class="metric-block">
 				<h3 class="metric-heading">Daytime vs. Evening</h3>
-				<ProportionalBar height={barHeight} segments={dayEveningSegments} />
+				<svelte:boundary failed={chartError} onerror={(err) => logChartError("Daytime vs. Evening", err)}>
+					<ProportionalBar height={barHeight} segments={dayEveningSegments} />
+				</svelte:boundary>
 			</div>
 		</div>
 
@@ -215,13 +277,17 @@
 			{#if wardSummary}
 				<div class="metric-block">
 					<h3 class="metric-heading">Ward Origin Visits</h3>
-					<ProportionalBar height={barHeight} segments={wardOriginSegments} />
+					<svelte:boundary failed={chartError} onerror={(err) => logChartError("Ward Origin Visits", err)}>
+						<ProportionalBar height={barHeight} segments={wardOriginSegments} />
+					</svelte:boundary>
 				</div>
 			{/if}
 
 			<div class="metric-block">
 				<h3 class="metric-heading">Travel Distance</h3>
-				<ProportionalBar height={barHeight} segments={distanceSegments} />
+				<svelte:boundary failed={chartError} onerror={(err) => logChartError("Travel Distance", err)}>
+					<ProportionalBar height={barHeight} segments={distanceSegments} />
+				</svelte:boundary>
 			</div>
 		</div>
 	</div>
@@ -341,6 +407,14 @@
 		color: var(--brandGray60);
 		line-height: 1.45;
 		margin: 2px 0 0;
+	}
+
+	.chart-error {
+		font-size: 0.68rem;
+		line-height: 1.4;
+		color: #b3261e;
+		margin: 0;
+		word-break: break-word;
 	}
 
 	.empty-state {
