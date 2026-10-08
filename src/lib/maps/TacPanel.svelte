@@ -510,7 +510,7 @@
 
   .header-authors {
     font-size: .75rem;
-    color: rgba(0, 0, 0, 0.6);
+    color: #000;
     margin: 0;
     line-height: 1.4;
   }
@@ -545,14 +545,14 @@
 
   .section-desc {
     font-size: 0.8rem;
-    color: var(--brandGray60);
+    color: #000;
     margin: 0 0 10px;
     line-height: 1.45;
   }
 
   .empty-state {
     font-size: 0.73rem;
-    color: var(--brandGray60);
+    color: #000;
     line-height: 1.5;
     font-style: italic;
     margin: 0;
@@ -642,7 +642,7 @@
     font-size: 0.75rem;
     background: #fff;
     border: none;
-    color: var(--brandGray70);
+    color: #000;
     cursor: pointer;
     transition: all 0.15s ease;
   }
@@ -670,7 +670,7 @@
     margin: 4px 0 10px;
     font-size: 0.8rem;
     line-height: 1.35;
-    color: var(--brandGray60);
+    color: #000;
   }
 
   .dot-legend {
@@ -685,7 +685,7 @@
     align-items: center;
     gap: 6px;
     font-size: 0.72rem;
-    color: var(--brandGray60);
+    color: #000;
     line-height: 1.3;
   }
 
@@ -721,7 +721,7 @@
     font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--brandGray60);
+    color: #000;
     margin-bottom: 5px;
   }
 
@@ -797,7 +797,7 @@
   .activity-btn {
     border: 1px solid var(--brandGray);
     background: #fff;
-    color: var(--brandGray70);
+    color: #000;
     padding: 5px 8px;
     font-size: 0.7rem;
     font-family: Montserrat, sans-serif;
@@ -839,14 +839,14 @@
 
   .vd-type {
     font-size: 0.72rem;
-    color: var(--brandGray60);
+    color: #000;
     margin: 0 0 6px;
     line-height: 1.4;
   }
 
   .vd-address {
     font-size: 0.72rem;
-    color: var(--brandGray60);
+    color: #000;
     margin: 0 0 10px;
     line-height: 1.4;
   }
@@ -856,7 +856,6 @@
     color: var(--brandBlack);
     line-height: 1.55;
     margin: 0;
-    opacity: 0.65;
 	font-weight:500;
   }
 
@@ -877,7 +876,7 @@
 
   .legend-label {
     font-size: 0.6rem;
-    fill: var(--brandGray60);
+    fill: #000;
     font-family: Montserrat, sans-serif;
   }
 </style>
