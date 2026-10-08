@@ -164,18 +164,20 @@
     <span class="header-org"
       ><a href="https://schoolofcities.utoronto.ca/" target="_blank">School of Cities</a> | <a href="https://torontoartscouncil.org/" target="_blank">Toronto Arts Council</a></span
     >
-			<p class="header-sub">Explore the activity patterns of art venues across Toronto</p>
+			<p class="header-sub">Explore activity patterns of art venues across Toronto</p>
 
     <p class="header-authors">Aniket Kali, Scott McCallum, Michelle Zhang &middot; 2026</p>
 	
 </header>
 
+  <div class="divider"></div>
+
   <!-- ── Venue Selector ────────────────────────────────────────────── -->
   <section class="panel-section">
     <h2 class="section-heading">Arts Venue</h2>
-    <p class="section-desc">
+    <!-- <p class="section-desc">
       Choose from the list or click a marker on the map.
-    </p>
+    </p> -->
 
     <div class="segmented-toggle" role="group" aria-label="Venue display mode">
       <button
@@ -195,6 +197,11 @@
         All
       </button>
     </div>
+    <p class="segmented-desc">
+      {venueDisplayMode === "some"
+        ? "Significant venues that were analyzed for activity patterns"
+        : "All venues that have received funding from the Toronto Arts Council for their activities"}
+    </p>
 
     {#if venueDisplayMode === "all"}
       <div class="dot-legend">
@@ -222,7 +229,7 @@
         }}
         aria-label="Select a venue"
       >
-        <option value="">— Select a venue —</option>
+        <option value="">— Select a venue or click a marker on the map —</option>
         {#each venues as venue (venue.id)}
           <option value={venue.id}>{venue.name}</option>
         {/each}
@@ -237,17 +244,12 @@
     </div>
   </section>
 
+  {#if venueDisplayMode === "some" && selectedVenue}
   <div class="divider"></div>
   <!-- ── Venue Description ──────────────────────────────────────────── -->
   <section class="panel-section">
     <!-- <h2 class="section-heading">Venue Description</h2> -->
 
-    {#if venueDisplayMode === "all"}
-      <p class="vd-body">
-        These are all venues that have received funding from the Toronto Arts
-        Council for their activities.
-      </p>
-    {:else if selectedVenue}
       <p class="vd-name">{selectedVenue.name}</p>
       <p class="vd-type">{selectedVenue.type}</p>
       {#if selectedVenue.address || selectedVenue.postalCode}
@@ -259,13 +261,8 @@
       <p class="vd-body">
         {selectedVenue.description || "Venue description coming soon."}
       </p>
-    {:else}
-      <p class="empty-state">
-        Select a venue above or click a marker on the map to view its
-        description.
-      </p>
-    {/if}
   </section>
+  {/if}
 
   <div class="divider"></div>
   <!-- ── Layer Toggles ─────────────────────────────────────────────── -->
@@ -547,7 +544,7 @@
   }
 
   .section-desc {
-    font-size: 0.73rem;
+    font-size: 0.8rem;
     color: var(--brandGray60);
     margin: 0 0 10px;
     line-height: 1.45;
@@ -636,7 +633,6 @@
     display: flex;
     width: fit-content;
     border: 1px solid var(--brandGray);
-    margin-bottom: 10px;
     overflow: hidden;
   }
 
@@ -658,6 +654,13 @@
   .segmented-btn.active {
     background: rgb(0, 98, 234);
     color: #fff;
+  }
+
+  .segmented-desc {
+    margin: 4px 0 10px;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: var(--brandGray60);
   }
 
   .dot-legend {
