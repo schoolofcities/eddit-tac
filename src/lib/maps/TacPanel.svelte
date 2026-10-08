@@ -722,6 +722,7 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: #000;
+    font-weight: 700;
     margin-bottom: 5px;
   }
 
