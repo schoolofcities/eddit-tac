@@ -178,12 +178,13 @@
 
 	.axis-tick {
 		font-family: Montserrat, sans-serif;
-		font-size: 6.2px;
+		font-size: 9px;
 		fill: var(--brandGray60);
 	}
 
 	.axis-caption {
-		font-size: 0.62rem;
+		font-size: 11px;
+		font-family: Montserrat, sans-serif;
 		color: var(--brandGray60);
 		margin: 0;
 		line-height: 1.3;
