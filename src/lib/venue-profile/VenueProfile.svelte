@@ -26,7 +26,7 @@
 			? [
 					{
 						id: "raw-stops",
-						label: "Raw stops",
+						label: "Total stops",
 						color: ACCENT_BLUE,
 						points: metrics.monthly_raw_stops.map((d) => ({
 							x: formatYearMonth(d.year_month),
@@ -162,7 +162,7 @@
 			<h3 class="metric-heading">Monthly Activity</h3>
 			<LineChart
 				series={stopsSeries}
-				yAxisLabel="Raw stops / unique devices (sample-adjusted). Reflects relative change over time, not an actual visit count."
+				yAxisLabel="Total stops / unique devices (sample-adjusted). Reflects relative change over time, not an actual visit count."
 				yFormat={(v) => v.toFixed(2)}
 				xTickEvery={6}
 			/>
