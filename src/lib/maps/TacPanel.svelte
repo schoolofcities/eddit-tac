@@ -166,8 +166,8 @@
 <aside class="panel">
 	<!-- ── Header ─────────────────────────────────────────────────────── -->
 	<header class="panel-header">
-		<h1 class="header-title">ACCESS IN THE ARTS</h1>
-		<span class="header-org">School of Cities | Toronto Arts Council</span>
+		<h1 class="header-title">ACCESS TO THE ARTS</h1>
+		<span class="header-org"><a href="https://schoolofcities.utoronto.ca/" target="_blank">School of Cities</a> | <a href="https://torontoartscouncil.org/" target="_blank">Toronto Arts Council</a></span>
 
 		<p class="header-authors">Author One, Author Two &middot; 2026</p>
 	</header>
@@ -287,9 +287,19 @@
 							aria-label={`Select ${group.label} layer`}
 						>
 							<option value="">None</option>
-							{#each group.items as item (item.id)}
-								<option value={item.id}>{item.label}</option>
-							{/each}
+							{#if group.items.some((item) => item.category)}
+								{#each [...new Set(group.items.map((item) => item.category))] as category (category)}
+									<optgroup label={category}>
+										{#each group.items.filter((item) => item.category === category) as item (item.id)}
+											<option value={item.id}>{item.label}</option>
+										{/each}
+									</optgroup>
+								{/each}
+							{:else}
+								{#each group.items as item (item.id)}
+									<option value={item.id}>{item.label}</option>
+								{/each}
+							{/if}
 						</select>
 
 						<svg
@@ -309,6 +319,11 @@
 
 						{#if selectedItem}
 							{@render breaksLegend(selectedItem)}
+							{#if selectedItem.description}
+								<p class="section-desc legend-caption">
+									{selectedItem.description}
+								</p>
+							{/if}
 						{/if}
 					{/if}
 				{:else if group.ui === "radio-toggles"}
@@ -570,6 +585,20 @@
 
 	.layer-select {
 		font-size: 0.75rem;
+	}
+
+	/* Category headings in the demography dropdown */
+	.layer-select optgroup {
+		font-size: 1rem;
+		font-weight: 700;
+		color: #000 !important;
+	}
+
+	/* Reset options so they don't inherit the heading style */
+	.layer-select optgroup option {
+		font-size: 0.75rem;
+		font-weight: 400;
+		color: var(--brandBlack);
 	}
 
 	.venue-select {
