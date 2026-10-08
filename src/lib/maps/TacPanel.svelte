@@ -656,6 +656,16 @@
     color: #fff;
   }
 
+  .segmented-btn:not(.active):hover {
+    background: rgba(0, 98, 234, 0.08);
+    color: rgb(0, 98, 234);
+  }
+
+  .segmented-btn:focus-visible {
+    outline: 2px solid rgb(0, 98, 234);
+    outline-offset: -2px;
+  }
+
   .segmented-desc {
     margin: 4px 0 10px;
     font-size: 0.8rem;
