@@ -30,7 +30,7 @@
 </script>
 
 <svelte:head>
-	<title>Arts Venue Map | Toronto Arts Council</title>
+	<title>Access to the Arts | Toronto Arts Council</title>
 	<meta
 		name="description"
 		content="Equitable development initiative: exploring activity, demography, and access across Toronto Arts Council venues."

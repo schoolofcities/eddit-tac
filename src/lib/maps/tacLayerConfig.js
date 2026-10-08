@@ -38,7 +38,7 @@ export const LAYER_GROUPS = [
       {
         category: "Population",
         id: "visible-minority",
-        label: "Visible Minority Status (%)",
+        label: "% Visible Minority Status",
         key: "visible_minority_yes_pct",
         breaks: [31.7, 47.7, 64.7, 79.6],
         colors: COLOURS,
@@ -69,7 +69,7 @@ export const LAYER_GROUPS = [
       {
         category: "Income",
         id: "pct-low-income",
-        label: "Low Income Households (%)",
+        label: "% Low Income Households",
         key: "lim_at_prev_pct",
         breaks: [9.1, 11.2, 13.3, 16.7],
         colors: COLOURS,
@@ -80,7 +80,7 @@ export const LAYER_GROUPS = [
       {
         category: "Housing",
         id: "tenure-renter",
-        label: "Households that are Renting (%)",
+        label: "% Households that are Renting",
         key: "housing_tenure_renter_pct",
         breaks: [27.9, 40.6, 49.8, 60.7],
         colors: COLOURS,
@@ -90,7 +90,7 @@ export const LAYER_GROUPS = [
       {
         category: "Housing",
         id: "shelter-costs",
-        label: "Households spending >30% of Income on Housing (%)",
+        label: "% Households spending >30% of Income on Housing",
         key: "housing_shelter_30plus_pct",
         breaks: [25.2, 28.0, 31.4, 36.1],
         colors: COLOURS,
@@ -100,17 +100,17 @@ export const LAYER_GROUPS = [
       {
         category: "Housing",
         id: "core-housing-need",
-        label: "Core Housing Need (%)",
+        label: "% Core Housing Need",
         key: "housing_core_need_yes_pct",
         breaks: [14.2, 17.8, 20.9, 24.3],
         colors: COLOURS,
-        description: 'Percentage of households living in housing that is unaffordable, overcrowded, or in need of major repairs, and who cannot afford acceptable alternative housing in their area.',
+        description: 'Percentage of households living in housing that is unaffordable, overcrowded, or in need of major repairs, and who cannot afford acceptable alternative housing in their area (CMHC).',
       },
       // ── Transportation ──
       {
         category: "Transportation",
         id: "pct-no-vehicle",
-        label: "Households with No Vehicle (%)",
+        label: "% Households with No Vehicle",
         key: "hh_no_veh_pct",
         breaks: [9.74, 15.2, 22.28, 35.92],
         colors: COLOURS,
@@ -120,27 +120,27 @@ export const LAYER_GROUPS = [
       {
         category: "Education",
         id: "pct-bachelors",
-        label: "Bachelors and Up (%)",
+        label: "% Highest Level of Education Attained: Bachelor's Degree",
         key: "education_bachelor_higher_pct",
         breaks: [25.5, 32.4, 41.8, 55.0],
         colors: COLOURS,
         description:
-          "Percentage of residents who attained a bachelor's degree or a higher level of education.",
+          "Percentage of residents whose highest level of education attained is a bachelor's degree."
       },
       {
         category: "Education",
         id: "pct-highschool",
-        label: "High School and Up (%)",
+        label: "% Highest Level of Education Attained: High School",
         key: "education_secondary_pct",
         breaks: [18.9, 22.9, 26.4, 29.2],
         colors: COLOURS,
         description:
-          "Percentage of residents who have completed high school or a higher level of education.",
+          "Percentage of residents whose highest level of education attained is high school.",
       },
       {
         category: "Education",
         id: "pct-no-education",
-        label: "No Education (%)",
+        label: "% No Education",
         key: "education_none_pct",
         breaks: [8.1, 12.5, 16.7, 20.5],
         colors: COLOURS,
@@ -150,7 +150,7 @@ export const LAYER_GROUPS = [
       {
         category: "Arts & Culture Labour",
         id: "labour-creatives",
-        label: "Labour Force in Creative Industries (%)",
+        label: "% Labour Force in Creative Industries",
         key: "labour_creatives_pct",
         breaks: [0.6, 0.9, 1.58, 3.0],
         colors: COLOURS,
@@ -160,7 +160,7 @@ export const LAYER_GROUPS = [
       {
         category: "Arts & Culture Labour",
         id: "labour-cultural-industries",
-        label: "Labour Force in Cultural Industries (%)",
+        label: "% Labour Force in Cultural Industries",
         key: "labour_cultural_industries_pct",
         breaks: [0.9, 1.3, 1.98, 4.2],
         colors: COLOURS,
@@ -170,7 +170,7 @@ export const LAYER_GROUPS = [
       {
         category: "Arts & Culture Labour",
         id: "labour-cultural-workers",
-        label: "Cultural Workers (%)",
+        label: "% Cultural Workers",
         key: "labour_cultural_workers_pct",
         breaks: [1.0, 1.7, 2.5, 5.3],
         colors: COLOURS,
@@ -180,7 +180,7 @@ export const LAYER_GROUPS = [
       {
         category: "Arts & Culture Labour",
         id: "labour-independent-artists",
-        label: "Independent Artists (%)",
+        label: "% Independent Artists",
         key: "labour_independent_artists_pct",
         breaks: [0.0, 0.3, 0.6, 1.3],
         colors: COLOURS,
@@ -190,7 +190,7 @@ export const LAYER_GROUPS = [
       {
         category: "Arts & Culture Labour",
         id: "labour-arts-major",
-        label: "Arts Majors (%)",
+        label: "% Arts Majors",
         key: "labour_arts_major_pct",
         breaks: [2.3, 3.52, 5.1, 8.24],
         colors: COLOURS,
