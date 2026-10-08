@@ -3,7 +3,7 @@
 	import maplibregl from "maplibre-gl";
 	import "maplibre-gl/dist/maplibre-gl.css";
 	import { LAYER_GROUPS } from "./tacLayerConfig.js";
-	import torontoBoundary from "$data/geo/toronto-boundary.geo.json";
+	import torontoBoundary from "$data/geo/toronto-mask.geo.json";
 	import venuesCentroids from "$data/venues/venues-centroids.geo.json";
 	import venuesBoundaries from "$data/venues/venues-boundaries.geo.json";
 	import artLocations from "$data/venues/current_toronto_arts_locations_eddit.geo.json";
@@ -143,7 +143,6 @@
 			id: "toronto-mask",
 			type: "fill",
 			source: "toronto-boundary",
-			filter: ["==", ["get", "name"], "outside-mask"],
 			paint: {
 				"fill-color": "#ffffff",
 				"fill-opacity": 0.7,
@@ -155,7 +154,6 @@
 			id: "toronto-border",
 			type: "line",
 			source: "toronto-boundary",
-			filter: ["==", ["get", "name"], "Toronto"],
 			paint: {
 				"line-color": "grey",
 				"line-width": 0.8,
