@@ -27,6 +27,8 @@ tmp/
 !src/data/
 
 *.graphml
+*.obj
+*.pbf
 
 # Node.js / npm (Svelte)
 node_modules/

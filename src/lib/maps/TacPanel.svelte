@@ -1,856 +1,933 @@
 <script>
-	import { LAYER_GROUPS } from "$lib/maps/tacLayerConfig.js";
-	import VenueProfile from "$lib/venue-profile/VenueProfile.svelte";
-	import artLocations from "$data/venues/current_toronto_arts_locations_eddit.geo.json";
+  import { LAYER_GROUPS } from "$lib/maps/tacLayerConfig.js";
+  import VenueProfile from "$lib/venue-profile/VenueProfile.svelte";
+  import artLocations from "$data/venues/current_toronto_arts_locations_eddit.geo.json";
 
-	let {
-		selectedVenueId = $bindable(null),
-		layerState = $bindable({}),
-		venues = [],
-		venueDisplayMode = $bindable("some"), // "some" (default) | "all"
-	} = $props();
+  let {
+    selectedVenueId = $bindable(null),
+    layerState = $bindable({}),
+    venues = [],
+    venueDisplayMode = $bindable("some"), // "some" (default) | "all"
+  } = $props();
 
-	const selectedVenue = $derived(
-		venues.find((v) => v.id === selectedVenueId) ?? null,
-	);
+  const selectedVenue = $derived(
+    venues.find((v) => v.id === selectedVenueId) ?? null,
+  );
 
+  function isTacFunded(value) {
+    return value === true;
+  }
 
-	function isTacFunded(value) {
-		return (
-			value === true
-		);
-	}
+  const tacFundedCounts = $derived.by(() => {
+    let funded = 0;
+    let unfunded = 0;
+    for (const feature of artLocations.features) {
+      if (isTacFunded(feature.properties?.TAC_funded_activities)) {
+        funded++;
+      } else {
+        unfunded++;
+      }
+    }
+    return { funded, unfunded };
+  });
 
-	const tacFundedCounts = $derived.by(() => {
-		let funded = 0;
-		let unfunded = 0;
-		for (const feature of artLocations.features) {
-			if (isTacFunded(feature.properties?.TAC_funded_activities)) {
-				funded++;
-			} else {
-				unfunded++;
-			}
-		}
-		return { funded, unfunded };
-	});
+  function setExclusive(groupId, itemId) {
+    if (
+      groupId === "activity" &&
+      (!selectedVenueId || venueDisplayMode === "all")
+    )
+      return;
+    const current = layerState[groupId]?.activeId ?? null;
+    const next = current === itemId ? null : itemId;
+    layerState[groupId].activeId = next;
+    applyCrossGroupExclusion(groupId, next);
+  }
 
-	function setExclusive(groupId, itemId) {
-		if (
-			groupId === "activity" &&
-			(!selectedVenueId || venueDisplayMode === "all")
-		)
-			return;
-		const current = layerState[groupId]?.activeId ?? null;
-		const next = current === itemId ? null : itemId;
-		layerState[groupId].activeId = next;
-		applyCrossGroupExclusion(groupId, next);
-	}
+  function setExclusiveFromSelect(groupId, value) {
+    const next = value || null;
+    layerState[groupId].activeId = next;
+    applyCrossGroupExclusion(groupId, next);
+  }
 
-	function setExclusiveFromSelect(groupId, value) {
-		const next = value || null;
-		layerState[groupId].activeId = next;
-		applyCrossGroupExclusion(groupId, next);
-	}
+  // Demography, Activity, Commute Time and Walk Access are fill layers drawn
+  // on the same map surface — picking one clears the others so they never
+  // compete for the same visual space. "except" is the layer that was just
+  // activated and should be left alone.
+  function clearOtherExclusiveLayers(except) {
+    if (except !== "demography") layerState.demography.activeId = null;
+    if (except !== "activity") layerState.activity.activeId = null;
+    if (except !== "commute-time") layerState.mobility["commute-time"] = false;
+    if (except !== "walk-venues-30min")
+      layerState.mobility["walk-venues-30min"] = false;
+  }
 
-	// Demography, Activity, Commute Time and Walk Access are fill layers drawn
-	// on the same map surface — picking one clears the others so they never
-	// compete for the same visual space. "except" is the layer that was just
-	// activated and should be left alone.
-	function clearOtherExclusiveLayers(except) {
-		if (except !== "demography") layerState.demography.activeId = null;
-		if (except !== "activity") layerState.activity.activeId = null;
-		if (except !== "commute-time") layerState.mobility["commute-time"] = false;
-		if (except !== "walk-venues-30min")
-			layerState.mobility["walk-venues-30min"] = false;
-	}
+  function applyCrossGroupExclusion(groupId, next) {
+    if (!next) return;
+    if (groupId !== "demography" && groupId !== "activity") return;
+    clearOtherExclusiveLayers(groupId);
+  }
 
-	function applyCrossGroupExclusion(groupId, next) {
-		if (!next) return;
-		if (groupId !== "demography" && groupId !== "activity") return;
-		clearOtherExclusiveLayers(groupId);
-	}
+  function toggleNonExclusive(groupId, itemId) {
+    if (
+      itemId === "commute-time" &&
+      (!selectedVenueId || venueDisplayMode === "all")
+    )
+      return;
+    const next = !layerState[groupId][itemId];
+    layerState[groupId][itemId] = next;
+    if ((itemId === "commute-time" || itemId === "walk-venues-30min") && next) {
+      clearOtherExclusiveLayers(itemId);
+    }
+  }
 
-	function toggleNonExclusive(groupId, itemId) {
-		if (
-			itemId === "commute-time" &&
-			(!selectedVenueId || venueDisplayMode === "all")
-		)
-			return;
-		const next = !layerState[groupId][itemId];
-		layerState[groupId][itemId] = next;
-		if ((itemId === "commute-time" || itemId === "walk-venues-30min") && next) {
-			clearOtherExclusiveLayers(itemId);
-		}
-	}
+  $effect(() => {
+    if (venueDisplayMode === "all" && selectedVenueId) {
+      selectedVenueId = null;
+    }
+  });
 
-	$effect(() => {
-		if (venueDisplayMode === "all" && selectedVenueId) {
-			selectedVenueId = null;
-		}
-	});
+  // Commute time only makes sense against the "Some" venue markers — turn
+  // it off if it was on when the user switches to "All".
+  $effect(() => {
+    if (venueDisplayMode === "all" && layerState.mobility?.["commute-time"]) {
+      layerState.mobility["commute-time"] = false;
+    }
+  });
 
-	// Commute time only makes sense against the "Some" venue markers — turn
-	// it off if it was on when the user switches to "All".
-	$effect(() => {
-		if (
-			venueDisplayMode === "all" &&
-			layerState.mobility?.["commute-time"]
-		) {
-			layerState.mobility["commute-time"] = false;
-		}
-	});
+  // Activity layers are keyed to a single selected venue, same as commute
+  // time — turn activity off if it was on when the user switches to "All".
+  $effect(() => {
+    if (venueDisplayMode === "all" && layerState.activity?.activeId) {
+      layerState.activity.activeId = null;
+    }
+  });
 
-	// Activity layers are keyed to a single selected venue, same as commute
-	// time — turn activity off if it was on when the user switches to "All".
-	$effect(() => {
-		if (venueDisplayMode === "all" && layerState.activity?.activeId) {
-			layerState.activity.activeId = null;
-		}
-	});
-
-	function isOn(group, item) {
-		if (group.exclusive) {
-			return layerState[group.id]?.activeId === item.id;
-		}
-		return layerState[group.id]?.[item.id] ?? false;
-	}
+  function isOn(group, item) {
+    if (group.exclusive) {
+      return layerState[group.id]?.activeId === item.id;
+    }
+    return layerState[group.id]?.[item.id] ?? false;
+  }
 </script>
 
 {#snippet breaksLegend(item)}
-	<svg class="legend" width="100%" height="40">
-		{#each item.colors as color, i}
-			<rect
-				x={i * 20 + "%"}
-				y="0"
-				width="20%"
-				height="20"
-				fill={color}
-				stroke="white"
-				stroke-width="1"
-				opacity="0.4"
-			/>
-		{/each}
+  <svg class="legend" width="100%" height="40">
+    {#each item.colors as color, i}
+      <rect
+        x={i * 20 + "%"}
+        y="0"
+        width="20%"
+        height="20"
+        fill={color}
+        stroke="white"
+        stroke-width="1"
+        opacity="0.4"
+      />
+    {/each}
 
-		{#if item.legendLabels}
-			{#each item.legendLabels as label, i}
-				<text
-					class="legend-label"
-					x={`${(i + 0.5) * 20}%`}
-					y="35"
-					text-anchor="middle"
-				>
-					{label}
-				</text>
-			{/each}
-		{:else}
-		{#each item.breaks as value, i}
-			<text
-				class="legend-label"
-				x={`${(i + 1) * 20}%`}
-				y="35"
-				text-anchor="middle"
-			>
-				{#if i === 0}
-					&lt;{value.toLocaleString()}
-				{:else if i === item.breaks.length - 1}
-					&gt;{value.toLocaleString()}
-				{:else}
-					{value.toLocaleString()}
-				{/if}
-			</text>
-		{/each}
-		{/if}
-	</svg>
+    {#if item.legendLabels}
+      {#each item.legendLabels as label, i}
+        <text
+          class="legend-label"
+          x={`${(i + 0.5) * 20}%`}
+          y="35"
+          text-anchor="middle"
+        >
+          {label}
+        </text>
+      {/each}
+    {:else}
+      {#each item.breaks as value, i}
+        <text
+          class="legend-label"
+          x={`${(i + 1) * 20}%`}
+          y="35"
+          text-anchor="middle"
+        >
+          {#if i === 0 && value !== 0}
+            &lt;{value.toLocaleString()}
+          {:else if i === item.breaks.length - 1}
+            &gt;{value.toLocaleString()}
+          {:else}
+            {value.toLocaleString()}
+          {/if}
+        </text>
+      {/each}
+    {/if}
+  </svg>
 {/snippet}
 
 <aside class="panel">
-	<!-- ── Header ─────────────────────────────────────────────────────── -->
-	<header class="panel-header">
-		<h1 class="header-title">ACCESS IN THE ARTS</h1>
-		<span class="header-org">School of Cities | Toronto Arts Council</span>
+  <!-- ── Header ─────────────────────────────────────────────────────── -->
+  <header class="panel-header">
+    <h1 class="header-title">ACCESS TO THE ARTS</h1>
+    <span class="header-org"
+      ><a href="https://schoolofcities.utoronto.ca/" target="_blank">School of Cities</a> | <a href="https://torontoartscouncil.org/" target="_blank">Toronto Arts Council</a></span
+    >
+			<p class="header-sub">Explore activity patterns of art venues across Toronto</p>
 
-		<p class="header-authors">Author One, Author Two &middot; 2026</p>
-	</header>
+    <p class="header-authors">Aniket Kali, Scott McCallum, Michelle Zhang &middot; 2026</p>
+	
+</header>
 
-	<!-- ── Venue Selector ────────────────────────────────────────────── -->
-	<section class="panel-section">
-		<h2 class="section-heading">Arts Venue</h2>
-		<p class="section-desc">
-			Choose from the list or click a marker on the map.
-		</p>
+  <div class="divider"></div>
 
-		<div class="segmented-toggle" role="group" aria-label="Venue display mode">
-			<button
-				type="button"
-				class="segmented-btn"
-				class:active={venueDisplayMode === "some"}
-				onclick={() => (venueDisplayMode = "some")}
-			>
-				Some
-			</button>
-			<button
-				type="button"
-				class="segmented-btn"
-				class:active={venueDisplayMode === "all"}
-				onclick={() => (venueDisplayMode = "all")}
-			>
-				All
-			</button>
-		</div>
+  <!-- ── Venue Selector ────────────────────────────────────────────── -->
+  <section class="panel-section">
+    <h2 class="section-heading">Arts Venue</h2>
+    <!-- <p class="section-desc">
+      Choose from the list or click a marker on the map.
+    </p> -->
 
-		{#if venueDisplayMode === "all"}
-			<div class="dot-legend">
-				<span class="dot-legend-item">
-					<span class="dot-swatch dot-funded"></span>
-					TAC-funded activity ({tacFundedCounts.funded})
-				</span>
-				<span class="dot-legend-item">
-					<span class="dot-swatch dot-unfunded"></span>
-					Not TAC-funded ({tacFundedCounts.unfunded})
-				</span>
-			</div>
-		{/if}
+    <div class="segmented-toggle" role="group" aria-label="Venue display mode">
+      <button
+        type="button"
+        class="segmented-btn"
+        class:active={venueDisplayMode === "some"}
+        onclick={() => (venueDisplayMode = "some")}
+      >
+        Some
+      </button>
+      <button
+        type="button"
+        class="segmented-btn"
+        class:active={venueDisplayMode === "all"}
+        onclick={() => (venueDisplayMode = "all")}
+      >
+        All
+      </button>
+    </div>
+    <p class="segmented-desc">
+      {venueDisplayMode === "some"
+        ? "Significant venues that were analyzed for activity patterns"
+        : "All venues that have received funding from the Toronto Arts Council for their activities"}
+    </p>
 
-		<div class="select-wrapper" class:select-wrapper-disabled={venueDisplayMode === "all"}>
-			<select
-				class="venue-select"
-				value={selectedVenueId ?? ""}
-				disabled={venueDisplayMode === "all"}
-				onchange={(e) => {
-					selectedVenueId = e.currentTarget.value || null;
-				}}
-				aria-label="Select a venue"
-			>
-				<option value="">— Select a venue —</option>
-				{#each venues as venue (venue.id)}
-					<option value={venue.id}>{venue.name}</option>
-				{/each}
-				{#if venues.length === 0}
-					<option value="" disabled>(Venues not yet loaded)</option>
-				{/if}
-			</select>
-			<!-- Custom dropdown arrow -->
-			<svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
-				<path d="M0 0l5 6 5-6z" />
-			</svg>
-		</div>
-	</section>
+    {#if venueDisplayMode === "all"}
+      <div class="dot-legend">
+        <span class="dot-legend-item">
+          <span class="dot-swatch dot-funded"></span>
+          TAC-funded activity ({tacFundedCounts.funded})
+        </span>
+        <span class="dot-legend-item">
+          <span class="dot-swatch dot-unfunded"></span>
+          Not TAC-funded ({tacFundedCounts.unfunded})
+        </span>
+      </div>
+    {/if}
 
-	<div class="divider"></div>
-	<!-- ── Venue Description ──────────────────────────────────────────── -->
-	<section class="panel-section">
-		<!-- <h2 class="section-heading">Venue Description</h2> -->
+    <div
+      class="select-wrapper"
+      class:select-wrapper-disabled={venueDisplayMode === "all"}
+    >
+      <select
+        class="venue-select"
+        value={selectedVenueId ?? ""}
+        disabled={venueDisplayMode === "all"}
+        onchange={(e) => {
+          selectedVenueId = e.currentTarget.value || null;
+        }}
+        aria-label="Select a venue"
+      >
+        <option value="">— Select a venue or click a marker on the map —</option>
+        {#each venues as venue (venue.id)}
+          <option value={venue.id}>{venue.name}</option>
+        {/each}
+        {#if venues.length === 0}
+          <option value="" disabled>(Venues not yet loaded)</option>
+        {/if}
+      </select>
+      <!-- Custom dropdown arrow -->
+      <svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
+        <path d="M0 0l5 6 5-6z" />
+      </svg>
+    </div>
+  </section>
 
-		{#if venueDisplayMode === "all"}
-			<p class="vd-body">
-				These are all venues that have received funding from the
-				Toronto Arts Council for their activities.
-			</p>
-		{:else if selectedVenue}
-			<p class="vd-name">{selectedVenue.name}</p>
-			<p class="vd-type">{selectedVenue.type}</p>
-			{#if selectedVenue.address || selectedVenue.postalCode}
-				<p class="vd-address">
-					{selectedVenue.address ?? "Address not available"}, Toronto, ON {selectedVenue.postalCode ?? ""}
-				</p>
-			{/if}
-			<p class="vd-body">
-				{selectedVenue.description || "Venue description coming soon."}
-			</p>
-		{:else}
-			<p class="empty-state">
-				Select a venue above or click a marker on the map to view its
-				description.
-			</p>
-		{/if}
-	</section>
+  {#if venueDisplayMode === "some" && selectedVenue}
+  <div class="divider"></div>
+  <!-- ── Venue Description ──────────────────────────────────────────── -->
+  <section class="panel-section">
+    <!-- <h2 class="section-heading">Venue Description</h2> -->
 
-	<div class="divider"></div>
-	<!-- ── Layer Toggles ─────────────────────────────────────────────── -->
-	<section class="panel-section">
-		<h2 class="section-heading">Map Layers</h2>
+      <p class="vd-name">{selectedVenue.name}</p>
+      <p class="vd-type">{selectedVenue.type}</p>
+      {#if selectedVenue.address || selectedVenue.postalCode}
+        <p class="vd-address">
+          {selectedVenue.address ?? "Address not available"}, Toronto, ON {selectedVenue.postalCode ??
+            ""}
+        </p>
+      {/if}
+      <p class="vd-body">
+        {selectedVenue.description || "Venue description coming soon."}
+      </p>
+  </section>
+  {/if}
 
-		{#each LAYER_GROUPS as group (group.id)}
-			<div class="layer-group">
-				<span class="layer-group-label">{group.label}</span>
+  <div class="divider"></div>
+  <!-- ── Layer Toggles ─────────────────────────────────────────────── -->
+  <section class="panel-section">
+    <h2 class="section-heading">Map Layers</h2>
 
-				{#if group.ui === "dropdown"}
-					<div class="select-wrapper">
-						<select
-							class="venue-select layer-select"
-							value={layerState[group.id]?.activeId ?? ""}
-							onchange={(e) =>
-								setExclusiveFromSelect(
-									group.id,
-									e.currentTarget.value,
-								)}
-							aria-label={`Select ${group.label} layer`}
-						>
-							<option value="">None</option>
-							{#each group.items as item (item.id)}
-								<option value={item.id}>{item.label}</option>
-							{/each}
-						</select>
+    {#each LAYER_GROUPS as group (group.id)}
+      <div class="layer-group">
+        <span class="layer-group-label">{group.label}</span>
 
-						<svg
-							class="select-arrow"
-							viewBox="0 0 10 6"
-							aria-hidden="true"
-						>
-							<path d="M0 0l5 6 5-6z" />
-						</svg>
-					</div>
+        {#if group.ui === "dropdown"}
+          <div class="select-wrapper">
+            <select
+              class="venue-select layer-select"
+              value={layerState[group.id]?.activeId ?? ""}
+              onchange={(e) =>
+                setExclusiveFromSelect(group.id, e.currentTarget.value)}
+              aria-label={`Select ${group.label} layer`}
+            >
+              <option value="">None</option>
+              {#if group.items.some((item) => item.category)}
+                {#each [...new Set(group.items.map((item) => item.category))] as category (category)}
+                  <optgroup label={category}>
+                    {#each group.items.filter((item) => item.category === category) as item (item.id)}
+                      <option value={item.id}>{item.label}</option>
+                    {/each}
+                  </optgroup>
+                {/each}
+              {:else}
+                {#each group.items as item (item.id)}
+                  <option value={item.id}>{item.label}</option>
+                {/each}
+              {/if}
+            </select>
 
-					{#if group.id === "demography" && layerState.demography?.activeId}
-						{@const selectedItem = group.items.find(
-							(item) =>
-								item.id === layerState.demography.activeId,
-						)}
+            <svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
+              <path d="M0 0l5 6 5-6z" />
+            </svg>
+          </div>
 
-						{#if selectedItem}
-							{@render breaksLegend(selectedItem)}
-						{/if}
-					{/if}
-				{:else if group.ui === "radio-toggles"}
-					<div class="activity-grid">
-						{#each group.items as item (item.id)}
-							<button
-								type="button"
-								class="activity-btn"
-								class:active={isOn(group, item)}
-								disabled={group.id === "activity" &&
-									(!selectedVenueId ||
-										venueDisplayMode === "all")}
-								onclick={() => setExclusive(group.id, item.id)}
-							>
-								{item.label}
-							</button>
-						{/each}
-					</div>
+          {#if group.id === "demography" && layerState.demography?.activeId}
+            {@const selectedItem = group.items.find(
+              (item) => item.id === layerState.demography.activeId,
+            )}
 
-					{#if group.id === "activity"}
-						{#if venueDisplayMode === "all"}
-							<p class="section-desc activity-hint">
-								Switch to "Some" to view a venue's home-origin
-								activity layers.
-							</p>
-						{:else if !selectedVenueId}
-							<p class="section-desc activity-hint">
-								Select a venue to view its home-origin
-								activity layers.
-							</p>
-						{:else if layerState.activity?.activeId}
-							{@const selectedActivityItem = group.items.find(
-								(item) =>
-									item.id === layerState.activity.activeId,
-							)}
-							{#if selectedActivityItem}
-								{@render breaksLegend(selectedActivityItem)}
-								<p class="section-desc legend-caption">
-									% share of the venue's estimated
-									home-origin visitors, by census ADA
-									(quintiles). Gray ADAs had no estimated
-									visitors.
-								</p>
-							{/if}
-						{/if}
-					{/if}
-				{:else}
-					{#each group.items as item (item.id)}
-						<label
-							class="layer-toggle"
-							class:layer-toggle-disabled={item.id ===
-								"commute-time" &&
-								(!selectedVenueId ||
-									venueDisplayMode === "all")}
-						>
-							<span
-								class="toggle-track"
-								class:on={isOn(group, item)}
-							>
-								<input
-									type="checkbox"
-									checked={isOn(group, item)}
-									disabled={item.id === "commute-time" &&
-										(!selectedVenueId ||
-											venueDisplayMode === "all")}
-									onchange={() =>
-										toggleNonExclusive(
-											group.id,
-											item.id,
-										)}
-									class="sr-only"
-								/>
-								<span class="toggle-thumb"></span>
-							</span>
-							<span class="layer-label">{item.label}</span>
-						</label>
+            {#if selectedItem}
+              {@render breaksLegend(selectedItem)}
+              {#if selectedItem.description}
+                <p class="section-desc legend-caption">
+                  {selectedItem.description}
+                </p>
+              {/if}
+            {/if}
+          {/if}
+        {:else if group.ui === "radio-toggles"}
+          <div class="activity-grid">
+            {#each group.items as item (item.id)}
+              <button
+                type="button"
+                class="activity-btn"
+                class:active={isOn(group, item)}
+                disabled={group.id === "activity" &&
+                  (!selectedVenueId || venueDisplayMode === "all")}
+                onclick={() => setExclusive(group.id, item.id)}
+              >
+                {item.label}
+              </button>
+            {/each}
+          </div>
 
-						{#if item.id === "commute-time" && isOn(group, item)}
-							{@const commuteItem = item}
-							{@const commuteBuckets = commuteItem.cutoffs.map(
-								(cutoff, i) => ({
-									label: `${cutoff} min`,
-									color: commuteItem.colors[i],
-								}),
-							)}
-							<svg class="legend" width="100%" height="40">
-								{#each commuteBuckets as bucket, i}
-									<rect
-										x={(i * 100) / commuteBuckets.length + "%"}
-										y="0"
-										width={100 / commuteBuckets.length + "%"}
-										height="20"
-										fill={bucket.color}
-										stroke="white"
-										stroke-width="1"
-										opacity="0.7"
-									/>
-								{/each}
-								{#each commuteBuckets as bucket, i}
-									<text
-										class="legend-label"
-										x={`${(i + 0.5) * (100 / commuteBuckets.length)}%`}
-										y="35"
-										text-anchor="middle"
-									>
-										{bucket.label}
-									</text>
-								{/each}
-							</svg>
-						{/if}
+          {#if group.id === "activity"}
+            {#if venueDisplayMode === "all"}
+              <p class="section-desc activity-hint">
+                Switch to "Some" to view a venue's home-origin activity layers.
+              </p>
+            {:else if !selectedVenueId}
+              <p class="section-desc activity-hint">
+                Select a venue to view its home-origin activity layers.
+              </p>
+            {:else if layerState.activity?.activeId}
+              {@const selectedActivityItem = group.items.find(
+                (item) => item.id === layerState.activity.activeId,
+              )}
+              {#if selectedActivityItem}
+                {@render breaksLegend(selectedActivityItem)}
+                <p class="section-desc legend-caption">
+                  % share of the venue's estimated home-origin visitors, by
+                  census ADA (quintiles). Gray ADAs had no estimated visitors.
+                </p>
+              {/if}
+            {/if}
+          {/if}
+        {:else}
+          {#each group.items as item (item.id)}
+            <label
+              class="layer-toggle"
+              class:layer-toggle-disabled={item.id === "commute-time" &&
+                (!selectedVenueId || venueDisplayMode === "all")}
+            >
+              <span class="toggle-track" class:on={isOn(group, item)}>
+                <input
+                  type="checkbox"
+                  checked={isOn(group, item)}
+                  disabled={item.id === "commute-time" &&
+                    (!selectedVenueId || venueDisplayMode === "all")}
+                  onchange={() => toggleNonExclusive(group.id, item.id)}
+                  class="sr-only"
+                />
+                <span class="toggle-thumb"></span>
+              </span>
+              <span class="layer-label">{item.label}</span>
+            </label>
 
-						{#if item.id === "walk-venues-30min" && isOn(group, item)}
-							{@render breaksLegend(item)}
-						{/if}
-					{/each}
+            {#if item.id === "commute-time" && isOn(group, item)}
+              {@const commuteItem = item}
+              {@const commuteBuckets = commuteItem.cutoffs.map((cutoff, i) => ({
+                label: `${cutoff} min`,
+                color: commuteItem.colors[i],
+              }))}
+              <svg class="legend" width="100%" height="40">
+                {#each commuteBuckets as bucket, i}
+                  <rect
+                    x={(i * 100) / commuteBuckets.length + "%"}
+                    y="0"
+                    width={100 / commuteBuckets.length + "%"}
+                    height="20"
+                    fill={bucket.color}
+                    stroke="white"
+                    stroke-width="1"
+                    opacity="0.7"
+                  />
+                {/each}
+                {#each commuteBuckets as bucket, i}
+                  <text
+                    class="legend-label"
+                    x={`${(i + 0.5) * (100 / commuteBuckets.length)}%`}
+                    y="35"
+                    text-anchor="middle"
+                  >
+                    {bucket.label}
+                  </text>
+                {/each}
+              </svg>
+            {/if}
 
-				{/if}
-			</div>
-		{/each}
-	</section>
+            {#if item.id === "walk-venues-30min" && isOn(group, item)}
+              {@render breaksLegend(item)}
+            {/if}
+          {/each}
+        {/if}
+      </div>
+    {/each}
+  </section>
 
-	<div class="divider"></div>
+  <div class="divider"></div>
 
-	<!-- ── Venue Profile ─────────────────────────────────────────────── -->
-	<section class="panel-section">
-		<h2 class="section-heading">Venue Profile</h2>
+  <!-- ── Venue Profile ─────────────────────────────────────────────── -->
+  <section class="panel-section">
+    <h2 class="section-heading">Venue Profile</h2>
 
-		{#if venueDisplayMode === "all"}
-			<p class="empty-state">
-				Switch to "Some" to view a venue's activity and demographic
-				profile.
-			</p>
-		{:else if selectedVenue}
-			<p class="venue-name">{selectedVenue.name}</p>
+    {#if venueDisplayMode === "all"}
+      <p class="empty-state">
+        Switch to "Some" to view a venue's activity and demographic profile.
+      </p>
+    {:else if selectedVenue}
+      <p class="venue-name">{selectedVenue.name}</p>
 
-			<VenueProfile venueId={selectedVenue.id} />
-		{:else}
-			<p class="empty-state">
-				Select a venue above or click on the map to view its activity
-				and demographic profile.
-			</p>
-		{/if}
-	</section>
+      <VenueProfile venueId={selectedVenue.id} />
+    {:else}
+      <p class="empty-state">
+        Select a venue above or click on the map to view its activity and
+        demographic profile.
+      </p>
+    {/if}
+  </section>
 
-	<div class="divider"></div>
+  <div class="divider"></div>
 
-	<!-- ── Compare ───────────────────────────────────────────────────── -->
-	<!-- <section class="panel-section panel-section--grow">
+  <!-- ── Compare ───────────────────────────────────────────────────── -->
+  <!-- <section class="panel-section panel-section--grow">
 		<h2 class="section-heading">Compare Venues</h2>
 		<p class="empty-state">
 			Side-by-side comparison of multiple selected venues will appear
 			here.
 		</p>
 	</section> -->
+
+  <!-- ── About ─────────────────────────────────────────────────────── -->
+  <section class="panel-section about-section">
+    <div class="about-block">
+      <h2 class="section-heading">Project Description</h2>
+      <p class="section-desc">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris.
+      </p>
+    </div>
+
+    <div class="about-block">
+      <h2 class="section-heading">Data</h2>
+      <p class="section-desc">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore.
+      </p>
+    </div>
+
+    <div class="about-block">
+      <h2 class="section-heading">GitHub</h2>
+      <p class="section-desc">
+        <a></a>
+      </p>
+    </div>
+  </section>
 </aside>
 
 <style>
-	/* ── Container ──────────────────────────────────────────────────────── */
+  /* ── Container ──────────────────────────────────────────────────────── */
 
-	.panel {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		height: 100%;
-		background: rgb(246, 246, 246);
-		color: var(--brandBlack);
-		font-family: Montserrat, sans-serif;
-		font-size: 0.8rem;
-		overflow-y: auto;
-		overflow-x: hidden;
-		scrollbar-width: thin;
-		scrollbar-color: var(--brandGray) transparent;
-	}
+  .panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: rgb(246, 246, 246);
+    color: var(--brandBlack);
+    font-family: Montserrat, sans-serif;
+    font-size: 0.8rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--brandGray) transparent;
+  }
 
-	/* ── Header ─────────────────────────────────────────────────────────── */
+  /* ── Header ─────────────────────────────────────────────────────────── */
 
-	.panel-header {
-		flex-shrink: 0;
-		padding: 16px 16px 14px;
-		background: rgb(246, 246, 246);
-		color: #000;
-	}
+  .panel-header {
+    flex-shrink: 0;
+    padding: 16px 16px 14px;
+    background: rgb(246, 246, 246);
+    color: #000;
+  }
 
-	.header-org {
-		display: block;
-		font-family: Montserrat, sans-serif;
-		font-weight: bold;
-		font-size: 0.65rem;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		color: rgb(0, 98, 234);
-		margin-bottom: 6px;
-	}
+  .header-org a {
+    /* display: block; */
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(0, 98, 234);
+    margin-bottom: 6px;
+	text-decoration: none;
+  }
 
-	.header-title {
-		font-family: Montserrat, sans-serif;
-		font-weight: 600;
-		font-size: 1.05rem;
-		line-height: 1.25;
-		margin: 0 0 10px;
-		color: #000;
-	}
+  .header-sub {
+	font-family: Montserrat, sans-serif;
+	font-weight: 500;
+	font-size: 0.8rem;
+	line-height: 1.25;
+	margin: 6px 0 6px;
+	color: #000;
+  }
 
-	.header-authors {
-		font-size: 0.7rem;
-		color: rgba(0, 0, 0, 0.6);
-		margin: 0;
-		line-height: 1.4;
-	}
+  .header-title {
+    font-family: Montserrat, sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin: 0 0 6px;
+    color: #000;
+  }
 
-	/* ── Sections ───────────────────────────────────────────────────────── */
+  .header-authors {
+    font-size: .75rem;
+    color: #000;
+    margin: 0;
+    line-height: 1.4;
+  }
 
-	.divider {
-		height: 1px;
-		background: var(--brandGray);
-		flex-shrink: 0;
-	}
+  /* ── Sections ───────────────────────────────────────────────────────── */
 
-	.panel-section {
-		padding: 14px 16px;
-		flex-shrink: 0;
-	}
+  .divider {
+    height: 1px;
+    background: var(--brandGray);
+    flex-shrink: 0;
+  }
 
-	/* Let the last section expand to fill remaining height */
-	.panel-section--grow {
-		flex: 1;
-	}
+  .panel-section {
+    padding: 14px 16px;
+    flex-shrink: 0;
+  }
 
-	.section-heading {
-		font-family: Montserrat, sans-serif;
-		font-weight: bold;
-		font-size: 0.68rem;
-		text-transform: uppercase;
-		letter-spacing: 0.07em;
-		color: rgb(0, 98, 234);
-		margin: 0 0 8px;
-	}
+  /* Let the last section expand to fill remaining height */
+  .panel-section--grow {
+    flex: 1;
+  }
 
-	.section-desc {
-		font-size: 0.73rem;
-		color: var(--brandGray60);
-		margin: 0 0 10px;
-		line-height: 1.45;
-	}
+  .section-heading {
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgb(0, 98, 234);
+    margin: 0 0 8px;
+  }
 
-	.empty-state {
-		font-size: 0.73rem;
-		color: var(--brandGray60);
-		line-height: 1.5;
-		font-style: italic;
-		margin: 0;
-	}
+  .section-desc {
+    font-size: 0.8rem;
+    color: #000;
+    margin: 0 0 10px;
+    line-height: 1.45;
+  }
 
-	/* ── Venue Select ───────────────────────────────────────────────────── */
+  /* ── About ──────────────────────────────────────────────────────────── */
 
-	.select-wrapper {
-		position: relative;
-	}
+  .about-block + .about-block {
+    margin-top: 14px;
+  }
 
-	.layer-select {
-		font-size: 0.75rem;
-	}
+  .about-block .section-desc {
+    margin: 0;
+  }
 
-	.venue-select {
-		width: 100%;
-		padding: 7px 28px 7px 10px;
-		font-family: Montserrat, sans-serif;
-		font-size: 0.78rem;
-		border: 1px solid var(--brandGray);
-		border-radius: 0px;
-		background: #fff;
-		color: var(--brandBlack);
-		appearance: none;
-		-webkit-appearance: none;
-		cursor: pointer;
-		outline: none;
-		transition:
-			border-color 0.15s,
-			box-shadow 0.15s;
-		box-sizing: border-box;
-	}
+  .about-link {
+    color: rgb(0, 98, 234);
+    text-decoration: none;
+    word-break: break-all;
+  }
 
-	.venue-select:focus {
-		border-color: rgb(0, 98, 234);
-		box-shadow: 0 0 0 2px rgba(0, 127, 163, 0.18);
-	}
+  .about-link:hover {
+    text-decoration: underline;
+  }
 
-	.select-arrow {
-		position: absolute;
-		right: 10px;
-		top: 50%;
-		transform: translateY(-50%);
-		width: 10px;
-		height: 6px;
-		fill: rgb(0, 98, 234);
-		pointer-events: none;
-	}
+  .empty-state {
+    font-size: 0.73rem;
+    color: #000;
+    line-height: 1.5;
+    font-style: italic;
+    margin: 0;
+  }
 
-	.select-wrapper-disabled {
-		opacity: 0.5;
-	}
+  /* ── Venue Select ───────────────────────────────────────────────────── */
 
-	.venue-select:disabled {
-		cursor: not-allowed;
-		background: var(--brandGray, #eee);
-		color: var(--brandGray60);
-	}
+  .select-wrapper {
+    position: relative;
+  }
 
-	/* ── Venue Display Mode Toggle ─────────────────────────────────────── */
+  .layer-select {
+    font-size: 0.75rem;
+  }
 
-	.segmented-toggle {
-		display: flex;
-		width: fit-content;
-		border: 1px solid var(--brandGray);
-		margin-bottom: 10px;
-		overflow: hidden;
-	}
+  /* Category headings in the demography dropdown */
+  .layer-select optgroup {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000 !important;
+  }
 
-	.segmented-btn {
-		padding: 6px 16px;
-		font-family: Montserrat, sans-serif;
-		font-size: 0.75rem;
-		background: #fff;
-		border: none;
-		color: var(--brandGray70);
-		cursor: pointer;
-		transition: all 0.15s ease;
-	}
+  /* Reset options so they don't inherit the heading style */
+  .layer-select optgroup option {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--brandBlack);
+  }
 
-	.segmented-btn + .segmented-btn {
-		border-left: 1px solid var(--brandGray);
-	}
+  .venue-select {
+    width: 100%;
+    padding: 7px 28px 7px 10px;
+    font-family: Montserrat, sans-serif;
+    font-size: 0.78rem;
+    border: 1px solid var(--brandGray);
+    border-radius: 0px;
+    background: #fff;
+    color: var(--brandBlack);
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    outline: none;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+    box-sizing: border-box;
+  }
 
-	.segmented-btn.active {
-		background: rgb(0, 98, 234);
-		color: #fff;
-	}
+  .venue-select:focus {
+    border-color: rgb(0, 98, 234);
+    box-shadow: 0 0 0 2px rgba(0, 127, 163, 0.18);
+  }
 
-	.dot-legend {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 14px;
-		margin: 0 0 10px;
-	}
+  .select-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 6px;
+    fill: rgb(0, 98, 234);
+    pointer-events: none;
+  }
 
-	.dot-legend-item {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		font-size: 0.72rem;
-		color: var(--brandGray60);
-		line-height: 1.3;
-	}
+  .select-wrapper-disabled {
+    opacity: 0.5;
+  }
 
-	.dot-swatch {
-		width: 9px;
-		height: 9px;
-		border-radius: 50%;
-		flex-shrink: 0;
-		border: 1px solid #ffffff;
-		box-shadow: 0 0 0 1px var(--brandGray);
-	}
+  .venue-select:disabled {
+    cursor: not-allowed;
+    background: var(--brandGray, #eee);
+    color: var(--brandGray60);
+  }
 
-	.dot-funded {
-		background: rgb(0, 98, 234);
-	}
+  /* ── Venue Display Mode Toggle ─────────────────────────────────────── */
 
-	.dot-unfunded {
-		background: #9c9c9c;
-	}
+  .segmented-toggle {
+    display: flex;
+    width: fit-content;
+    border: 1px solid var(--brandGray);
+    overflow: hidden;
+  }
 
-	/* ── Layer Toggles ──────────────────────────────────────────────────── */
+  .segmented-btn {
+    padding: 6px 16px;
+    font-family: Montserrat, sans-serif;
+    font-size: 0.75rem;
+    background: #fff;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
 
-	.layer-group {
-		margin-bottom: 10px;
-	}
+  .segmented-btn + .segmented-btn {
+    border-left: 1px solid var(--brandGray);
+  }
 
-	.layer-group:last-child {
-		margin-bottom: 0;
-	}
+  .segmented-btn.active {
+    background: rgb(0, 98, 234);
+    color: #fff;
+  }
 
-	.layer-group-label {
-		display: block;
-		font-size: 0.65rem;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: var(--brandGray60);
-		margin-bottom: 5px;
-	}
+  /* Shared hover / focus for every button on the panel */
+  .segmented-btn:not(.active):not(:disabled):hover,
+  .activity-btn:not(.active):not(:disabled):hover {
+    background: rgba(0, 98, 234, 0.08);
+    color: rgb(0, 98, 234);
+  }
 
-	.layer-toggle {
-		display: flex;
-		align-items: center;
-		gap: 9px;
-		padding: 4px 0;
-		cursor: pointer;
-		user-select: none;
-	}
+  .segmented-btn:focus-visible,
+  .activity-btn:focus-visible {
+    outline: 2px solid rgb(0, 98, 234);
+    outline-offset: -2px;
+  }
 
-	.layer-toggle-disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
+  .segmented-desc {
+    margin: 4px 0 10px;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: #000;
+  }
 
-	/* Screen-reader only — visually hidden checkbox */
-	.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip: rect(0 0 0 0);
-		white-space: nowrap;
-	}
+  .dot-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 0 0 10px;
+  }
 
-	/* Toggle pill */
-	.toggle-track {
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-		width: 30px;
-		height: 16px;
-		border-radius: 8px;
-		background: var(--brandGray);
-		flex-shrink: 0;
-		transition: background 0.2s;
-		cursor: pointer;
-	}
+  .dot-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: #000;
+    line-height: 1.3;
+  }
 
-	.toggle-track.on {
-		background: rgb(0, 98, 234);
-	}
+  .dot-swatch {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid #ffffff;
+    box-shadow: 0 0 0 1px var(--brandGray);
+  }
 
-	.toggle-thumb {
-		position: absolute;
-		left: 2px;
-		width: 12px;
-		height: 12px;
-		border-radius: 50%;
-		background: #fff;
-		transition: left 0.2s;
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-	}
+  .dot-funded {
+    background: rgb(0, 98, 234);
+  }
 
-	.toggle-track.on .toggle-thumb {
-		left: 16px;
-	}
+  .dot-unfunded {
+    background: #9c9c9c;
+  }
 
-	.layer-label {
-		font-size: 0.77rem;
-		color: var(--brandBlack);
-		line-height: 1.3;
-	}
+  /* ── Layer Toggles ──────────────────────────────────────────────────── */
 
-	.activity-grid {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 6px;
-	}
+  .layer-group {
+    margin-bottom: 10px;
+  }
 
-	.activity-btn {
-		border: 1px solid var(--brandGray);
-		background: #fff;
-		color: var(--brandGray70);
-		padding: 5px 8px;
-		font-size: 0.7rem;
-		font-family: Montserrat, sans-serif;
-		border-radius: 0px;
-		line-height: 1.2;
-		cursor: pointer;
-		transition: all 0.15s ease;
-	}
+  .layer-group:last-child {
+    margin-bottom: 0;
+  }
 
-	.activity-btn.active {
-		background: rgb(0, 98, 234);
-		border-color: rgb(0, 98, 234);
-		color: #fff;
-	}
+  .layer-group-label {
+    display: block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #000;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
 
-	.activity-btn:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
+  .layer-toggle {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 4px 0;
+    cursor: pointer;
+    user-select: none;
+  }
 
-	.activity-hint {
-		margin: 6px 0 0;
-	}
+  .layer-toggle-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
-	.legend-caption {
-		margin: 4px 0 0;
-	}
+  /* Screen-reader only — visually hidden checkbox */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 
-	/* ── Venue Description ──────────────────────────────────────────────── */
+  /* Toggle pill */
+  .toggle-track {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 30px;
+    height: 16px;
+    border-radius: 8px;
+    background: var(--brandGray);
+    flex-shrink: 0;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
 
-	.vd-name {
-		font-family: Montserrat, sans-serif;
-		font-weight: bold;
-		font-size: 0.92rem;
-		color: rgb(0, 98, 234);
-		margin: 0 0 4px;
-		line-height: 1.25;
-	}
+  .toggle-track.on {
+    background: rgb(0, 98, 234);
+  }
 
-	.vd-type {
-		font-size: 0.72rem;
-		color: var(--brandGray60);
-		margin: 0 0 6px;
-		line-height: 1.4;
-	}
+  .toggle-thumb {
+    position: absolute;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    transition: left 0.2s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
 
-	.vd-address {
-		font-size: 0.72rem;
-		color: var(--brandGray60);
-		margin: 0 0 10px;
-		line-height: 1.4;
-	}
+  .toggle-track.on .toggle-thumb {
+    left: 16px;
+  }
 
-	.vd-body {
-		font-size: 0.75rem;
-		color: var(--brandBlack);
-		line-height: 1.55;
-		margin: 0;
-		opacity: 0.65;
-	}
+  .layer-label {
+    font-size: 0.77rem;
+    color: var(--brandBlack);
+    line-height: 1.3;
+  }
 
-	/* ── Venue Profile ──────────────────────────────────────────────────── */
+  .activity-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
 
-	.venue-name {
-		font-family: Montserrat, sans-serif;
-		font-weight: bold;
-		font-size: 0.88rem;
-		color: rgb(0, 98, 234);
-		margin: 0 0 10px;
-	}
+  .activity-btn {
+    border: 1px solid var(--brandGray);
+    background: #fff;
+    color: #000;
+    padding: 5px 8px;
+    font-size: 0.7rem;
+    font-family: Montserrat, sans-serif;
+    border-radius: 0px;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
 
-	.legend {
-		margin-top: 0.5rem;
-		display: block;
-	}
+  .activity-btn.active {
+    background: rgb(0, 98, 234);
+    border-color: rgb(0, 98, 234);
+    color: #fff;
+  }
 
-	.legend-label {
-		font-size: 0.6rem;
-		fill: var(--brandGray60);
-		font-family: Montserrat, sans-serif;
-	}
+  .activity-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .activity-hint {
+    margin: 6px 0 0;
+  }
+
+  .legend-caption {
+    margin: 4px 0 0;
+  }
+
+  /* ── Venue Description ──────────────────────────────────────────────── */
+
+  .vd-name {
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    font-size: 0.92rem;
+    color: rgb(0, 98, 234);
+    margin: 0 0 4px;
+    line-height: 1.25;
+  }
+
+  .vd-type {
+    font-size: 0.72rem;
+    color: #000;
+    margin: 0 0 6px;
+    line-height: 1.4;
+  }
+
+  .vd-address {
+    font-size: 0.72rem;
+    color: #000;
+    margin: 0 0 10px;
+    line-height: 1.4;
+  }
+
+  .vd-body {
+    font-size: 0.8rem;
+    color: var(--brandBlack);
+    line-height: 1.55;
+    margin: 0;
+	font-weight:500;
+  }
+
+  /* ── Venue Profile ──────────────────────────────────────────────────── */
+
+  .venue-name {
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    font-size: 0.88rem;
+    color: rgb(0, 98, 234);
+    margin: 0 0 10px;
+  }
+
+  .legend {
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  .legend-label {
+    font-size: 0.6rem;
+    fill: #000;
+    font-family: Montserrat, sans-serif;
+  }
 </style>

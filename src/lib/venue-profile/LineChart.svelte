@@ -178,13 +178,14 @@
 
 	.axis-tick {
 		font-family: Montserrat, sans-serif;
-		font-size: 6.2px;
-		fill: var(--brandGray60);
+		font-size: 9px;
+		fill: #000;
 	}
 
 	.axis-caption {
-		font-size: 0.62rem;
-		color: var(--brandGray60);
+		font-size: 11px;
+		font-family: Montserrat, sans-serif;
+		color: #000;
 		margin: 0;
 		line-height: 1.3;
 	}
@@ -201,7 +202,7 @@
 		align-items: center;
 		gap: 5px;
 		font-size: 0.68rem;
-		color: var(--brandGray70);
+		color: #000;
 	}
 
 	.legend-swatch {
