@@ -703,12 +703,15 @@
     color: #fff;
   }
 
-  .segmented-btn:not(.active):hover {
+  /* Shared hover / focus for every button on the panel */
+  .segmented-btn:not(.active):not(:disabled):hover,
+  .activity-btn:not(.active):not(:disabled):hover {
     background: rgba(0, 98, 234, 0.08);
     color: rgb(0, 98, 234);
   }
 
-  .segmented-btn:focus-visible {
+  .segmented-btn:focus-visible,
+  .activity-btn:focus-visible {
     outline: 2px solid rgb(0, 98, 234);
     outline-offset: -2px;
   }
