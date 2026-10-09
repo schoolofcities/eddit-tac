@@ -1451,6 +1451,7 @@
     },
     "source": "openmaptiles",
     "source-layer": "transportation_name",
+    "minzoom": 12,
     "filter": [
       "all",
       [

@@ -54,8 +54,8 @@
   // compete for the same visual space. "except" is the layer that was just
   // activated and should be left alone.
   function clearOtherExclusiveLayers(except) {
-    if (except !== "activity") layerState.activity.activeId = null;
     if (except !== "demography") layerState.demography.activeId = null;
+    if (except !== "activity") layerState.activity.activeId = null;
     if (except !== "commute-time") layerState.mobility["commute-time"] = false;
     if (except !== "walk-venues-30min")
       layerState.mobility["walk-venues-30min"] = false;
