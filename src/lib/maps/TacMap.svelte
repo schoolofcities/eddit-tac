@@ -674,8 +674,7 @@
 			url: `pmtiles://${building_census}`,
 		});
 
-		const demographyGroup = LAYER_GROUPS[0];
-		for (const item of demographyGroup.items) {
+			const demographyGroup = LAYER_GROUPS.find((g) => g.id === "demography");		for (const item of demographyGroup.items) {
 			const fillColor = [
 				"step",
 				["get", item.key],

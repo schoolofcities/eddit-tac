@@ -2,6 +2,49 @@ const COLOURS = ["#99C2F8", "#4D92F1", "#0062EA", "#004EBB", "#00398C"];
 
 export const LAYER_GROUPS = [
   {
+    id: "activity",
+    label: "Activity",
+    exclusive: true,
+    ui: "radio-toggles",
+    items: [
+      {
+        id: "activity-all",
+        label: "All",
+        key: "all",
+        breaks: [0.039, 0.107, 0.228, 0.611],
+        colors: COLOURS,
+      },
+      {
+        id: "activity-evenings",
+        label: "Evenings (5-11PM)",
+        key: "evening",
+        breaks: [0.043, 0.127, 0.31, 0.891],
+        colors: COLOURS,
+      },
+      {
+        id: "activity-daytime",
+        label: "Daytime (9AM-5PM)",
+        key: "nine-five",
+        breaks: [0.05, 0.143, 0.342, 0.981],
+        colors: COLOURS,
+      },
+      {
+        id: "activity-weekdays",
+        label: "Weekdays",
+        key: "weekdays",
+        breaks: [0.041, 0.111, 0.244, 0.688],
+        colors: COLOURS,
+      },
+      {
+        id: "activity-weekends",
+        label: "Weekends",
+        key: "weekends",
+        breaks: [0.049, 0.147, 0.348, 0.987],
+        colors: COLOURS,
+      },
+    ],
+  },
+    {
     id: "demography",
     label: "Demography",
     exclusive: true,
@@ -196,49 +239,6 @@ export const LAYER_GROUPS = [
         colors: COLOURS,
         description:
           "Percentage of the labour force who have an educational degree in the arts.",
-      },
-    ],
-  },
-  {
-    id: "activity",
-    label: "Activity",
-    exclusive: true,
-    ui: "radio-toggles",
-    items: [
-      {
-        id: "activity-all",
-        label: "All",
-        key: "all",
-        breaks: [0.039, 0.107, 0.228, 0.611],
-        colors: COLOURS,
-      },
-      {
-        id: "activity-evenings",
-        label: "Evenings (5-11PM)",
-        key: "evening",
-        breaks: [0.043, 0.127, 0.31, 0.891],
-        colors: COLOURS,
-      },
-      {
-        id: "activity-daytime",
-        label: "Daytime (9AM-5PM)",
-        key: "nine-five",
-        breaks: [0.05, 0.143, 0.342, 0.981],
-        colors: COLOURS,
-      },
-      {
-        id: "activity-weekdays",
-        label: "Weekdays",
-        key: "weekdays",
-        breaks: [0.041, 0.111, 0.244, 0.688],
-        colors: COLOURS,
-      },
-      {
-        id: "activity-weekends",
-        label: "Weekends",
-        key: "weekends",
-        breaks: [0.049, 0.147, 0.348, 0.987],
-        colors: COLOURS,
       },
     ],
   },
