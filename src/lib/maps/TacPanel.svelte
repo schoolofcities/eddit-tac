@@ -7,7 +7,7 @@
     selectedVenueId = $bindable(null),
     layerState = $bindable({}),
     venues = [],
-    venueDisplayMode = $bindable("some"), // "some" (default) | "all"
+    venueDisplayMode = $bindable("some"), // "some" (default) | "all" | "none"
     // Desktop passes false: the Venue Profile lives in TacProfilePanel
     // under the map instead, and the title stays fixed while the rest scrolls.
     showProfile = true,
@@ -34,10 +34,16 @@
     return { funded, unfunded };
   });
 
+  // Panel controls that are disabled in the "All" view are hidden there
+  // entirely: the Activity group and the Commute Time toggle.
+  const HIDDEN_IN_ALL = new Set(["activity", "commute-time"]);
+  const hiddenInAll = (id) =>
+    venueDisplayMode === "all" && HIDDEN_IN_ALL.has(id);
+
   function setExclusive(groupId, itemId) {
     if (
       groupId === "activity" &&
-      (!selectedVenueId || venueDisplayMode === "all")
+      (!selectedVenueId || venueDisplayMode !== "some")
     )
       return;
     const current = layerState[groupId]?.activeId ?? null;
@@ -52,7 +58,7 @@
     applyCrossGroupExclusion(groupId, next);
   }
 
-  // Demography, Activity, Commute Time and Walk Access are fill layers drawn
+  // Demography, Activity, Commute Time, Walk and Transit Access are fill layers drawn
   // on the same map surface — picking one clears the others so they never
   // compete for the same visual space. "except" is the layer that was just
   // activated and should be left alone.
@@ -60,8 +66,10 @@
     if (except !== "demography") layerState.demography.activeId = null;
     if (except !== "activity") layerState.activity.activeId = null;
     if (except !== "commute-time") layerState.mobility["commute-time"] = false;
-    if (except !== "walk-venues-30min")
-      layerState.mobility["walk-venues-30min"] = false;
+    if (except !== "walk-venues-15min")
+      layerState.mobility["walk-venues-15min"] = false;
+    if (except !== "transit-venues-30min")
+      layerState.mobility["transit-venues-30min"] = false;
   }
 
   function applyCrossGroupExclusion(groupId, next) {
@@ -73,34 +81,52 @@
   function toggleNonExclusive(groupId, itemId) {
     if (
       itemId === "commute-time" &&
-      (!selectedVenueId || venueDisplayMode === "all")
+      (!selectedVenueId || venueDisplayMode !== "some")
     )
       return;
     const next = !layerState[groupId][itemId];
     layerState[groupId][itemId] = next;
-    if ((itemId === "commute-time" || itemId === "walk-venues-30min") && next) {
+    if (
+      (itemId === "commute-time" ||
+        itemId === "walk-venues-15min" ||
+        itemId === "transit-venues-30min") &&
+      next
+    ) {
       clearOtherExclusiveLayers(itemId);
     }
   }
 
+  // Pick a random venue on first load. Venues may arrive asynchronously, so
+  // wait until the list is populated, then do it exactly once — if the user
+  // later clears the selection, we don't pick another one for them. If a
+  // venue is already selected (e.g. passed in from the parent), keep it.
+  let initialVenuePicked = false; // plain let: not reactive, just a guard
   $effect(() => {
-    if (venueDisplayMode === "all" && selectedVenueId) {
+    if (initialVenuePicked || venues.length === 0) return;
+    initialVenuePicked = true;
+    if (selectedVenueId || venueDisplayMode !== "some") return;
+    const randomVenue = venues[Math.floor(Math.random() * venues.length)];
+    selectedVenueId = randomVenue.id;
+  });
+
+  $effect(() => {
+    if (venueDisplayMode !== "some" && selectedVenueId) {
       selectedVenueId = null;
     }
   });
 
   // Commute time only makes sense against the "Some" venue markers — turn
-  // it off if it was on when the user switches to "All".
+  // it off if it was on when the user switches to "All" or "None".
   $effect(() => {
-    if (venueDisplayMode === "all" && layerState.mobility?.["commute-time"]) {
+    if (venueDisplayMode !== "some" && layerState.mobility?.["commute-time"]) {
       layerState.mobility["commute-time"] = false;
     }
   });
 
   // Activity layers are keyed to a single selected venue, same as commute
-  // time — turn activity off if it was on when the user switches to "All".
+  // time — turn activity off if it was on when the user switches to "All" or "None".
   $effect(() => {
-    if (venueDisplayMode === "all" && layerState.activity?.activeId) {
+    if (venueDisplayMode !== "some" && layerState.activity?.activeId) {
       layerState.activity.activeId = null;
     }
   });
@@ -177,10 +203,7 @@
       ><a href="https://schoolofcities.utoronto.ca/" target="_blank">School of Cities</a> | <a href="https://torontoartscouncil.org/" target="_blank">Toronto Arts Council</a></span
     >
 			<p class="header-sub">Explore activity patterns of art venues across Toronto</p>
-
-    <p class="header-authors">Aniket Kali, Scott McCallum, Michelle Zhang &middot; 2026</p>
-	
-</header>
+  </header>
 
   <div class="divider"></div>
 
@@ -210,11 +233,21 @@
       >
         All
       </button>
+      <button
+        type="button"
+        class="segmented-btn"
+        class:active={venueDisplayMode === "none"}
+        onclick={() => (venueDisplayMode = "none")}
+      >
+        None
+      </button>
     </div>
     <p class="segmented-desc">
       {venueDisplayMode === "some"
         ? "Significant venues that were analyzed for activity patterns"
-        : "All venues that have received funding from the Toronto Arts Council for their activities"}
+        : venueDisplayMode === "all"
+          ? "All venues that have received funding from the Toronto Arts Council for their activities"
+          : "Venue points are hidden"}
     </p>
 
     {#if venueDisplayMode === "all"}
@@ -230,32 +263,35 @@
       </div>
     {/if}
 
-    <div
-      class="select-wrapper"
-      class:select-wrapper-disabled={venueDisplayMode === "all"}
-    >
-      <select
-        class="venue-select"
-        value={selectedVenueId ?? ""}
-        disabled={venueDisplayMode === "all"}
-        onchange={(e) => {
-          selectedVenueId = e.currentTarget.value || null;
-        }}
-        aria-label="Select a venue"
+    <!-- Hidden in "All" view: no single venue can be selected there -->
+    {#if venueDisplayMode !== "all"}
+      <div
+        class="select-wrapper"
+        class:select-wrapper-disabled={venueDisplayMode !== "some"}
       >
-        <option value="">— Select a venue or click a marker on the map —</option>
-        {#each venues as venue (venue.id)}
-          <option value={venue.id}>{venue.name}</option>
-        {/each}
-        {#if venues.length === 0}
-          <option value="" disabled>(Venues not yet loaded)</option>
-        {/if}
-      </select>
-      <!-- Custom dropdown arrow -->
-      <svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
-        <path d="M0 0l5 6 5-6z" />
-      </svg>
-    </div>
+        <select
+          class="venue-select"
+          value={selectedVenueId ?? ""}
+          disabled={venueDisplayMode !== "some"}
+          onchange={(e) => {
+            selectedVenueId = e.currentTarget.value || null;
+          }}
+          aria-label="Select a venue"
+        >
+          <option value="">— Select a venue or click a marker on the map —</option>
+          {#each venues as venue (venue.id)}
+            <option value={venue.id}>{venue.name}</option>
+          {/each}
+          {#if venues.length === 0}
+            <option value="" disabled>(Venues not yet loaded)</option>
+          {/if}
+        </select>
+        <!-- Custom dropdown arrow -->
+        <svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
+          <path d="M0 0l5 6 5-6z" />
+        </svg>
+      </div>
+    {/if}
   </section>
 
   {#if venueDisplayMode === "some" && selectedVenue}
@@ -283,7 +319,7 @@
   <section class="panel-section">
     <h2 class="section-heading">Map Layers</h2>
 
-    {#each panelGroups as group (group.id)}
+    {#each panelGroups.filter((g) => !hiddenInAll(g.id)) as group (group.id)}
       <div class="layer-group">
         <span class="layer-group-label">{group.label}</span>
 
@@ -339,7 +375,7 @@
                 class="activity-btn"
                 class:active={isOn(group, item)}
                 disabled={group.id === "activity" &&
-                  (!selectedVenueId || venueDisplayMode === "all")}
+                  (!selectedVenueId || venueDisplayMode !== "some")}
                 onclick={() => setExclusive(group.id, item.id)}
               >
                 {item.label}
@@ -348,7 +384,7 @@
           </div>
 
           {#if group.id === "activity"}
-            {#if venueDisplayMode === "all"}
+            {#if venueDisplayMode !== "some"}
               <p class="section-desc activity-hint">
                 Switch to "Some" to view a venue's home-origin activity layers.
               </p>
@@ -370,18 +406,18 @@
             {/if}
           {/if}
         {:else}
-          {#each group.items as item (item.id)}
+          {#each group.items.filter((i) => !hiddenInAll(i.id)) as item (item.id)}
             <label
               class="layer-toggle"
               class:layer-toggle-disabled={item.id === "commute-time" &&
-                (!selectedVenueId || venueDisplayMode === "all")}
+                (!selectedVenueId || venueDisplayMode !== "some")}
             >
               <span class="toggle-track" class:on={isOn(group, item)}>
                 <input
                   type="checkbox"
                   checked={isOn(group, item)}
                   disabled={item.id === "commute-time" &&
-                    (!selectedVenueId || venueDisplayMode === "all")}
+                    (!selectedVenueId || venueDisplayMode !== "some")}
                   onchange={() => toggleNonExclusive(group.id, item.id)}
                   class="sr-only"
                 />
@@ -422,7 +458,7 @@
               </svg>
             {/if}
 
-            {#if item.id === "walk-venues-30min" && isOn(group, item)}
+            {#if (item.id === "walk-venues-15min" || item.id === "transit-venues-30min") && isOn(group, item)}
               {@render breaksLegend(item)}
             {/if}
           {/each}
@@ -438,7 +474,7 @@
   <section class="panel-section">
     <h2 class="section-heading">Activity Profile</h2>
 
-    {#if venueDisplayMode === "all"}
+    {#if venueDisplayMode !== "some"}
       <p class="empty-state">
         Switch to "Some" to view a venue's activity and demographic profile.
       </p>
@@ -475,6 +511,15 @@
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
         ad minim veniam, quis nostrud exercitation ullamco laboris.
       </p>
+    </div>
+
+    <div class="about-block">
+      <h2 class="section-heading">Contributors</h2>
+      <p class="credits-org">School of Cities:</p>
+      <p class="section-desc">Aniket Kali, Scott McCallum, Michelle Zhang</p>
+
+      <p class="credits-org">Toronto Arts Council:</p>
+      <p class="section-desc">Names to come</p>
     </div>
 
     <div class="about-block">
@@ -566,13 +611,6 @@
     color: #000;
   }
 
-  .header-authors {
-    font-size: .75rem;
-    color: #000;
-    margin: 0;
-    line-height: 1.4;
-  }
-
   /* ── Sections ───────────────────────────────────────────────────────── */
 
   .divider {
@@ -616,6 +654,19 @@
 
   .about-block .section-desc {
     margin: 0;
+  }
+
+  .credits-org {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    color: #000;
+    margin: 8px 0 2px;
+  }
+
+  .section-heading + .credits-org {
+    margin-top: 0;
   }
 
   .about-link {

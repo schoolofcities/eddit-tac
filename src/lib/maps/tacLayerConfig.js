@@ -263,12 +263,21 @@ export const LAYER_GROUPS = [
         colors: ["#2166ac", "#1fac8f", "#f8961e", "#d73027"],
       },
       {
-        id: "walk-venues-30min",
-        label: "Number of Venues Within a 30 Minute Walk",
+        id: "walk-venues-15min",
+        label: "Number of Venues Within a 15 Minute Walk",
         key: "venues_reachable",
         // step thresholds: 1–10 | 11–30 | 31–75 | 76–200 | 200+
-        breaks: [11, 31, 76, 201],
-        legendLabels: ["1–10", "11–30", "31–75", "76–200", "200+"],
+        breaks: [11, 31, 76, 121],
+        legendLabels: ["1–10", "11–30", "31–75", "76–120", "120+"],
+        colors: COLOURS,
+      },
+      {
+        id: "transit-venues-30min",
+        label: "Number of Venues Within a 30 Minute Transit Trip",
+        key: "venues_reachable_overall_typical",
+        // step thresholds: 1–50 | 50–150 | 150–350 | 350–600 | 600+
+        breaks: [50, 150, 350, 600],
+        legendLabels: ["1–50", "50–150", "150–350", "350–600", "600+"],
         colors: COLOURS,
       },
     ],

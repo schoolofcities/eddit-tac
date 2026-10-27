@@ -17,7 +17,8 @@
 	import neighbourhoodsLabels from "$data/geo/neighbourhoods-labels.geo.json";
 	import cityWards from "$data/geo/city-wards.geo.json";
 	import cityWardsLabels from "$data/geo/city-wards-labels.geo.json";
-	import hexWalk30 from "$data/mobility/hex_walk_30min_res9.geo.json";
+	import hexWalk15 from "$data/mobility/hex_walk_15min_res9.geo.json";
+	import hexTransit30 from "$data/mobility/hex_transit_30min_res9.geo.json";
 
 	import basemapLayers from "$lib/maps/neutral-grey.json";
 	import * as pmtiles from "pmtiles";
@@ -47,7 +48,7 @@
 		map = $bindable(null),
 		selectedVenueId = $bindable(null),
 		layerState = {},
-		venueDisplayMode = $bindable("some"), // "some" (venuesCentroids, default) | "all" (artLocations)
+		venueDisplayMode = $bindable("some"), // "some" (venuesCentroids, default) | "all" (artLocations) | "none" (no points)
 	} = $props();
 
 	const MAP_STYLE = {
@@ -109,7 +110,12 @@
 			mapLoaded = true;
 			addDemographyLayers();
 			addActivityLayers();
-			addWalkAccessLayer();
+			addHexAccessLayer("walk-venues-15min", "hex-walk-15min", hexWalk15);
+			addHexAccessLayer(
+				"transit-venues-30min",
+				"hex-transit-30min",
+				hexTransit30,
+			);
 			addTorontoBoundary();
 			addCityWards();
 			addNeighbourhoods();
@@ -418,7 +424,7 @@
 			promoteId: "fid",
 		});
 
-		const someVisibility = venueDisplayMode === "all" ? "none" : "visible";
+		const someVisibility = venueDisplayMode === "some" ? "visible" : "none";
 
 		// ── Boundary layers (visible at zoom ≥ 15) ──────────────────────────
 		map.addLayer({
@@ -574,7 +580,7 @@
 					6,
 				],
 				"circle-color": TAC_FUNDED_COLOR,
-				"circle-stroke-width": 1,
+				"circle-stroke-width": .2,
 				"circle-stroke-color": "#ffffff",
 			},
 			layout: {
@@ -769,27 +775,28 @@
 		}
 	}
 
-	const walkAccessItem = LAYER_GROUPS.find(
-		(g) => g.id === "mobility",
-	).items.find((i) => i.id === "walk-venues-30min");
+	const mobilityItems = LAYER_GROUPS.find((g) => g.id === "mobility").items;
 
-	// Hex grid (H3 res 9) of how many venues are reachable on a 30 min walk.
-	// Not venue-dependent, so it's added once and only its visibility changes.
-	function addWalkAccessLayer() {
+	// Hex grids (H3 res 9) of how many venues are reachable on a 15 min walk
+	// or a 30 min transit trip. Not venue-dependent, so each is added once and
+	// only its visibility changes.
+	function addHexAccessLayer(itemId, sourceId, data) {
 		if (!map) return;
 
-		map.addSource("hex-walk-30min", {
+		const item = mobilityItems.find((i) => i.id === itemId);
+		if (!item) return;
+
+		map.addSource(sourceId, {
 			type: "geojson",
-			data: hexWalk30,
+			data,
 		});
 
-		const item = walkAccessItem;
 		const value = ["to-number", ["get", item.key], 0];
 
 		map.addLayer({
 			id: item.id,
 			type: "fill",
-			source: "hex-walk-30min",
+			source: sourceId,
 			paint: {
 				"fill-color": [
 					"case",
@@ -1013,7 +1020,8 @@
 						break;
 					}
 
-					case "walk-venues-30min":
+					case "walk-venues-15min":
+					case "transit-venues-30min":
 						if (map.getLayer(item.id)) {
 							map.setLayoutProperty(
 								item.id,
@@ -1169,12 +1177,14 @@
 		);
 	});
 
-	// Toggles between the "Some" (venue centroid/boundary markers, default)
-	// and "All" (art-locations dots colored by TAC_funded_activities) views.
+	// Toggles between the "Some" (venue centroid/boundary markers, default),
+	// "All" (art-locations dots colored by TAC_funded_activities) and "None"
+	// (no venue points) views.
 	$effect(() => {
 		if (!map || !mapLoaded) return;
 
 		const showAll = venueDisplayMode === "all";
+		const showSome = venueDisplayMode === "some";
 
 		if (showAll) {
 			map.easeTo({
@@ -1197,7 +1207,7 @@
 				map.setLayoutProperty(
 					id,
 					"visibility",
-					showAll ? "none" : "visible",
+					showSome ? "visible" : "none",
 				);
 			}
 		}

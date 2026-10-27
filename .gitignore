@@ -23,6 +23,8 @@ data/geo/lct_000b21a_e
 
 data/venues/axle
 
+data/mobility/r5-hex-samples
+
 tmp/
 !src/data/
 
