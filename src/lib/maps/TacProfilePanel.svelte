@@ -5,7 +5,7 @@
 
   let {
     selectedVenueId = null,
-    venueDisplayMode = "some", // "some" | "all"
+    venueDisplayMode = "some", // "some" | "all" | "none"
     venues = [],
   } = $props();
 
@@ -27,7 +27,7 @@
   <section class="profile-section">
     <h2 class="section-heading">Venue Profile</h2>
 
-    {#if venueDisplayMode === "all"}
+    {#if venueDisplayMode !== "some"}
       <p class="empty-state">
         Switch to "Some" to view a venue's activity and demographic profile.
       </p>

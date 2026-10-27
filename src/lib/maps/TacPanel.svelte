@@ -34,11 +34,12 @@
     return { funded, unfunded };
   });
 
-  // Panel controls that are disabled in the "All" view are hidden there
-  // entirely: the Activity group and the Commute Time toggle.
-  const HIDDEN_IN_ALL = new Set(["activity", "commute-time"]);
-  const hiddenInAll = (id) =>
-    venueDisplayMode === "all" && HIDDEN_IN_ALL.has(id);
+  // Panel controls that only work against a single "Some" venue are hidden
+  // entirely in the "All" and "None" views: the Activity group and the
+  // Commute Time toggle.
+  const SOME_ONLY = new Set(["activity", "commute-time"]);
+  const hiddenOutsideSome = (id) =>
+    venueDisplayMode !== "some" && SOME_ONLY.has(id);
 
   function setExclusive(groupId, itemId) {
     if (
@@ -200,301 +201,308 @@
   <header class="panel-header">
     <h1 class="header-title">ACCESS TO THE ARTS</h1>
     <span class="header-org"
-      ><a href="https://schoolofcities.utoronto.ca/" target="_blank">School of Cities</a> | <a href="https://torontoartscouncil.org/" target="_blank">Toronto Arts Council</a></span
+      ><a href="https://schoolofcities.utoronto.ca/" target="_blank"
+        >School of Cities</a
+      >
+      |
+      <a href="https://torontoartscouncil.org/" target="_blank"
+        >Toronto Arts Council</a
+      ></span
     >
-			<p class="header-sub">Explore activity patterns of art venues across Toronto</p>
+    <p class="header-sub">
+      Explore activity patterns of art venues across Toronto
+    </p>
   </header>
 
   <div class="divider"></div>
 
   <div class="panel-body">
-
-  <!-- ── Venue Selector ────────────────────────────────────────────── -->
-  <section class="panel-section">
-    <h2 class="section-heading">Arts Venue</h2>
-    <!-- <p class="section-desc">
+    <!-- ── Venue Selector ────────────────────────────────────────────── -->
+    <section class="panel-section">
+      <h2 class="section-heading">Arts Venue</h2>
+      <!-- <p class="section-desc">
       Choose from the list or click a marker on the map.
     </p> -->
 
-    <div class="segmented-toggle" role="group" aria-label="Venue display mode">
-      <button
-        type="button"
-        class="segmented-btn"
-        class:active={venueDisplayMode === "some"}
-        onclick={() => (venueDisplayMode = "some")}
-      >
-        Some
-      </button>
-      <button
-        type="button"
-        class="segmented-btn"
-        class:active={venueDisplayMode === "all"}
-        onclick={() => (venueDisplayMode = "all")}
-      >
-        All
-      </button>
-      <button
-        type="button"
-        class="segmented-btn"
-        class:active={venueDisplayMode === "none"}
-        onclick={() => (venueDisplayMode = "none")}
-      >
-        None
-      </button>
-    </div>
-    <p class="segmented-desc">
-      {venueDisplayMode === "some"
-        ? "Significant venues that were analyzed for activity patterns"
-        : venueDisplayMode === "all"
-          ? "All venues that have received funding from the Toronto Arts Council for their activities"
-          : "Venue points are hidden"}
-    </p>
-
-    {#if venueDisplayMode === "all"}
-      <div class="dot-legend">
-        <span class="dot-legend-item">
-          <span class="dot-swatch dot-funded"></span>
-          TAC-funded activity ({tacFundedCounts.funded})
-        </span>
-        <span class="dot-legend-item">
-          <span class="dot-swatch dot-unfunded"></span>
-          Not TAC-funded ({tacFundedCounts.unfunded})
-        </span>
-      </div>
-    {/if}
-
-    <!-- Hidden in "All" view: no single venue can be selected there -->
-    {#if venueDisplayMode !== "all"}
       <div
-        class="select-wrapper"
-        class:select-wrapper-disabled={venueDisplayMode !== "some"}
+        class="segmented-toggle"
+        role="group"
+        aria-label="Venue display mode"
       >
-        <select
-          class="venue-select"
-          value={selectedVenueId ?? ""}
-          disabled={venueDisplayMode !== "some"}
-          onchange={(e) => {
-            selectedVenueId = e.currentTarget.value || null;
-          }}
-          aria-label="Select a venue"
+        <button
+          type="button"
+          class="segmented-btn"
+          class:active={venueDisplayMode === "some"}
+          onclick={() => (venueDisplayMode = "some")}
         >
-          <option value="">— Select a venue or click a marker on the map —</option>
-          {#each venues as venue (venue.id)}
-            <option value={venue.id}>{venue.name}</option>
-          {/each}
-          {#if venues.length === 0}
-            <option value="" disabled>(Venues not yet loaded)</option>
-          {/if}
-        </select>
-        <!-- Custom dropdown arrow -->
-        <svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
-          <path d="M0 0l5 6 5-6z" />
-        </svg>
+          Some
+        </button>
+        <button
+          type="button"
+          class="segmented-btn"
+          class:active={venueDisplayMode === "all"}
+          onclick={() => (venueDisplayMode = "all")}
+        >
+          All
+        </button>
+        <button
+          type="button"
+          class="segmented-btn"
+          class:active={venueDisplayMode === "none"}
+          onclick={() => (venueDisplayMode = "none")}
+        >
+          None
+        </button>
       </div>
-    {/if}
-  </section>
+      <p class="segmented-desc">
+        {venueDisplayMode === "some"
+          ? "Significant venues that were analyzed for activity patterns"
+          : venueDisplayMode === "all"
+            ? "All venues that have received funding from the Toronto Arts Council for their activities"
+            : "Venue points are hidden"}
+      </p>
 
-  {#if venueDisplayMode === "some" && selectedVenue}
-  <div class="divider"></div>
-  <!-- ── Venue Description ──────────────────────────────────────────── -->
-  <section class="panel-section">
-    <!-- <h2 class="section-heading">Venue Description</h2> -->
-
-      <p class="vd-name">{selectedVenue.name}</p>
-      <p class="vd-type">{selectedVenue.type}</p>
-      {#if selectedVenue.address || selectedVenue.postalCode}
-        <p class="vd-address">
-          {selectedVenue.address ?? "Address not available"}, Toronto, ON {selectedVenue.postalCode ??
-            ""}
-        </p>
+      {#if venueDisplayMode === "all"}
+        <div class="dot-legend">
+          <span class="dot-legend-item">
+            <span class="dot-swatch dot-funded"></span>
+            TAC-funded activity ({tacFundedCounts.funded})
+          </span>
+          <span class="dot-legend-item">
+            <span class="dot-swatch dot-unfunded"></span>
+            Not TAC-funded ({tacFundedCounts.unfunded})
+          </span>
+        </div>
       {/if}
-      <p class="vd-body">
-        {selectedVenue.description || "Venue description coming soon."}
-      </p>
-  </section>
-  {/if}
 
-  <div class="divider"></div>
-  <!-- ── Layer Toggles ─────────────────────────────────────────────── -->
-  <section class="panel-section">
-    <h2 class="section-heading">Map Layers</h2>
-
-    {#each panelGroups.filter((g) => !hiddenInAll(g.id)) as group (group.id)}
-      <div class="layer-group">
-        <span class="layer-group-label">{group.label}</span>
-
-        {#if group.ui === "dropdown"}
-          <div class="select-wrapper">
-            <select
-              class="venue-select layer-select"
-              value={layerState[group.id]?.activeId ?? ""}
-              onchange={(e) =>
-                setExclusiveFromSelect(group.id, e.currentTarget.value)}
-              aria-label={`Select ${group.label} layer`}
+      <!-- Hidden in "All" and "None" views: no single venue can be selected there -->
+      {#if venueDisplayMode === "some"}
+        <div class="select-wrapper">
+          <select
+            class="venue-select"
+            value={selectedVenueId ?? ""}
+            onchange={(e) => {
+              selectedVenueId = e.currentTarget.value || null;
+            }}
+            aria-label="Select a venue"
+          >
+            <option value=""
+              >— Select a venue or click a marker on the map —</option
             >
-              <option value="">None</option>
-              {#if group.items.some((item) => item.category)}
-                {#each [...new Set(group.items.map((item) => item.category))] as category (category)}
-                  <optgroup label={category}>
-                    {#each group.items.filter((item) => item.category === category) as item (item.id)}
-                      <option value={item.id}>{item.label}</option>
-                    {/each}
-                  </optgroup>
-                {/each}
-              {:else}
-                {#each group.items as item (item.id)}
-                  <option value={item.id}>{item.label}</option>
-                {/each}
-              {/if}
-            </select>
-
-            <svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
-              <path d="M0 0l5 6 5-6z" />
-            </svg>
-          </div>
-
-          {#if group.id === "demography" && layerState.demography?.activeId}
-            {@const selectedItem = group.items.find(
-              (item) => item.id === layerState.demography.activeId,
-            )}
-
-            {#if selectedItem}
-              {@render breaksLegend(selectedItem)}
-              {#if selectedItem.description}
-                <p class="section-desc legend-caption">
-                  {selectedItem.description}
-                </p>
-              {/if}
-            {/if}
-          {/if}
-        {:else if group.ui === "radio-toggles"}
-          <div class="activity-grid">
-            {#each group.items as item (item.id)}
-              <button
-                type="button"
-                class="activity-btn"
-                class:active={isOn(group, item)}
-                disabled={group.id === "activity" &&
-                  (!selectedVenueId || venueDisplayMode !== "some")}
-                onclick={() => setExclusive(group.id, item.id)}
-              >
-                {item.label}
-              </button>
+            {#each venues as venue (venue.id)}
+              <option value={venue.id}>{venue.name}</option>
             {/each}
-          </div>
+            {#if venues.length === 0}
+              <option value="" disabled>(Venues not yet loaded)</option>
+            {/if}
+          </select>
+          <!-- Custom dropdown arrow -->
+          <svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
+            <path d="M0 0l5 6 5-6z" />
+          </svg>
+        </div>
+      {/if}
+    </section>
 
-          {#if group.id === "activity"}
-            {#if venueDisplayMode !== "some"}
-              <p class="section-desc activity-hint">
-                Switch to "Some" to view a venue's home-origin activity layers.
-              </p>
-            {:else if !selectedVenueId}
-              <p class="section-desc activity-hint">
-                Select a venue to view its home-origin activity layers.
-              </p>
-            {:else if layerState.activity?.activeId}
-              {@const selectedActivityItem = group.items.find(
-                (item) => item.id === layerState.activity.activeId,
+    {#if venueDisplayMode === "some" && selectedVenue}
+      <div class="divider"></div>
+      <!-- ── Venue Description ──────────────────────────────────────────── -->
+      <section class="panel-section">
+        <!-- <h2 class="section-heading">Venue Description</h2> -->
+
+        <p class="vd-name">{selectedVenue.name}</p>
+        <p class="vd-type">{selectedVenue.type}</p>
+        {#if selectedVenue.address || selectedVenue.postalCode}
+          <p class="vd-address">
+            {selectedVenue.address ?? "Address not available"}, Toronto, ON {selectedVenue.postalCode ??
+              ""}
+          </p>
+        {/if}
+        <p class="vd-body">
+          {selectedVenue.description || "Venue description coming soon."}
+        </p>
+      </section>
+    {/if}
+
+    <div class="divider"></div>
+    <!-- ── Layer Toggles ─────────────────────────────────────────────── -->
+    <section class="panel-section">
+      <h2 class="section-heading">Map Layers</h2>
+
+      {#each panelGroups.filter((g) => !hiddenOutsideSome(g.id)) as group (group.id)}
+        <div class="layer-group">
+          <span class="layer-group-label">{group.label}</span>
+
+          {#if group.ui === "dropdown"}
+            <div class="select-wrapper">
+              <select
+                class="venue-select layer-select"
+                value={layerState[group.id]?.activeId ?? ""}
+                onchange={(e) =>
+                  setExclusiveFromSelect(group.id, e.currentTarget.value)}
+                aria-label={`Select ${group.label} layer`}
+              >
+                <option value="">None</option>
+                {#if group.items.some((item) => item.category)}
+                  {#each [...new Set(group.items.map((item) => item.category))] as category (category)}
+                    <optgroup label={category}>
+                      {#each group.items.filter((item) => item.category === category) as item (item.id)}
+                        <option value={item.id}>{item.label}</option>
+                      {/each}
+                    </optgroup>
+                  {/each}
+                {:else}
+                  {#each group.items as item (item.id)}
+                    <option value={item.id}>{item.label}</option>
+                  {/each}
+                {/if}
+              </select>
+
+              <svg class="select-arrow" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M0 0l5 6 5-6z" />
+              </svg>
+            </div>
+
+            {#if group.id === "demography" && layerState.demography?.activeId}
+              {@const selectedItem = group.items.find(
+                (item) => item.id === layerState.demography.activeId,
               )}
-              {#if selectedActivityItem}
-                {@render breaksLegend(selectedActivityItem)}
-                <p class="section-desc legend-caption">
-                  % share of the venue's estimated home-origin visitors, by
-                  census ADA (quintiles). Gray ADAs had no estimated visitors.
-                </p>
+
+              {#if selectedItem}
+                {@render breaksLegend(selectedItem)}
+                {#if selectedItem.description}
+                  <p class="section-desc legend-caption">
+                    {selectedItem.description}
+                  </p>
+                {/if}
               {/if}
             {/if}
-          {/if}
-        {:else}
-          {#each group.items.filter((i) => !hiddenInAll(i.id)) as item (item.id)}
-            <label
-              class="layer-toggle"
-              class:layer-toggle-disabled={item.id === "commute-time" &&
-                (!selectedVenueId || venueDisplayMode !== "some")}
-            >
-              <span class="toggle-track" class:on={isOn(group, item)}>
-                <input
-                  type="checkbox"
-                  checked={isOn(group, item)}
-                  disabled={item.id === "commute-time" &&
+          {:else if group.ui === "radio-toggles"}
+            <div class="activity-grid">
+              {#each group.items as item (item.id)}
+                <button
+                  type="button"
+                  class="activity-btn"
+                  class:active={isOn(group, item)}
+                  disabled={group.id === "activity" &&
                     (!selectedVenueId || venueDisplayMode !== "some")}
-                  onchange={() => toggleNonExclusive(group.id, item.id)}
-                  class="sr-only"
-                />
-                <span class="toggle-thumb"></span>
-              </span>
-              <span class="layer-label">{item.label}</span>
-            </label>
+                  onclick={() => setExclusive(group.id, item.id)}
+                >
+                  {item.label}
+                </button>
+              {/each}
+            </div>
 
-            {#if item.id === "commute-time" && isOn(group, item)}
-              {@const commuteItem = item}
-              {@const commuteBuckets = commuteItem.cutoffs.map((cutoff, i) => ({
-                label: `${cutoff} min`,
-                color: commuteItem.colors[i],
-              }))}
-              <svg class="legend" width="100%" height="40">
-                {#each commuteBuckets as bucket, i}
-                  <rect
-                    x={(i * 100) / commuteBuckets.length + "%"}
-                    y="0"
-                    width={100 / commuteBuckets.length + "%"}
-                    height="20"
-                    fill={bucket.color}
-                    stroke="white"
-                    stroke-width="1"
-                    opacity="0.7"
+            {#if group.id === "activity"}
+              {#if !selectedVenueId}
+                <p class="section-desc activity-hint">
+                  Select a venue to view its home-origin activity layers.
+                </p>
+              {:else if layerState.activity?.activeId}
+                {@const selectedActivityItem = group.items.find(
+                  (item) => item.id === layerState.activity.activeId,
+                )}
+                {#if selectedActivityItem}
+                  {@render breaksLegend(selectedActivityItem)}
+                  <p class="section-desc legend-caption">
+                    % share of the venue's estimated home-origin visitors, by
+                    census ADA (quintiles). Gray ADAs had no estimated visitors.
+                  </p>
+                {/if}
+              {/if}
+            {/if}
+          {:else}
+            {#each group.items.filter((i) => !hiddenOutsideSome(i.id)) as item (item.id)}
+              <label
+                class="layer-toggle"
+                class:layer-toggle-disabled={item.id === "commute-time" &&
+                  (!selectedVenueId || venueDisplayMode !== "some")}
+              >
+                <span class="toggle-track" class:on={isOn(group, item)}>
+                  <input
+                    type="checkbox"
+                    checked={isOn(group, item)}
+                    disabled={item.id === "commute-time" &&
+                      (!selectedVenueId || venueDisplayMode !== "some")}
+                    onchange={() => toggleNonExclusive(group.id, item.id)}
+                    class="sr-only"
                   />
-                {/each}
-                {#each commuteBuckets as bucket, i}
-                  <text
-                    class="legend-label"
-                    x={`${(i + 0.5) * (100 / commuteBuckets.length)}%`}
-                    y="35"
-                    text-anchor="middle"
-                  >
-                    {bucket.label}
-                  </text>
-                {/each}
-              </svg>
-            {/if}
+                  <span class="toggle-thumb"></span>
+                </span>
+                <span class="layer-label">{item.label}</span>
+              </label>
 
-            {#if (item.id === "walk-venues-15min" || item.id === "transit-venues-30min") && isOn(group, item)}
-              {@render breaksLegend(item)}
-            {/if}
-          {/each}
+              {#if item.id === "commute-time" && isOn(group, item)}
+                {@const commuteItem = item}
+                {@const commuteBuckets = commuteItem.cutoffs.map(
+                  (cutoff, i) => ({
+                    label: `${cutoff} min`,
+                    color: commuteItem.colors[i],
+                  }),
+                )}
+                <svg class="legend" width="100%" height="40">
+                  {#each commuteBuckets as bucket, i}
+                    <rect
+                      x={(i * 100) / commuteBuckets.length + "%"}
+                      y="0"
+                      width={100 / commuteBuckets.length + "%"}
+                      height="20"
+                      fill={bucket.color}
+                      stroke="white"
+                      stroke-width="1"
+                      opacity="0.7"
+                    />
+                  {/each}
+                  {#each commuteBuckets as bucket, i}
+                    <text
+                      class="legend-label"
+                      x={`${(i + 0.5) * (100 / commuteBuckets.length)}%`}
+                      y="35"
+                      text-anchor="middle"
+                    >
+                      {bucket.label}
+                    </text>
+                  {/each}
+                </svg>
+              {/if}
+
+              {#if (item.id === "walk-venues-15min" || item.id === "transit-venues-30min") && isOn(group, item)}
+                {@render breaksLegend(item)}
+              {/if}
+            {/each}
+          {/if}
+        </div>
+      {/each}
+    </section>
+
+    {#if showProfile}
+      <div class="divider"></div>
+
+      <!-- ── Venue Profile ─────────────────────────────────────────────── -->
+      <section class="panel-section">
+        <h2 class="section-heading">Venue Profile</h2>
+
+        {#if venueDisplayMode !== "some"}
+          <p class="empty-state">
+            Switch to "Some" to view a venue's activity and demographic profile.
+          </p>
+        {:else if selectedVenue}
+          <p class="venue-name">{selectedVenue.name}</p>
+
+          <VenueProfile venueId={selectedVenue.id} />
+        {:else}
+          <p class="empty-state">
+            Select a venue above or click on the map to view its activity and
+            demographic profile.
+          </p>
         {/if}
-      </div>
-    {/each}
-  </section>
-
-  {#if showProfile}
-  <div class="divider"></div>
-
-  <!-- ── Venue Profile ─────────────────────────────────────────────── -->
-  <section class="panel-section">
-    <h2 class="section-heading">Activity Profile</h2>
-
-    {#if venueDisplayMode !== "some"}
-      <p class="empty-state">
-        Switch to "Some" to view a venue's activity and demographic profile.
-      </p>
-    {:else if selectedVenue}
-      <p class="venue-name">{selectedVenue.name}</p>
-
-      <VenueProfile venueId={selectedVenue.id} />
-    {:else}
-      <p class="empty-state">
-        Select a venue above or click on the map to view its activity and
-        demographic profile.
-      </p>
+      </section>
     {/if}
-  </section>
-  {/if}
 
-  <div class="divider"></div>
+    <div class="divider"></div>
 
-  <!-- ── Compare ───────────────────────────────────────────────────── -->
-  <!-- <section class="panel-section panel-section--grow">
+    <!-- ── Compare ───────────────────────────────────────────────────── -->
+    <!-- <section class="panel-section panel-section--grow">
 		<h2 class="section-heading">Compare Venues</h2>
 		<p class="empty-state">
 			Side-by-side comparison of multiple selected venues will appear
@@ -502,41 +510,69 @@
 		</p>
 	</section> -->
 
-  <!-- ── About ─────────────────────────────────────────────────────── -->
-  <section class="panel-section about-section">
-    <div class="about-block">
-      <h2 class="section-heading">Project Description</h2>
-      <p class="section-desc">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-        ad minim veniam, quis nostrud exercitation ullamco laboris.
-      </p>
-    </div>
+    <!-- ── About ─────────────────────────────────────────────────────── -->
+    <section class="panel-section about-section">
+      <div class="about-block">
+        <h2 class="section-heading">Project Description</h2>
+        <p class="section-desc">
+          The Access to the Arts map is a collaboration between the School of
+          Cities and the Toronto Arts Council. It visualizes sampled activity
+          patterns of selected arts venues across Toronto, showing where venues
+          draw their visitors. <br /><br />The map is intended to support the
+          Toronto Arts Council's ongoing efforts to understand and improve
+          access to the arts in Toronto, and to inform future decisions for
+          investment be it city-wide or at the neighborhood scale.<br /><br />We
+          hope this map will be a useful resource and generalized tool for arts
+          organizations, policymakers, and the public to better understand the
+          dynamics of arts engagement in Toronto through the overlay of
+          demographic, mobility, and activity data with the locations of arts
+          venues across the city.
+        </p>
+      </div>
 
-    <div class="about-block">
-      <h2 class="section-heading">Contributors</h2>
-      <p class="credits-org">School of Cities:</p>
-      <p class="section-desc">Aniket Kali, Scott McCallum, Michelle Zhang</p>
+      <div class="about-block">
+        <h2 class="section-heading">Contributors</h2>
+        <p class="credits-org">School of Cities:</p>
+        <p class="section-desc">
+          Jeff Allen, Aniket Kali, Scott McCallum, Michelle Zhang
+        </p>
 
-      <p class="credits-org">Toronto Arts Council:</p>
-      <p class="section-desc">Names to come</p>
-    </div>
+        <p class="credits-org">Toronto Arts Council:</p>
+        <p class="section-desc">
+          Kadija de Paula, Francois Lebas, Elizabeth Riddolls, Earnest Ma
+        </p>
+      </div>
 
-    <div class="about-block">
-      <h2 class="section-heading">Data</h2>
-      <p class="section-desc">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute
-        irure dolor in reprehenderit in voluptate velit esse cillum dolore.
-      </p>
-    </div>
+            <div class="about-block">
+        <h2 class="section-heading">Data</h2>
+        <p class="section-desc">
+          Activity Data: Cuebiq
+          <br />Map Data: OpenStreetMap, Toronto Open Data Portal
+          <br />Venue Location Data: Toronto Arts Council
+          <br />Demographic Data: Statistics Canada, 2021 Census
+        </p>
+      </div>
 
-    <div class="about-block">
-      <h2 class="section-heading">GitHub</h2>
-      <p class="section-desc">
-        <a></a>
-      </p>
-    </div>
-  </section>
+      <div class="about-block">
+        <!-- <h2 class="section-heading">GitHub</h2> -->
+        <p class="section-desc">
+          <a
+            class="github-link"
+            href="https://github.com/schoolofcities/eddit-tac"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View source on GitHub"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+              alt=""
+              width="16"
+              height="16"
+            />
+          </a>
+        </p>
+      </div>
+    </section>
   </div>
 </aside>
 
@@ -590,16 +626,16 @@
     text-transform: uppercase;
     color: rgb(0, 98, 234);
     margin-bottom: 6px;
-	text-decoration: none;
+    text-decoration: none;
   }
 
   .header-sub {
-	font-family: Montserrat, sans-serif;
-	font-weight: 500;
-	font-size: 0.8rem;
-	line-height: 1.25;
-	margin: 6px 0 6px;
-	color: #000;
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    font-size: 0.8rem;
+    line-height: 1.25;
+    margin: 6px 0 6px;
+    color: #000;
   }
 
   .header-title {
@@ -744,10 +780,6 @@
     height: 6px;
     fill: rgb(0, 98, 234);
     pointer-events: none;
-  }
-
-  .select-wrapper-disabled {
-    opacity: 0.5;
   }
 
   .venue-select:disabled {
@@ -986,7 +1018,7 @@
     color: var(--brandBlack);
     line-height: 1.55;
     margin: 0;
-	font-weight:500;
+    font-weight: 500;
   }
 
   /* ── Venue Profile ──────────────────────────────────────────────────── */
