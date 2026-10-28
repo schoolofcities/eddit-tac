@@ -694,24 +694,33 @@
 				...item.breaks.flatMap((b, i) => [b, item.colors[i + 1]]),
 			];
 
-			const caseColor = [
-				"case",
-				["!=", ["get", item.key], null],
-				fillColor,
-				"#cbcbcb",
-			];
+			// Null (and, for zeroAsNull items, 0) values render light grey,
+			// matching the Activity layers.
+			const noDataTest = item.zeroAsNull
+				? [
+						"any",
+						["==", ["get", item.key], null],
+						["==", ["get", item.key], 0],
+					]
+				: ["==", ["get", item.key], null];
+
+			const caseColor = ["case", noDataTest, "#cbcbcb", fillColor];
 
 			map.addLayer({
 				id: item.id,
 				type: "fill",
 				source: "toronto-ada",
-				maxzoom: ZOOM_TRANSITION,
+				// adaOnly items have no building-level data, so keep the ADA
+				// layer visible at every zoom instead of handing off to buildings.
+				...(item.adaOnly ? {} : { maxzoom: ZOOM_TRANSITION }),
 				paint: {
 					"fill-color": caseColor,
 					"fill-opacity": FILL_OPACITY,
 				},
 				layout: { visibility: "none" },
 			});
+
+			if (item.adaOnly) continue;
 
 			map.addLayer({
 				id: `${item.id}-buildings`,
@@ -936,6 +945,8 @@
 					case "citizenship":
 					case "visible-minority":
 					case "pct-no-vehicle":
+					case "total-venues":
+					case "people-per-venue":
 						if (map.getLayer(item.id)) {
 							map.setLayoutProperty(
 								item.id,

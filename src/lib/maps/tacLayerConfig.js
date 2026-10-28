@@ -197,6 +197,33 @@ export const LAYER_GROUPS = [
         description:
           "Percentage of the labour force who have an educational degree in the arts.",
       },
+      // ── Venues ──
+      {
+        category: "Venues",
+        id: "total-venues",
+        label: "Total Venues",
+        key: "total_venues",
+        // 1–5 | 5–10 | 10–20 | 20–35 | 35–60
+        breaks: [5, 10, 20, 35],
+        legendLabels: ["1–5", "5–10", "10–20", "20–35", "35–60"],
+        colors: COLOURS,
+        zeroAsNull: true,
+        adaOnly: true,
+        description: "Total number of venues in the area.",
+      },
+      {
+        category: "Venues",
+        id: "people-per-venue",
+        label: "People per Venue",
+        key: "people_per_venue",
+        // 1–1250 | 1250–2500 | 2500–4000 | 4000–7000 | 7000–14000
+        breaks: [1250, 2500, 4000, 7000],
+        legendLabels: ["1–1,250", "1,250–2,500", "2,500–4,000", "4,000–7,000", "7,000–14,000"],
+        colors: COLOURS,
+        zeroAsNull: true,
+        adaOnly: true,
+        description: "Number of residents per venue in the area.",
+      },
     ],
   },
   {
