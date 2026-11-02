@@ -1,0 +1,3478 @@
+{
+  "meta": {
+    "story": "Story 2: Cultural workforce and opportunities for suburban expansion",
+    "source_notebook": "analysis/wards/explore/prepare_story2_sample_graphics.ipynb",
+    "time_period": "all",
+    "activity_measure": "normalized_raw_stop_count_by_ward",
+    "headline_workforce_measure": "labour_cultural_workers",
+    "n_wards": 25,
+    "n_activity_venues": 105,
+    "n_inventory_locations": 2576,
+    "priority_wards": [
+      "Don Valley North",
+      "Willowdale",
+      "Eglinton-Lawrence",
+      "Don Valley West"
+    ],
+    "region_order": [
+      "Toronto and East York",
+      "Etobicoke York",
+      "North York",
+      "Scarborough"
+    ],
+    "shares_are": "fractions between 0 and 1 (fields ending in _pp are percentage points)",
+    "caveats": [
+      "Cultural workers are counted by home ward, not workplace. The five workforce measures overlap and must never be summed.",
+      "Workforce counts are small-area estimates from a custom census tabulation; shares of residents use the ward's age 15+ population.",
+      "The broader inventory (2,576 locations) counts presence, not size, quality, funding dollars or activity; funding_frequency applies to TAC-funded locations only.",
+      "Normalized activity is not attendance, a unique-person count or a percentage of residents participating, and it describes all residents of a ward, not cultural workers specifically.",
+      "The activity analysis covers 105 selected venues; most wards host only 1-3 included venues, so activity shares are sensitive to which venues were sampled.",
+      "Straight-line distance is not route distance, travel time or difficulty.",
+      "Ward-level relationships are ecological: they describe wards, not individual behaviour, and do not establish causality.",
+      "Priority-ward flags describe a pattern in the data, not a measure of need."
+    ],
+    "description": "Every plausible per-ward metric for Story 2: workforce, infrastructure, ranks, trend position, selection flags, activity and distance.",
+    "workforce_measures": [
+      {
+        "key": "labour_creatives",
+        "label": "Creative occupations (NOC)",
+        "basis": "occupation",
+        "headline": false
+      },
+      {
+        "key": "labour_cultural_workers",
+        "label": "Broader cultural workers (NOC)",
+        "basis": "occupation",
+        "headline": true
+      },
+      {
+        "key": "labour_cultural_industries",
+        "label": "Cultural industries (NAICS)",
+        "basis": "industry",
+        "headline": false
+      },
+      {
+        "key": "labour_independent_artists",
+        "label": "Independent artists & arts organizations (NAICS)",
+        "basis": "industry",
+        "headline": false
+      },
+      {
+        "key": "labour_arts_major",
+        "label": "Arts-major education (CIP)",
+        "basis": "field_of_study",
+        "headline": false
+      }
+    ],
+    "definitions": {
+      "workforce.<measure>": "Residents by home ward (custom census tabulation). share_of_residents_15plus = count / population_15plus; share_of_city_total = the ward's share of the 25-ward total for that measure; ranks: 1 = most.",
+      "infrastructure": "Broader inventory by point-in-polygon ward. n_high_funding_freq = locations with high or very_high funding_frequency (n_very_high_funding_freq is the very_high subset); funding_frequency_counts cover TAC-funded locations only. n_activity_sample_venues = included (activity-measured) venues in the ward.",
+      "ranks": "Average of component ranks among the 25 wards (1 = highest). avg_workforce_rank averages cultural-worker count, independent-artist count and cultural-worker concentration; avg_infrastructure_rank averages total locations, locations per 100k, TAC-funded locations and free-programming share. rank_gap = avg_infrastructure_rank - avg_workforce_rank (positive = workforce outranks infrastructure).",
+      "trend": "predicted_workers is the cultural-worker count the citywide trend implies for the ward's location count (see top-level trend); workers_vs_trend_ratio > 1 means more workers than the trend implies. residual_log_locations is the residual of locations on workers (negative = fewer locations than the trend implies).",
+      "selection": "n_comparisons_flagged counts the 12 workforce x infrastructure comparisons in which the ward is at or above the median on workforce and at or below the median on infrastructure. flag_quadrant: flagged in at least half of the comparisons; flag_rank_gap: top quartile of rank_gap; flag_residual: bottom quartile of residual_log_locations; n_methods_flagging counts the three.",
+      "ratio_to_citywide_median": "Ward value divided by the median across the 25 wards (1.0 = the median ward).",
+      "activity": "Normalized, ward-mapped activity. Origin side: residents' activity (origin_total, within/outside shares, leading outside destination). Destination side: activity at the ward's included venues (dest_total, dest_outside_share, leading outside origin).",
+      "distance": "Straight-line home-area (geohash6 centre) to venue distance, weighted by normalized activity, for the ward's residents."
+    },
+    "notes": [
+      "Willowdale's within-ward share and median distance rest heavily on one home area beside Meridian Arts Centre; see priority_wards.json."
+    ]
+  },
+  "trend": {
+    "description": "Least-squares fit of log(1 + cultural workers) on log(1 + locations) across 25 wards; predicted_workers = expm1(slope * log1p(locations) + intercept).",
+    "x": "infrastructure.n_locations",
+    "y": "workforce.labour_cultural_workers.count",
+    "slope": 1.0987,
+    "intercept": 2.8268,
+    "spearman_rho_workers_vs_locations": 0.7278
+  },
+  "indicators": [
+    {
+      "key": "workers",
+      "label": "Broader cultural workers",
+      "unit": "count",
+      "path": "workforce.labour_cultural_workers.count",
+      "min": 672.3661,
+      "median": 1892.2749,
+      "max": 8080.1209,
+      "lower_value_is_higher_level": false
+    },
+    {
+      "key": "workers_share",
+      "label": "Broader cultural workers, share of residents 15+",
+      "unit": "share",
+      "path": "workforce.labour_cultural_workers.share_of_residents_15plus",
+      "min": 0.0072,
+      "median": 0.02,
+      "max": 0.0753,
+      "lower_value_is_higher_level": false
+    },
+    {
+      "key": "locations",
+      "label": "Locations in the broader inventory",
+      "unit": "count",
+      "path": "infrastructure.n_locations",
+      "min": 34,
+      "median": 72.0,
+      "max": 284,
+      "lower_value_is_higher_level": false
+    },
+    {
+      "key": "locations_per_100k",
+      "label": "Locations per 100,000 residents",
+      "unit": "per 100k",
+      "path": "infrastructure.locations_per_100k",
+      "min": 35.8964,
+      "median": 70.5395,
+      "max": 267.3797,
+      "lower_value_is_higher_level": false
+    },
+    {
+      "key": "tac_funded",
+      "label": "TAC-funded locations",
+      "unit": "count",
+      "path": "infrastructure.n_tac_funded",
+      "min": 30,
+      "median": 63.0,
+      "max": 251,
+      "lower_value_is_higher_level": false
+    },
+    {
+      "key": "high_frequency",
+      "label": "High / very-high-frequency funded locations",
+      "unit": "count",
+      "path": "infrastructure.n_high_funding_freq",
+      "min": 1,
+      "median": 7.0,
+      "max": 45,
+      "lower_value_is_higher_level": false
+    },
+    {
+      "key": "avg_workforce_rank",
+      "label": "Average workforce rank (1 = highest)",
+      "unit": "rank",
+      "path": "ranks.avg_workforce_rank",
+      "min": 2.3333,
+      "median": 13.0,
+      "max": 24.0,
+      "lower_value_is_higher_level": true
+    },
+    {
+      "key": "avg_infrastructure_rank",
+      "label": "Average infrastructure rank (1 = highest)",
+      "unit": "rank",
+      "path": "ranks.avg_infrastructure_rank",
+      "min": 1.75,
+      "median": 13.5,
+      "max": 23.5,
+      "lower_value_is_higher_level": true
+    },
+    {
+      "key": "outside_share",
+      "label": "Residents' activity outside the home ward",
+      "unit": "share",
+      "path": "activity.outside_share",
+      "min": 0.0553,
+      "median": 0.7758,
+      "max": 0.998,
+      "lower_value_is_higher_level": false
+    },
+    {
+      "key": "median_km",
+      "label": "Median straight-line distance to venues",
+      "unit": "km",
+      "path": "distance.median_km",
+      "min": 0.0837,
+      "median": 5.8444,
+      "max": 15.8997,
+      "lower_value_is_higher_level": false
+    },
+    {
+      "key": "workers_vs_trend_ratio",
+      "label": "Workers relative to the citywide trend",
+      "unit": "ratio",
+      "path": "trend.workers_vs_trend_ratio",
+      "min": 0.3144,
+      "median": 1.034,
+      "max": 1.9959,
+      "lower_value_is_higher_level": false
+    }
+  ],
+  "wards": [
+    {
+      "ward_code": "01",
+      "ward_name": "Etobicoke North",
+      "region": "Etobicoke York",
+      "is_priority_ward": false,
+      "population_2021": 116003,
+      "population_15plus": 97534.7,
+      "workforce": {
+        "labour_creatives": {
+          "count": 344.5799,
+          "share_of_residents_15plus": 0.0035,
+          "share_of_city_total": 0.0075,
+          "rank_by_count": 25,
+          "rank_by_share": 25
+        },
+        "labour_cultural_workers": {
+          "count": 700.2527,
+          "share_of_residents_15plus": 0.0072,
+          "share_of_city_total": 0.0092,
+          "rank_by_count": 24,
+          "rank_by_share": 25
+        },
+        "labour_cultural_industries": {
+          "count": 825.7309,
+          "share_of_residents_15plus": 0.0085,
+          "share_of_city_total": 0.0136,
+          "rank_by_count": 23,
+          "rank_by_share": 24
+        },
+        "labour_independent_artists": {
+          "count": 124.4984,
+          "share_of_residents_15plus": 0.0013,
+          "share_of_city_total": 0.0071,
+          "rank_by_count": 22,
+          "rank_by_share": 22
+        },
+        "labour_arts_major": {
+          "count": 1761.9835,
+          "share_of_residents_15plus": 0.0181,
+          "share_of_city_total": 0.0141,
+          "rank_by_count": 23,
+          "rank_by_share": 25
+        }
+      },
+      "infrastructure": {
+        "n_locations": 69,
+        "locations_per_100k": 59.4812,
+        "share_of_city_locations": 0.0268,
+        "n_tac_funded": 60,
+        "tac_funded_share_of_locations": 0.8696,
+        "n_high_funding_freq": 4,
+        "n_very_high_funding_freq": 0,
+        "funding_frequency_counts": {
+          "rare": 30,
+          "low": 19,
+          "mid": 7,
+          "high": 4,
+          "very_high": 0
+        },
+        "free_programming_counts": {
+          "none": 8,
+          "rare": 26,
+          "low": 18,
+          "mid": 5,
+          "high": 3,
+          "very_high": 0
+        },
+        "n_meaningful_free_programming": 8,
+        "meaningful_free_programming_share": 0.1159,
+        "n_activity_sample_venues": 1
+      },
+      "ranks": {
+        "avg_workforce_rank": 23.3333,
+        "avg_infrastructure_rank": 17.0,
+        "rank_gap": -6.3333,
+        "components": {
+          "workers_count": 24.0,
+          "independent_artists_count": 22.0,
+          "worker_concentration": 24.0,
+          "locations": 16.0,
+          "locations_per_100k": 18.0,
+          "tac_funded": 14.0,
+          "free_programming_share": 20.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1797.3663,
+        "workers_vs_trend_ratio": 0.3896,
+        "residual_log_workers": -0.9418,
+        "residual_log_locations": 0.4881
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.3701,
+        "locations": 0.9583,
+        "locations_per_100k": 0.8432,
+        "tac_funded_locations": 0.9524,
+        "high_frequency_locations": 0.5714,
+        "activity_sample_venues": 0.5
+      },
+      "activity": {
+        "origin_total": 1639.1978,
+        "within_share": 0.4377,
+        "outside_share": 0.5623,
+        "leading_outside_destination": {
+          "ward_name": "Willowdale",
+          "share_of_outside": 0.3563
+        },
+        "share_of_outside_to_downtown": 0.5375,
+        "share_of_outside_to_same_region": 0.0548,
+        "dest_total": 1164.1774,
+        "dest_outside_share": 0.3838,
+        "leading_outside_origin": {
+          "ward_name": "Humber River-Black Creek",
+          "share_of_outside": 0.5877
+        }
+      },
+      "distance": {
+        "p25_km": 1.2855,
+        "median_km": 11.9298,
+        "p75_km": 15.6005,
+        "n_home_areas": 80
+      }
+    },
+    {
+      "ward_code": "02",
+      "ward_name": "Etobicoke Centre",
+      "region": "Etobicoke York",
+      "is_priority_ward": false,
+      "population_2021": 118483,
+      "population_15plus": 99390.0,
+      "workforce": {
+        "labour_creatives": {
+          "count": 975.3719,
+          "share_of_residents_15plus": 0.0098,
+          "share_of_city_total": 0.0214,
+          "rank_by_count": 14,
+          "rank_by_share": 17
+        },
+        "labour_cultural_workers": {
+          "count": 1832.4181,
+          "share_of_residents_15plus": 0.0184,
+          "share_of_city_total": 0.024,
+          "rank_by_count": 15,
+          "rank_by_share": 15
+        },
+        "labour_cultural_industries": {
+          "count": 1533.5008,
+          "share_of_residents_15plus": 0.0154,
+          "share_of_city_total": 0.0253,
+          "rank_by_count": 13,
+          "rank_by_share": 13
+        },
+        "labour_independent_artists": {
+          "count": 337.7528,
+          "share_of_residents_15plus": 0.0034,
+          "share_of_city_total": 0.0194,
+          "rank_by_count": 14,
+          "rank_by_share": 14
+        },
+        "labour_arts_major": {
+          "count": 3960.92,
+          "share_of_residents_15plus": 0.0399,
+          "share_of_city_total": 0.0318,
+          "rank_by_count": 14,
+          "rank_by_share": 14
+        }
+      },
+      "infrastructure": {
+        "n_locations": 51,
+        "locations_per_100k": 43.0441,
+        "share_of_city_locations": 0.0198,
+        "n_tac_funded": 49,
+        "tac_funded_share_of_locations": 0.9608,
+        "n_high_funding_freq": 6,
+        "n_very_high_funding_freq": 0,
+        "funding_frequency_counts": {
+          "rare": 22,
+          "low": 9,
+          "mid": 12,
+          "high": 6,
+          "very_high": 0
+        },
+        "free_programming_counts": {
+          "none": 18,
+          "rare": 12,
+          "low": 7,
+          "mid": 8,
+          "high": 4,
+          "very_high": 0
+        },
+        "n_meaningful_free_programming": 12,
+        "meaningful_free_programming_share": 0.2353,
+        "n_activity_sample_venues": 3
+      },
+      "ranks": {
+        "avg_workforce_rank": 14.6667,
+        "avg_infrastructure_rank": 17.0,
+        "rank_gap": 2.3333,
+        "components": {
+          "workers_count": 15.0,
+          "independent_artists_count": 14.0,
+          "worker_concentration": 15.0,
+          "locations": 22.0,
+          "locations_per_100k": 22.0,
+          "tac_funded": 21.0,
+          "free_programming_share": 3.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1296.3064,
+        "workers_vs_trend_ratio": 1.4136,
+        "residual_log_workers": 0.3459,
+        "residual_log_locations": -0.3828
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": true,
+        "n_methods_flagging": 1
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.9684,
+        "locations": 0.7083,
+        "locations_per_100k": 0.6102,
+        "tac_funded_locations": 0.7778,
+        "high_frequency_locations": 0.8571,
+        "activity_sample_venues": 1.5
+      },
+      "activity": {
+        "origin_total": 1535.5653,
+        "within_share": 0.3732,
+        "outside_share": 0.6268,
+        "leading_outside_destination": {
+          "ward_name": "University-Rosedale",
+          "share_of_outside": 0.2616
+        },
+        "share_of_outside_to_downtown": 0.6267,
+        "share_of_outside_to_same_region": 0.1464,
+        "dest_total": 707.9936,
+        "dest_outside_share": 0.1905,
+        "leading_outside_origin": {
+          "ward_name": "Don Valley North",
+          "share_of_outside": 0.2705
+        }
+      },
+      "distance": {
+        "p25_km": 1.6582,
+        "median_km": 10.8885,
+        "p75_km": 13.405,
+        "n_home_areas": 69
+      }
+    },
+    {
+      "ward_code": "03",
+      "ward_name": "Etobicoke-Lakeshore",
+      "region": "Etobicoke York",
+      "is_priority_ward": false,
+      "population_2021": 141751,
+      "population_15plus": 106708.0,
+      "workforce": {
+        "labour_creatives": {
+          "count": 2106.4146,
+          "share_of_residents_15plus": 0.0197,
+          "share_of_city_total": 0.0461,
+          "rank_by_count": 9,
+          "rank_by_share": 9
+        },
+        "labour_cultural_workers": {
+          "count": 3616.2354,
+          "share_of_residents_15plus": 0.0339,
+          "share_of_city_total": 0.0474,
+          "rank_by_count": 9,
+          "rank_by_share": 9
+        },
+        "labour_cultural_industries": {
+          "count": 2841.0243,
+          "share_of_residents_15plus": 0.0266,
+          "share_of_city_total": 0.0468,
+          "rank_by_count": 9,
+          "rank_by_share": 9
+        },
+        "labour_independent_artists": {
+          "count": 621.2779,
+          "share_of_residents_15plus": 0.0058,
+          "share_of_city_total": 0.0356,
+          "rank_by_count": 9,
+          "rank_by_share": 10
+        },
+        "labour_arts_major": {
+          "count": 5887.0141,
+          "share_of_residents_15plus": 0.0552,
+          "share_of_city_total": 0.0472,
+          "rank_by_count": 9,
+          "rank_by_share": 9
+        }
+      },
+      "infrastructure": {
+        "n_locations": 102,
+        "locations_per_100k": 71.9572,
+        "share_of_city_locations": 0.0396,
+        "n_tac_funded": 80,
+        "tac_funded_share_of_locations": 0.7843,
+        "n_high_funding_freq": 7,
+        "n_very_high_funding_freq": 1,
+        "funding_frequency_counts": {
+          "rare": 50,
+          "low": 14,
+          "mid": 9,
+          "high": 6,
+          "very_high": 1
+        },
+        "free_programming_counts": {
+          "none": 29,
+          "rare": 33,
+          "low": 9,
+          "mid": 5,
+          "high": 3,
+          "very_high": 1
+        },
+        "n_meaningful_free_programming": 9,
+        "meaningful_free_programming_share": 0.0882,
+        "n_activity_sample_venues": 4
+      },
+      "ranks": {
+        "avg_workforce_rank": 9.0,
+        "avg_infrastructure_rank": 12.0,
+        "rank_gap": 3.0,
+        "components": {
+          "workers_count": 9.0,
+          "independent_artists_count": 9.0,
+          "worker_concentration": 9.0,
+          "locations": 7.0,
+          "locations_per_100k": 10.0,
+          "tac_funded": 8.0,
+          "free_programming_share": 23.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 2747.9841,
+        "workers_vs_trend_ratio": 1.316,
+        "residual_log_workers": 0.2745,
+        "residual_log_locations": -0.1049
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 1.9111,
+        "locations": 1.4167,
+        "locations_per_100k": 1.0201,
+        "tac_funded_locations": 1.2698,
+        "high_frequency_locations": 1.0,
+        "activity_sample_venues": 2.0
+      },
+      "activity": {
+        "origin_total": 1513.2613,
+        "within_share": 0.1131,
+        "outside_share": 0.8869,
+        "leading_outside_destination": {
+          "ward_name": "Spadina-Fort York",
+          "share_of_outside": 0.2808
+        },
+        "share_of_outside_to_downtown": 0.7871,
+        "share_of_outside_to_same_region": 0.0502,
+        "dest_total": 238.6237,
+        "dest_outside_share": 0.283,
+        "leading_outside_origin": {
+          "ward_name": "Etobicoke Centre",
+          "share_of_outside": 0.3544
+        }
+      },
+      "distance": {
+        "p25_km": 8.3977,
+        "median_km": 10.3657,
+        "p75_km": 13.8991,
+        "n_home_areas": 70
+      }
+    },
+    {
+      "ward_code": "04",
+      "ward_name": "Parkdale-High Park",
+      "region": "Toronto and East York",
+      "is_priority_ward": false,
+      "population_2021": 106750,
+      "population_15plus": 88396.8,
+      "workforce": {
+        "labour_creatives": {
+          "count": 4011.7103,
+          "share_of_residents_15plus": 0.0454,
+          "share_of_city_total": 0.0879,
+          "rank_by_count": 3,
+          "rank_by_share": 2
+        },
+        "labour_cultural_workers": {
+          "count": 6657.3406,
+          "share_of_residents_15plus": 0.0753,
+          "share_of_city_total": 0.0873,
+          "rank_by_count": 3,
+          "rank_by_share": 1
+        },
+        "labour_cultural_industries": {
+          "count": 5592.9562,
+          "share_of_residents_15plus": 0.0633,
+          "share_of_city_total": 0.0922,
+          "rank_by_count": 2,
+          "rank_by_share": 1
+        },
+        "labour_independent_artists": {
+          "count": 1875.4868,
+          "share_of_residents_15plus": 0.0212,
+          "share_of_city_total": 0.1076,
+          "rank_by_count": 3,
+          "rank_by_share": 2
+        },
+        "labour_arts_major": {
+          "count": 9514.2361,
+          "share_of_residents_15plus": 0.1076,
+          "share_of_city_total": 0.0763,
+          "rank_by_count": 3,
+          "rank_by_share": 1
+        }
+      },
+      "infrastructure": {
+        "n_locations": 162,
+        "locations_per_100k": 151.7564,
+        "share_of_city_locations": 0.0629,
+        "n_tac_funded": 136,
+        "tac_funded_share_of_locations": 0.8395,
+        "n_high_funding_freq": 7,
+        "n_very_high_funding_freq": 1,
+        "funding_frequency_counts": {
+          "rare": 76,
+          "low": 29,
+          "mid": 24,
+          "high": 6,
+          "very_high": 1
+        },
+        "free_programming_counts": {
+          "none": 34,
+          "rare": 57,
+          "low": 25,
+          "mid": 16,
+          "high": 3,
+          "very_high": 1
+        },
+        "n_meaningful_free_programming": 20,
+        "meaningful_free_programming_share": 0.1235,
+        "n_activity_sample_venues": 5
+      },
+      "ranks": {
+        "avg_workforce_rank": 2.3333,
+        "avg_infrastructure_rank": 9.0,
+        "rank_gap": 6.6667,
+        "components": {
+          "workers_count": 3.0,
+          "independent_artists_count": 3.0,
+          "worker_concentration": 1.0,
+          "locations": 6.0,
+          "locations_per_100k": 6.0,
+          "tac_funded": 6.0,
+          "free_programming_share": 18.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 4550.9484,
+        "workers_vs_trend_ratio": 1.4628,
+        "residual_log_workers": 0.3803,
+        "residual_log_locations": -0.0101
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": true,
+        "flag_residual": false,
+        "n_methods_flagging": 1
+      },
+      "ratio_to_citywide_median": {
+        "workers": 3.5182,
+        "locations": 2.25,
+        "locations_per_100k": 2.1514,
+        "tac_funded_locations": 2.1587,
+        "high_frequency_locations": 1.0,
+        "activity_sample_venues": 2.5
+      },
+      "activity": {
+        "origin_total": 4132.672,
+        "within_share": 0.2242,
+        "outside_share": 0.7758,
+        "leading_outside_destination": {
+          "ward_name": "Spadina-Fort York",
+          "share_of_outside": 0.3757
+        },
+        "share_of_outside_to_downtown": 0.8908,
+        "share_of_outside_to_same_region": 0.8908,
+        "dest_total": 1141.6519,
+        "dest_outside_share": 0.1885,
+        "leading_outside_origin": {
+          "ward_name": "Davenport",
+          "share_of_outside": 0.185
+        }
+      },
+      "distance": {
+        "p25_km": 0.3338,
+        "median_km": 5.8444,
+        "p75_km": 6.8298,
+        "n_home_areas": 26
+      }
+    },
+    {
+      "ward_code": "05",
+      "ward_name": "York South-Weston",
+      "region": "Etobicoke York",
+      "is_priority_ward": false,
+      "population_2021": 116757,
+      "population_15plus": 97190.1,
+      "workforce": {
+        "labour_creatives": {
+          "count": 887.1906,
+          "share_of_residents_15plus": 0.0091,
+          "share_of_city_total": 0.0194,
+          "rank_by_count": 17,
+          "rank_by_share": 18
+        },
+        "labour_cultural_workers": {
+          "count": 1538.2256,
+          "share_of_residents_15plus": 0.0158,
+          "share_of_city_total": 0.0202,
+          "rank_by_count": 16,
+          "rank_by_share": 17
+        },
+        "labour_cultural_industries": {
+          "count": 1390.135,
+          "share_of_residents_15plus": 0.0143,
+          "share_of_city_total": 0.0229,
+          "rank_by_count": 15,
+          "rank_by_share": 16
+        },
+        "labour_independent_artists": {
+          "count": 258.0507,
+          "share_of_residents_15plus": 0.0027,
+          "share_of_city_total": 0.0148,
+          "rank_by_count": 15,
+          "rank_by_share": 16
+        },
+        "labour_arts_major": {
+          "count": 2593.5002,
+          "share_of_residents_15plus": 0.0267,
+          "share_of_city_total": 0.0208,
+          "rank_by_count": 19,
+          "rank_by_share": 19
+        }
+      },
+      "infrastructure": {
+        "n_locations": 84,
+        "locations_per_100k": 71.9443,
+        "share_of_city_locations": 0.0326,
+        "n_tac_funded": 80,
+        "tac_funded_share_of_locations": 0.9524,
+        "n_high_funding_freq": 3,
+        "n_very_high_funding_freq": 0,
+        "funding_frequency_counts": {
+          "rare": 41,
+          "low": 18,
+          "mid": 18,
+          "high": 3,
+          "very_high": 0
+        },
+        "free_programming_counts": {
+          "none": 13,
+          "rare": 37,
+          "low": 15,
+          "mid": 14,
+          "high": 1,
+          "very_high": 0
+        },
+        "n_meaningful_free_programming": 15,
+        "meaningful_free_programming_share": 0.1786,
+        "n_activity_sample_venues": 1
+      },
+      "ranks": {
+        "avg_workforce_rank": 16.0,
+        "avg_infrastructure_rank": 9.5,
+        "rank_gap": -6.5,
+        "components": {
+          "workers_count": 16.0,
+          "independent_artists_count": 15.0,
+          "worker_concentration": 17.0,
+          "locations": 10.0,
+          "locations_per_100k": 11.0,
+          "tac_funded": 8.0,
+          "free_programming_share": 9.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 2224.9788,
+        "workers_vs_trend_ratio": 0.6913,
+        "residual_log_workers": -0.3689,
+        "residual_log_locations": 0.213
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.8129,
+        "locations": 1.1667,
+        "locations_per_100k": 1.0199,
+        "tac_funded_locations": 1.2698,
+        "high_frequency_locations": 0.4286,
+        "activity_sample_venues": 0.5
+      },
+      "activity": {
+        "origin_total": 2943.6004,
+        "within_share": 0.004,
+        "outside_share": 0.996,
+        "leading_outside_destination": {
+          "ward_name": "University-Rosedale",
+          "share_of_outside": 0.4434
+        },
+        "share_of_outside_to_downtown": 0.7701,
+        "share_of_outside_to_same_region": 0.0745,
+        "dest_total": 12.7121,
+        "dest_outside_share": 0.0678,
+        "leading_outside_origin": {
+          "ward_name": "Parkdale-High Park",
+          "share_of_outside": 1.0
+        }
+      },
+      "distance": {
+        "p25_km": 6.9142,
+        "median_km": 6.9229,
+        "p75_km": 9.156,
+        "n_home_areas": 44
+      }
+    },
+    {
+      "ward_code": "06",
+      "ward_name": "York Centre",
+      "region": "Etobicoke York",
+      "is_priority_ward": false,
+      "population_2021": 108307,
+      "population_15plus": 93992.4,
+      "workforce": {
+        "labour_creatives": {
+          "count": 967.8715,
+          "share_of_residents_15plus": 0.0103,
+          "share_of_city_total": 0.0212,
+          "rank_by_count": 15,
+          "rank_by_share": 14
+        },
+        "labour_cultural_workers": {
+          "count": 1482.7978,
+          "share_of_residents_15plus": 0.0158,
+          "share_of_city_total": 0.0194,
+          "rank_by_count": 17,
+          "rank_by_share": 18
+        },
+        "labour_cultural_industries": {
+          "count": 1116.6369,
+          "share_of_residents_15plus": 0.0119,
+          "share_of_city_total": 0.0184,
+          "rank_by_count": 19,
+          "rank_by_share": 19
+        },
+        "labour_independent_artists": {
+          "count": 238.4108,
+          "share_of_residents_15plus": 0.0025,
+          "share_of_city_total": 0.0137,
+          "rank_by_count": 16,
+          "rank_by_share": 18
+        },
+        "labour_arts_major": {
+          "count": 3222.5669,
+          "share_of_residents_15plus": 0.0343,
+          "share_of_city_total": 0.0259,
+          "rank_by_count": 16,
+          "rank_by_share": 17
+        }
+      },
+      "infrastructure": {
+        "n_locations": 56,
+        "locations_per_100k": 51.7049,
+        "share_of_city_locations": 0.0217,
+        "n_tac_funded": 50,
+        "tac_funded_share_of_locations": 0.8929,
+        "n_high_funding_freq": 2,
+        "n_very_high_funding_freq": 1,
+        "funding_frequency_counts": {
+          "rare": 26,
+          "low": 14,
+          "mid": 8,
+          "high": 1,
+          "very_high": 1
+        },
+        "free_programming_counts": {
+          "none": 12,
+          "rare": 18,
+          "low": 13,
+          "mid": 5,
+          "high": 1,
+          "very_high": 1
+        },
+        "n_meaningful_free_programming": 7,
+        "meaningful_free_programming_share": 0.125,
+        "n_activity_sample_venues": 3
+      },
+      "ranks": {
+        "avg_workforce_rank": 16.6667,
+        "avg_infrastructure_rank": 18.75,
+        "rank_gap": 2.0833,
+        "components": {
+          "workers_count": 17.0,
+          "independent_artists_count": 16.0,
+          "worker_concentration": 17.0,
+          "locations": 20.0,
+          "locations_per_100k": 20.0,
+          "tac_funded": 19.0,
+          "free_programming_share": 16.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1433.991,
+        "workers_vs_trend_ratio": 1.034,
+        "residual_log_workers": 0.0334,
+        "residual_log_locations": -0.1647
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.7836,
+        "locations": 0.7778,
+        "locations_per_100k": 0.733,
+        "tac_funded_locations": 0.7937,
+        "high_frequency_locations": 0.2857,
+        "activity_sample_venues": 1.5
+      },
+      "activity": {
+        "origin_total": 3085.8168,
+        "within_share": 0.0872,
+        "outside_share": 0.9128,
+        "leading_outside_destination": {
+          "ward_name": "Willowdale",
+          "share_of_outside": 0.4785
+        },
+        "share_of_outside_to_downtown": 0.4551,
+        "share_of_outside_to_same_region": 0.0459,
+        "dest_total": 614.4139,
+        "dest_outside_share": 0.562,
+        "leading_outside_origin": {
+          "ward_name": "Willowdale",
+          "share_of_outside": 0.144
+        }
+      },
+      "distance": {
+        "p25_km": 2.9609,
+        "median_km": 6.1027,
+        "p75_km": 9.4235,
+        "n_home_areas": 63
+      }
+    },
+    {
+      "ward_code": "07",
+      "ward_name": "Humber River-Black Creek",
+      "region": "Etobicoke York",
+      "is_priority_ward": false,
+      "population_2021": 111593,
+      "population_15plus": 89784.2,
+      "workforce": {
+        "labour_creatives": {
+          "count": 409.5545,
+          "share_of_residents_15plus": 0.0046,
+          "share_of_city_total": 0.009,
+          "rank_by_count": 24,
+          "rank_by_share": 24
+        },
+        "labour_cultural_workers": {
+          "count": 672.3661,
+          "share_of_residents_15plus": 0.0075,
+          "share_of_city_total": 0.0088,
+          "rank_by_count": 25,
+          "rank_by_share": 24
+        },
+        "labour_cultural_industries": {
+          "count": 550.183,
+          "share_of_residents_15plus": 0.0061,
+          "share_of_city_total": 0.0091,
+          "rank_by_count": 25,
+          "rank_by_share": 25
+        },
+        "labour_independent_artists": {
+          "count": 76.3937,
+          "share_of_residents_15plus": 0.0009,
+          "share_of_city_total": 0.0044,
+          "rank_by_count": 23,
+          "rank_by_share": 23
+        },
+        "labour_arts_major": {
+          "count": 1657.9847,
+          "share_of_residents_15plus": 0.0185,
+          "share_of_city_total": 0.0133,
+          "rank_by_count": 25,
+          "rank_by_share": 24
+        }
+      },
+      "infrastructure": {
+        "n_locations": 81,
+        "locations_per_100k": 72.5852,
+        "share_of_city_locations": 0.0314,
+        "n_tac_funded": 75,
+        "tac_funded_share_of_locations": 0.9259,
+        "n_high_funding_freq": 7,
+        "n_very_high_funding_freq": 2,
+        "funding_frequency_counts": {
+          "rare": 38,
+          "low": 14,
+          "mid": 16,
+          "high": 5,
+          "very_high": 2
+        },
+        "free_programming_counts": {
+          "none": 10,
+          "rare": 33,
+          "low": 13,
+          "mid": 13,
+          "high": 4,
+          "very_high": 2
+        },
+        "n_meaningful_free_programming": 19,
+        "meaningful_free_programming_share": 0.2346,
+        "n_activity_sample_venues": 2
+      },
+      "ranks": {
+        "avg_workforce_rank": 24.0,
+        "avg_infrastructure_rank": 8.75,
+        "rank_gap": -15.25,
+        "components": {
+          "workers_count": 25.0,
+          "independent_artists_count": 23.0,
+          "worker_concentration": 24.0,
+          "locations": 11.0,
+          "locations_per_100k": 9.0,
+          "tac_funded": 11.0,
+          "free_programming_share": 4.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 2138.813,
+        "workers_vs_trend_ratio": 0.3144,
+        "residual_log_workers": -1.1562,
+        "residual_log_locations": 0.6706
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.3553,
+        "locations": 1.125,
+        "locations_per_100k": 1.029,
+        "tac_funded_locations": 1.1905,
+        "high_frequency_locations": 1.0,
+        "activity_sample_venues": 1.0
+      },
+      "activity": {
+        "origin_total": 3402.4426,
+        "within_share": 0.1614,
+        "outside_share": 0.8386,
+        "leading_outside_destination": {
+          "ward_name": "Don Valley East",
+          "share_of_outside": 0.313
+        },
+        "share_of_outside_to_downtown": 0.2578,
+        "share_of_outside_to_same_region": 0.1145,
+        "dest_total": 1181.6374,
+        "dest_outside_share": 0.5353,
+        "leading_outside_origin": {
+          "ward_name": "Beaches-East York",
+          "share_of_outside": 0.2047
+        }
+      },
+      "distance": {
+        "p25_km": 7.0539,
+        "median_km": 13.9644,
+        "p75_km": 15.6468,
+        "n_home_areas": 56
+      }
+    },
+    {
+      "ward_code": "08",
+      "ward_name": "Eglinton-Lawrence",
+      "region": "Etobicoke York",
+      "is_priority_ward": true,
+      "population_2021": 115832,
+      "population_15plus": 95698.1,
+      "workforce": {
+        "labour_creatives": {
+          "count": 1374.433,
+          "share_of_residents_15plus": 0.0144,
+          "share_of_city_total": 0.0301,
+          "rank_by_count": 11,
+          "rank_by_share": 11
+        },
+        "labour_cultural_workers": {
+          "count": 2373.9591,
+          "share_of_residents_15plus": 0.0248,
+          "share_of_city_total": 0.0311,
+          "rank_by_count": 11,
+          "rank_by_share": 11
+        },
+        "labour_cultural_industries": {
+          "count": 1964.0794,
+          "share_of_residents_15plus": 0.0205,
+          "share_of_city_total": 0.0324,
+          "rank_by_count": 10,
+          "rank_by_share": 10
+        },
+        "labour_independent_artists": {
+          "count": 589.7278,
+          "share_of_residents_15plus": 0.0062,
+          "share_of_city_total": 0.0338,
+          "rank_by_count": 10,
+          "rank_by_share": 9
+        },
+        "labour_arts_major": {
+          "count": 4662.8804,
+          "share_of_residents_15plus": 0.0487,
+          "share_of_city_total": 0.0374,
+          "rank_by_count": 11,
+          "rank_by_share": 12
+        }
+      },
+      "infrastructure": {
+        "n_locations": 70,
+        "locations_per_100k": 60.4324,
+        "share_of_city_locations": 0.0272,
+        "n_tac_funded": 58,
+        "tac_funded_share_of_locations": 0.8286,
+        "n_high_funding_freq": 5,
+        "n_very_high_funding_freq": 1,
+        "funding_frequency_counts": {
+          "rare": 24,
+          "low": 20,
+          "mid": 9,
+          "high": 4,
+          "very_high": 1
+        },
+        "free_programming_counts": {
+          "none": 14,
+          "rare": 17,
+          "low": 18,
+          "mid": 7,
+          "high": 2,
+          "very_high": 0
+        },
+        "n_meaningful_free_programming": 9,
+        "meaningful_free_programming_share": 0.1286,
+        "n_activity_sample_venues": 1
+      },
+      "ranks": {
+        "avg_workforce_rank": 10.6667,
+        "avg_infrastructure_rank": 15.25,
+        "rank_gap": 4.5833,
+        "components": {
+          "workers_count": 11.0,
+          "independent_artists_count": 10.0,
+          "worker_concentration": 11.0,
+          "locations": 14.0,
+          "locations_per_100k": 16.0,
+          "tac_funded": 16.0,
+          "free_programming_share": 15.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1825.6126,
+        "workers_vs_trend_ratio": 1.3004,
+        "residual_log_workers": 0.2625,
+        "residual_log_locations": -0.2258
+      },
+      "selection": {
+        "n_comparisons_flagged": 12,
+        "n_comparisons": 12,
+        "flag_quadrant": true,
+        "flag_rank_gap": true,
+        "flag_residual": false,
+        "n_methods_flagging": 2
+      },
+      "ratio_to_citywide_median": {
+        "workers": 1.2546,
+        "locations": 0.9722,
+        "locations_per_100k": 0.8567,
+        "tac_funded_locations": 0.9206,
+        "high_frequency_locations": 0.7143,
+        "activity_sample_venues": 0.5
+      },
+      "activity": {
+        "origin_total": 2589.8666,
+        "within_share": 0.2586,
+        "outside_share": 0.7414,
+        "leading_outside_destination": {
+          "ward_name": "Willowdale",
+          "share_of_outside": 0.4203
+        },
+        "share_of_outside_to_downtown": 0.5312,
+        "share_of_outside_to_same_region": 0.027,
+        "dest_total": 1229.862,
+        "dest_outside_share": 0.4555,
+        "leading_outside_origin": {
+          "ward_name": "York South-Weston",
+          "share_of_outside": 0.1874
+        }
+      },
+      "distance": {
+        "p25_km": 2.2577,
+        "median_km": 5.4101,
+        "p75_km": 7.4586,
+        "n_home_areas": 42
+      }
+    },
+    {
+      "ward_code": "09",
+      "ward_name": "Davenport",
+      "region": "Toronto and East York",
+      "is_priority_ward": false,
+      "population_2021": 105946,
+      "population_15plus": 92139.0,
+      "workforce": {
+        "labour_creatives": {
+          "count": 4276.4655,
+          "share_of_residents_15plus": 0.0464,
+          "share_of_city_total": 0.0937,
+          "rank_by_count": 2,
+          "rank_by_share": 1
+        },
+        "labour_cultural_workers": {
+          "count": 6916.8753,
+          "share_of_residents_15plus": 0.0751,
+          "share_of_city_total": 0.0907,
+          "rank_by_count": 2,
+          "rank_by_share": 2
+        },
+        "labour_cultural_industries": {
+          "count": 5213.862,
+          "share_of_residents_15plus": 0.0566,
+          "share_of_city_total": 0.0859,
+          "rank_by_count": 3,
+          "rank_by_share": 2
+        },
+        "labour_independent_artists": {
+          "count": 1657.7922,
+          "share_of_residents_15plus": 0.018,
+          "share_of_city_total": 0.0951,
+          "rank_by_count": 5,
+          "rank_by_share": 4
+        },
+        "labour_arts_major": {
+          "count": 8940.9061,
+          "share_of_residents_15plus": 0.097,
+          "share_of_city_total": 0.0717,
+          "rank_by_count": 4,
+          "rank_by_share": 3
+        }
+      },
+      "infrastructure": {
+        "n_locations": 196,
+        "locations_per_100k": 184.9999,
+        "share_of_city_locations": 0.0761,
+        "n_tac_funded": 179,
+        "tac_funded_share_of_locations": 0.9133,
+        "n_high_funding_freq": 25,
+        "n_very_high_funding_freq": 8,
+        "funding_frequency_counts": {
+          "rare": 94,
+          "low": 35,
+          "mid": 25,
+          "high": 17,
+          "very_high": 8
+        },
+        "free_programming_counts": {
+          "none": 41,
+          "rare": 78,
+          "low": 23,
+          "mid": 18,
+          "high": 14,
+          "very_high": 5
+        },
+        "n_meaningful_free_programming": 37,
+        "meaningful_free_programming_share": 0.1888,
+        "n_activity_sample_venues": 9
+      },
+      "ranks": {
+        "avg_workforce_rank": 2.6667,
+        "avg_infrastructure_rank": 4.75,
+        "rank_gap": 2.0833,
+        "components": {
+          "workers_count": 2.0,
+          "independent_artists_count": 5.0,
+          "worker_concentration": 1.0,
+          "locations": 4.0,
+          "locations_per_100k": 3.0,
+          "tac_funded": 4.0,
+          "free_programming_share": 8.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 5604.2679,
+        "workers_vs_trend_ratio": 1.2342,
+        "residual_log_workers": 0.2104,
+        "residual_log_locations": 0.1566
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 3.6553,
+        "locations": 2.7222,
+        "locations_per_100k": 2.6226,
+        "tac_funded_locations": 2.8413,
+        "high_frequency_locations": 3.5714,
+        "activity_sample_venues": 4.5
+      },
+      "activity": {
+        "origin_total": 2862.1876,
+        "within_share": 0.248,
+        "outside_share": 0.752,
+        "leading_outside_destination": {
+          "ward_name": "Spadina-Fort York",
+          "share_of_outside": 0.3807
+        },
+        "share_of_outside_to_downtown": 0.8405,
+        "share_of_outside_to_same_region": 0.8405,
+        "dest_total": 2965.7822,
+        "dest_outside_share": 0.7606,
+        "leading_outside_origin": {
+          "ward_name": "Spadina-Fort York",
+          "share_of_outside": 0.2881
+        }
+      },
+      "distance": {
+        "p25_km": 2.1976,
+        "median_km": 4.1748,
+        "p75_km": 5.8178,
+        "n_home_areas": 22
+      }
+    },
+    {
+      "ward_code": "10",
+      "ward_name": "Spadina-Fort York",
+      "region": "Toronto and East York",
+      "is_priority_ward": false,
+      "population_2021": 136213,
+      "population_15plus": 130271.7,
+      "workforce": {
+        "labour_creatives": {
+          "count": 5176.593,
+          "share_of_residents_15plus": 0.0397,
+          "share_of_city_total": 0.1134,
+          "rank_by_count": 1,
+          "rank_by_share": 5
+        },
+        "labour_cultural_workers": {
+          "count": 8080.1209,
+          "share_of_residents_15plus": 0.062,
+          "share_of_city_total": 0.106,
+          "rank_by_count": 1,
+          "rank_by_share": 5
+        },
+        "labour_cultural_industries": {
+          "count": 5964.6176,
+          "share_of_residents_15plus": 0.0458,
+          "share_of_city_total": 0.0983,
+          "rank_by_count": 1,
+          "rank_by_share": 5
+        },
+        "labour_independent_artists": {
+          "count": 1915.0517,
+          "share_of_residents_15plus": 0.0147,
+          "share_of_city_total": 0.1098,
+          "rank_by_count": 2,
+          "rank_by_share": 5
+        },
+        "labour_arts_major": {
+          "count": 9634.4195,
+          "share_of_residents_15plus": 0.074,
+          "share_of_city_total": 0.0773,
+          "rank_by_count": 1,
+          "rank_by_share": 7
+        }
+      },
+      "infrastructure": {
+        "n_locations": 279,
+        "locations_per_100k": 204.8263,
+        "share_of_city_locations": 0.1083,
+        "n_tac_funded": 223,
+        "tac_funded_share_of_locations": 0.7993,
+        "n_high_funding_freq": 43,
+        "n_very_high_funding_freq": 24,
+        "funding_frequency_counts": {
+          "rare": 98,
+          "low": 40,
+          "mid": 42,
+          "high": 19,
+          "very_high": 24
+        },
+        "free_programming_counts": {
+          "none": 39,
+          "rare": 84,
+          "low": 28,
+          "mid": 38,
+          "high": 17,
+          "very_high": 17
+        },
+        "n_meaningful_free_programming": 72,
+        "meaningful_free_programming_share": 0.2581,
+        "n_activity_sample_venues": 23
+      },
+      "ranks": {
+        "avg_workforce_rank": 2.6667,
+        "avg_infrastructure_rank": 1.75,
+        "rank_gap": -0.9167,
+        "components": {
+          "workers_count": 1.0,
+          "independent_artists_count": 2.0,
+          "worker_concentration": 5.0,
+          "locations": 2.0,
+          "locations_per_100k": 2.0,
+          "tac_funded": 2.0,
+          "free_programming_share": 1.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 8247.177,
+        "workers_vs_trend_ratio": 0.9797,
+        "residual_log_workers": -0.0205,
+        "residual_log_locations": 0.4154
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 4.2701,
+        "locations": 3.875,
+        "locations_per_100k": 2.9037,
+        "tac_funded_locations": 3.5397,
+        "high_frequency_locations": 6.1429,
+        "activity_sample_venues": 11.5
+      },
+      "activity": {
+        "origin_total": 13870.106,
+        "within_share": 0.5161,
+        "outside_share": 0.4839,
+        "leading_outside_destination": {
+          "ward_name": "Toronto Centre",
+          "share_of_outside": 0.6551
+        },
+        "share_of_outside_to_downtown": 0.9251,
+        "share_of_outside_to_same_region": 0.9251,
+        "dest_total": 18594.3227,
+        "dest_outside_share": 0.615,
+        "leading_outside_origin": {
+          "ward_name": "Toronto Centre",
+          "share_of_outside": 0.1907
+        }
+      },
+      "distance": {
+        "p25_km": 0.3013,
+        "median_km": 0.3997,
+        "p75_km": 1.2493,
+        "n_home_areas": 30
+      }
+    },
+    {
+      "ward_code": "11",
+      "ward_name": "University-Rosedale",
+      "region": "Toronto and East York",
+      "is_priority_ward": false,
+      "population_2021": 106216,
+      "population_15plus": 91192.9,
+      "workforce": {
+        "labour_creatives": {
+          "count": 3915.5304,
+          "share_of_residents_15plus": 0.0429,
+          "share_of_city_total": 0.0858,
+          "rank_by_count": 4,
+          "rank_by_share": 3
+        },
+        "labour_cultural_workers": {
+          "count": 6277.3675,
+          "share_of_residents_15plus": 0.0688,
+          "share_of_city_total": 0.0823,
+          "rank_by_count": 4,
+          "rank_by_share": 3
+        },
+        "labour_cultural_industries": {
+          "count": 4930.4743,
+          "share_of_residents_15plus": 0.0541,
+          "share_of_city_total": 0.0813,
+          "rank_by_count": 5,
+          "rank_by_share": 4
+        },
+        "labour_independent_artists": {
+          "count": 1946.2885,
+          "share_of_residents_15plus": 0.0213,
+          "share_of_city_total": 0.1116,
+          "rank_by_count": 1,
+          "rank_by_share": 1
+        },
+        "labour_arts_major": {
+          "count": 9583.5835,
+          "share_of_residents_15plus": 0.1051,
+          "share_of_city_total": 0.0769,
+          "rank_by_count": 2,
+          "rank_by_share": 2
+        }
+      },
+      "infrastructure": {
+        "n_locations": 284,
+        "locations_per_100k": 267.3797,
+        "share_of_city_locations": 0.1102,
+        "n_tac_funded": 251,
+        "tac_funded_share_of_locations": 0.8838,
+        "n_high_funding_freq": 45,
+        "n_very_high_funding_freq": 22,
+        "funding_frequency_counts": {
+          "rare": 114,
+          "low": 54,
+          "mid": 38,
+          "high": 23,
+          "very_high": 22
+        },
+        "free_programming_counts": {
+          "none": 59,
+          "rare": 87,
+          "low": 48,
+          "mid": 28,
+          "high": 16,
+          "very_high": 13
+        },
+        "n_meaningful_free_programming": 57,
+        "meaningful_free_programming_share": 0.2007,
+        "n_activity_sample_venues": 16
+      },
+      "ranks": {
+        "avg_workforce_rank": 2.6667,
+        "avg_infrastructure_rank": 2.5,
+        "rank_gap": -0.1667,
+        "components": {
+          "workers_count": 4.0,
+          "independent_artists_count": 1.0,
+          "worker_concentration": 3.0,
+          "locations": 1.0,
+          "locations_per_100k": 1.0,
+          "tac_funded": 1.0,
+          "free_programming_share": 7.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 8409.1442,
+        "workers_vs_trend_ratio": 0.7465,
+        "residual_log_workers": -0.2923,
+        "residual_log_locations": 0.5837
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 3.3174,
+        "locations": 3.9444,
+        "locations_per_100k": 3.7905,
+        "tac_funded_locations": 3.9841,
+        "high_frequency_locations": 6.4286,
+        "activity_sample_venues": 8.0
+      },
+      "activity": {
+        "origin_total": 10491.2966,
+        "within_share": 0.6844,
+        "outside_share": 0.3156,
+        "leading_outside_destination": {
+          "ward_name": "Spadina-Fort York",
+          "share_of_outside": 0.4444
+        },
+        "share_of_outside_to_downtown": 0.8435,
+        "share_of_outside_to_same_region": 0.8435,
+        "dest_total": 21758.4419,
+        "dest_outside_share": 0.67,
+        "leading_outside_origin": {
+          "ward_name": "Toronto Centre",
+          "share_of_outside": 0.1796
+        }
+      },
+      "distance": {
+        "p25_km": 0.3307,
+        "median_km": 0.4846,
+        "p75_km": 1.6022,
+        "n_home_areas": 25
+      }
+    },
+    {
+      "ward_code": "12",
+      "ward_name": "Toronto-St. Paul's",
+      "region": "Toronto and East York",
+      "is_priority_ward": false,
+      "population_2021": 116953,
+      "population_15plus": 100326.1,
+      "workforce": {
+        "labour_creatives": {
+          "count": 3118.7037,
+          "share_of_residents_15plus": 0.0311,
+          "share_of_city_total": 0.0683,
+          "rank_by_count": 7,
+          "rank_by_share": 7
+        },
+        "labour_cultural_workers": {
+          "count": 5134.5681,
+          "share_of_residents_15plus": 0.0512,
+          "share_of_city_total": 0.0673,
+          "rank_by_count": 7,
+          "rank_by_share": 7
+        },
+        "labour_cultural_industries": {
+          "count": 3887.9128,
+          "share_of_residents_15plus": 0.0388,
+          "share_of_city_total": 0.0641,
+          "rank_by_count": 8,
+          "rank_by_share": 7
+        },
+        "labour_independent_artists": {
+          "count": 1436.5824,
+          "share_of_residents_15plus": 0.0143,
+          "share_of_city_total": 0.0824,
+          "rank_by_count": 6,
+          "rank_by_share": 6
+        },
+        "labour_arts_major": {
+          "count": 8428.008,
+          "share_of_residents_15plus": 0.084,
+          "share_of_city_total": 0.0676,
+          "rank_by_count": 5,
+          "rank_by_share": 5
+        }
+      },
+      "infrastructure": {
+        "n_locations": 96,
+        "locations_per_100k": 82.0843,
+        "share_of_city_locations": 0.0373,
+        "n_tac_funded": 81,
+        "tac_funded_share_of_locations": 0.8438,
+        "n_high_funding_freq": 13,
+        "n_very_high_funding_freq": 4,
+        "funding_frequency_counts": {
+          "rare": 36,
+          "low": 18,
+          "mid": 14,
+          "high": 9,
+          "very_high": 4
+        },
+        "free_programming_counts": {
+          "none": 25,
+          "rare": 26,
+          "low": 13,
+          "mid": 9,
+          "high": 6,
+          "very_high": 2
+        },
+        "n_meaningful_free_programming": 17,
+        "meaningful_free_programming_share": 0.1771,
+        "n_activity_sample_venues": 3
+      },
+      "ranks": {
+        "avg_workforce_rank": 6.6667,
+        "avg_infrastructure_rank": 8.0,
+        "rank_gap": 1.3333,
+        "components": {
+          "workers_count": 7.0,
+          "independent_artists_count": 6.0,
+          "worker_concentration": 7.0,
+          "locations": 8.0,
+          "locations_per_100k": 7.0,
+          "tac_funded": 7.0,
+          "free_programming_share": 10.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 2572.5596,
+        "workers_vs_trend_ratio": 1.9959,
+        "residual_log_workers": 0.6909,
+        "residual_log_locations": -0.3741
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": true,
+        "n_methods_flagging": 1
+      },
+      "ratio_to_citywide_median": {
+        "workers": 2.7134,
+        "locations": 1.3333,
+        "locations_per_100k": 1.1637,
+        "tac_funded_locations": 1.2857,
+        "high_frequency_locations": 1.8571,
+        "activity_sample_venues": 1.5
+      },
+      "activity": {
+        "origin_total": 2412.5085,
+        "within_share": 0.1175,
+        "outside_share": 0.8825,
+        "leading_outside_destination": {
+          "ward_name": "University-Rosedale",
+          "share_of_outside": 0.3898
+        },
+        "share_of_outside_to_downtown": 0.7498,
+        "share_of_outside_to_same_region": 0.7498,
+        "dest_total": 1175.8252,
+        "dest_outside_share": 0.7589,
+        "leading_outside_origin": {
+          "ward_name": "Toronto Centre",
+          "share_of_outside": 0.3325
+        }
+      },
+      "distance": {
+        "p25_km": 2.7109,
+        "median_km": 4.2956,
+        "p75_km": 6.59,
+        "n_home_areas": 25
+      }
+    },
+    {
+      "ward_code": "13",
+      "ward_name": "Toronto Centre",
+      "region": "Toronto and East York",
+      "is_priority_ward": false,
+      "population_2021": 119901,
+      "population_15plus": 107399.8,
+      "workforce": {
+        "labour_creatives": {
+          "count": 3449.8344,
+          "share_of_residents_15plus": 0.0321,
+          "share_of_city_total": 0.0756,
+          "rank_by_count": 6,
+          "rank_by_share": 6
+        },
+        "labour_cultural_workers": {
+          "count": 5629.0144,
+          "share_of_residents_15plus": 0.0524,
+          "share_of_city_total": 0.0738,
+          "rank_by_count": 6,
+          "rank_by_share": 6
+        },
+        "labour_cultural_industries": {
+          "count": 4149.0745,
+          "share_of_residents_15plus": 0.0386,
+          "share_of_city_total": 0.0684,
+          "rank_by_count": 6,
+          "rank_by_share": 8
+        },
+        "labour_independent_artists": {
+          "count": 1324.8927,
+          "share_of_residents_15plus": 0.0123,
+          "share_of_city_total": 0.076,
+          "rank_by_count": 7,
+          "rank_by_share": 8
+        },
+        "labour_arts_major": {
+          "count": 8292.0117,
+          "share_of_residents_15plus": 0.0772,
+          "share_of_city_total": 0.0665,
+          "rank_by_count": 6,
+          "rank_by_share": 6
+        }
+      },
+      "infrastructure": {
+        "n_locations": 214,
+        "locations_per_100k": 178.4806,
+        "share_of_city_locations": 0.0831,
+        "n_tac_funded": 201,
+        "tac_funded_share_of_locations": 0.9393,
+        "n_high_funding_freq": 35,
+        "n_very_high_funding_freq": 17,
+        "funding_frequency_counts": {
+          "rare": 78,
+          "low": 47,
+          "mid": 41,
+          "high": 18,
+          "very_high": 17
+        },
+        "free_programming_counts": {
+          "none": 32,
+          "rare": 73,
+          "low": 43,
+          "mid": 32,
+          "high": 13,
+          "very_high": 8
+        },
+        "n_meaningful_free_programming": 53,
+        "meaningful_free_programming_share": 0.2477,
+        "n_activity_sample_venues": 12
+      },
+      "ranks": {
+        "avg_workforce_rank": 6.3333,
+        "avg_infrastructure_rank": 3.0,
+        "rank_gap": -3.3333,
+        "components": {
+          "workers_count": 6.0,
+          "independent_artists_count": 7.0,
+          "worker_concentration": 6.0,
+          "locations": 3.0,
+          "locations_per_100k": 4.0,
+          "tac_funded": 3.0,
+          "free_programming_share": 2.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 6169.4416,
+        "workers_vs_trend_ratio": 0.9124,
+        "residual_log_workers": -0.0917,
+        "residual_log_locations": 0.3669
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 2.9747,
+        "locations": 2.9722,
+        "locations_per_100k": 2.5302,
+        "tac_funded_locations": 3.1905,
+        "high_frequency_locations": 5.0,
+        "activity_sample_venues": 6.0
+      },
+      "activity": {
+        "origin_total": 12493.9309,
+        "within_share": 0.5349,
+        "outside_share": 0.4651,
+        "leading_outside_destination": {
+          "ward_name": "University-Rosedale",
+          "share_of_outside": 0.4505
+        },
+        "share_of_outside_to_downtown": 0.9156,
+        "share_of_outside_to_same_region": 0.9156,
+        "dest_total": 17351.9725,
+        "dest_outside_share": 0.6148,
+        "leading_outside_origin": {
+          "ward_name": "Spadina-Fort York",
+          "share_of_outside": 0.4121
+        }
+      },
+      "distance": {
+        "p25_km": 0.3361,
+        "median_km": 0.9632,
+        "p75_km": 1.8125,
+        "n_home_areas": 10
+      }
+    },
+    {
+      "ward_code": "14",
+      "ward_name": "Toronto-Danforth",
+      "region": "Toronto and East York",
+      "is_priority_ward": false,
+      "population_2021": 105472,
+      "population_15plus": 89241.1,
+      "workforce": {
+        "labour_creatives": {
+          "count": 3593.1299,
+          "share_of_residents_15plus": 0.0403,
+          "share_of_city_total": 0.0787,
+          "rank_by_count": 5,
+          "rank_by_share": 4
+        },
+        "labour_cultural_workers": {
+          "count": 6015.2861,
+          "share_of_residents_15plus": 0.0674,
+          "share_of_city_total": 0.0789,
+          "rank_by_count": 5,
+          "rank_by_share": 4
+        },
+        "labour_cultural_industries": {
+          "count": 4995.5313,
+          "share_of_residents_15plus": 0.056,
+          "share_of_city_total": 0.0823,
+          "rank_by_count": 4,
+          "rank_by_share": 3
+        },
+        "labour_independent_artists": {
+          "count": 1675.4425,
+          "share_of_residents_15plus": 0.0188,
+          "share_of_city_total": 0.0961,
+          "rank_by_count": 4,
+          "rank_by_share": 3
+        },
+        "labour_arts_major": {
+          "count": 8118.324,
+          "share_of_residents_15plus": 0.091,
+          "share_of_city_total": 0.0651,
+          "rank_by_count": 7,
+          "rank_by_share": 4
+        }
+      },
+      "infrastructure": {
+        "n_locations": 171,
+        "locations_per_100k": 162.1283,
+        "share_of_city_locations": 0.0664,
+        "n_tac_funded": 140,
+        "tac_funded_share_of_locations": 0.8187,
+        "n_high_funding_freq": 8,
+        "n_very_high_funding_freq": 3,
+        "funding_frequency_counts": {
+          "rare": 65,
+          "low": 47,
+          "mid": 20,
+          "high": 5,
+          "very_high": 3
+        },
+        "free_programming_counts": {
+          "none": 43,
+          "rare": 57,
+          "low": 26,
+          "mid": 10,
+          "high": 3,
+          "very_high": 1
+        },
+        "n_meaningful_free_programming": 14,
+        "meaningful_free_programming_share": 0.0819,
+        "n_activity_sample_venues": 3
+      },
+      "ranks": {
+        "avg_workforce_rank": 4.3333,
+        "avg_infrastructure_rank": 9.75,
+        "rank_gap": 5.4167,
+        "components": {
+          "workers_count": 5.0,
+          "independent_artists_count": 4.0,
+          "worker_concentration": 4.0,
+          "locations": 5.0,
+          "locations_per_100k": 5.0,
+          "tac_funded": 5.0,
+          "free_programming_share": 24.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 4827.8285,
+        "workers_vs_trend_ratio": 1.246,
+        "residual_log_workers": 0.2199,
+        "residual_log_locations": 0.1042
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": true,
+        "flag_residual": false,
+        "n_methods_flagging": 1
+      },
+      "ratio_to_citywide_median": {
+        "workers": 3.1789,
+        "locations": 2.375,
+        "locations_per_100k": 2.2984,
+        "tac_funded_locations": 2.2222,
+        "high_frequency_locations": 1.1429,
+        "activity_sample_venues": 1.5
+      },
+      "activity": {
+        "origin_total": 3163.5498,
+        "within_share": 0.0793,
+        "outside_share": 0.9207,
+        "leading_outside_destination": {
+          "ward_name": "Toronto Centre",
+          "share_of_outside": 0.2297
+        },
+        "share_of_outside_to_downtown": 0.9083,
+        "share_of_outside_to_same_region": 0.9083,
+        "dest_total": 636.1137,
+        "dest_outside_share": 0.6056,
+        "leading_outside_origin": {
+          "ward_name": "Toronto Centre",
+          "share_of_outside": 0.1971
+        }
+      },
+      "distance": {
+        "p25_km": 1.2902,
+        "median_km": 3.6628,
+        "p75_km": 5.3163,
+        "n_home_areas": 32
+      }
+    },
+    {
+      "ward_code": "15",
+      "ward_name": "Don Valley West",
+      "region": "North York",
+      "is_priority_ward": true,
+      "population_2021": 101959,
+      "population_15plus": 82456.8,
+      "workforce": {
+        "labour_creatives": {
+          "count": 1341.5821,
+          "share_of_residents_15plus": 0.0163,
+          "share_of_city_total": 0.0294,
+          "rank_by_count": 12,
+          "rank_by_share": 10
+        },
+        "labour_cultural_workers": {
+          "count": 2397.864,
+          "share_of_residents_15plus": 0.0291,
+          "share_of_city_total": 0.0314,
+          "rank_by_count": 10,
+          "rank_by_share": 10
+        },
+        "labour_cultural_industries": {
+          "count": 1563.3126,
+          "share_of_residents_15plus": 0.019,
+          "share_of_city_total": 0.0258,
+          "rank_by_count": 12,
+          "rank_by_share": 11
+        },
+        "labour_independent_artists": {
+          "count": 413.0216,
+          "share_of_residents_15plus": 0.005,
+          "share_of_city_total": 0.0237,
+          "rank_by_count": 11,
+          "rank_by_share": 11
+        },
+        "labour_arts_major": {
+          "count": 4530.9362,
+          "share_of_residents_15plus": 0.0549,
+          "share_of_city_total": 0.0364,
+          "rank_by_count": 12,
+          "rank_by_share": 10
+        }
+      },
+      "infrastructure": {
+        "n_locations": 72,
+        "locations_per_100k": 70.6166,
+        "share_of_city_locations": 0.028,
+        "n_tac_funded": 63,
+        "tac_funded_share_of_locations": 0.875,
+        "n_high_funding_freq": 2,
+        "n_very_high_funding_freq": 0,
+        "funding_frequency_counts": {
+          "rare": 37,
+          "low": 13,
+          "mid": 11,
+          "high": 2,
+          "very_high": 0
+        },
+        "free_programming_counts": {
+          "none": 21,
+          "rare": 25,
+          "low": 8,
+          "mid": 8,
+          "high": 1,
+          "very_high": 0
+        },
+        "n_meaningful_free_programming": 9,
+        "meaningful_free_programming_share": 0.125,
+        "n_activity_sample_venues": 2
+      },
+      "ranks": {
+        "avg_workforce_rank": 10.3333,
+        "avg_infrastructure_rank": 13.5,
+        "rank_gap": 3.1667,
+        "components": {
+          "workers_count": 10.0,
+          "independent_artists_count": 11.0,
+          "worker_concentration": 10.0,
+          "locations": 13.0,
+          "locations_per_100k": 12.0,
+          "tac_funded": 13.0,
+          "free_programming_share": 16.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1882.2226,
+        "workers_vs_trend_ratio": 1.274,
+        "residual_log_workers": 0.242,
+        "residual_log_locations": -0.204
+      },
+      "selection": {
+        "n_comparisons_flagged": 9,
+        "n_comparisons": 12,
+        "flag_quadrant": true,
+        "flag_rank_gap": true,
+        "flag_residual": false,
+        "n_methods_flagging": 2
+      },
+      "ratio_to_citywide_median": {
+        "workers": 1.2672,
+        "locations": 1.0,
+        "locations_per_100k": 1.0011,
+        "tac_funded_locations": 1.0,
+        "high_frequency_locations": 0.2857,
+        "activity_sample_venues": 1.0
+      },
+      "activity": {
+        "origin_total": 2787.1052,
+        "within_share": 0.002,
+        "outside_share": 0.998,
+        "leading_outside_destination": {
+          "ward_name": "Willowdale",
+          "share_of_outside": 0.5417
+        },
+        "share_of_outside_to_downtown": 0.3834,
+        "share_of_outside_to_same_region": 0.5591,
+        "dest_total": 37.9942,
+        "dest_outside_share": 0.8524,
+        "leading_outside_origin": {
+          "ward_name": "Scarborough-Agincourt",
+          "share_of_outside": 0.152
+        }
+      },
+      "distance": {
+        "p25_km": 1.8889,
+        "median_km": 4.4663,
+        "p75_km": 7.8531,
+        "n_home_areas": 54
+      }
+    },
+    {
+      "ward_code": "16",
+      "ward_name": "Don Valley East",
+      "region": "North York",
+      "is_priority_ward": false,
+      "population_2021": 95039,
+      "population_15plus": 80725.5,
+      "workforce": {
+        "labour_creatives": {
+          "count": 803.6536,
+          "share_of_residents_15plus": 0.01,
+          "share_of_city_total": 0.0176,
+          "rank_by_count": 18,
+          "rank_by_share": 16
+        },
+        "labour_cultural_workers": {
+          "count": 1420.3867,
+          "share_of_residents_15plus": 0.0176,
+          "share_of_city_total": 0.0186,
+          "rank_by_count": 18,
+          "rank_by_share": 16
+        },
+        "labour_cultural_industries": {
+          "count": 1180.7692,
+          "share_of_residents_15plus": 0.0146,
+          "share_of_city_total": 0.0195,
+          "rank_by_count": 17,
+          "rank_by_share": 14
+        },
+        "labour_independent_artists": {
+          "count": 215.6891,
+          "share_of_residents_15plus": 0.0027,
+          "share_of_city_total": 0.0124,
+          "rank_by_count": 18,
+          "rank_by_share": 15
+        },
+        "labour_arts_major": {
+          "count": 3076.5341,
+          "share_of_residents_15plus": 0.0381,
+          "share_of_city_total": 0.0247,
+          "rank_by_count": 17,
+          "rank_by_share": 15
+        }
+      },
+      "infrastructure": {
+        "n_locations": 57,
+        "locations_per_100k": 59.9754,
+        "share_of_city_locations": 0.0221,
+        "n_tac_funded": 53,
+        "tac_funded_share_of_locations": 0.9298,
+        "n_high_funding_freq": 4,
+        "n_very_high_funding_freq": 2,
+        "funding_frequency_counts": {
+          "rare": 28,
+          "low": 15,
+          "mid": 6,
+          "high": 2,
+          "very_high": 2
+        },
+        "free_programming_counts": {
+          "none": 18,
+          "rare": 22,
+          "low": 6,
+          "mid": 5,
+          "high": 1,
+          "very_high": 1
+        },
+        "n_meaningful_free_programming": 7,
+        "meaningful_free_programming_share": 0.1228,
+        "n_activity_sample_venues": 1
+      },
+      "ranks": {
+        "avg_workforce_rank": 17.0,
+        "avg_infrastructure_rank": 18.25,
+        "rank_gap": 1.25,
+        "components": {
+          "workers_count": 18.0,
+          "independent_artists_count": 18.0,
+          "worker_concentration": 15.0,
+          "locations": 19.0,
+          "locations_per_100k": 17.0,
+          "tac_funded": 18.0,
+          "free_programming_share": 19.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1461.6747,
+        "workers_vs_trend_ratio": 0.9718,
+        "residual_log_workers": -0.0286,
+        "residual_log_locations": -0.1216
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.7506,
+        "locations": 0.7917,
+        "locations_per_100k": 0.8502,
+        "tac_funded_locations": 0.8413,
+        "high_frequency_locations": 0.5714,
+        "activity_sample_venues": 0.5
+      },
+      "activity": {
+        "origin_total": 2135.2371,
+        "within_share": 0.0829,
+        "outside_share": 0.9171,
+        "leading_outside_destination": {
+          "ward_name": "Spadina-Fort York",
+          "share_of_outside": 0.2751
+        },
+        "share_of_outside_to_downtown": 0.6206,
+        "share_of_outside_to_same_region": 0.3305,
+        "dest_total": 1617.8632,
+        "dest_outside_share": 0.8906,
+        "leading_outside_origin": {
+          "ward_name": "Humber River-Black Creek",
+          "share_of_outside": 0.6198
+        }
+      },
+      "distance": {
+        "p25_km": 6.0629,
+        "median_km": 8.6822,
+        "p75_km": 11.3099,
+        "n_home_areas": 44
+      }
+    },
+    {
+      "ward_code": "17",
+      "ward_name": "Don Valley North",
+      "region": "North York",
+      "is_priority_ward": true,
+      "population_2021": 113663,
+      "population_15plus": 98285.9,
+      "workforce": {
+        "labour_creatives": {
+          "count": 1098.6274,
+          "share_of_residents_15plus": 0.0112,
+          "share_of_city_total": 0.0241,
+          "rank_by_count": 13,
+          "rank_by_share": 13
+        },
+        "labour_cultural_workers": {
+          "count": 1892.2749,
+          "share_of_residents_15plus": 0.0193,
+          "share_of_city_total": 0.0248,
+          "rank_by_count": 13,
+          "rank_by_share": 14
+        },
+        "labour_cultural_industries": {
+          "count": 1228.3128,
+          "share_of_residents_15plus": 0.0125,
+          "share_of_city_total": 0.0202,
+          "rank_by_count": 16,
+          "rank_by_share": 18
+        },
+        "labour_independent_artists": {
+          "count": 194.4969,
+          "share_of_residents_15plus": 0.002,
+          "share_of_city_total": 0.0112,
+          "rank_by_count": 19,
+          "rank_by_share": 19
+        },
+        "labour_arts_major": {
+          "count": 4468.4299,
+          "share_of_residents_15plus": 0.0455,
+          "share_of_city_total": 0.0359,
+          "rank_by_count": 13,
+          "rank_by_share": 13
+        }
+      },
+      "infrastructure": {
+        "n_locations": 42,
+        "locations_per_100k": 36.9513,
+        "share_of_city_locations": 0.0163,
+        "n_tac_funded": 33,
+        "tac_funded_share_of_locations": 0.7857,
+        "n_high_funding_freq": 3,
+        "n_very_high_funding_freq": 1,
+        "funding_frequency_counts": {
+          "rare": 17,
+          "low": 6,
+          "mid": 7,
+          "high": 2,
+          "very_high": 1
+        },
+        "free_programming_counts": {
+          "none": 10,
+          "rare": 14,
+          "low": 2,
+          "mid": 5,
+          "high": 2,
+          "very_high": 0
+        },
+        "n_meaningful_free_programming": 7,
+        "meaningful_free_programming_share": 0.1667,
+        "n_activity_sample_venues": 1
+      },
+      "ranks": {
+        "avg_workforce_rank": 15.3333,
+        "avg_infrastructure_rank": 21.0,
+        "rank_gap": 5.6667,
+        "components": {
+          "workers_count": 13.0,
+          "independent_artists_count": 19.0,
+          "worker_concentration": 14.0,
+          "locations": 24.0,
+          "locations_per_100k": 24.0,
+          "tac_funded": 24.0,
+          "free_programming_share": 12.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1051.839,
+        "workers_vs_trend_ratio": 1.799,
+        "residual_log_workers": 0.5868,
+        "residual_log_locations": -0.592
+      },
+      "selection": {
+        "n_comparisons_flagged": 8,
+        "n_comparisons": 12,
+        "flag_quadrant": true,
+        "flag_rank_gap": true,
+        "flag_residual": true,
+        "n_methods_flagging": 3
+      },
+      "ratio_to_citywide_median": {
+        "workers": 1.0,
+        "locations": 0.5833,
+        "locations_per_100k": 0.5238,
+        "tac_funded_locations": 0.5238,
+        "high_frequency_locations": 0.4286,
+        "activity_sample_venues": 0.5
+      },
+      "activity": {
+        "origin_total": 3647.1005,
+        "within_share": 0.3691,
+        "outside_share": 0.6309,
+        "leading_outside_destination": {
+          "ward_name": "Willowdale",
+          "share_of_outside": 0.5388
+        },
+        "share_of_outside_to_downtown": 0.3699,
+        "share_of_outside_to_same_region": 0.5519,
+        "dest_total": 2077.0086,
+        "dest_outside_share": 0.3519,
+        "leading_outside_origin": {
+          "ward_name": "Don Valley East",
+          "share_of_outside": 0.2122
+        }
+      },
+      "distance": {
+        "p25_km": 0.9081,
+        "median_km": 4.5839,
+        "p75_km": 13.4352,
+        "n_home_areas": 46
+      }
+    },
+    {
+      "ward_code": "18",
+      "ward_name": "Willowdale",
+      "region": "North York",
+      "is_priority_ward": true,
+      "population_2021": 118218,
+      "population_15plus": 103664.2,
+      "workforce": {
+        "labour_creatives": {
+          "count": 1434.7454,
+          "share_of_residents_15plus": 0.0138,
+          "share_of_city_total": 0.0314,
+          "rank_by_count": 10,
+          "rank_by_share": 12
+        },
+        "labour_cultural_workers": {
+          "count": 2234.4055,
+          "share_of_residents_15plus": 0.0216,
+          "share_of_city_total": 0.0293,
+          "rank_by_count": 12,
+          "rank_by_share": 12
+        },
+        "labour_cultural_industries": {
+          "count": 1489.5554,
+          "share_of_residents_15plus": 0.0144,
+          "share_of_city_total": 0.0246,
+          "rank_by_count": 14,
+          "rank_by_share": 15
+        },
+        "labour_independent_artists": {
+          "count": 359.9921,
+          "share_of_residents_15plus": 0.0035,
+          "share_of_city_total": 0.0206,
+          "rank_by_count": 13,
+          "rank_by_share": 13
+        },
+        "labour_arts_major": {
+          "count": 5533.622,
+          "share_of_residents_15plus": 0.0534,
+          "share_of_city_total": 0.0444,
+          "rank_by_count": 10,
+          "rank_by_share": 11
+        }
+      },
+      "infrastructure": {
+        "n_locations": 54,
+        "locations_per_100k": 45.6783,
+        "share_of_city_locations": 0.021,
+        "n_tac_funded": 50,
+        "tac_funded_share_of_locations": 0.9259,
+        "n_high_funding_freq": 7,
+        "n_very_high_funding_freq": 4,
+        "funding_frequency_counts": {
+          "rare": 29,
+          "low": 8,
+          "mid": 6,
+          "high": 3,
+          "very_high": 4
+        },
+        "free_programming_counts": {
+          "none": 8,
+          "rare": 27,
+          "low": 4,
+          "mid": 6,
+          "high": 2,
+          "very_high": 3
+        },
+        "n_meaningful_free_programming": 11,
+        "meaningful_free_programming_share": 0.2037,
+        "n_activity_sample_venues": 2
+      },
+      "ranks": {
+        "avg_workforce_rank": 12.3333,
+        "avg_infrastructure_rank": 16.5,
+        "rank_gap": 4.1667,
+        "components": {
+          "workers_count": 12.0,
+          "independent_artists_count": 13.0,
+          "worker_concentration": 12.0,
+          "locations": 21.0,
+          "locations_per_100k": 21.0,
+          "tac_funded": 19.0,
+          "free_programming_share": 5.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1378.7679,
+        "workers_vs_trend_ratio": 1.6206,
+        "residual_log_workers": 0.4825,
+        "residual_log_locations": -0.445
+      },
+      "selection": {
+        "n_comparisons_flagged": 12,
+        "n_comparisons": 12,
+        "flag_quadrant": true,
+        "flag_rank_gap": true,
+        "flag_residual": true,
+        "n_methods_flagging": 3
+      },
+      "ratio_to_citywide_median": {
+        "workers": 1.1808,
+        "locations": 0.75,
+        "locations_per_100k": 0.6476,
+        "tac_funded_locations": 0.7937,
+        "high_frequency_locations": 1.0,
+        "activity_sample_venues": 1.0
+      },
+      "activity": {
+        "origin_total": 25542.5053,
+        "within_share": 0.9447,
+        "outside_share": 0.0553,
+        "leading_outside_destination": {
+          "ward_name": "University-Rosedale",
+          "share_of_outside": 0.4781
+        },
+        "share_of_outside_to_downtown": 0.783,
+        "share_of_outside_to_same_region": 0.0616,
+        "dest_total": 35523.3316,
+        "dest_outside_share": 0.3207,
+        "leading_outside_origin": {
+          "ward_name": "Don Valley West",
+          "share_of_outside": 0.1323
+        }
+      },
+      "distance": {
+        "p25_km": 0.0837,
+        "median_km": 0.0837,
+        "p75_km": 0.9903,
+        "n_home_areas": 35
+      }
+    },
+    {
+      "ward_code": "19",
+      "ward_name": "Beaches-East York",
+      "region": "Toronto and East York",
+      "is_priority_ward": false,
+      "population_2021": 109359,
+      "population_15plus": 88150.2,
+      "workforce": {
+        "labour_creatives": {
+          "count": 2532.2823,
+          "share_of_residents_15plus": 0.0287,
+          "share_of_city_total": 0.0555,
+          "rank_by_count": 8,
+          "rank_by_share": 8
+        },
+        "labour_cultural_workers": {
+          "count": 4406.2286,
+          "share_of_residents_15plus": 0.05,
+          "share_of_city_total": 0.0578,
+          "rank_by_count": 8,
+          "rank_by_share": 8
+        },
+        "labour_cultural_industries": {
+          "count": 3920.4501,
+          "share_of_residents_15plus": 0.0445,
+          "share_of_city_total": 0.0646,
+          "rank_by_count": 7,
+          "rank_by_share": 6
+        },
+        "labour_independent_artists": {
+          "count": 1137.2713,
+          "share_of_residents_15plus": 0.0129,
+          "share_of_city_total": 0.0652,
+          "rank_by_count": 8,
+          "rank_by_share": 7
+        },
+        "labour_arts_major": {
+          "count": 6491.065,
+          "share_of_residents_15plus": 0.0736,
+          "share_of_city_total": 0.0521,
+          "rank_by_count": 8,
+          "rank_by_share": 8
+        }
+      },
+      "infrastructure": {
+        "n_locations": 89,
+        "locations_per_100k": 81.3833,
+        "share_of_city_locations": 0.0345,
+        "n_tac_funded": 76,
+        "tac_funded_share_of_locations": 0.8539,
+        "n_high_funding_freq": 7,
+        "n_very_high_funding_freq": 1,
+        "funding_frequency_counts": {
+          "rare": 41,
+          "low": 19,
+          "mid": 9,
+          "high": 6,
+          "very_high": 1
+        },
+        "free_programming_counts": {
+          "none": 17,
+          "rare": 33,
+          "low": 16,
+          "mid": 5,
+          "high": 4,
+          "very_high": 1
+        },
+        "n_meaningful_free_programming": 10,
+        "meaningful_free_programming_share": 0.1124,
+        "n_activity_sample_venues": 3
+      },
+      "ranks": {
+        "avg_workforce_rank": 8.0,
+        "avg_infrastructure_rank": 12.0,
+        "rank_gap": 4.0,
+        "components": {
+          "workers_count": 8.0,
+          "independent_artists_count": 8.0,
+          "worker_concentration": 8.0,
+          "locations": 9.0,
+          "locations_per_100k": 8.0,
+          "tac_funded": 10.0,
+          "free_programming_share": 21.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 2369.2522,
+        "workers_vs_trend_ratio": 1.8598,
+        "residual_log_workers": 0.6202,
+        "residual_log_locations": -0.3577
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": true,
+        "flag_residual": true,
+        "n_methods_flagging": 2
+      },
+      "ratio_to_citywide_median": {
+        "workers": 2.3285,
+        "locations": 1.2361,
+        "locations_per_100k": 1.1537,
+        "tac_funded_locations": 1.2063,
+        "high_frequency_locations": 1.0,
+        "activity_sample_venues": 1.5
+      },
+      "activity": {
+        "origin_total": 3559.0357,
+        "within_share": 0.3519,
+        "outside_share": 0.6481,
+        "leading_outside_destination": {
+          "ward_name": "Toronto Centre",
+          "share_of_outside": 0.3174
+        },
+        "share_of_outside_to_downtown": 0.7968,
+        "share_of_outside_to_same_region": 0.7968,
+        "dest_total": 2736.1964,
+        "dest_outside_share": 0.5422,
+        "leading_outside_origin": {
+          "ward_name": "Toronto-Danforth",
+          "share_of_outside": 0.3856
+        }
+      },
+      "distance": {
+        "p25_km": 0.34,
+        "median_km": 6.8775,
+        "p75_km": 8.2912,
+        "n_home_areas": 30
+      }
+    },
+    {
+      "ward_code": "20",
+      "ward_name": "Scarborough Southwest",
+      "region": "Scarborough",
+      "is_priority_ward": false,
+      "population_2021": 111994,
+      "population_15plus": 93254.4,
+      "workforce": {
+        "labour_creatives": {
+          "count": 946.1561,
+          "share_of_residents_15plus": 0.0101,
+          "share_of_city_total": 0.0207,
+          "rank_by_count": 16,
+          "rank_by_share": 15
+        },
+        "labour_cultural_workers": {
+          "count": 1863.5942,
+          "share_of_residents_15plus": 0.02,
+          "share_of_city_total": 0.0244,
+          "rank_by_count": 14,
+          "rank_by_share": 13
+        },
+        "labour_cultural_industries": {
+          "count": 1727.2275,
+          "share_of_residents_15plus": 0.0185,
+          "share_of_city_total": 0.0285,
+          "rank_by_count": 11,
+          "rank_by_share": 12
+        },
+        "labour_independent_artists": {
+          "count": 399.4675,
+          "share_of_residents_15plus": 0.0043,
+          "share_of_city_total": 0.0229,
+          "rank_by_count": 12,
+          "rank_by_share": 12
+        },
+        "labour_arts_major": {
+          "count": 3384.2153,
+          "share_of_residents_15plus": 0.0363,
+          "share_of_city_total": 0.0272,
+          "rank_by_count": 15,
+          "rank_by_share": 16
+        }
+      },
+      "infrastructure": {
+        "n_locations": 79,
+        "locations_per_100k": 70.5395,
+        "share_of_city_locations": 0.0307,
+        "n_tac_funded": 74,
+        "tac_funded_share_of_locations": 0.9367,
+        "n_high_funding_freq": 1,
+        "n_very_high_funding_freq": 1,
+        "funding_frequency_counts": {
+          "rare": 44,
+          "low": 16,
+          "mid": 13,
+          "high": 0,
+          "very_high": 1
+        },
+        "free_programming_counts": {
+          "none": 23,
+          "rare": 29,
+          "low": 11,
+          "mid": 10,
+          "high": 0,
+          "very_high": 1
+        },
+        "n_meaningful_free_programming": 11,
+        "meaningful_free_programming_share": 0.1392,
+        "n_activity_sample_venues": 1
+      },
+      "ranks": {
+        "avg_workforce_rank": 13.0,
+        "avg_infrastructure_rank": 12.75,
+        "rank_gap": -0.25,
+        "components": {
+          "workers_count": 14.0,
+          "independent_artists_count": 12.0,
+          "worker_concentration": 13.0,
+          "locations": 12.0,
+          "locations_per_100k": 13.0,
+          "tac_funded": 12.0,
+          "free_programming_share": 14.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 2081.5411,
+        "workers_vs_trend_ratio": 0.8953,
+        "residual_log_workers": -0.1105,
+        "residual_log_locations": 0.0379
+      },
+      "selection": {
+        "n_comparisons_flagged": 2,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.9848,
+        "locations": 1.0972,
+        "locations_per_100k": 1.0,
+        "tac_funded_locations": 1.1746,
+        "high_frequency_locations": 0.1429,
+        "activity_sample_venues": 0.5
+      },
+      "activity": {
+        "origin_total": 2850.8511,
+        "within_share": 0.0029,
+        "outside_share": 0.9971,
+        "leading_outside_destination": {
+          "ward_name": "University-Rosedale",
+          "share_of_outside": 0.2781
+        },
+        "share_of_outside_to_downtown": 0.7981,
+        "share_of_outside_to_same_region": 0.0783,
+        "dest_total": 11.0678,
+        "dest_outside_share": 0.2564,
+        "leading_outside_origin": {
+          "ward_name": "University-Rosedale",
+          "share_of_outside": 0.3515
+        }
+      },
+      "distance": {
+        "p25_km": 8.9316,
+        "median_km": 10.0233,
+        "p75_km": 12.1269,
+        "n_home_areas": 53
+      }
+    },
+    {
+      "ward_code": "21",
+      "ward_name": "Scarborough Centre",
+      "region": "Scarborough",
+      "is_priority_ward": false,
+      "population_2021": 113104,
+      "population_15plus": 92683.1,
+      "workforce": {
+        "labour_creatives": {
+          "count": 579.7095,
+          "share_of_residents_15plus": 0.0063,
+          "share_of_city_total": 0.0127,
+          "rank_by_count": 21,
+          "rank_by_share": 21
+        },
+        "labour_cultural_workers": {
+          "count": 1042.6966,
+          "share_of_residents_15plus": 0.0113,
+          "share_of_city_total": 0.0137,
+          "rank_by_count": 21,
+          "rank_by_share": 22
+        },
+        "labour_cultural_industries": {
+          "count": 1033.5562,
+          "share_of_residents_15plus": 0.0112,
+          "share_of_city_total": 0.017,
+          "rank_by_count": 20,
+          "rank_by_share": 20
+        },
+        "labour_independent_artists": {
+          "count": 172.8336,
+          "share_of_residents_15plus": 0.0019,
+          "share_of_city_total": 0.0099,
+          "rank_by_count": 20,
+          "rank_by_share": 20
+        },
+        "labour_arts_major": {
+          "count": 2209.7478,
+          "share_of_residents_15plus": 0.0238,
+          "share_of_city_total": 0.0177,
+          "rank_by_count": 20,
+          "rank_by_share": 21
+        }
+      },
+      "infrastructure": {
+        "n_locations": 70,
+        "locations_per_100k": 61.8899,
+        "share_of_city_locations": 0.0272,
+        "n_tac_funded": 59,
+        "tac_funded_share_of_locations": 0.8429,
+        "n_high_funding_freq": 7,
+        "n_very_high_funding_freq": 2,
+        "funding_frequency_counts": {
+          "rare": 33,
+          "low": 11,
+          "mid": 8,
+          "high": 5,
+          "very_high": 2
+        },
+        "free_programming_counts": {
+          "none": 12,
+          "rare": 25,
+          "low": 11,
+          "mid": 6,
+          "high": 4,
+          "very_high": 1
+        },
+        "n_meaningful_free_programming": 11,
+        "meaningful_free_programming_share": 0.1571,
+        "n_activity_sample_venues": 2
+      },
+      "ranks": {
+        "avg_workforce_rank": 20.6667,
+        "avg_infrastructure_rank": 14.0,
+        "rank_gap": -6.6667,
+        "components": {
+          "workers_count": 21.0,
+          "independent_artists_count": 20.0,
+          "worker_concentration": 21.0,
+          "locations": 14.0,
+          "locations_per_100k": 14.0,
+          "tac_funded": 15.0,
+          "free_programming_share": 13.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1825.6126,
+        "workers_vs_trend_ratio": 0.5711,
+        "residual_log_workers": -0.5597,
+        "residual_log_locations": 0.265
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.551,
+        "locations": 0.9722,
+        "locations_per_100k": 0.8774,
+        "tac_funded_locations": 0.9365,
+        "high_frequency_locations": 1.0,
+        "activity_sample_venues": 1.0
+      },
+      "activity": {
+        "origin_total": 2315.0615,
+        "within_share": 0.1709,
+        "outside_share": 0.8291,
+        "leading_outside_destination": {
+          "ward_name": "Spadina-Fort York",
+          "share_of_outside": 0.233
+        },
+        "share_of_outside_to_downtown": 0.606,
+        "share_of_outside_to_same_region": 0.1398,
+        "dest_total": 981.3309,
+        "dest_outside_share": 0.5967,
+        "leading_outside_origin": {
+          "ward_name": "Scarborough-Guildwood",
+          "share_of_outside": 0.2965
+        }
+      },
+      "distance": {
+        "p25_km": 3.8685,
+        "median_km": 12.4144,
+        "p75_km": 13.476,
+        "n_home_areas": 53
+      }
+    },
+    {
+      "ward_code": "22",
+      "ward_name": "Scarborough-Agincourt",
+      "region": "Scarborough",
+      "is_priority_ward": false,
+      "population_2021": 104423,
+      "population_15plus": 90431.9,
+      "workforce": {
+        "labour_creatives": {
+          "count": 755.156,
+          "share_of_residents_15plus": 0.0084,
+          "share_of_city_total": 0.0165,
+          "rank_by_count": 19,
+          "rank_by_share": 19
+        },
+        "labour_cultural_workers": {
+          "count": 1255.3885,
+          "share_of_residents_15plus": 0.0139,
+          "share_of_city_total": 0.0165,
+          "rank_by_count": 19,
+          "rank_by_share": 19
+        },
+        "labour_cultural_industries": {
+          "count": 850.2081,
+          "share_of_residents_15plus": 0.0094,
+          "share_of_city_total": 0.014,
+          "rank_by_count": 22,
+          "rank_by_share": 22
+        },
+        "labour_independent_artists": {
+          "count": 60.1404,
+          "share_of_residents_15plus": 0.0007,
+          "share_of_city_total": 0.0034,
+          "rank_by_count": 24,
+          "rank_by_share": 24
+        },
+        "labour_arts_major": {
+          "count": 2746.0686,
+          "share_of_residents_15plus": 0.0304,
+          "share_of_city_total": 0.022,
+          "rank_by_count": 18,
+          "rank_by_share": 18
+        }
+      },
+      "infrastructure": {
+        "n_locations": 43,
+        "locations_per_100k": 41.1787,
+        "share_of_city_locations": 0.0167,
+        "n_tac_funded": 36,
+        "tac_funded_share_of_locations": 0.8372,
+        "n_high_funding_freq": 1,
+        "n_very_high_funding_freq": 0,
+        "funding_frequency_counts": {
+          "rare": 23,
+          "low": 8,
+          "mid": 4,
+          "high": 1,
+          "very_high": 0
+        },
+        "free_programming_counts": {
+          "none": 13,
+          "rare": 14,
+          "low": 7,
+          "mid": 1,
+          "high": 1,
+          "very_high": 0
+        },
+        "n_meaningful_free_programming": 2,
+        "meaningful_free_programming_share": 0.0465,
+        "n_activity_sample_venues": 1
+      },
+      "ranks": {
+        "avg_workforce_rank": 20.6667,
+        "avg_infrastructure_rank": 23.5,
+        "rank_gap": 2.8333,
+        "components": {
+          "workers_count": 19.0,
+          "independent_artists_count": 24.0,
+          "worker_concentration": 19.0,
+          "locations": 23.0,
+          "locations_per_100k": 23.0,
+          "tac_funded": 23.0,
+          "free_programming_share": 25.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1078.7708,
+        "workers_vs_trend_ratio": 1.1637,
+        "residual_log_workers": 0.1515,
+        "residual_log_locations": -0.3242
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": true,
+        "n_methods_flagging": 1
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.6634,
+        "locations": 0.5972,
+        "locations_per_100k": 0.5838,
+        "tac_funded_locations": 0.5714,
+        "high_frequency_locations": 0.1429,
+        "activity_sample_venues": 0.5
+      },
+      "activity": {
+        "origin_total": 1246.7362,
+        "within_share": 0.2533,
+        "outside_share": 0.7467,
+        "leading_outside_destination": {
+          "ward_name": "Willowdale",
+          "share_of_outside": 0.3565
+        },
+        "share_of_outside_to_downtown": 0.4308,
+        "share_of_outside_to_same_region": 0.0857,
+        "dest_total": 1188.3342,
+        "dest_outside_share": 0.7343,
+        "leading_outside_origin": {
+          "ward_name": "Scarborough North",
+          "share_of_outside": 0.3232
+        }
+      },
+      "distance": {
+        "p25_km": 2.297,
+        "median_km": 8.7725,
+        "p75_km": 15.1202,
+        "n_home_areas": 39
+      }
+    },
+    {
+      "ward_code": "23",
+      "ward_name": "Scarborough North",
+      "region": "Scarborough",
+      "is_priority_ward": false,
+      "population_2021": 94717,
+      "population_15plus": 82253.7,
+      "workforce": {
+        "labour_creatives": {
+          "count": 419.7904,
+          "share_of_residents_15plus": 0.0051,
+          "share_of_city_total": 0.0092,
+          "rank_by_count": 23,
+          "rank_by_share": 23
+        },
+        "labour_cultural_workers": {
+          "count": 787.0251,
+          "share_of_residents_15plus": 0.0096,
+          "share_of_city_total": 0.0103,
+          "rank_by_count": 23,
+          "rank_by_share": 23
+        },
+        "labour_cultural_industries": {
+          "count": 739.0344,
+          "share_of_residents_15plus": 0.009,
+          "share_of_city_total": 0.0122,
+          "rank_by_count": 24,
+          "rank_by_share": 23
+        },
+        "labour_independent_artists": {
+          "count": 28.1763,
+          "share_of_residents_15plus": 0.0003,
+          "share_of_city_total": 0.0016,
+          "rank_by_count": 25,
+          "rank_by_share": 25
+        },
+        "labour_arts_major": {
+          "count": 1737.1964,
+          "share_of_residents_15plus": 0.0211,
+          "share_of_city_total": 0.0139,
+          "rank_by_count": 24,
+          "rank_by_share": 23
+        }
+      },
+      "infrastructure": {
+        "n_locations": 34,
+        "locations_per_100k": 35.8964,
+        "share_of_city_locations": 0.0132,
+        "n_tac_funded": 30,
+        "tac_funded_share_of_locations": 0.8824,
+        "n_high_funding_freq": 2,
+        "n_very_high_funding_freq": 1,
+        "funding_frequency_counts": {
+          "rare": 18,
+          "low": 5,
+          "mid": 5,
+          "high": 1,
+          "very_high": 1
+        },
+        "free_programming_counts": {
+          "none": 9,
+          "rare": 9,
+          "low": 6,
+          "mid": 5,
+          "high": 1,
+          "very_high": 0
+        },
+        "n_meaningful_free_programming": 6,
+        "meaningful_free_programming_share": 0.1765,
+        "n_activity_sample_venues": 2
+      },
+      "ranks": {
+        "avg_workforce_rank": 23.6667,
+        "avg_infrastructure_rank": 21.5,
+        "rank_gap": -2.1667,
+        "components": {
+          "workers_count": 23.0,
+          "independent_artists_count": 25.0,
+          "worker_concentration": 23.0,
+          "locations": 25.0,
+          "locations_per_100k": 25.0,
+          "tac_funded": 25.0,
+          "free_programming_share": 11.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 838.7273,
+        "workers_vs_trend_ratio": 0.9384,
+        "residual_log_workers": -0.0635,
+        "residual_log_locations": -0.2747
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": true,
+        "n_methods_flagging": 1
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.4159,
+        "locations": 0.4722,
+        "locations_per_100k": 0.5089,
+        "tac_funded_locations": 0.4762,
+        "high_frequency_locations": 0.2857,
+        "activity_sample_venues": 1.0
+      },
+      "activity": {
+        "origin_total": 1647.0993,
+        "within_share": 0.1843,
+        "outside_share": 0.8157,
+        "leading_outside_destination": {
+          "ward_name": "Scarborough-Agincourt",
+          "share_of_outside": 0.2099
+        },
+        "share_of_outside_to_downtown": 0.246,
+        "share_of_outside_to_same_region": 0.4695,
+        "dest_total": 564.0851,
+        "dest_outside_share": 0.4619,
+        "leading_outside_origin": {
+          "ward_name": "Scarborough-Guildwood",
+          "share_of_outside": 0.2024
+        }
+      },
+      "distance": {
+        "p25_km": 1.6848,
+        "median_km": 4.4108,
+        "p75_km": 14.6106,
+        "n_home_areas": 56
+      }
+    },
+    {
+      "ward_code": "24",
+      "ward_name": "Scarborough-Guildwood",
+      "region": "Scarborough",
+      "is_priority_ward": false,
+      "population_2021": 103449,
+      "population_15plus": 84969.8,
+      "workforce": {
+        "labour_creatives": {
+          "count": 505.7247,
+          "share_of_residents_15plus": 0.006,
+          "share_of_city_total": 0.0111,
+          "rank_by_count": 22,
+          "rank_by_share": 22
+        },
+        "labour_cultural_workers": {
+          "count": 956.7305,
+          "share_of_residents_15plus": 0.0113,
+          "share_of_city_total": 0.0125,
+          "rank_by_count": 22,
+          "rank_by_share": 21
+        },
+        "labour_cultural_industries": {
+          "count": 855.2023,
+          "share_of_residents_15plus": 0.0101,
+          "share_of_city_total": 0.0141,
+          "rank_by_count": 21,
+          "rank_by_share": 21
+        },
+        "labour_independent_artists": {
+          "count": 154.5822,
+          "share_of_residents_15plus": 0.0018,
+          "share_of_city_total": 0.0089,
+          "rank_by_count": 21,
+          "rank_by_share": 21
+        },
+        "labour_arts_major": {
+          "count": 2148.6169,
+          "share_of_residents_15plus": 0.0253,
+          "share_of_city_total": 0.0172,
+          "rank_by_count": 21,
+          "rank_by_share": 20
+        }
+      },
+      "infrastructure": {
+        "n_locations": 59,
+        "locations_per_100k": 57.0329,
+        "share_of_city_locations": 0.0229,
+        "n_tac_funded": 54,
+        "tac_funded_share_of_locations": 0.9153,
+        "n_high_funding_freq": 7,
+        "n_very_high_funding_freq": 2,
+        "funding_frequency_counts": {
+          "rare": 21,
+          "low": 16,
+          "mid": 10,
+          "high": 5,
+          "very_high": 2
+        },
+        "free_programming_counts": {
+          "none": 7,
+          "rare": 19,
+          "low": 16,
+          "mid": 6,
+          "high": 4,
+          "very_high": 2
+        },
+        "n_meaningful_free_programming": 12,
+        "meaningful_free_programming_share": 0.2034,
+        "n_activity_sample_venues": 3
+      },
+      "ranks": {
+        "avg_workforce_rank": 21.3333,
+        "avg_infrastructure_rank": 15.0,
+        "rank_gap": -6.3333,
+        "components": {
+          "workers_count": 22.0,
+          "independent_artists_count": 21.0,
+          "worker_concentration": 21.0,
+          "locations": 18.0,
+          "locations_per_100k": 19.0,
+          "tac_funded": 17.0,
+          "free_programming_share": 6.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1517.183,
+        "workers_vs_trend_ratio": 0.6306,
+        "residual_log_workers": -0.4607,
+        "residual_log_locations": 0.1479
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.5056,
+        "locations": 0.8194,
+        "locations_per_100k": 0.8085,
+        "tac_funded_locations": 0.8571,
+        "high_frequency_locations": 1.0,
+        "activity_sample_venues": 1.5
+      },
+      "activity": {
+        "origin_total": 1167.9472,
+        "within_share": 0.028,
+        "outside_share": 0.972,
+        "leading_outside_destination": {
+          "ward_name": "University-Rosedale",
+          "share_of_outside": 0.1829
+        },
+        "share_of_outside_to_downtown": 0.4696,
+        "share_of_outside_to_same_region": 0.2637,
+        "dest_total": 61.1265,
+        "dest_outside_share": 0.4653,
+        "leading_outside_origin": {
+          "ward_name": "Etobicoke North",
+          "share_of_outside": 0.2992
+        }
+      },
+      "distance": {
+        "p25_km": 7.091,
+        "median_km": 15.8997,
+        "p75_km": 17.8664,
+        "n_home_areas": 48
+      }
+    },
+    {
+      "ward_code": "25",
+      "ward_name": "Scarborough-Rouge Park",
+      "region": "Scarborough",
+      "is_priority_ward": false,
+      "population_2021": 102254,
+      "population_15plus": 86357.8,
+      "workforce": {
+        "labour_creatives": {
+          "count": 623.4486,
+          "share_of_residents_15plus": 0.0072,
+          "share_of_city_total": 0.0137,
+          "rank_by_count": 20,
+          "rank_by_share": 20
+        },
+        "labour_cultural_workers": {
+          "count": 1065.8005,
+          "share_of_residents_15plus": 0.0123,
+          "share_of_city_total": 0.014,
+          "rank_by_count": 20,
+          "rank_by_share": 20
+        },
+        "labour_cultural_industries": {
+          "count": 1130.1343,
+          "share_of_residents_15plus": 0.0131,
+          "share_of_city_total": 0.0186,
+          "rank_by_count": 18,
+          "rank_by_share": 17
+        },
+        "labour_independent_artists": {
+          "count": 222.2576,
+          "share_of_residents_15plus": 0.0026,
+          "share_of_city_total": 0.0127,
+          "rank_by_count": 17,
+          "rank_by_share": 17
+        },
+        "labour_arts_major": {
+          "count": 2036.9208,
+          "share_of_residents_15plus": 0.0236,
+          "share_of_city_total": 0.0163,
+          "rank_by_count": 22,
+          "rank_by_share": 22
+        }
+      },
+      "infrastructure": {
+        "n_locations": 62,
+        "locations_per_100k": 60.6333,
+        "share_of_city_locations": 0.0241,
+        "n_tac_funded": 47,
+        "tac_funded_share_of_locations": 0.7581,
+        "n_high_funding_freq": 2,
+        "n_very_high_funding_freq": 1,
+        "funding_frequency_counts": {
+          "rare": 25,
+          "low": 15,
+          "mid": 5,
+          "high": 1,
+          "very_high": 1
+        },
+        "free_programming_counts": {
+          "none": 12,
+          "rare": 18,
+          "low": 11,
+          "mid": 4,
+          "high": 2,
+          "very_high": 0
+        },
+        "n_meaningful_free_programming": 6,
+        "meaningful_free_programming_share": 0.0968,
+        "n_activity_sample_venues": 1
+      },
+      "ranks": {
+        "avg_workforce_rank": 19.0,
+        "avg_infrastructure_rank": 19.0,
+        "rank_gap": 0.0,
+        "components": {
+          "workers_count": 20.0,
+          "independent_artists_count": 17.0,
+          "worker_concentration": 20.0,
+          "locations": 17.0,
+          "locations_per_100k": 15.0,
+          "tac_funded": 22.0,
+          "free_programming_share": 22.0
+        }
+      },
+      "trend": {
+        "predicted_workers": 1600.7867,
+        "workers_vs_trend_ratio": 0.6658,
+        "residual_log_workers": -0.4065,
+        "residual_log_locations": 0.1323
+      },
+      "selection": {
+        "n_comparisons_flagged": 0,
+        "n_comparisons": 12,
+        "flag_quadrant": false,
+        "flag_rank_gap": false,
+        "flag_residual": false,
+        "n_methods_flagging": 0
+      },
+      "ratio_to_citywide_median": {
+        "workers": 0.5632,
+        "locations": 0.8611,
+        "locations_per_100k": 0.8596,
+        "tac_funded_locations": 0.746,
+        "high_frequency_locations": 0.2857,
+        "activity_sample_venues": 0.5
+      },
+      "activity": {
+        "origin_total": 2023.5586,
+        "within_share": 0.5435,
+        "outside_share": 0.4565,
+        "leading_outside_destination": {
+          "ward_name": "Willowdale",
+          "share_of_outside": 0.2614
+        },
+        "share_of_outside_to_downtown": 0.5001,
+        "share_of_outside_to_same_region": 0.1295,
+        "dest_total": 1486.3712,
+        "dest_outside_share": 0.26,
+        "leading_outside_origin": {
+          "ward_name": "Scarborough North",
+          "share_of_outside": 0.553
+        }
+      },
+      "distance": {
+        "p25_km": 0.8736,
+        "median_km": 2.5795,
+        "p75_km": 19.788,
+        "n_home_areas": 70
+      }
+    }
+  ]
+}

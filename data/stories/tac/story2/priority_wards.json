@@ -1,0 +1,476 @@
+{
+  "meta": {
+    "story": "Story 2: Cultural workforce and opportunities for suburban expansion",
+    "source_notebook": "analysis/wards/explore/prepare_story2_sample_graphics.ipynb",
+    "time_period": "all",
+    "activity_measure": "normalized_raw_stop_count_by_ward",
+    "headline_workforce_measure": "labour_cultural_workers",
+    "n_wards": 25,
+    "n_activity_venues": 105,
+    "n_inventory_locations": 2576,
+    "priority_wards": [
+      "Don Valley North",
+      "Willowdale",
+      "Eglinton-Lawrence",
+      "Don Valley West"
+    ],
+    "region_order": [
+      "Toronto and East York",
+      "Etobicoke York",
+      "North York",
+      "Scarborough"
+    ],
+    "shares_are": "fractions between 0 and 1 (fields ending in _pp are percentage points)",
+    "caveats": [
+      "Cultural workers are counted by home ward, not workplace. The five workforce measures overlap and must never be summed.",
+      "Workforce counts are small-area estimates from a custom census tabulation; shares of residents use the ward's age 15+ population.",
+      "The broader inventory (2,576 locations) counts presence, not size, quality, funding dollars or activity; funding_frequency applies to TAC-funded locations only.",
+      "Normalized activity is not attendance, a unique-person count or a percentage of residents participating, and it describes all residents of a ward, not cultural workers specifically.",
+      "The activity analysis covers 105 selected venues; most wards host only 1-3 included venues, so activity shares are sensitive to which venues were sampled.",
+      "Straight-line distance is not route distance, travel time or difficulty.",
+      "Ward-level relationships are ecological: they describe wards, not individual behaviour, and do not establish causality.",
+      "Priority-ward flags describe a pattern in the data, not a measure of need."
+    ],
+    "description": "Case-study detail for the four priority wards that is not in ward_stats.json: leading outside destinations and venues, included venues, and how concentrated each ward's recorded activity is in a single home area.",
+    "definitions": {
+      "leading_outside_destinations": "Top 5 other wards by residents' normalized activity; share_of_outside is of activity outside the ward.",
+      "leading_outside_venues": "Top 5 included venues outside the ward by residents' normalized activity.",
+      "included_venues": "Included (activity-measured) venues located in the ward, with activity from all home wards.",
+      "home_area_concentration": "Largest single home geohash6 area's share of the ward's residents' activity. Willowdale's is unusually high and sits next to Meridian Arts Centre, so its within-ward share and median distance mainly reflect Meridian's local pull."
+    }
+  },
+  "wards": [
+    {
+      "ward_name": "Eglinton-Lawrence",
+      "ward_code": "08",
+      "region": "Etobicoke York",
+      "leading_outside_destinations": [
+        {
+          "ward_name": "Willowdale",
+          "units": 807.1448,
+          "share_of_outside": 0.4203,
+          "share_of_all_activity": 0.3117
+        },
+        {
+          "ward_name": "University-Rosedale",
+          "units": 367.8531,
+          "share_of_outside": 0.1916,
+          "share_of_all_activity": 0.142
+        },
+        {
+          "ward_name": "Spadina-Fort York",
+          "units": 347.1754,
+          "share_of_outside": 0.1808,
+          "share_of_all_activity": 0.1341
+        },
+        {
+          "ward_name": "Toronto Centre",
+          "units": 230.7403,
+          "share_of_outside": 0.1202,
+          "share_of_all_activity": 0.0891
+        },
+        {
+          "ward_name": "Davenport",
+          "units": 31.7549,
+          "share_of_outside": 0.0165,
+          "share_of_all_activity": 0.0123
+        }
+      ],
+      "leading_outside_venues": [
+        {
+          "venue_id": 51,
+          "venue_name": "Meridian Arts Centre",
+          "ward_name": "Willowdale",
+          "units": 804.6213,
+          "share_of_outside": 0.419
+        },
+        {
+          "venue_id": 78,
+          "venue_name": "Toronto Reference Library",
+          "ward_name": "University-Rosedale",
+          "units": 187.7385,
+          "share_of_outside": 0.0978
+        },
+        {
+          "venue_id": 64,
+          "venue_name": "Royal Ontario Museum",
+          "ward_name": "University-Rosedale",
+          "units": 128.007,
+          "share_of_outside": 0.0667
+        },
+        {
+          "venue_id": 6,
+          "venue_name": "Art Gallery of Ontario",
+          "ward_name": "Spadina-Fort York",
+          "units": 122.6027,
+          "share_of_outside": 0.0638
+        },
+        {
+          "venue_id": 66,
+          "venue_name": "Young Centre for the Performing Arts",
+          "ward_name": "Spadina-Fort York",
+          "units": 87.3535,
+          "share_of_outside": 0.0455
+        }
+      ],
+      "venues_in_own_ward_used_by_residents": [
+        {
+          "venue_id": 93,
+          "venue_name": "Colombus Centre",
+          "units": 669.6376,
+          "share_of_all_activity": 0.2586
+        }
+      ],
+      "included_venues": [
+        {
+          "venue_id": 93,
+          "venue_name": "Colombus Centre",
+          "lat": 43.713119,
+          "lon": -79.456715,
+          "activity_total": 1229.862,
+          "share_from_outside_residents": 0.4555
+        }
+      ],
+      "home_area_concentration": {
+        "top_home_area_geohash6": "dpz2xv",
+        "lat": 43.711853,
+        "lon": -79.458618,
+        "share_of_residents_activity": 0.1871,
+        "distance_km_to_nearest_included_venue": 0.2081,
+        "n_home_areas": 42,
+        "note": "Share of the ward's residents' normalized activity (home-area basis) that comes from its single largest home area."
+      }
+    },
+    {
+      "ward_name": "Don Valley West",
+      "ward_code": "15",
+      "region": "North York",
+      "leading_outside_destinations": [
+        {
+          "ward_name": "Willowdale",
+          "units": 1506.7992,
+          "share_of_outside": 0.5417,
+          "share_of_all_activity": 0.5406
+        },
+        {
+          "ward_name": "University-Rosedale",
+          "units": 402.7807,
+          "share_of_outside": 0.1448,
+          "share_of_all_activity": 0.1445
+        },
+        {
+          "ward_name": "Toronto Centre",
+          "units": 312.0329,
+          "share_of_outside": 0.1122,
+          "share_of_all_activity": 0.112
+        },
+        {
+          "ward_name": "Spadina-Fort York",
+          "units": 269.2176,
+          "share_of_outside": 0.0968,
+          "share_of_all_activity": 0.0966
+        },
+        {
+          "ward_name": "Humber River-Black Creek",
+          "units": 112.4806,
+          "share_of_outside": 0.0404,
+          "share_of_all_activity": 0.0404
+        }
+      ],
+      "leading_outside_venues": [
+        {
+          "venue_id": 51,
+          "venue_name": "Meridian Arts Centre",
+          "ward_name": "Willowdale",
+          "units": 1500.2583,
+          "share_of_outside": 0.5394
+        },
+        {
+          "venue_id": 78,
+          "venue_name": "Toronto Reference Library",
+          "ward_name": "University-Rosedale",
+          "units": 185.2449,
+          "share_of_outside": 0.0666
+        },
+        {
+          "venue_id": 64,
+          "venue_name": "Royal Ontario Museum",
+          "ward_name": "University-Rosedale",
+          "units": 165.211,
+          "share_of_outside": 0.0594
+        },
+        {
+          "venue_id": 27,
+          "venue_name": "Elgin and Winter Garden Theatres",
+          "ward_name": "Toronto Centre",
+          "units": 113.7628,
+          "share_of_outside": 0.0409
+        },
+        {
+          "venue_id": 88,
+          "venue_name": "The Village at Black Creek",
+          "ward_name": "Humber River-Black Creek",
+          "units": 112.0864,
+          "share_of_outside": 0.0403
+        }
+      ],
+      "venues_in_own_ward_used_by_residents": [
+        {
+          "venue_id": 95,
+          "venue_name": "Dandelion Terrace (Toronto Botanical Garden)",
+          "units": 4.4786,
+          "share_of_all_activity": 0.0016
+        },
+        {
+          "venue_id": 94,
+          "venue_name": "Glendon Theatre",
+          "units": 1.1284,
+          "share_of_all_activity": 0.0004
+        }
+      ],
+      "included_venues": [
+        {
+          "venue_id": 94,
+          "venue_name": "Glendon Theatre",
+          "lat": 43.727483,
+          "lon": -79.377644,
+          "activity_total": 9.735,
+          "share_from_outside_residents": 0.8841
+        },
+        {
+          "venue_id": 95,
+          "venue_name": "Dandelion Terrace (Toronto Botanical Garden)",
+          "lat": 43.733959,
+          "lon": -79.359297,
+          "activity_total": 28.2592,
+          "share_from_outside_residents": 0.8415
+        }
+      ],
+      "home_area_concentration": {
+        "top_home_area_geohash6": "dpz8cj",
+        "lat": 43.755798,
+        "lon": -79.403687,
+        "share_of_residents_activity": 0.2561,
+        "distance_km_to_nearest_included_venue": 1.4304,
+        "n_home_areas": 54,
+        "note": "Share of the ward's residents' normalized activity (home-area basis) that comes from its single largest home area."
+      }
+    },
+    {
+      "ward_name": "Don Valley North",
+      "ward_code": "17",
+      "region": "North York",
+      "leading_outside_destinations": [
+        {
+          "ward_name": "Willowdale",
+          "units": 1239.8802,
+          "share_of_outside": 0.5388,
+          "share_of_all_activity": 0.34
+        },
+        {
+          "ward_name": "University-Rosedale",
+          "units": 502.1203,
+          "share_of_outside": 0.2182,
+          "share_of_all_activity": 0.1377
+        },
+        {
+          "ward_name": "Spadina-Fort York",
+          "units": 199.0257,
+          "share_of_outside": 0.0865,
+          "share_of_all_activity": 0.0546
+        },
+        {
+          "ward_name": "Toronto Centre",
+          "units": 109.0073,
+          "share_of_outside": 0.0474,
+          "share_of_all_activity": 0.0299
+        },
+        {
+          "ward_name": "Scarborough-Agincourt",
+          "units": 50.3413,
+          "share_of_outside": 0.0219,
+          "share_of_all_activity": 0.0138
+        }
+      ],
+      "leading_outside_venues": [
+        {
+          "venue_id": 51,
+          "venue_name": "Meridian Arts Centre",
+          "ward_name": "Willowdale",
+          "units": 1232.3964,
+          "share_of_outside": 0.5356
+        },
+        {
+          "venue_id": 64,
+          "venue_name": "Royal Ontario Museum",
+          "ward_name": "University-Rosedale",
+          "units": 393.1113,
+          "share_of_outside": 0.1708
+        },
+        {
+          "venue_id": 78,
+          "venue_name": "Toronto Reference Library",
+          "ward_name": "University-Rosedale",
+          "units": 68.3737,
+          "share_of_outside": 0.0297
+        },
+        {
+          "venue_id": 6,
+          "venue_name": "Art Gallery of Ontario",
+          "ward_name": "Spadina-Fort York",
+          "units": 55.5054,
+          "share_of_outside": 0.0241
+        },
+        {
+          "venue_id": 96,
+          "venue_name": "Agincourt Toronto Public Library",
+          "ward_name": "Scarborough-Agincourt",
+          "units": 50.3413,
+          "share_of_outside": 0.0219
+        }
+      ],
+      "venues_in_own_ward_used_by_residents": [
+        {
+          "venue_id": 31,
+          "venue_name": "Fairview Library",
+          "units": 1346.0572,
+          "share_of_all_activity": 0.3691
+        }
+      ],
+      "included_venues": [
+        {
+          "venue_id": 31,
+          "venue_name": "Fairview Library",
+          "lat": 43.779084,
+          "lon": -79.346732,
+          "activity_total": 2077.0086,
+          "share_from_outside_residents": 0.3519
+        }
+      ],
+      "home_area_concentration": {
+        "top_home_area_geohash6": "dpz943",
+        "lat": 43.777771,
+        "lon": -79.348755,
+        "share_of_residents_activity": 0.1904,
+        "distance_km_to_nearest_included_venue": 0.2186,
+        "n_home_areas": 46,
+        "note": "Share of the ward's residents' normalized activity (home-area basis) that comes from its single largest home area."
+      }
+    },
+    {
+      "ward_name": "Willowdale",
+      "ward_code": "18",
+      "region": "North York",
+      "leading_outside_destinations": [
+        {
+          "ward_name": "University-Rosedale",
+          "units": 675.2637,
+          "share_of_outside": 0.4781,
+          "share_of_all_activity": 0.0264
+        },
+        {
+          "ward_name": "Spadina-Fort York",
+          "units": 213.381,
+          "share_of_outside": 0.1511,
+          "share_of_all_activity": 0.0084
+        },
+        {
+          "ward_name": "Toronto Centre",
+          "units": 149.3818,
+          "share_of_outside": 0.1058,
+          "share_of_all_activity": 0.0058
+        },
+        {
+          "ward_name": "Humber River-Black Creek",
+          "units": 86.964,
+          "share_of_outside": 0.0616,
+          "share_of_all_activity": 0.0034
+        },
+        {
+          "ward_name": "Don Valley North",
+          "units": 54.1554,
+          "share_of_outside": 0.0383,
+          "share_of_all_activity": 0.0021
+        }
+      ],
+      "leading_outside_venues": [
+        {
+          "venue_id": 64,
+          "venue_name": "Royal Ontario Museum",
+          "ward_name": "University-Rosedale",
+          "units": 374.4638,
+          "share_of_outside": 0.2651
+        },
+        {
+          "venue_id": 78,
+          "venue_name": "Toronto Reference Library",
+          "ward_name": "University-Rosedale",
+          "units": 268.9617,
+          "share_of_outside": 0.1904
+        },
+        {
+          "venue_id": 88,
+          "venue_name": "The Village at Black Creek",
+          "ward_name": "Humber River-Black Creek",
+          "units": 83.7076,
+          "share_of_outside": 0.0593
+        },
+        {
+          "venue_id": 6,
+          "venue_name": "Art Gallery of Ontario",
+          "ward_name": "Spadina-Fort York",
+          "units": 59.0411,
+          "share_of_outside": 0.0418
+        },
+        {
+          "venue_id": 31,
+          "venue_name": "Fairview Library",
+          "ward_name": "Don Valley North",
+          "units": 54.1554,
+          "share_of_outside": 0.0383
+        }
+      ],
+      "venues_in_own_ward_used_by_residents": [
+        {
+          "venue_id": 51,
+          "venue_name": "Meridian Arts Centre",
+          "units": 24007.1268,
+          "share_of_all_activity": 0.9399
+        },
+        {
+          "venue_id": 90,
+          "venue_name": "Lee Lifeson Art Park Amphitheatre",
+          "units": 122.9019,
+          "share_of_all_activity": 0.0048
+        }
+      ],
+      "included_venues": [
+        {
+          "venue_id": 51,
+          "venue_name": "Meridian Arts Centre",
+          "lat": 43.766051,
+          "lon": -79.414436,
+          "activity_total": 35368.8044,
+          "share_from_outside_residents": 0.3212
+        },
+        {
+          "venue_id": 90,
+          "venue_name": "Lee Lifeson Art Park Amphitheatre",
+          "lat": 43.768745,
+          "lon": -79.409766,
+          "activity_total": 154.5272,
+          "share_from_outside_residents": 0.2047
+        }
+      ],
+      "home_area_concentration": {
+        "top_home_area_geohash6": "dpz8bz",
+        "lat": 43.766785,
+        "lon": -79.414673,
+        "share_of_residents_activity": 0.6421,
+        "distance_km_to_nearest_included_venue": 0.0837,
+        "n_home_areas": 35,
+        "note": "Share of the ward's residents' normalized activity (home-area basis) that comes from its single largest home area."
+      }
+    }
+  ]
+}
