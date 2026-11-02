@@ -1,0 +1,1551 @@
+{
+  "meta": {
+    "story": "Story 1: Toronto's cultural infrastructure across ward lines",
+    "source_notebook": "analysis/wards/explore/prepare_story1_sample_graphics.ipynb",
+    "time_period": "all",
+    "activity_measure": "normalized_raw_stop_count_by_ward",
+    "n_wards": 25,
+    "n_venues": 105,
+    "shares_are": "fractions between 0 and 1",
+    "caveats": [
+      "Normalized activity is not attendance, a unique-person count or a percentage of residents participating.",
+      "The activity analysis covers 105 selected venues; the broader inventory holds roughly 2,576 locations with no comparable activity measurements.",
+      "Straight-line distance is not route distance, travel time or difficulty.",
+      "Activity is attributed to residents' inferred home ward, not the workplace ward.",
+      "Ward-level relationships are ecological: they describe wards, not individual behaviour, and do not establish causality.",
+      "Most wards host only 1-3 included venues, so destination-side shares are sensitive to which venues were sampled."
+    ],
+    "description": "Where Scarborough residents' activity occurs, grouped by destination, plus every ward-to-ward flow and the Scarborough venues.",
+    "suggested_top_n_flows_for_map": 6,
+    "definitions": {
+      "destination_units / destination_share": "Residents' normalized activity by destination group; shares sum to 1 per ward.",
+      "received_from_other_scarborough": "Normalized activity at the ward's venues coming from the other five Scarborough wards.",
+      "flows": "One row per Scarborough origin ward and destination ward (6 x 25). internal_rank orders the Scarborough-to-Scarborough flows, 1 = strongest; null otherwise.",
+      "representative_point": "A point guaranteed to lie inside the ward polygon, for placing nodes and arrows. Not a venue location.",
+      "venues": "Included venues located in Scarborough, with their total activity from all home wards."
+    }
+  },
+  "buckets": [
+    {
+      "key": "same_ward",
+      "label": "Within home ward",
+      "description": "Venues in the resident's own ward."
+    },
+    {
+      "key": "other_scarborough",
+      "label": "Another Scarborough ward",
+      "description": "Venues in any other Scarborough ward."
+    },
+    {
+      "key": "north_york_willowdale",
+      "label": "North York / Willowdale",
+      "description": "Venues in the North York Community Council wards (includes Willowdale)."
+    },
+    {
+      "key": "downtown",
+      "label": "Downtown / core",
+      "description": "Venues in the Toronto and East York Community Council wards."
+    },
+    {
+      "key": "elsewhere_in_toronto",
+      "label": "Elsewhere in Toronto",
+      "description": "Venues in the Etobicoke York Community Council wards."
+    }
+  ],
+  "wards": [
+    {
+      "ward_code": 20,
+      "ward_name": "Scarborough Southwest",
+      "is_case_study": true,
+      "representative_point": {
+        "lat": 43.707656,
+        "lon": -79.264173
+      },
+      "n_venues": 1,
+      "origin_total": 2850.8511,
+      "received_from_other_scarborough": 0.1999,
+      "destination_units": {
+        "same_ward": 8.2306,
+        "other_scarborough": 222.5645,
+        "north_york_willowdale": 310.1311,
+        "downtown": 2268.7823,
+        "elsewhere_in_toronto": 41.1426
+      },
+      "destination_share": {
+        "same_ward": 0.0029,
+        "other_scarborough": 0.0781,
+        "north_york_willowdale": 0.1088,
+        "downtown": 0.7958,
+        "elsewhere_in_toronto": 0.0144
+      }
+    },
+    {
+      "ward_code": 21,
+      "ward_name": "Scarborough Centre",
+      "is_case_study": false,
+      "representative_point": {
+        "lat": 43.752741,
+        "lon": -79.273539
+      },
+      "n_venues": 2,
+      "origin_total": 2315.0615,
+      "received_from_other_scarborough": 447.0746,
+      "destination_units": {
+        "same_ward": 395.7569,
+        "other_scarborough": 268.3047,
+        "north_york_willowdale": 448.4564,
+        "downtown": 1163.0804,
+        "elsewhere_in_toronto": 39.4631
+      },
+      "destination_share": {
+        "same_ward": 0.1709,
+        "other_scarborough": 0.1159,
+        "north_york_willowdale": 0.1937,
+        "downtown": 0.5024,
+        "elsewhere_in_toronto": 0.017
+      }
+    },
+    {
+      "ward_code": 22,
+      "ward_name": "Scarborough-Agincourt",
+      "is_case_study": false,
+      "representative_point": {
+        "lat": 43.796963,
+        "lon": -79.30828
+      },
+      "n_venues": 1,
+      "origin_total": 1246.7362,
+      "received_from_other_scarborough": 681.4013,
+      "destination_units": {
+        "same_ward": 315.7518,
+        "other_scarborough": 79.7581,
+        "north_york_willowdale": 418.4426,
+        "downtown": 401.0656,
+        "elsewhere_in_toronto": 31.7181
+      },
+      "destination_share": {
+        "same_ward": 0.2533,
+        "other_scarborough": 0.064,
+        "north_york_willowdale": 0.3356,
+        "downtown": 0.3217,
+        "elsewhere_in_toronto": 0.0254
+      }
+    },
+    {
+      "ward_code": 23,
+      "ward_name": "Scarborough North",
+      "is_case_study": true,
+      "representative_point": {
+        "lat": 43.809786,
+        "lon": -79.256056
+      },
+      "n_venues": 2,
+      "origin_total": 1647.0993,
+      "received_from_other_scarborough": 169.9629,
+      "destination_units": {
+        "same_ward": 303.5381,
+        "other_scarborough": 630.7541,
+        "north_york_willowdale": 364.0373,
+        "downtown": 330.5241,
+        "elsewhere_in_toronto": 18.2457
+      },
+      "destination_share": {
+        "same_ward": 0.1843,
+        "other_scarborough": 0.3829,
+        "north_york_willowdale": 0.221,
+        "downtown": 0.2007,
+        "elsewhere_in_toronto": 0.0111
+      }
+    },
+    {
+      "ward_code": 24,
+      "ward_name": "Scarborough-Guildwood",
+      "is_case_study": false,
+      "representative_point": {
+        "lat": 43.762698,
+        "lon": -79.215911
+      },
+      "n_venues": 3,
+      "origin_total": 1167.9472,
+      "received_from_other_scarborough": 7.4425,
+      "destination_units": {
+        "same_ward": 32.6871,
+        "other_scarborough": 299.3677,
+        "north_york_willowdale": 265.8263,
+        "downtown": 533.1081,
+        "elsewhere_in_toronto": 36.958
+      },
+      "destination_share": {
+        "same_ward": 0.028,
+        "other_scarborough": 0.2563,
+        "north_york_willowdale": 0.2276,
+        "downtown": 0.4564,
+        "elsewhere_in_toronto": 0.0316
+      }
+    },
+    {
+      "ward_code": 25,
+      "ward_name": "Scarborough-Rouge Park",
+      "is_case_study": false,
+      "representative_point": {
+        "lat": 43.803664,
+        "lon": -79.175444
+      },
+      "n_venues": 1,
+      "origin_total": 2023.5586,
+      "received_from_other_scarborough": 314.297,
+      "destination_units": {
+        "same_ward": 1099.8473,
+        "other_scarborough": 119.6291,
+        "north_york_willowdale": 325.5377,
+        "downtown": 461.9035,
+        "elsewhere_in_toronto": 16.6411
+      },
+      "destination_share": {
+        "same_ward": 0.5435,
+        "other_scarborough": 0.0591,
+        "north_york_willowdale": 0.1609,
+        "downtown": 0.2283,
+        "elsewhere_in_toronto": 0.0082
+      }
+    }
+  ],
+  "flows": [
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Spadina-Fort York",
+      "bucket": "downtown",
+      "units": 447.2497,
+      "share_of_origin": 0.1932,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Scarborough Centre",
+      "bucket": "same_ward",
+      "units": 395.7569,
+      "share_of_origin": 0.1709,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Willowdale",
+      "bucket": "north_york_willowdale",
+      "units": 380.3755,
+      "share_of_origin": 0.1643,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "University-Rosedale",
+      "bucket": "downtown",
+      "units": 352.3365,
+      "share_of_origin": 0.1522,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Toronto Centre",
+      "bucket": "downtown",
+      "units": 312.6807,
+      "share_of_origin": 0.1351,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Scarborough-Agincourt",
+      "bucket": "other_scarborough",
+      "units": 203.5242,
+      "share_of_origin": 0.0879,
+      "internal_rank": 3
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Don Valley North",
+      "bucket": "north_york_willowdale",
+      "units": 44.4468,
+      "share_of_origin": 0.0192,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Scarborough North",
+      "bucket": "other_scarborough",
+      "units": 43.4487,
+      "share_of_origin": 0.0188,
+      "internal_rank": 10
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Beaches-East York",
+      "bucket": "downtown",
+      "units": 29.0998,
+      "share_of_origin": 0.0126,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Don Valley East",
+      "bucket": "north_york_willowdale",
+      "units": 19.727,
+      "share_of_origin": 0.0085,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Humber River-Black Creek",
+      "bucket": "elsewhere_in_toronto",
+      "units": 18.9938,
+      "share_of_origin": 0.0082,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Scarborough-Rouge Park",
+      "bucket": "other_scarborough",
+      "units": 17.7816,
+      "share_of_origin": 0.0077,
+      "internal_rank": 15
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Eglinton-Lawrence",
+      "bucket": "elsewhere_in_toronto",
+      "units": 14.437,
+      "share_of_origin": 0.0062,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Davenport",
+      "bucket": "downtown",
+      "units": 10.4129,
+      "share_of_origin": 0.0045,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Toronto-Danforth",
+      "bucket": "downtown",
+      "units": 5.3221,
+      "share_of_origin": 0.0023,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Don Valley West",
+      "bucket": "north_york_willowdale",
+      "units": 3.9071,
+      "share_of_origin": 0.0017,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Toronto-St. Paul's",
+      "bucket": "downtown",
+      "units": 3.8418,
+      "share_of_origin": 0.0017,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Scarborough-Guildwood",
+      "bucket": "other_scarborough",
+      "units": 3.5503,
+      "share_of_origin": 0.0015,
+      "internal_rank": 21
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Etobicoke North",
+      "bucket": "elsewhere_in_toronto",
+      "units": 2.5329,
+      "share_of_origin": 0.0011,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Parkdale-High Park",
+      "bucket": "downtown",
+      "units": 2.1369,
+      "share_of_origin": 0.0009,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "York Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 1.7819,
+      "share_of_origin": 0.0008,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Etobicoke Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.9473,
+      "share_of_origin": 0.0004,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Etobicoke-Lakeshore",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.7702,
+      "share_of_origin": 0.0003,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "Scarborough Southwest",
+      "bucket": "other_scarborough",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": 26
+    },
+    {
+      "origin_ward": "Scarborough Centre",
+      "dest_ward": "York South-Weston",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Scarborough North",
+      "bucket": "same_ward",
+      "units": 303.5381,
+      "share_of_origin": 0.1843,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Scarborough-Agincourt",
+      "bucket": "other_scarborough",
+      "units": 282.0524,
+      "share_of_origin": 0.1712,
+      "internal_rank": 1
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Willowdale",
+      "bucket": "north_york_willowdale",
+      "units": 270.9178,
+      "share_of_origin": 0.1645,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Scarborough-Rouge Park",
+      "bucket": "other_scarborough",
+      "units": 213.7542,
+      "share_of_origin": 0.1298,
+      "internal_rank": 2
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Scarborough Centre",
+      "bucket": "other_scarborough",
+      "units": 134.9476,
+      "share_of_origin": 0.0819,
+      "internal_rank": 6
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "University-Rosedale",
+      "bucket": "downtown",
+      "units": 127.6578,
+      "share_of_origin": 0.0775,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Spadina-Fort York",
+      "bucket": "downtown",
+      "units": 101.8796,
+      "share_of_origin": 0.0619,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Toronto Centre",
+      "bucket": "downtown",
+      "units": 78.7317,
+      "share_of_origin": 0.0478,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Don Valley East",
+      "bucket": "north_york_willowdale",
+      "units": 62.6226,
+      "share_of_origin": 0.038,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Don Valley North",
+      "bucket": "north_york_willowdale",
+      "units": 30.0727,
+      "share_of_origin": 0.0183,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Eglinton-Lawrence",
+      "bucket": "elsewhere_in_toronto",
+      "units": 9.4122,
+      "share_of_origin": 0.0057,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Beaches-East York",
+      "bucket": "downtown",
+      "units": 7.6137,
+      "share_of_origin": 0.0046,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Davenport",
+      "bucket": "downtown",
+      "units": 5.9731,
+      "share_of_origin": 0.0036,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "York Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 4.6716,
+      "share_of_origin": 0.0028,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Toronto-St. Paul's",
+      "bucket": "downtown",
+      "units": 4.5541,
+      "share_of_origin": 0.0028,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Toronto-Danforth",
+      "bucket": "downtown",
+      "units": 3.3722,
+      "share_of_origin": 0.002,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Etobicoke North",
+      "bucket": "elsewhere_in_toronto",
+      "units": 1.6244,
+      "share_of_origin": 0.001,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Etobicoke Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 1.2269,
+      "share_of_origin": 0.0007,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Humber River-Black Creek",
+      "bucket": "elsewhere_in_toronto",
+      "units": 1.2175,
+      "share_of_origin": 0.0007,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Parkdale-High Park",
+      "bucket": "downtown",
+      "units": 0.7419,
+      "share_of_origin": 0.0005,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Don Valley West",
+      "bucket": "north_york_willowdale",
+      "units": 0.4242,
+      "share_of_origin": 0.0003,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Etobicoke-Lakeshore",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.093,
+      "share_of_origin": 0.0001,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Scarborough Southwest",
+      "bucket": "other_scarborough",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": 27
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Scarborough-Guildwood",
+      "bucket": "other_scarborough",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": 28
+    },
+    {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "York South-Weston",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "University-Rosedale",
+      "bucket": "downtown",
+      "units": 790.6298,
+      "share_of_origin": 0.2773,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Toronto Centre",
+      "bucket": "downtown",
+      "units": 708.7385,
+      "share_of_origin": 0.2486,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Beaches-East York",
+      "bucket": "downtown",
+      "units": 474.6987,
+      "share_of_origin": 0.1665,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Spadina-Fort York",
+      "bucket": "downtown",
+      "units": 258.2506,
+      "share_of_origin": 0.0906,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Willowdale",
+      "bucket": "north_york_willowdale",
+      "units": 249.7685,
+      "share_of_origin": 0.0876,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Scarborough-Agincourt",
+      "bucket": "other_scarborough",
+      "units": 164.6331,
+      "share_of_origin": 0.0577,
+      "internal_rank": 5
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Don Valley East",
+      "bucket": "north_york_willowdale",
+      "units": 46.7985,
+      "share_of_origin": 0.0164,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Scarborough Centre",
+      "bucket": "other_scarborough",
+      "units": 31.4186,
+      "share_of_origin": 0.011,
+      "internal_rank": 13
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Humber River-Black Creek",
+      "bucket": "elsewhere_in_toronto",
+      "units": 20.3045,
+      "share_of_origin": 0.0071,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Davenport",
+      "bucket": "downtown",
+      "units": 16.3897,
+      "share_of_origin": 0.0057,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Scarborough-Rouge Park",
+      "bucket": "other_scarborough",
+      "units": 15.9413,
+      "share_of_origin": 0.0056,
+      "internal_rank": 17
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Toronto-Danforth",
+      "bucket": "downtown",
+      "units": 14.408,
+      "share_of_origin": 0.0051,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Don Valley North",
+      "bucket": "north_york_willowdale",
+      "units": 11.7786,
+      "share_of_origin": 0.0041,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Scarborough North",
+      "bucket": "other_scarborough",
+      "units": 8.7469,
+      "share_of_origin": 0.0031,
+      "internal_rank": 20
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Scarborough Southwest",
+      "bucket": "same_ward",
+      "units": 8.2306,
+      "share_of_origin": 0.0029,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Etobicoke North",
+      "bucket": "elsewhere_in_toronto",
+      "units": 7.0205,
+      "share_of_origin": 0.0025,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "York Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 4.0736,
+      "share_of_origin": 0.0014,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Eglinton-Lawrence",
+      "bucket": "elsewhere_in_toronto",
+      "units": 3.9243,
+      "share_of_origin": 0.0014,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Etobicoke-Lakeshore",
+      "bucket": "elsewhere_in_toronto",
+      "units": 3.546,
+      "share_of_origin": 0.0012,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Toronto-St. Paul's",
+      "bucket": "downtown",
+      "units": 3.0256,
+      "share_of_origin": 0.0011,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Parkdale-High Park",
+      "bucket": "downtown",
+      "units": 2.6414,
+      "share_of_origin": 0.0009,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Etobicoke Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 2.2739,
+      "share_of_origin": 0.0008,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Scarborough-Guildwood",
+      "bucket": "other_scarborough",
+      "units": 1.8246,
+      "share_of_origin": 0.0006,
+      "internal_rank": 22
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "Don Valley West",
+      "bucket": "north_york_willowdale",
+      "units": 1.7855,
+      "share_of_origin": 0.0006,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough Southwest",
+      "dest_ward": "York South-Weston",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Willowdale",
+      "bucket": "north_york_willowdale",
+      "units": 331.8666,
+      "share_of_origin": 0.2662,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Scarborough-Agincourt",
+      "bucket": "same_ward",
+      "units": 315.7518,
+      "share_of_origin": 0.2533,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "University-Rosedale",
+      "bucket": "downtown",
+      "units": 135.9392,
+      "share_of_origin": 0.109,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Spadina-Fort York",
+      "bucket": "downtown",
+      "units": 131.457,
+      "share_of_origin": 0.1054,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Toronto Centre",
+      "bucket": "downtown",
+      "units": 91.3397,
+      "share_of_origin": 0.0733,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Don Valley North",
+      "bucket": "north_york_willowdale",
+      "units": 73.0425,
+      "share_of_origin": 0.0586,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Scarborough Centre",
+      "bucket": "other_scarborough",
+      "units": 41.8455,
+      "share_of_origin": 0.0336,
+      "internal_rank": 11
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Scarborough North",
+      "bucket": "other_scarborough",
+      "units": 26.5392,
+      "share_of_origin": 0.0213,
+      "internal_rank": 14
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Beaches-East York",
+      "bucket": "downtown",
+      "units": 15.5504,
+      "share_of_origin": 0.0125,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "York Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 15.3126,
+      "share_of_origin": 0.0123,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Parkdale-High Park",
+      "bucket": "downtown",
+      "units": 14.891,
+      "share_of_origin": 0.0119,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Scarborough-Rouge Park",
+      "bucket": "other_scarborough",
+      "units": 9.8594,
+      "share_of_origin": 0.0079,
+      "internal_rank": 19
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Don Valley East",
+      "bucket": "north_york_willowdale",
+      "units": 8.6095,
+      "share_of_origin": 0.0069,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Eglinton-Lawrence",
+      "bucket": "elsewhere_in_toronto",
+      "units": 8.2244,
+      "share_of_origin": 0.0066,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Davenport",
+      "bucket": "downtown",
+      "units": 5.9733,
+      "share_of_origin": 0.0048,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Don Valley West",
+      "bucket": "north_york_willowdale",
+      "units": 4.924,
+      "share_of_origin": 0.0039,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Toronto-Danforth",
+      "bucket": "downtown",
+      "units": 3.9565,
+      "share_of_origin": 0.0032,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Etobicoke Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 3.1106,
+      "share_of_origin": 0.0025,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Etobicoke North",
+      "bucket": "elsewhere_in_toronto",
+      "units": 3.0986,
+      "share_of_origin": 0.0025,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Humber River-Black Creek",
+      "bucket": "elsewhere_in_toronto",
+      "units": 1.9719,
+      "share_of_origin": 0.0016,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Toronto-St. Paul's",
+      "bucket": "downtown",
+      "units": 1.9586,
+      "share_of_origin": 0.0016,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Scarborough-Guildwood",
+      "bucket": "other_scarborough",
+      "units": 1.314,
+      "share_of_origin": 0.0011,
+      "internal_rank": 23
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Scarborough Southwest",
+      "bucket": "other_scarborough",
+      "units": 0.1999,
+      "share_of_origin": 0.0002,
+      "internal_rank": 25
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "Etobicoke-Lakeshore",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Agincourt",
+      "dest_ward": "York South-Weston",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "University-Rosedale",
+      "bucket": "downtown",
+      "units": 207.5878,
+      "share_of_origin": 0.1777,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Willowdale",
+      "bucket": "north_york_willowdale",
+      "units": 197.8875,
+      "share_of_origin": 0.1694,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Scarborough Centre",
+      "bucket": "other_scarborough",
+      "units": 173.6268,
+      "share_of_origin": 0.1487,
+      "internal_rank": 4
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Toronto Centre",
+      "bucket": "downtown",
+      "units": 136.7583,
+      "share_of_origin": 0.1171,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Spadina-Fort York",
+      "bucket": "downtown",
+      "units": 125.7831,
+      "share_of_origin": 0.1077,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Scarborough-Rouge Park",
+      "bucket": "other_scarborough",
+      "units": 56.9606,
+      "share_of_origin": 0.0488,
+      "internal_rank": 8
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Scarborough North",
+      "bucket": "other_scarborough",
+      "units": 52.7434,
+      "share_of_origin": 0.0452,
+      "internal_rank": 9
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Beaches-East York",
+      "bucket": "downtown",
+      "units": 45.3276,
+      "share_of_origin": 0.0388,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Don Valley East",
+      "bucket": "north_york_willowdale",
+      "units": 36.3831,
+      "share_of_origin": 0.0312,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Scarborough-Guildwood",
+      "bucket": "same_ward",
+      "units": 32.6871,
+      "share_of_origin": 0.028,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Don Valley North",
+      "bucket": "north_york_willowdale",
+      "units": 31.0756,
+      "share_of_origin": 0.0266,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Scarborough-Agincourt",
+      "bucket": "other_scarborough",
+      "units": 16.0369,
+      "share_of_origin": 0.0137,
+      "internal_rank": 16
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Humber River-Black Creek",
+      "bucket": "elsewhere_in_toronto",
+      "units": 15.3788,
+      "share_of_origin": 0.0132,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Davenport",
+      "bucket": "downtown",
+      "units": 11.4017,
+      "share_of_origin": 0.0098,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Etobicoke North",
+      "bucket": "elsewhere_in_toronto",
+      "units": 7.7814,
+      "share_of_origin": 0.0067,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "York Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 7.5709,
+      "share_of_origin": 0.0065,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Toronto-Danforth",
+      "bucket": "downtown",
+      "units": 6.2496,
+      "share_of_origin": 0.0054,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Eglinton-Lawrence",
+      "bucket": "elsewhere_in_toronto",
+      "units": 3.6578,
+      "share_of_origin": 0.0031,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Etobicoke-Lakeshore",
+      "bucket": "elsewhere_in_toronto",
+      "units": 1.4226,
+      "share_of_origin": 0.0012,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Etobicoke Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 1.1465,
+      "share_of_origin": 0.001,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Don Valley West",
+      "bucket": "north_york_willowdale",
+      "units": 0.4801,
+      "share_of_origin": 0.0004,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Parkdale-High Park",
+      "bucket": "downtown",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Scarborough Southwest",
+      "bucket": "other_scarborough",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": 29
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "Toronto-St. Paul's",
+      "bucket": "downtown",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Guildwood",
+      "dest_ward": "York South-Weston",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Scarborough-Rouge Park",
+      "bucket": "same_ward",
+      "units": 1099.8473,
+      "share_of_origin": 0.5435,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Willowdale",
+      "bucket": "north_york_willowdale",
+      "units": 241.4756,
+      "share_of_origin": 0.1193,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "University-Rosedale",
+      "bucket": "downtown",
+      "units": 194.9475,
+      "share_of_origin": 0.0963,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Spadina-Fort York",
+      "bucket": "downtown",
+      "units": 147.0601,
+      "share_of_origin": 0.0727,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Toronto Centre",
+      "bucket": "downtown",
+      "units": 87.3237,
+      "share_of_origin": 0.0432,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Scarborough Centre",
+      "bucket": "other_scarborough",
+      "units": 65.2361,
+      "share_of_origin": 0.0322,
+      "internal_rank": 7
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Don Valley East",
+      "bucket": "north_york_willowdale",
+      "units": 59.7374,
+      "share_of_origin": 0.0295,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Scarborough North",
+      "bucket": "other_scarborough",
+      "units": 38.4847,
+      "share_of_origin": 0.019,
+      "internal_rank": 12
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Don Valley North",
+      "bucket": "north_york_willowdale",
+      "units": 22.7017,
+      "share_of_origin": 0.0112,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Davenport",
+      "bucket": "downtown",
+      "units": 19.3652,
+      "share_of_origin": 0.0096,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Scarborough-Agincourt",
+      "bucket": "other_scarborough",
+      "units": 15.1547,
+      "share_of_origin": 0.0075,
+      "internal_rank": 18
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Beaches-East York",
+      "bucket": "downtown",
+      "units": 10.009,
+      "share_of_origin": 0.0049,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "York Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 7.0277,
+      "share_of_origin": 0.0035,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Eglinton-Lawrence",
+      "bucket": "elsewhere_in_toronto",
+      "units": 5.3575,
+      "share_of_origin": 0.0026,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Toronto-Danforth",
+      "bucket": "downtown",
+      "units": 2.4629,
+      "share_of_origin": 0.0012,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Etobicoke-Lakeshore",
+      "bucket": "elsewhere_in_toronto",
+      "units": 2.3374,
+      "share_of_origin": 0.0012,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Don Valley West",
+      "bucket": "north_york_willowdale",
+      "units": 1.623,
+      "share_of_origin": 0.0008,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Etobicoke North",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.9782,
+      "share_of_origin": 0.0005,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Scarborough-Guildwood",
+      "bucket": "other_scarborough",
+      "units": 0.7536,
+      "share_of_origin": 0.0004,
+      "internal_rank": 24
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Toronto-St. Paul's",
+      "bucket": "downtown",
+      "units": 0.7351,
+      "share_of_origin": 0.0004,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Humber River-Black Creek",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.5051,
+      "share_of_origin": 0.0002,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Etobicoke Centre",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.4352,
+      "share_of_origin": 0.0002,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Parkdale-High Park",
+      "bucket": "downtown",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "Scarborough Southwest",
+      "bucket": "other_scarborough",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": 30
+    },
+    {
+      "origin_ward": "Scarborough-Rouge Park",
+      "dest_ward": "York South-Weston",
+      "bucket": "elsewhere_in_toronto",
+      "units": 0.0,
+      "share_of_origin": 0.0,
+      "internal_rank": null
+    }
+  ],
+  "venues": [
+    {
+      "venue_id": 48,
+      "venue_name": "Malvern Library",
+      "ward_name": "Scarborough-Rouge Park",
+      "lat": 43.808291,
+      "lon": -79.216069,
+      "activity_total": 1486.3712,
+      "share_of_scarborough_destination_activity": 0.3463,
+      "is_map_venue": true,
+      "map_label": "Malvern Library"
+    },
+    {
+      "venue_id": 96,
+      "venue_name": "Agincourt Toronto Public Library",
+      "ward_name": "Scarborough-Agincourt",
+      "lat": 43.785246,
+      "lon": -79.293486,
+      "activity_total": 1188.3342,
+      "share_of_scarborough_destination_activity": 0.2769,
+      "is_map_venue": true,
+      "map_label": "Agincourt TPL"
+    },
+    {
+      "venue_id": 85,
+      "venue_name": "Scarborough Civic Centre Library",
+      "ward_name": "Scarborough Centre",
+      "lat": 43.772365,
+      "lon": -79.257009,
+      "activity_total": 894.637,
+      "share_of_scarborough_destination_activity": 0.2084,
+      "is_map_venue": true,
+      "map_label": "Scarborough Civic Centre Library"
+    },
+    {
+      "venue_id": 99,
+      "venue_name": "Woodside Square Cinemas",
+      "ward_name": "Scarborough North",
+      "lat": 43.810102,
+      "lon": -79.269402,
+      "activity_total": 356.1064,
+      "share_of_scarborough_destination_activity": 0.083,
+      "is_map_venue": true,
+      "map_label": "Woodside Square Cinemas"
+    },
+    {
+      "venue_id": 56,
+      "venue_name": "P.C. Ho Theatre",
+      "ward_name": "Scarborough North",
+      "lat": 43.794556,
+      "lon": -79.233638,
+      "activity_total": 207.9787,
+      "share_of_scarborough_destination_activity": 0.0485,
+      "is_map_venue": true,
+      "map_label": "P.C. Ho Theatre"
+    },
+    {
+      "venue_id": 97,
+      "venue_name": "Birkdale Community Centre",
+      "ward_name": "Scarborough Centre",
+      "lat": 43.768241,
+      "lon": -79.263864,
+      "activity_total": 86.6939,
+      "share_of_scarborough_destination_activity": 0.0202,
+      "is_map_venue": true,
+      "map_label": "Birkdale Community Centre"
+    },
+    {
+      "venue_id": 98,
+      "venue_name": "Cedarbrook Community Centre",
+      "ward_name": "Scarborough-Guildwood",
+      "lat": 43.755638,
+      "lon": -79.227405,
+      "activity_total": 29.9983,
+      "share_of_scarborough_destination_activity": 0.007,
+      "is_map_venue": false,
+      "map_label": null
+    },
+    {
+      "venue_id": 20,
+      "venue_name": "Clark Centre for the Arts",
+      "ward_name": "Scarborough-Guildwood",
+      "lat": 43.746881,
+      "lon": -79.193682,
+      "activity_total": 17.5257,
+      "share_of_scarborough_destination_activity": 0.0041,
+      "is_map_venue": false,
+      "map_label": null
+    },
+    {
+      "venue_id": 19,
+      "venue_name": "Cedar Ridge Creative Centre",
+      "ward_name": "Scarborough-Guildwood",
+      "lat": 43.757416,
+      "lon": -79.2071,
+      "activity_total": 13.6025,
+      "share_of_scarborough_destination_activity": 0.0032,
+      "is_map_venue": false,
+      "map_label": null
+    },
+    {
+      "venue_id": 65,
+      "venue_name": "Bluffs Gallery",
+      "ward_name": "Scarborough Southwest",
+      "lat": 43.69528,
+      "lon": -79.258761,
+      "activity_total": 11.0678,
+      "share_of_scarborough_destination_activity": 0.0026,
+      "is_map_venue": false,
+      "map_label": null
+    }
+  ],
+  "headline": {
+    "top_venue": {
+      "venue_id": 48,
+      "venue_name": "Malvern Library",
+      "share_of_scarborough_destination_activity": 0.3463
+    },
+    "other_scarborough_share_excluding_top_venue": 0.5529,
+    "strongest_internal_connection": {
+      "origin_ward": "Scarborough North",
+      "dest_ward": "Scarborough-Agincourt",
+      "units": 282.0524
+    },
+    "top_receiving_ward": {
+      "ward_name": "Scarborough-Agincourt",
+      "units": 681.4013
+    },
+    "reciprocity": {
+      "ward_a": "Scarborough North",
+      "ward_b": "Scarborough-Agincourt",
+      "a_to_b_units": 282.0524,
+      "b_to_a_units": 26.5392,
+      "ratio": 0.0941
+    }
+  }
+}

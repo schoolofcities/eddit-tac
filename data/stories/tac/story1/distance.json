@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "story": "Story 1: Toronto's cultural infrastructure across ward lines",
+    "source_notebook": "analysis/wards/explore/prepare_story1_sample_graphics.ipynb",
+    "time_period": "all",
+    "activity_measure": "normalized_raw_stop_count_by_ward",
+    "n_wards": 25,
+    "n_venues": 105,
+    "shares_are": "fractions between 0 and 1",
+    "caveats": [
+      "Normalized activity is not attendance, a unique-person count or a percentage of residents participating.",
+      "The activity analysis covers 105 selected venues; the broader inventory holds roughly 2,576 locations with no comparable activity measurements.",
+      "Straight-line distance is not route distance, travel time or difficulty.",
+      "Activity is attributed to residents' inferred home ward, not the workplace ward.",
+      "Ward-level relationships are ecological: they describe wards, not individual behaviour, and do not establish causality.",
+      "Most wards host only 1-3 included venues, so destination-side shares are sensitive to which venues were sampled."
+    ],
+    "description": "Typical straight-line distance from home area to venue, for activity within and across wards.",
+    "method": "Straight-line distance (km) from the centre of each home geohash6 cell (about 1 km across) to the venue, projected to UTM. p25, median and p75 are weighted by normalized activity (normalized_raw_stop_count).",
+    "n_rows_used": 14454,
+    "notes": [
+      "Home-area rows that could not be matched to a ward (about 2%) are excluded.",
+      "downtown = the Toronto and East York wards; suburban = all other wards."
+    ]
+  },
+  "citywide": {
+    "groups": [
+      {
+        "key": "within_home_ward",
+        "label": "Within home ward",
+        "description": "Activity at venues in the resident's own ward.",
+        "p25_km": 0.083,
+        "median_km": 0.3322,
+        "p75_km": 0.8691,
+        "n_rows": 1510
+      },
+      {
+        "key": "all_cross_ward",
+        "label": "All cross-ward activity",
+        "description": "Activity at venues in any other ward.",
+        "p25_km": 2.4122,
+        "median_km": 6.2192,
+        "p75_km": 11.0478,
+        "n_rows": 12944
+      },
+      {
+        "key": "suburb_to_suburb",
+        "label": "Suburb to suburb",
+        "description": "Home ward outside Toronto and East York, venue in a different ward that is also outside Toronto and East York.",
+        "p25_km": 3.5484,
+        "median_km": 6.5704,
+        "p75_km": 11.8988,
+        "n_rows": 2523
+      },
+      {
+        "key": "suburb_to_downtown",
+        "label": "Suburb to downtown",
+        "description": "Home ward outside Toronto and East York, venue in Toronto and East York.",
+        "p25_km": 8.5432,
+        "median_km": 11.3122,
+        "p75_km": 13.9551,
+        "n_rows": 5971
+      }
+    ],
+    "suburban_outside_ward_activity_staying_suburban_share": 0.4617
+  },
+  "scarborough": {
+    "description": "Scarborough home areas to venues, by destination group. Group keys match scarborough_network.json.",
+    "by_destination": [
+      {
+        "key": "same_ward",
+        "label": "Within home ward",
+        "p25_km": 0.3096,
+        "median_km": 0.876,
+        "p75_km": 1.9134,
+        "n_rows": 186
+      },
+      {
+        "key": "other_scarborough",
+        "label": "Another Scarborough ward",
+        "p25_km": 2.0467,
+        "median_km": 4.302,
+        "p75_km": 5.9151,
+        "n_rows": 401
+      },
+      {
+        "key": "north_york_willowdale",
+        "label": "North York / Willowdale",
+        "p25_km": 9.5377,
+        "median_km": 12.4524,
+        "p75_km": 14.8891,
+        "n_rows": 484
+      },
+      {
+        "key": "downtown",
+        "label": "Downtown / core",
+        "p25_km": 10.265,
+        "median_km": 13.4759,
+        "p75_km": 17.4475,
+        "n_rows": 1751
+      },
+      {
+        "key": "elsewhere_in_toronto",
+        "label": "Elsewhere in Toronto",
+        "p25_km": 16.4556,
+        "median_km": 19.9682,
+        "p75_km": 24.2373,
+        "n_rows": 90
+      }
+    ]
+  }
+}
