@@ -546,10 +546,10 @@
             <div class="about-block">
         <h2 class="section-heading">Data</h2>
         <p class="section-desc">
-          Activity Data: Cuebiq
-          <br />Map Data: OpenStreetMap, Toronto Open Data Portal
-          <br />Venue Location Data: Toronto Arts Council
-          <br />Demographic Data: Statistics Canada, 2021 Census
+          Activity Data: Cuebiq, 2026
+          <br />Map Data: OpenStreetMap, Toronto Open Data Portal, 2025
+          <br />Venue Location Data: Toronto Arts Council, 2026
+          <br />Demographic Data: Statistics Canada Census, 2021
         </p>
       </div>
 
