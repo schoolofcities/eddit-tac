@@ -51,7 +51,9 @@
 </aside>
 
 <style>
-  /* Fills the grid cell; scrolls sideways if the row is wider, never down */
+  /* Fills the grid cell; scrolls sideways if the row is wider. The cell's
+     height now scales with the viewport, so allow vertical scrolling as a
+     fallback on very short screens instead of silently clipping content. */
   .profile-panel {
     width: 100%;
     height: 100%;
@@ -60,7 +62,7 @@
     font-family: Montserrat, sans-serif;
     font-size: 0.8rem;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--brandGray) transparent;
   }
@@ -108,5 +110,17 @@
     line-height: 1.5;
     font-style: italic;
     margin: 0;
+  }
+
+  /* Short viewports (e.g. Windows laptops with display scaling): tighten
+     spacing so the shorter strip fits more of the profile before scrolling */
+  @media (max-height: 700px) {
+    .profile-section {
+      padding: 8px 12px;
+    }
+
+    .section-heading {
+      margin-bottom: 4px;
+    }
   }
 </style>

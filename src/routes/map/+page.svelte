@@ -114,7 +114,11 @@
 
 	.tac-layout {
 		--tac-side-width: 400px;
-		--tac-bottom-height: 300px; /* fixed: no longer scales with the window */
+		/* Scales with the viewport height, capped at 300px (unchanged on tall
+		   screens) and floored at 180px. Windows laptops with 125–150% display
+		   scaling often have only ~600px of viewport height, where a fixed
+		   300px strip took half the screen and squeezed the map. */
+		--tac-bottom-height: clamp(180px, 30dvh, 300px);
 
 		display: grid;
 		grid-template-columns: var(--tac-side-width) minmax(0, 1fr);
