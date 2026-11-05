@@ -75,6 +75,31 @@
 	let mapContainer;
 	let mapLoaded = $state(false);
 
+	// Last size the map canvas was set to. Resizing the canvas clears it, so
+	// skipping no-op resizes avoids blank frames mid-animation.
+	let mapSize = { w: 0, h: 0 };
+
+	// Resizes the map to its container and redraws in the same frame.
+	// When only the height changes (the profile strip under the map
+	// appearing or disappearing), the top edge stays pinned so the map
+	// looks uncovered/covered rather than jumping by half the difference.
+	function resizeMap() {
+		if (!map || !mapContainer) return false;
+		const w = mapContainer.clientWidth;
+		const h = mapContainer.clientHeight;
+		if (w === mapSize.w && h === mapSize.h) return false;
+
+		const heightOnly = w === mapSize.w && mapSize.h > 0;
+		// The point that sits at the new centre height, measured from the top
+		const anchor = heightOnly ? map.unproject([w / 2, h / 2]) : null;
+
+		mapSize = { w, h };
+		map.resize();
+		if (anchor) map.jumpTo({ center: anchor });
+		if (mapLoaded) map.redraw();
+		return true;
+	}
+
 	onMount(() => {
 		const protocol = new pmtiles.Protocol();
 		maplibregl.addProtocol("pmtiles", protocol.tile);
@@ -127,7 +152,8 @@
 			syncLayers();
 		});
 
-		const resizeObserver = new ResizeObserver(() => map?.resize());
+		mapSize = { w: mapContainer.clientWidth, h: mapContainer.clientHeight };
+		const resizeObserver = new ResizeObserver(() => resizeMap());
 		resizeObserver.observe(mapContainer);
 
 		return () => {
@@ -1197,7 +1223,12 @@
 		const showAll = venueDisplayMode === "all";
 		const showSome = venueDisplayMode === "some";
 
-		if (showAll) {
+		// In "all" / "none" the page removes the profile strip under the map.
+		// The DOM is already updated when this effect runs, so resize the map
+		// to its new full height first (same frame, nothing painted yet), then
+		// ease from there — no stale-size frame and no mid-ease resize.
+		if (!showSome) {
+			resizeMap();
 			map.easeTo({
 				center: MAP_CENTER,
 				zoom: MAP_ZOOM,

@@ -567,7 +567,10 @@
             2021 Census.
           </li>
           <li>
-            Arts venue location data was provided by the Toronto Arts Council.
+            Arts venue location data was provided by the <a
+              href="https://torontoartscouncil.org/"
+              target="_blank"
+              rel="noopener noreferrer">Toronto Arts Council</a>.
           </li>
           <li>
             Other reference data on the map are from
@@ -579,7 +582,14 @@
           </li>
           <li>
             Transit networks and mobility data were computed by sampling GTFS
-            data from the Toronto Transit Commission and Metrolinx.
+            data from the <a
+              href="https://open.toronto.ca/dataset/merged-gtfs-ttc-routes-and-schedules/"
+              target="_blank"
+              rel="noopener noreferrer">Toronto Transit Commission</a> and
+            <a
+              href="https://www.metrolinx.com/en/about-us/open-data"
+              target="_blank"
+              rel="noopener noreferrer">Metrolinx</a>.
           </li>
         </ul>
         <p class="section-desc">
@@ -767,7 +777,7 @@
     font-size: 0.55rem;
     font-weight: 400;
     letter-spacing: 0.04em;
-    color: #7a7a7a;
+    color: #4d4d4d;
     margin-left: 1px;
     line-height: 0;
   }
@@ -1116,6 +1126,10 @@
     line-height: 1.55;
     margin: 0;
     font-weight: 500;
+  }
+
+  .about-block a:hover {
+    color: rgb(0, 98, 234) !important;
   }
 
   /* ── Venue Profile ──────────────────────────────────────────────────── */

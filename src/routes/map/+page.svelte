@@ -24,7 +24,11 @@
 	let map = $state(null);
 	let selectedVenueId = $state(null);
 	let layerState = $state(makeInitialLayerState());
-	let venueDisplayMode = $state("some"); // "some" (default) | "all"
+	let venueDisplayMode = $state("some"); // "some" (default) | "all" | "none"
+	// Desktop only: the venue profile strip only has something to show in
+	// "some" mode, so in "all" / "none" it's removed and the map takes its
+	// height (TacMap's ResizeObserver handles the resize).
+	const showProfileStrip = $derived(venueDisplayMode === "some");
 
 	// Derive a simple list for the panel dropdown — sorted alphabetically
 	const venues = venuesCentroids.features
@@ -71,7 +75,7 @@
 
 <Password />
 
-<div class="tac-layout">
+<div class="tac-layout" class:profile-hidden={!showProfileStrip}>
 	{#if isMobile}
 		<!-- Mobile: one panel with everything, Venue Profile included -->
 		<div class="tac-panel-wrap tac-side-wrap">
@@ -89,9 +93,11 @@
 			/>
 		</div>
 		<!-- ...and the profile on its own in the strip under the map -->
-		<div class="tac-panel-wrap tac-venue-wrap">
-			<TacProfilePanel {selectedVenueId} {venueDisplayMode} {venues} />
-		</div>
+		{#if showProfileStrip}
+			<div class="tac-panel-wrap tac-venue-wrap">
+				<TacProfilePanel {selectedVenueId} {venueDisplayMode} {venues} />
+			</div>
+		{/if}
 	{/if}
 
 	<!-- Kept outside the {#if} so the map never remounts on resize -->
@@ -130,6 +136,12 @@
 		width: 100vw;
 		height: 100dvh;
 		overflow: hidden;
+	}
+
+	/* No profile strip: collapse its row so the map fills the full height.
+	   Only the variable changes, so the mobile rows below are unaffected. */
+	.tac-layout.profile-hidden {
+		--tac-bottom-height: 0px;
 	}
 
 	.tac-panel-wrap {
