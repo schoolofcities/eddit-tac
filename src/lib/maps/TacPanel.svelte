@@ -2,6 +2,8 @@
   import { LAYER_GROUPS } from "$lib/maps/tacLayerConfig.js";
   import VenueProfile from "$lib/venue-profile/VenueProfile.svelte";
   import artLocations from "$data/venues/current_toronto_arts_locations_eddit.geo.json";
+  import sofcLogo from "$lib/../assets/sofc-uoft-logo-black.svg";
+  import toaLogo from "$lib/../assets/toa-logo-black.svg";
 
   let {
     selectedVenueId = $bindable(null),
@@ -573,6 +575,31 @@
         </p>
       </div>
     </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Logos ─────────────────────────────────────────────────────── -->
+    <div class="logo-row">
+      <a
+        href="https://schoolofcities.utoronto.ca/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          class="partner-logo"
+          src={sofcLogo}
+          alt="School of Cities, University of Toronto"
+        />
+      </a>
+      <span class="logo-divider" aria-hidden="true"></span>
+      <a
+        href="https://torontoartscouncil.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img class="partner-logo" src={toaLogo} alt="Toronto Arts Council" />
+      </a>
+    </div>
   </div>
 </aside>
 
@@ -713,6 +740,36 @@
 
   .about-link:hover {
     text-decoration: underline;
+  }
+
+  /* ── Logos ──────────────────────────────────────────────────────────── */
+
+  .logo-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 14px 16px 20px;
+    flex-shrink: 0;
+  }
+
+  .logo-row a {
+    display: block;
+    line-height: 0;
+  }
+
+  .logo-divider {
+    width: 1px;
+    height: 36px;
+    background: #000;
+    flex-shrink: 0;
+  }
+
+  /* Same height for both; width follows each logo's own proportions */
+  .partner-logo {
+    display: block;
+    height: 36px;
+    width: auto;
+    max-width: 100%;
   }
 
   .empty-state {

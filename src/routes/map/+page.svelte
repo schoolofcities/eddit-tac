@@ -114,11 +114,12 @@
 
 	.tac-layout {
 		--tac-side-width: 400px;
-		/* Scales with the viewport height, capped at 300px (unchanged on tall
-		   screens) and floored at 180px. Windows laptops with 125–150% display
-		   scaling often have only ~600px of viewport height, where a fixed
-		   300px strip took half the screen and squeezed the map. */
-		--tac-bottom-height: clamp(180px, 30dvh, 300px);
+		/* Scales with the viewport height: full 300px on any viewport 750px
+		   or taller, shrinking to a 240px floor on short screens (e.g. Windows
+		   laptops with 125–150% display scaling, ~600px of viewport height).
+		   The floor is what VenueProfile needs to fit; below it, the panel
+		   scrolls rather than clipping. */
+		--tac-bottom-height: clamp(240px, 40dvh, 300px);
 
 		display: grid;
 		grid-template-columns: var(--tac-side-width) minmax(0, 1fr);
