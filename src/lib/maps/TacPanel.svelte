@@ -534,44 +534,62 @@
 
       <div class="about-block">
         <h2 class="section-heading">Contributors</h2>
-        <p class="credits-org">School of Cities:</p>
-        <p class="section-desc">
-          Jeff Allen, Aniket Kali, Scott McCallum, Michelle Zhang
-        </p>
-
-        <p class="credits-org">Toronto Arts Council:</p>
-        <p class="section-desc">
-          Kadija de Paula, Francois Lebas, Elizabeth Riddolls, Earnest Ma
-        </p>
+        <ul class="section-desc">
+          <li>Jeff Allen<sup class="affil">SOC</sup></li>
+          <li>Aniket Kali<sup class="affil">SOC</sup></li>
+          <li>Scott McCallum<sup class="affil">SOC</sup></li>
+          <li>Michelle Zhang<sup class="affil">SOC</sup></li>
+          <li>Kadija de Paula<sup class="affil">TAC</sup></li>
+          <li>Francois Lebas<sup class="affil">TAC</sup></li>
+          <li>Elizabeth Riddolls<sup class="affil">TAC</sup></li>
+          <li>Earnest Ma<sup class="affil">TAC</sup></li>
+        </ul>
       </div>
-
-            <div class="about-block">
-        <h2 class="section-heading">Data</h2>
-        <p class="section-desc">
-          Activity Data: Cuebiq, 2026
-          <br />Map Data: OpenStreetMap, Toronto Open Data Portal, 2025
-          <br />Venue Location Data: Toronto Arts Council, 2026
-          <br />Demographic Data: Statistics Canada Census, 2021
-        </p>
-      </div>
-
       <div class="about-block">
-        <!-- <h2 class="section-heading">GitHub</h2> -->
+        <h2 class="section-heading">Data</h2>
+        <ul class="section-desc">
+          <li>
+            Activity data on the map was derived from a sample of mobile phone
+            data via
+            <a
+              href="https://cuebiq.com/"
+              target="_blank"
+              rel="noopener noreferrer">Cuebiq</a
+            >.
+          </li>
+          <li>
+            Demographic data was sampled from the
+            <a
+              href="https://www.statcan.gc.ca/"
+              target="_blank"
+              rel="noopener noreferrer">Statistics Canada</a
+            >
+            2021 Census.
+          </li>
+          <li>
+            Arts venue location data was provided by the Toronto Arts Council.
+          </li>
+          <li>
+            Other reference data on the map are from
+            <a
+              href="https://www.openstreetmap.org/"
+              target="_blank"
+              rel="noopener noreferrer">OpenStreetMap</a
+            >.
+          </li>
+          <li>
+            Transit networks and mobility data were computed by sampling GTFS
+            data from the Toronto Transit Commission and Metrolinx.
+          </li>
+        </ul>
         <p class="section-desc">
+          Check out our
           <a
-            class="github-link"
             href="https://github.com/schoolofcities/eddit-tac"
             target="_blank"
-            rel="noopener noreferrer"
-            aria-label="View source on GitHub"
+            rel="noopener noreferrer">GitHub</a
           >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
-              alt=""
-              width="16"
-              height="16"
-            />
-          </a>
+          for more information about the data and methods.
         </p>
       </div>
     </section>
@@ -719,17 +737,39 @@
     margin: 0;
   }
 
-  .credits-org {
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-weight: 700;
+  /* Data list: match the .section-desc paragraphs, overriding any
+     global ul/li styles */
+  .about-block ul.section-desc {
+    font-family: Montserrat, sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.45;
     color: #000;
-    margin: 8px 0 2px;
+    margin: 0 0 8px;
+    padding-left: 1.25em;
+    list-style: disc;
   }
 
-  .section-heading + .credits-org {
-    margin-top: 0;
+  .about-block ul.section-desc li {
+    font: inherit;
+    color: inherit;
+    margin: 0 0 4px;
+    padding: 0;
+  }
+
+  .about-block ul.section-desc li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Contributor affiliation superscripts (SoC / TAC) */
+  .affil {
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: #7a7a7a;
+    margin-left: 1px;
+    line-height: 0;
   }
 
   .about-link {
