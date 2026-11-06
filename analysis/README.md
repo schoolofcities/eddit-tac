@@ -56,6 +56,14 @@ Day-to-day edits only need the affected branch -- for example, new venue boundar
 
 ## Environment
 
-- Python 3.12 (some notebooks use newer f-string syntax) with Jupyter and: `pandas`, `geopandas`, `pyogrio`, `shapely`, `numpy`, `scipy`, `duckdb`, `tobler`, `python-geohash` (`import geohash`), `pygeohash`, `h3`, `osmnx`, `networkx`, `rasterio`, `requests`, `matplotlib`, `seaborn`, `scikit-learn`, `geopy`, `tqdm`.
-- Command-line tools: `tippecanoe` (tiling), Java 8 (only for the OTP step in `mobility/`).
+Python 3.12, managed with [uv](https://docs.astral.sh/uv/). Direct dependencies are declared in `pyproject.toml` and pinned in `uv.lock`. From the repository root:
+
+```bash
+uv sync
+uv run jupyter lab
+```
+
+`uv sync` installs the environment, including Jupyter. `uv run jupyter lab` starts it with that environment's Python 3 kernel. Notebooks are set to that kernel (`python3`).
+
+- Command-line tools, not installed by uv: `tippecanoe` (tiling), Java 8 (only for the OTP step in `mobility/`).
 - Notebooks locate the repository root themselves (the nearest parent folder containing `package.json`), so they can be run from any working directory.

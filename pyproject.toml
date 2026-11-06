@@ -1,0 +1,32 @@
+[project]
+name = "eddit-tac"
+version = "0.0.1"
+description = "Python environment for the EDDIT TAC analysis notebooks"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "duckdb",
+    "geopandas",
+    "h3",
+    "ipykernel",
+    "ipywidgets",
+    "jupyter",
+    "matplotlib",
+    "networkx",
+    "numpy",
+    "osmnx",
+    "pandas",
+    "pygeohash",
+    # 0.9.x is a Rust rewrite with Linux-only wheels and a different build.
+    # Notebooks call the 0.8 API: encode, bbox, neighbors, decode_exactly.
+    "python-geohash==0.8.5",
+    "rasterio",
+    "requests",
+    "scipy",
+    "seaborn",
+    "shapely",
+    "tobler",
+    "tqdm",
+]
+
+[tool.uv]
+package = false
